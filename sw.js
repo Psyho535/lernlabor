@@ -1,5 +1,5 @@
 // Offline-Cache. Die Version ändert sich bei jedem Build, damit Handys die neue Fassung holen.
-const CACHE = "lernlabor-20261103-235611";
+const CACHE = "lernlabor-20261104-120000";
 const CORE = ["./", "./index.html", "./manifest.webmanifest"];
 
 self.addEventListener("install", e => {
