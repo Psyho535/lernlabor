@@ -601,14 +601,6 @@ main{overflow-x:clip}
 
 /* Glasstapel */
 .hero{display:flex;flex-direction:column;gap:16px}
-.hero-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.hero-head .ring-label b{font-size:15px;letter-spacing:-.02em}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--fill-2);border:1px solid var(--sep);font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums}
-.pill .ic{color:var(--accent)}
-.pill.flame .ic{color:#ff8a3d}
-.pill.flame.on .ic{animation:flame 1.6s ease-in-out infinite}
-@keyframes flame{0%,100%{transform:scale(1)}50%{transform:scale(1.2) translateY(-1px)}}
 .stack{position:relative;padding:12px 0 14px;display:flex;flex-direction:column}
 .prow{position:relative;display:grid;grid-template-columns:120px minmax(0,1fr);align-items:center;height:36px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
 .pw{position:relative;height:100%;animation:lift var(--loop,7s) linear infinite;animation-delay:var(--t)}
@@ -671,10 +663,43 @@ main{overflow-x:clip}
 .mod-head .large{font-size:28px}
 .mod-head p{font-size:14.5px;color:var(--label-2);margin-top:3px}
 .exam-note{font-size:13.5px;line-height:1.45;color:var(--label-2)}
-.continue{display:flex;align-items:center;gap:12px;width:100%;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer}
-.continue small{display:block;font-size:13px;color:var(--label-2)}
-.continue b{display:block;font-size:16px;font-weight:600}
-.continue .chev{margin-left:auto;color:var(--label-3)}
+.src-link{text-decoration:none;min-height:44px;padding-block:8px}
+.src-link .cell-title{font-size:15px;font-weight:400}
+/* Begrüßung */
+.welcome{display:flex;flex-direction:column;gap:14px;padding-top:9vh;min-width:0}
+.large.greet{font-size:clamp(50px,15vw,84px);line-height:1;letter-spacing:-.045em;font-weight:700;padding-bottom:.08em;
+  background:linear-gradient(100deg,var(--label) 30%,#ff375f 44%,#bf5af2 52%,#0a84ff 60%,#40c8e0 68%,var(--label) 82%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:greetIn 1s var(--ease-ios) both,sheenText 3.2s var(--ease-ios) both;animation-delay:var(--intro,0s)}
+@keyframes greetIn{from{opacity:0;transform:translateY(22px);filter:blur(14px)}to{opacity:1;transform:none;filter:none}}
+@keyframes sheenText{from{background-position:100% 0}to{background-position:0 0}}
+.col.entering .large.greet{animation:greetIn 1s var(--ease-ios) both,sheenText 3.2s var(--ease-ios) both;animation-delay:var(--intro,0s)}
+.welcome-sub{font-size:20px;line-height:1.3;font-weight:500;letter-spacing:-.012em;color:var(--label-2);max-width:26ch;animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .18s)}
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
+.glow{position:relative;margin-top:14px;animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .32s)}
+.glow::before{content:"";position:absolute;inset:-2px;border-radius:20px;background:conic-gradient(from var(--spin),#ff375f,#bf5af2,#5e5ce6,#0a84ff,#40c8e0,#30d158,#ff9f0a,#ff375f);filter:blur(12px);opacity:.75;animation:spin 7s linear infinite}
+@keyframes spin{to{--spin:360deg}}
+.glow .btn{position:relative;height:58px;border-radius:18px;font-size:18px}
+.welcome-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;margin-top:6px;font-size:13px;color:var(--label-2);font-variant-numeric:tabular-nums;animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .46s)}
+.shelf-wrap{margin:10px -16px 0;min-width:0;animation:shelfIn .95s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .55s)}
+.shelf{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:16px;padding:6px 16px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.shelf::-webkit-scrollbar{display:none}
+.shelf-card{flex:none;width:min(74vw,290px);height:320px;display:flex;flex-direction:column;justify-content:space-between;padding:22px;border:0;border-radius:30px;text-align:left;color:#fff;cursor:pointer;scroll-snap-align:start;background:color-mix(in srgb,var(--c) 88%,#000);transition:transform .4s var(--ease-spring)}
+@keyframes shelfIn{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+.shelf-card:active{transform:scale(.97)}
+.shelf-text{display:block}
+.shelf-card b{display:block;font-size:27px;font-weight:700;line-height:1.1;letter-spacing:-.022em}
+.shelf-card small{display:block;margin-top:7px;font-size:14.5px;line-height:1.3;opacity:.85}
+.shelf-bar{display:block;height:4px;margin-top:16px;border-radius:4px;background:rgba(255,255,255,.28);overflow:hidden}
+.shelf-bar i{display:block;height:100%;border-radius:inherit;background:#fff}
+@media (min-width:900px){.shelf-wrap{margin-inline:-40px}.shelf{padding-inline:40px;scroll-padding-inline:40px}}
+/* Vorspann */
+#intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);pointer-events:none;animation:introOut .55s cubic-bezier(.6,0,.9,.3) 1.3s forwards}
+.intro-stack{display:flex;flex-direction:column;gap:7px;width:132px;animation:introZoom .6s cubic-bezier(.7,0,.84,0) 1.22s forwards}
+.intro-stack i{display:block;height:11px;border-radius:6px;transform-origin:left center;animation:introBar .55s var(--ease-ios) both;animation-delay:calc(var(--k) * 90ms + .1s)}
+@keyframes introBar{from{opacity:0;transform:scaleX(.15) translateY(14px)}to{opacity:1;transform:none}}
+@keyframes introZoom{to{transform:scale(16);opacity:0}}
+@keyframes introOut{to{opacity:0;visibility:hidden}}
 /* Lernseite */
 .lesson{display:flex;flex-direction:column;gap:16px}
 .lesson h2{font-size:19px;font-weight:650;letter-spacing:-.01em;margin-bottom:8px}
@@ -740,12 +765,12 @@ main{zoom:var(--zoom,1)}
 :root[data-nosignal] .signal{display:none}
 :root[data-nosignal] .pw,:root[data-nosignal] .pl,:root[data-nosignal] .plate::after{animation:none!important}
 :root[data-calm] *,:root[data-calm] *::before,:root[data-calm] *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
-:root[data-calm] #aurora i,:root[data-calm] .signal,:root[data-calm] .pw,:root[data-calm] .pl,:root[data-calm] .plate::after,:root[data-calm] .pill.flame.on .ic{animation:none!important}
+:root[data-calm] #aurora i,:root[data-calm] .glow::before,:root[data-calm] .signal,:root[data-calm] .pw,:root[data-calm] .pl,:root[data-calm] .plate::after{animation:none!important}
 :root[data-calm] .signal{display:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
-  #aurora i,.signal,.pw,.pl,.plate::after,.pill.flame.on .ic{animation:none!important}
+  #aurora i,.glow::before,.signal,.pw,.pl,.plate::after{animation:none!important}
   .signal{display:none}
 }
 </style>
@@ -773,6 +798,7 @@ main{zoom:var(--zoom,1)}
 <script src="content/admin.js"></script>
 <script src="content/arbeitsplatz.js"></script>
 <script src="content/wirtschaft.js"></script>
+<script src="content/ergaenzung.js"></script>
 <script>
 (() => {
 "use strict";
@@ -1137,13 +1163,21 @@ const MODS = [
   ...(window.LERN_MODULES || [])
 ];
 const MOD = Object.fromEntries(MODS.map(m => [m.id, m]));
+const unitOf = (m, id) => m.units.find(u => u.id === id);
+(window.LERN_EXT || []).forEach(x => {
+  const m = MOD[x.id];
+  Object.entries(x.addSec || {}).forEach(([uid, sec]) => unitOf(m, uid).sec.push(...sec));
+  m.units.push(...(x.addUnits || []));
+  Object.entries(x.sources || {}).forEach(([uid, src]) => { unitOf(m, uid).src = src; });
+  m.cards.push(...(x.cards || []));
+  m.questions.push(...(x.questions || []));
+});
 MODS.forEach(m => {
   if (m.osi) return;
   m.cards.forEach((c, i) => { c.id = `${m.id}.c${i + 1}`; c.m = m.id; CARD_BY_ID[c.id] = c; });
   m.questions.forEach((q, i) => { q.id = `${m.id}.q${i + 1}`; q.m = m.id; Q_BY_ID[q.id] = q; });
 });
 const modIc = (m, s = 19) => `<span class="si ly" style="--c:${m.color}">${icon(m.icon, s)}</span>`;
-const unitOf = (m, id) => m.units.find(u => u.id === id);
 let curMod = MOD.osi;
 
 const SORT_POOL = [
@@ -1241,7 +1275,6 @@ function progress() {
   const total = Math.round((pL * .4 + pQ * .25 + pC * .2 + (ex / 2) * .15) * 100);
   return {learned, known, ex, pL, pQ, pC, total};
 }
-const progressLabel = p => p === 0 ? "Los geht’s" : p < 30 ? "Guter Anfang" : p < 60 ? "Du bist dabei" : p < 90 ? "Fast prüfungsreif" : "Prüfungsreif";
 
 /* ---------------- Wiederholung in wachsenden Abständen ---------------- */
 const HUE = {1:"#ff9f0a", 2:"#30d158", 3:"#40c8e0", 4:"#0a84ff", 5:"#5e5ce6", 6:"#bf5af2", 7:"#ff375f"};
@@ -1659,38 +1692,33 @@ function mnemoHTML(mode, withId) {
 const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="--c:${m.color}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
 const modCard = m => `<button class="mod-card" data-go="modul-${m.id}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="--c:${col}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
-function nextUnit() {
-  for (const m of MODS) {
-    if (m.osi) { const l = LAYERS.find(x => !S.learned[x.n]); if (l) return {m, go:"schicht" + l.n, title:l.de}; continue; }
-    const u = m.units.find(x => !S.unitsDone[`${m.id}.${x.id}`]);
-    if (u) return {m, go:`modul-${m.id}-unit-${u.id}`, title:u.title};
-  }
-  return null;
-}
+const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
+const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="--c:${m.color};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
 function vStart() {
-  const date = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
-  const due = dueCount(), streak = streakNow(), total = overallProgress(), next = nextUnit();
+  const due = dueCount(), streak = streakNow();
   setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
   paint(`
-  ${titleBlock(date, "Übersicht", "")}
-  <section class="card hero">
-    <div class="hero-head">
-      <div class="prog-info"><div class="prog-label">${progressLabel(total)}</div>
-        <p class="muted small">${due ? `${due} ${due === 1 ? "Aufgabe ist" : "Aufgaben sind"} heute fällig.` : "Heute ist nichts fällig. Zeit für Neues."}</p></div>
-      ${ring(total, 62, 7)}
-    </div>
-    <div class="pills">
-      <span class="pill flame${streak ? " on" : ""}">${icon("flame", 16)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
-      <span class="pill">${icon("bolt", 16)} ${S.xp} XP</span>
-      <span class="pill">${icon("check", 16)} ${doneToday()}/${CFG.goal} heute</span>
-    </div>
-    <button class="btn btn-fill btn-lg cta" data-go="heute">${icon("mix", 20)} Tagesmix starten</button>
-  </section>
-  ${next ? `<section class="card"><button class="continue" data-go="${next.go}">${modIc(next.m)}<span><small>Weiterlesen in ${next.m.title}</small><b>${next.title}</b></span>${icon("right", 16, "chev")}</button></section>` : ""}
-  <section class="section">
-    <h2 class="section-t">Themen</h2>
-    <div class="mod-list">${MODS.map(modCard).join("")}</div>
-  </section>`);
+  <header class="welcome">
+    <h1 class="large greet">${greeting()}</h1>
+    <p class="welcome-sub">${due ? `${due} ${due === 1 ? "Aufgabe wartet" : "Aufgaben warten"} auf dich.` : "Heute ist ein guter Tag für die Prüfung von morgen."}</p>
+    <div class="glow"><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
+    <p class="welcome-meta"><span>${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</span><span>${doneToday()} von ${CFG.goal} heute</span><span>${overallProgress()} % geschafft</span></p>
+  </header>
+  <section class="shelf-wrap" aria-label="Themen"><div class="shelf">${MODS.map(shelfCard).join("")}</div></section>`);
+}
+/* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
+function playIntro() {
+  if (reduced() || parseHash().view !== "start") return;
+  const root = document.documentElement, el = document.createElement("div");
+  el.id = "intro";
+  el.setAttribute("aria-hidden", "true");
+  el.innerHTML = `<div class="intro-stack">${[7, 6, 5, 4, 3, 2, 1].map((n, k) => `<i style="background:${HUE[n]};--k:${6 - k}"></i>`).join("")}</div>`;
+  document.body.appendChild(el);
+  root.style.setProperty("--intro", "1.5s");
+  const end = () => { el.remove(); removeEventListener("pointerdown", end); };
+  addEventListener("pointerdown", end);
+  setTimeout(end, 1900);
+  setTimeout(() => root.style.removeProperty("--intro"), 4500);
 }
 function vThemen() {
   paint(`
@@ -1747,6 +1775,7 @@ function vUnit(id, uid) {
   ${titleBlock(m.title, u.title, u.sum)}
   <section class="card"><div class="lesson">${u.sec.map(blockHTML).join("")}</div></section>
   <div class="row">${btn()}<button class="btn btn-gray" data-go="modul-${id}-quiz">Dazu Quiz machen</button></div>
+  ${u.src ? `<section class="set-sec"><div class="group-h">Quellen</div><div class="group">${u.src.map(([label, url]) => `<a class="cell src-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="cell-main"><span class="cell-title">${label}</span></span>${icon("right", 16, "chev")}</a>`).join("")}</div></section>` : ""}
   ${nx ? `<div class="group"><button class="cell with-badge" data-go="modul-${id}-unit-${nx.id}"><span class="si" style="--c:${m.color}">${icon("book", 19)}</span><span class="cell-main"><span class="cell-sub">Nächste Lernseite</span><span class="cell-title">${nx.title}</span></span>${icon("right", 16, "chev")}</button></div>` : ""}`);
 }
 
@@ -1959,9 +1988,7 @@ function drawPz() {
 /* ---------------- OSI-Register ---------------- */
 function vOsi() {
   const p = progress();
-  const next = LAYERS.find(l => !S.learned[l.n]);
   const wrongN = S.wrong.filter(id => Q_BY_ID[id] && Q_BY_ID[id].m === "osi").length;
-  const due = ITEMS.filter(it => it.m === "osi" && isDue(it)).length, streak = streakNow();
   actHandler = (act, el) => {
     if (act === "drill") { mix.mod = "osi"; haptic("light"); go("heute"); return; }
     if (act === "mnemo") {
@@ -1982,16 +2009,8 @@ function vOsi() {
   paint(`
   <header class="mod-head">${modIc(MOD.osi, 36)}<div><h1 class="large">OSI-Modell</h1><p>${MOD.osi.ap}</p></div></header>
   <section class="card hero">
-    <div class="hero-head">
-      <div class="prog-info"><div class="prog-label">${progressLabel(p.total)}</div>
-        <p class="muted small">${due ? `${due} ${due === 1 ? "Aufgabe ist" : "Aufgaben sind"} heute fällig.` : next ? `Als Nächstes: Schicht ${next.n}, ${shortName(next.n)}.` : "Heute ist nichts fällig."}</p></div>
-      ${ring(p.total, 62, 7)}
-    </div>
-    <div class="pills">
-      <span class="pill flame${streak ? " on" : ""}">${icon("flame", 16)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
-      <span class="pill">${icon("bolt", 16)} ${S.xp} XP</span>
-      <span class="pill">${icon("check", 16)} ${doneToday()}/${CFG.goal} heute</span>
-    </div>
+    ${modBar(MOD.osi)}
+    <p class="exam-note">${MOD.osi.exam}</p>
     <div class="stack" role="group" aria-label="Die 7 Schichten">
       <span class="signal" aria-hidden="true"></span>
       ${[7, 6, 5, 4, 3, 2, 1].map((n, k) => `<button class="prow" data-go="schicht${n}" aria-label="Schicht ${n}, ${L(n).de}" style="--lh:${HUE[n]};--m:${mastery(n).toFixed(2)};--t:${(k * .817 - 7).toFixed(2)}s;z-index:${8 - n}">
@@ -2938,6 +2957,7 @@ function vFakten() {
 function boot(data) {
   try { if (data && data.hash && !location.hash) history.replaceState(null, "", data.hash); } catch (e) {}
   setSync("loading");
+  playIntro();
   render();
   connectDb();
 }

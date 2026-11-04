@@ -41,7 +41,7 @@
       {h:"Ports, die du kennen musst", table:{head:["Port", "Dienst"], rows:[["22", "SSH"], ["25", "SMTP"], ["53", "DNS"], ["67/68", "DHCP"], ["80 / 443", "HTTP / HTTPS"], ["123", "NTP"], ["143 / 993", "IMAP / IMAPS"], ["161", "SNMP"], ["389 / 636", "LDAP / LDAPS"], ["445", "SMB"], ["3389", "RDP"]]}}
     ]},
     {id:"wlan", title:"WLAN und Medien", sum:"Funkstandards, Verschlüsselung, Kabeltypen und Topologien.", sec:[
-      {h:"WLAN-Standards", table:{head:["Bezeichnung", "Standard", "Band"], rows:[["Wi-Fi 4", "802.11n", "2,4 und 5 GHz"], ["Wi-Fi 5", "802.11ac", "5 GHz"], ["Wi-Fi 6 / 6E", "802.11ax", "2,4, 5 und bei 6E auch 6 GHz"], ["Wi-Fi 7", "802.11be", "2,4, 5 und 6 GHz"]]}},
+      {h:"WLAN-Standards", table:{head:["Bezeichnung", "Standard", "Band"], rows:[["Wi-Fi 4", "802.11n", "2,4 und 5 GHz"], ["Wi-Fi 5", "802.11ac", "5 GHz, die meisten Geräte zusätzlich 2,4 GHz"], ["Wi-Fi 6 / 6E", "802.11ax", "2,4, 5 und bei 6E auch 6 GHz"], ["Wi-Fi 7", "802.11be", "2,4, 5 und 6 GHz"]]}},
       {h:"Sicherheit im WLAN", list:["WEP und WPA gelten als gebrochen und sind tabu", "WPA2 oder besser WPA3 verwenden", "Im Unternehmen: WPA2/3-Enterprise mit IEEE 802.1X und RADIUS-Server, jeder Nutzer meldet sich einzeln an", "Gäste in ein eigenes VLAN legen"]},
       {h:"Kabel", list:["Kupfer Cat 6: 10 Gbit/s auf kurzen Strecken bis etwa 55 m", "Kupfer Cat 6A: 10 Gbit/s bis 100 m", "Glasfaser Multimode: kurze Strecken im Gebäude", "Glasfaser Singlemode: lange Strecken, teils viele Kilometer"]}
     ]},

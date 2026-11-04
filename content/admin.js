@@ -39,7 +39,7 @@
       {p:"Die Prüfung verlangt Programme für die automatisierte Systemadministration. Wichtig sind Variablen, Bedingungen und Schleifen. Du solltest ein kurzes Skript lesen können und wissen, was es tut."},
       {h:"Bash: alte Logs löschen", code:"#!/bin/bash\nziel=\"/var/log/app\"\nif [ -d \"$ziel\" ]; then\n  find \"$ziel\" -name \"*.log\" -mtime +30 -delete\n  echo \"Alte Logs entfernt\"\nfi"},
       {h:"PowerShell: gestoppte Dienste", code:"Get-Service |\n  Where-Object { $_.Status -eq 'Stopped' } |\n  Select-Object Name, DisplayName"},
-      {h:"Zeitgesteuert ausführen", list:["Linux: cron, zum Beispiel 0 2 * * * /opt/backup.sh jeden Tag um 2 Uhr", "Reihenfolge bei cron: Minute, Stunde, Tag, Monat, Wochentag", "Windows: Aufgabenplanung"]},
+      {h:"Zeitgesteuert ausführen", list:["Linux: cron, zum Beispiel 0 2 * * * /opt/backup.sh jeden Tag um 2 Uhr", "Reihenfolge bei cron: Minute, Stunde, Tag, Monat, Wochentag (0 und 7 sind Sonntag)", "Windows: Aufgabenplanung"]},
       {h:"Häufige Bausteine", table:{head:["Zweck", "Bash", "PowerShell"], rows:[["Variable", "name=\"Wert\"", "$name = \"Wert\""], ["Ausgabe", "echo", "Write-Output"], ["Schleife", "for f in *.log; do ... done", "foreach ($f in $liste) { ... }"], ["Vergleich", "[ \"$a\" = \"$b\" ]", "$a -eq $b"]]}},
       {tip:"Vor dem Automatisieren: Erst von Hand testen, Pfade prüfen und nichts blind löschen."}
     ]},
