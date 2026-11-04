@@ -694,9 +694,12 @@ main{overflow-x:clip}
 .shelf-bar i{display:block;height:100%;border-radius:inherit;background:#fff}
 @media (min-width:900px){.shelf-wrap{margin-inline:-40px}.shelf{padding-inline:40px;scroll-padding-inline:40px}}
 /* Vorspann */
-#intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);pointer-events:none;animation:introOut .55s cubic-bezier(.6,0,.9,.3) 1.3s forwards}
-.intro-stack{display:flex;flex-direction:column;gap:7px;width:132px;animation:introZoom .6s cubic-bezier(.7,0,.84,0) 1.22s forwards}
-.intro-stack i{display:block;height:11px;border-radius:6px;transform-origin:left center;animation:introBar .55s var(--ease-ios) both;animation-delay:calc(var(--k) * 90ms + .1s)}
+#intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);pointer-events:none}
+#intro.go{animation:introOut .55s cubic-bezier(.6,0,.9,.3) 1.3s forwards}
+.intro-stack{display:flex;flex-direction:column;gap:7px;width:132px}
+.intro-stack i{display:block;height:11px;border-radius:6px;transform-origin:left center;opacity:0}
+.go .intro-stack{animation:introZoom .6s cubic-bezier(.7,0,.84,0) 1.22s forwards}
+.go .intro-stack i{animation:introBar .55s var(--ease-ios) both;animation-delay:calc(var(--k) * 90ms + .1s)}
 @keyframes introBar{from{opacity:0;transform:scaleX(.15) translateY(14px)}to{opacity:1;transform:none}}
 @keyframes introZoom{to{transform:scale(16);opacity:0}}
 @keyframes introOut{to{opacity:0;visibility:hidden}}
@@ -1714,11 +1717,15 @@ function playIntro() {
   el.setAttribute("aria-hidden", "true");
   el.innerHTML = `<div class="intro-stack">${[7, 6, 5, 4, 3, 2, 1].map((n, k) => `<i style="background:${HUE[n]};--k:${6 - k}"></i>`).join("")}</div>`;
   document.body.appendChild(el);
-  root.style.setProperty("--intro", "1.5s");
+  root.style.setProperty("--intro", "1.7s");
   const end = () => { el.remove(); removeEventListener("pointerdown", end); };
   addEventListener("pointerdown", end);
-  setTimeout(end, 1900);
-  setTimeout(() => root.style.removeProperty("--intro"), 4500);
+  // Erst nach dem ersten Aufbau der Seite starten, sonst bremst das Laden die Animation aus.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.classList.add("go");
+    setTimeout(end, 1900);
+    setTimeout(() => root.style.removeProperty("--intro"), 4500);
+  }));
 }
 function vThemen() {
   paint(`
