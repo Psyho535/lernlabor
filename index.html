@@ -609,12 +609,12 @@ main{overflow-x:clip}
 .pill.flame .ic{color:#ff8a3d}
 .pill.flame.on .ic{animation:flame 1.6s ease-in-out infinite}
 @keyframes flame{0%,100%{transform:scale(1)}50%{transform:scale(1.2) translateY(-1px)}}
-.stack{position:relative;padding:8px 0 12px;display:flex;flex-direction:column}
-.prow{position:relative;display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;height:33px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
+.stack{position:relative;padding:12px 0 14px;display:flex;flex-direction:column}
+.prow{position:relative;display:grid;grid-template-columns:120px minmax(0,1fr);align-items:center;height:36px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
 .pw{position:relative;height:100%;animation:lift var(--loop,7s) linear infinite;animation-delay:var(--t)}
-.plate{position:absolute;left:22px;top:calc(50% - 26px);width:52px;height:52px;border-radius:11px;transform:rotateX(60deg) rotateZ(45deg);pointer-events:none;overflow:hidden;
-  background:color-mix(in srgb,var(--lh) 82%,var(--bg));transition:transform .45s var(--ease-spring)}
-.plate::before{content:"";position:absolute;inset:0;background:var(--lh);opacity:var(--m,0)}
+.plate{position:absolute;left:26px;top:calc(50% - 34px);width:68px;height:68px;border-radius:14px;transform:rotateX(60deg) rotateZ(45deg);pointer-events:none;overflow:hidden;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--lh) 80%,transparent),color-mix(in srgb,var(--lh) 52%,transparent));border:1px solid rgba(255,255,255,.34);box-shadow:inset 1px 1px 0 rgba(255,255,255,.3);-webkit-backdrop-filter:blur(8px) saturate(150%);backdrop-filter:blur(8px) saturate(150%);transition:transform .45s var(--ease-spring)}
+.plate::before{content:"";position:absolute;inset:0;background:var(--lh);opacity:calc(var(--m,0) * .6)}
 .plate::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;animation:hit var(--loop,7s) linear infinite;animation-delay:var(--t)}
 .prow:hover .plate,.prow:focus-visible .plate{transform:rotateX(60deg) rotateZ(45deg) scale(1.08)}
 .prow:active .plate{transform:rotateX(60deg) rotateZ(45deg) scale(.92)}
@@ -622,8 +622,8 @@ main{overflow-x:clip}
 .pl b{font:600 15px var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pl small{font-size:11.5px;color:var(--label-2)}
 .pl .ic{display:inline-block;vertical-align:-2px;color:var(--green-ink)}
-.signal{position:absolute;left:42px;top:18.5px;width:12px;height:12px;border-radius:50%;z-index:9;pointer-events:none;background:#fff;box-shadow:0 0 6px 2px rgba(255,255,255,.8);animation:drop var(--loop,7s) linear infinite}
-@keyframes drop{0%{transform:translateY(-30px) scale(.4);opacity:0}4%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(198px) scale(1);opacity:1}78%,100%{transform:translateY(224px) scale(.3);opacity:0}}
+.signal{position:absolute;left:54px;top:24px;width:12px;height:12px;border-radius:50%;z-index:9;pointer-events:none;background:#fff;box-shadow:0 0 6px 2px rgba(255,255,255,.8);animation:drop var(--loop,7s) linear infinite}
+@keyframes drop{0%{transform:translateY(-30px) scale(.4);opacity:0}4%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(216px) scale(1);opacity:1}78%,100%{transform:translateY(246px) scale(.3);opacity:0}}
 @keyframes hit{0%{opacity:0}1.5%{opacity:.4}11%,100%{opacity:0}}
 @keyframes lift{0%{transform:none}1.5%{transform:translateX(5px)}11%,100%{transform:none}}
 @keyframes lit{0%{opacity:.72}1.5%{opacity:1;transform:translateX(5px)}11%{transform:none}14%,100%{opacity:1}}
