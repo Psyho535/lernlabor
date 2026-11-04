@@ -586,8 +586,9 @@ main{overflow-x:clip}
 .tile:hover,.hub:hover,.mode:hover:not([disabled]){transform:translateY(-3px)}
 .ripple{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:currentColor;opacity:.24;pointer-events:none;animation:ripple .6s var(--ease-ios) forwards}
 @keyframes ripple{to{transform:scale(34);opacity:0}}
-.col > .pre{opacity:0;transform:translateY(26px) scale(.98)}
-.col > .rev{animation:rise .7s var(--ease-ios) both}
+.pre{opacity:0;transform:translateY(26px) scale(.98)}
+.rev{animation:rise .7s var(--ease-ios) both}
+.layer-body{display:flex;flex-direction:column;gap:22px;min-width:0}
 
 /* Schichtfarben */
 .lp{width:auto;height:auto;padding:0;background:transparent;border-radius:9px;display:block}
@@ -608,22 +609,22 @@ main{overflow-x:clip}
 .pill.flame .ic{color:#ff8a3d}
 .pill.flame.on .ic{animation:flame 1.6s ease-in-out infinite}
 @keyframes flame{0%,100%{transform:scale(1)}50%{transform:scale(1.2) translateY(-1px)}}
-.stack{position:relative;padding:20px 0 34px;display:flex;flex-direction:column}
-.prow{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;height:32px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
+.stack{position:relative;padding:8px 0 12px;display:flex;flex-direction:column}
+.prow{position:relative;display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;height:33px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
 .pw{position:relative;height:100%;animation:lift var(--loop,7s) linear infinite;animation-delay:var(--t)}
-.plate{position:absolute;left:20px;top:calc(50% - 46px);width:92px;height:92px;border-radius:15px;transform:rotateX(60deg) rotateZ(45deg);pointer-events:none;overflow:hidden;
-  background:linear-gradient(135deg,color-mix(in srgb,var(--lh) 42%,transparent),color-mix(in srgb,var(--lh) 12%,transparent));border:1.5px solid color-mix(in srgb,var(--lh) 72%,#fff);box-shadow:0 0 22px color-mix(in srgb,var(--lh) 34%,transparent);transition:transform .45s var(--ease-spring)}
-.plate::before{content:"";position:absolute;inset:0;background:var(--lh);opacity:calc(var(--m,0) * .75)}
+.plate{position:absolute;left:22px;top:calc(50% - 26px);width:52px;height:52px;border-radius:11px;transform:rotateX(60deg) rotateZ(45deg);pointer-events:none;overflow:hidden;
+  background:color-mix(in srgb,var(--lh) 82%,var(--bg));transition:transform .45s var(--ease-spring)}
+.plate::before{content:"";position:absolute;inset:0;background:var(--lh);opacity:var(--m,0)}
 .plate::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;animation:hit var(--loop,7s) linear infinite;animation-delay:var(--t)}
 .prow:hover .plate,.prow:focus-visible .plate{transform:rotateX(60deg) rotateZ(45deg) scale(1.08)}
 .prow:active .plate{transform:rotateX(60deg) rotateZ(45deg) scale(.92)}
 .pl{display:flex;flex-direction:column;line-height:1.15;min-width:0;padding-left:6px;animation:lit var(--loop,7s) linear infinite;animation-delay:var(--t)}
-.pl b{font:650 14px var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl b{font:600 15px var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pl small{font-size:11.5px;color:var(--label-2)}
 .pl .ic{display:inline-block;vertical-align:-2px;color:var(--green-ink)}
-.signal{position:absolute;left:58px;top:28px;width:16px;height:16px;border-radius:50%;z-index:9;pointer-events:none;background:#fff;box-shadow:0 0 8px 3px #fff,0 0 24px 8px rgba(200,204,212,.8);animation:drop var(--loop,7s) linear infinite}
-@keyframes drop{0%{transform:translateY(-30px) scale(.4);opacity:0}4%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(192px) scale(1);opacity:1}78%,100%{transform:translateY(228px) scale(.3);opacity:0}}
-@keyframes hit{0%{opacity:0}1.5%{opacity:.8}11%,100%{opacity:0}}
+.signal{position:absolute;left:42px;top:18.5px;width:12px;height:12px;border-radius:50%;z-index:9;pointer-events:none;background:#fff;box-shadow:0 0 6px 2px rgba(255,255,255,.8);animation:drop var(--loop,7s) linear infinite}
+@keyframes drop{0%{transform:translateY(-30px) scale(.4);opacity:0}4%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(198px) scale(1);opacity:1}78%,100%{transform:translateY(224px) scale(.3);opacity:0}}
+@keyframes hit{0%{opacity:0}1.5%{opacity:.4}11%,100%{opacity:0}}
 @keyframes lift{0%{transform:none}1.5%{transform:translateX(5px)}11%,100%{transform:none}}
 @keyframes lit{0%{opacity:.72}1.5%{opacity:1;transform:translateX(5px)}11%{transform:none}14%,100%{opacity:1}}
 
@@ -1360,7 +1361,7 @@ function bindSwipe(decide) {
   f.addEventListener("click", e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
 }
 let revealIO = null;
-function revealBelow() {
+function revealBelow(root = view) {
   if (revealIO) { revealIO.disconnect(); revealIO = null; }
   if (reduced() || !("IntersectionObserver" in window)) return;
   revealIO = new IntersectionObserver(es => es.forEach(e => {
@@ -1368,7 +1369,7 @@ function revealBelow() {
     e.target.classList.remove("pre"); e.target.classList.add("rev");
     revealIO.unobserve(e.target);
   }), {threshold:.04});
-  [...view.children].forEach(el => {
+  [...root.children].forEach(el => {
     if (el.getBoundingClientRect().top > innerHeight * .92) { el.classList.add("pre"); revealIO.observe(el); }
   });
 }
@@ -1483,6 +1484,8 @@ function render() {
     else if (r.view === "schicht" && prevRoute.view === "schicht") dir = r.n > prevRoute.n ? "push" : "pop";
   }
   const same = prevRoute && prevRoute.key === r.key;
+  const layerSwap = !same && prevRoute && prevRoute.view === "schicht" && r.view === "schicht" && $("#layerBody");
+  if (!layerSwap) { clearTimeout(swapT); swapT = null; }
   prevRoute = r; curRoute = r;
   const tabKey = r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.parent || r.view;
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
@@ -1493,14 +1496,14 @@ function render() {
   const aurora = $("#aurora");
   aurora.classList.toggle("tinted", r.view === "schicht");
   if (r.view === "schicht") aurora.style.setProperty("--route", HUE[r.n]);
-  if (!same) {
+  if (!same && !layerSwap) {
     view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
     void view.offsetWidth;
     view.classList.add("entering", "enter-" + dir);
     clearTimeout(enterT);
     enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 900);
   }
-  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
+  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
   window.scrollTo(0, 0);
   updateChrome();
 }
@@ -1761,7 +1764,35 @@ function vSchichten() {
 const learnBtn = n => S.learned[n]
   ? `<button class="btn done" id="learnBtn" data-act="learn" aria-pressed="true">${icon("check", 18, "check-draw")} Gelernt</button>`
   : `<button class="btn btn-tint" id="learnBtn" data-act="learn" aria-pressed="false">Als gelernt markieren</button>`;
-function vSchicht(n) {
+/* Wechsel zwischen Schichten: Die Symbolleiste bleibt stehen, nur der Inhalt wird ausgetauscht. */
+let swapT = null;
+function swapLayer(n, html, dir) {
+  clearTimeout(enterT);
+  view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
+  view.querySelectorAll(".lp").forEach(b => {
+    if (b.dataset.go === "schicht" + n) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+  });
+  const body = $("#layerBody"), sign = dir === "push" ? 1 : -1;
+  const visible = () => [...body.children].filter(el => el.getBoundingClientRect().top < innerHeight);
+  const fill = () => {
+    swapT = null;
+    body.innerHTML = html;
+    observeTitle();
+    if (reduced()) return;
+    visible().forEach((el, i) => el.animate(
+      [{opacity:0, transform:`translateX(${sign * 28}px)`}, {opacity:1, transform:"none"}],
+      {duration:340, delay:i * 26, easing:"cubic-bezier(.32,.72,0,1)", fill:"backwards"}));
+    revealBelow(body);
+  };
+  if (reduced()) { fill(); return; }
+  // Schnelles Tippen: Der Inhalt ist schon ausgeblendet, dann gewinnt einfach die letzte Schicht.
+  if (swapT) { clearTimeout(swapT); swapT = setTimeout(fill, 60); return; }
+  visible().forEach(el => el.animate(
+    [{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${sign * -18}px)`}],
+    {duration:120, easing:"ease-in", fill:"forwards"}));
+  swapT = setTimeout(fill, 110);
+}
+function vSchicht(n, swapDir) {
   const l = L(n);
   actHandler = act => {
     if (act === "drill") { mix.layer = n; haptic("light"); go("heute"); return; }
@@ -1777,8 +1808,7 @@ function vSchicht(n) {
     if (e.key === "ArrowRight" && n < 7) go("schicht" + (n + 1));
     if (e.key === "ArrowLeft" && n > 1) go("schicht" + (n - 1));
   };
-  paint(`
-  <nav class="layer-pick" aria-label="Schicht wählen">${[1, 2, 3, 4, 5, 6, 7].map(k => `<button class="lp${S.learned[k] ? " learned" : ""}" data-go="schicht${k}" aria-label="Schicht ${k}, ${L(k).de}" ${k === n ? 'aria-current="page"' : ""}>${layerIc(k)}</button>`).join("")}</nav>
+  const body = `
   <header class="title-block" style="--lh:${HUE[n]}">
     <div class="kicker lhk">Schicht ${n}, ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}</div>
     <h1 class="large">${l.de}</h1>
@@ -1809,7 +1839,13 @@ function vSchicht(n) {
     ${n > 1 ? `<button class="cell with-badge" data-go="schicht${n - 1}">${layerIc(n - 1)}<span class="cell-main"><span class="cell-sub">Vorherige Schicht</span><span class="cell-title">${L(n - 1).de}</span></span>${icon("right", 16, "chev")}</button>` : ""}
     ${n < 7 ? `<button class="cell with-badge" data-go="schicht${n + 1}">${layerIc(n + 1)}<span class="cell-main"><span class="cell-sub">Nächste Schicht</span><span class="cell-title">${L(n + 1).de}</span></span>${icon("right", 16, "chev")}</button>`
             : `<button class="cell with-badge" data-go="kapselung"><span class="badge">${icon("kapselung", 17)}</span><span class="cell-main"><span class="cell-sub">Als Nächstes</span><span class="cell-title">Kapselung ansehen</span></span>${icon("right", 16, "chev")}</button>`}
-  </div>`);
+  </div>`;
+  if (swapDir) { swapLayer(n, body, swapDir); return; }
+  clearTimeout(swapT); swapT = null;
+  paint(`
+  <nav class="layer-pick" aria-label="Schicht wählen">${[1, 2, 3, 4, 5, 6, 7].map(k => `<button class="lp${S.learned[k] ? " learned" : ""}" data-go="schicht${k}" aria-label="Schicht ${k}, ${L(k).de}" ${k === n ? 'aria-current="page"' : ""}>${layerIc(k)}</button>`).join("")}</nav>
+  <div id="layerBody" class="layer-body">${body}</div>`);
+  revealBelow($("#layerBody"));
 }
 
 /* ---------------- Kapselung ---------------- */
