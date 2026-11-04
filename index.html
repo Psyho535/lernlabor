@@ -146,9 +146,9 @@ main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom
 .nb-btn{padding:0 10px}
 .back:active,.nb-btn:active{opacity:.35}
 
-.tabbar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),440px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:5px;border-radius:999px;
+.tabbar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),440px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:5px;border-radius:999px;
   background:var(--material);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);border:.5px solid var(--sep);box-shadow:0 12px 32px -14px rgba(0,0,0,.35)}
-.tab-ind{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px) / 5);border-radius:999px;background:var(--fill);transform:translateX(calc(var(--i,0) * 100%));transition:transform .55s var(--ease-spring)}
+.tab-ind{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px) / 4);border-radius:999px;background:var(--fill);transform:translateX(calc(var(--i,0) * 100%));transition:transform .55s var(--ease-spring)}
 .tab{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:52px;padding:0;border:0;background:transparent;border-radius:999px;color:var(--label-2);font-size:10.5px;font-weight:600;cursor:pointer;min-width:0;transition:color .2s}
 .tab span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tab .ic{transition:transform .4s var(--ease-spring)}
@@ -648,6 +648,57 @@ main{overflow-x:clip}
 .stamp.yes{left:18px;--r:-9deg;color:var(--green-ink);opacity:var(--yes,0)}
 .stamp.no{right:18px;--r:9deg;color:var(--red-ink);opacity:var(--no,0)}
 
+/* Themen und Module */
+.mod-list{display:flex;flex-direction:column;gap:10px}
+.mod-card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;padding:14px;text-align:left;cursor:pointer;color:var(--label);border-radius:22px;background:var(--surface);border:1px solid var(--glass-edge);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);transition:transform .35s var(--ease-spring)}
+.mod-card:active{transform:scale(.97)}
+.mod-card .si{width:48px;height:48px;border-radius:13px}
+.mod-card b{display:block;font-size:17px;font-weight:600;line-height:1.25}
+.mod-card small{display:block;font-size:13.5px;line-height:1.3;color:var(--label-2);margin-top:1px}
+.mod-card .chev{color:var(--label-3)}
+.mbar-line{display:flex;align-items:center;gap:9px;margin-top:8px}
+.mbar-line .track{flex:1;height:5px;border-radius:5px;background:var(--fill);overflow:hidden}
+.mbar-line .track i{display:block;height:100%;border-radius:inherit;background:var(--c,var(--accent));transition:width .9s var(--ease-ios)}
+.mbar-line span{font-size:12px;color:var(--label-2);font-variant-numeric:tabular-nums}
+.mod-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mod-tile{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:20px;text-align:left;cursor:pointer;color:var(--label);background:var(--surface);border:1px solid var(--glass-edge);min-width:0;-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);transition:transform .35s var(--ease-spring)}
+.mod-tile:active{transform:scale(.96)}
+.mod-tile:last-child:nth-child(odd){grid-column:1 / -1}
+.mod-tile b{display:block;font-size:15.5px;font-weight:600;line-height:1.25}
+.mod-tile small{display:block;font-size:12.5px;color:var(--label-2);margin-top:1px}
+.mod-head{display:flex;align-items:center;gap:16px}
+.mod-head .si{width:68px;height:68px;border-radius:17px}
+.mod-head .large{font-size:28px}
+.mod-head p{font-size:14.5px;color:var(--label-2);margin-top:3px}
+.exam-note{font-size:13.5px;line-height:1.45;color:var(--label-2)}
+.continue{display:flex;align-items:center;gap:12px;width:100%;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer}
+.continue small{display:block;font-size:13px;color:var(--label-2)}
+.continue b{display:block;font-size:16px;font-weight:600}
+.continue .chev{margin-left:auto;color:var(--label-3)}
+/* Lernseite */
+.lesson{display:flex;flex-direction:column;gap:16px}
+.lesson h2{font-size:19px;font-weight:650;letter-spacing:-.01em;margin-bottom:8px}
+.lesson p{font-size:16px;line-height:1.55}
+.lesson ul{margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:7px;font-size:16px;line-height:1.45}
+.lesson li::marker{color:var(--label-3)}
+.lesson .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;border:1px solid var(--sep)}
+.lesson table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.35}
+.lesson th{background:var(--fill-2);text-align:left;font-weight:600;padding:9px 11px;white-space:nowrap}
+.lesson td{padding:9px 11px;border-top:1px solid var(--sep);vertical-align:top}
+.lesson pre{margin:0;padding:13px 14px;border-radius:14px;background:var(--fill-2);border:1px solid var(--sep);font:500 13px/1.55 var(--f-mono);overflow-x:auto;white-space:pre}
+.note{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:13px 14px;border-radius:14px;font-size:15px;line-height:1.45;background:var(--fill-2)}
+.note.warn .ic{color:var(--red-ink)}
+.note.tip .ic{color:#ff9f0a}
+/* Suche und Probeprüfung */
+.search-box{display:flex;align-items:center;gap:9px;height:44px;padding:0 13px;border-radius:13px;background:var(--fill);color:var(--label-2)}
+.search-box input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--label);font:inherit;font-size:17px}
+.result-type{color:var(--label-2)}
+.pz-time{font-variant-numeric:tabular-nums;color:var(--label-2);font-weight:600}
+.opt.chosen{background:var(--accent-tint)}
+.pass{font-size:15px;font-weight:600}
+.pass.ok{color:var(--green-ink)}
+.pass.no{color:var(--red-ink)}
+
 /* Einstellungen im Stil der iOS-App */
 main{zoom:var(--zoom,1)}
 .switch[aria-checked="true"]{background:#34c759}
@@ -702,7 +753,7 @@ main{zoom:var(--zoom,1)}
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <aside class="sidebar" aria-label="Navigation">
-  <div class="side-head"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>Modul 1 · OSI-Modell</small></div></div>
+  <div class="side-head"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>Fachinformatik Systemintegration</small></div></div>
   <nav class="side-nav" id="sideNav"></nav>
   <div class="side-foot">
     <div class="side-prog"><div class="top"><span>Fortschritt</span><b id="spPct">0 %</b></div><div class="bar"><i id="spBar" style="width:0%"></i></div></div>
@@ -717,6 +768,11 @@ main{zoom:var(--zoom,1)}
 <div class="island" id="island" role="status" aria-live="polite"></div>
 <div id="sheetRoot"></div>
 
+<script src="content/netz.js"></script>
+<script src="content/sicherheit.js"></script>
+<script src="content/admin.js"></script>
+<script src="content/arbeitsplatz.js"></script>
+<script src="content/wirtschaft.js"></script>
 <script>
 (() => {
 "use strict";
@@ -806,6 +862,11 @@ const ICONS = {
   swap:'<path d="M4 8h14"/><path d="m14.500 4.500 3.500 3.500-3.500 3.500"/><path d="M20 16H6"/><path d="m9.500 12.500-3.500 3.500 3.500 3.500"/>',
   globe:'<circle cx="12" cy="12" r="8.750"/><path d="M3.250 12h17.500"/><path d="M12 3.250c2.500 2.500 3.500 5.500 3.500 8.750s-1 6.250-3.500 8.750c-2.500-2.500-3.500-5.500-3.500-8.750s1-6.250 3.500-8.750z"/>',
   net:'<rect x="9" y="3.500" width="6" height="5" rx="1.300"/><rect x="3" y="15.500" width="6" height="5" rx="1.300"/><rect x="15" y="15.500" width="6" height="5" rx="1.300"/><path d="M12 8.500V12M6 15.500V12h12v3.500"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20.500 20.500-4.500-4.500"/>',
+  suche:'<circle cx="11" cy="11" r="7"/><path d="m20.500 20.500-4.500-4.500"/>',
+  themen:'<rect x="3.500" y="3.500" width="7" height="7" rx="2"/><rect x="13.500" y="3.500" width="7" height="7" rx="2"/><rect x="3.500" y="13.500" width="7" height="7" rx="2"/><rect x="13.500" y="13.500" width="7" height="7" rx="2"/>',
+  calc:'<rect x="5" y="3" width="14" height="18" rx="2.500"/><path d="M8.500 7h7"/><path d="M8.500 12h.01M12 12h.01M15.500 12h.01M8.500 16.500h.01M12 16.500h.01M15.500 16.500h.01"/>',
+  book:'<path d="M12 6.500C10.300 5 7.800 4.500 4 4.500v14c3.800 0 6.300.5 8 2 1.700-1.500 4.200-2 8-2v-14c-3.800 0-6.300.5-8 2z"/><path d="M12 6.500v14"/>',
   flame:'<path d="M12 3c.6 3-2.6 4.700-3.800 7.300C7.300 12.300 7 13.300 7 14.500a5 5 0 0 0 10 0c0-2-1-3.700-2-4.800-.3 1.300-1 2-1.900 2.400C13.800 9 13.700 5.500 12 3z"/>',
   bolt:'<path d="M13 3 5 13.500h6L10 21l8-10.500h-6z"/>',
   mix:'<path d="m12 3.500 8.500 4.250L12 12 3.500 7.750z"/><path d="M12 12v8.500"/><path d="m5 13 7 3.500 7-3.500"/>'
@@ -1068,6 +1129,23 @@ const QUESTIONS = [
 QUESTIONS.forEach((q, i) => { q.id = "q" + (i + 1); });
 const Q_BY_ID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
 
+/* ---------------- Register (Themenmodule) ---------------- */
+CARDS.forEach(c => { c.m = "osi"; });
+QUESTIONS.forEach(q => { q.m = "osi"; });
+const MODS = [
+  {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#bf5af2", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
+  ...(window.LERN_MODULES || [])
+];
+const MOD = Object.fromEntries(MODS.map(m => [m.id, m]));
+MODS.forEach(m => {
+  if (m.osi) return;
+  m.cards.forEach((c, i) => { c.id = `${m.id}.c${i + 1}`; c.m = m.id; CARD_BY_ID[c.id] = c; });
+  m.questions.forEach((q, i) => { q.id = `${m.id}.q${i + 1}`; q.m = m.id; Q_BY_ID[q.id] = q; });
+});
+const modIc = (m, s = 19) => `<span class="si ly" style="--c:${m.color}">${icon(m.icon, s)}</span>`;
+const unitOf = (m, id) => m.units.find(u => u.id === id);
+let curMod = MOD.osi;
+
 const SORT_POOL = [
   ["HTTP",7],["DNS",7],["SMTP",7],["FTP",7],["DHCP",7],["SSH",7],["IMAP",7],["Proxy",7],
   ["TLS-Verschlüsselung",6],["JPEG",6],["UTF-8",6],["MIME",6],["Komprimierung",6],
@@ -1101,7 +1179,7 @@ const MNEMO = {
 
 /* ---------------- Fortschritt ---------------- */
 const LS_KEY = "itlernlabor.osi.v1";
-const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, updatedAt:0});
+const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, mq:{}, unitsDone:{}, updatedAt:0});
 const clone = o => JSON.parse(JSON.stringify(o));
 let S = DEFAULT();
 try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
@@ -1157,7 +1235,7 @@ function setSync(s) {
 }
 function progress() {
   const learned = LAYERS.filter(l => S.learned[l.n]).length;
-  const known = S.known.filter(id => CARD_BY_ID[id]).length;
+  const known = S.known.filter(id => CARD_BY_ID[id] && CARD_BY_ID[id].m === "osi").length;
   const pL = learned / 7, pQ = Math.min(1, (S.quizBest || 0) / 100), pC = Math.min(1, known / CARDS.length);
   const ex = (S.sortRounds > 0 ? 1 : 0) + (S.orderBest != null ? 1 : 0);
   const total = Math.round((pL * .4 + pQ * .25 + pC * .2 + (ex / 2) * .15) * 100);
@@ -1177,27 +1255,38 @@ function grade(id, ok, xp) {
   const d = today(), rec = S.srs[id] || {b:0, d:0};
   const b = ok ? Math.min(SRS_DAYS.length - 1, rec.b + 1) : 0;
   S.srs[id] = {b, d:d + SRS_DAYS[b]};
+  countDay(xp);
+}
+function countDay(xp) {
+  const d = today();
   if (S.day.d !== d) S.day = {d, n:0};
   S.day.n++;
   if (S.streak.last !== d) S.streak = {n:S.streak.last === d - 1 ? S.streak.n + 1 : 1, last:d};
   S.xp += xp;
 }
-const allItems = () => [...CARDS.map(c => ({k:"card", id:c.id, L:c.L || 0})), ...QUESTIONS.map(q => ({k:"q", id:q.id, L:q.L || 0}))];
+const ITEMS = MODS.flatMap(m => [...m.cards.map(c => ({k:"card", id:c.id, L:c.L || 0, m:m.id})), ...m.questions.map(q => ({k:"q", id:q.id, L:q.L || 0, m:m.id}))]);
+const allItems = () => ITEMS;
 const isDue = it => S.srs[it.id] && S.srs[it.id].d <= today();
-const dueCount = () => allItems().filter(isDue).length;
-function mastery(n) {
-  const items = allItems().filter(it => it.L === n);
-  if (!items.length) return 0;
-  return items.reduce((sum, it) => sum + (S.srs[it.id] ? S.srs[it.id].b : 0), 0) / (items.length * (SRS_DAYS.length - 1));
+const dueCount = () => ITEMS.filter(isDue).length;
+const share = items => items.length ? items.reduce((sum, it) => sum + (S.srs[it.id] ? S.srs[it.id].b : 0), 0) / (items.length * (SRS_DAYS.length - 1)) : 0;
+const mastery = n => share(ITEMS.filter(it => it.m === "osi" && it.L === n));
+const modMastery = id => share(ITEMS.filter(it => it.m === id));
+/* Fortschritt eines Registers: 40 % gelesene Lernseiten, 60 % gefestigte Karten und Fragen. */
+function modProgress(id) {
+  const m = MOD[id];
+  const read = m.osi ? LAYERS.filter(l => S.learned[l.n]).length / 7 : m.units.filter(u => S.unitsDone[`${id}.${u.id}`]).length / m.units.length;
+  return Math.round((read * .4 + modMastery(id) * .6) * 100);
 }
+const overallProgress = () => Math.round(MODS.reduce((sum, m) => sum + modProgress(m.id), 0) / MODS.length);
 /* Zuerst Fälliges, dann Neues aus den schwächsten Schichten (Karte und Frage im Wechsel), sonst das Unsicherste. */
-function buildMix(layer, size = CFG.round) {
-  let all = allItems().filter(it => !layer || it.L === layer);
+function buildMix(layer, size = CFG.round, modId = "") {
+  let all = ITEMS.filter(it => (!layer || (it.m === "osi" && it.L === layer)) && (!modId || it.m === modId));
   const only = all.filter(it => CFG.content === "mix" || it.k === CFG.content);
   if (only.length) all = only;
   const box = it => S.srs[it.id] ? S.srs[it.id].b : 0;
   const due = shuffle(all.filter(isDue)).sort((a, b) => box(a) - box(b));
-  const newOf = k => shuffle(all.filter(it => it.k === k && !S.srs[it.id])).sort((a, b) => mastery(a.L) - mastery(b.L));
+  const weak = Object.fromEntries(MODS.map(m => [m.id, modMastery(m.id)]));
+  const newOf = k => shuffle(all.filter(it => it.k === k && !S.srs[it.id])).sort((a, b) => weak[a.m] - weak[b.m]);
   const cards = newOf("card"), qs = newOf("q"), fresh = [];
   while (cards.length || qs.length) { if (cards.length) fresh.push(cards.shift()); if (qs.length) fresh.push(qs.shift()); }
   const rest = shuffle(all.filter(it => S.srs[it.id] && !isDue(it))).sort((a, b) => box(a) - box(b));
@@ -1442,24 +1531,36 @@ function paint(html, {anim = true} = {}) {
 const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${lede ? `<p class="lede" style="margin-top:6px">${lede}</p>` : ""}</header>`;
 
 /* ---------------- Navigation ---------------- */
-const TABS = [["start","Übersicht","Start"],["schichten","Schichten","Schichten"],["kapselung","Kapselung","Kapselung"],["trainieren","Trainieren","Trainieren"],["fakten","Fakten","Fakten"]];
+const TABS = [["start","Übersicht","Start"],["themen","Themen","Themen"],["trainieren","Trainieren","Trainieren"],["suche","Suche","Suche"]];
 const TITLE = Object.fromEntries(TABS.map(t => [t[0], t[1]]));
 TITLE.einstellungen = "Einstellungen";
-const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"}, quiz:{parent:"trainieren", title:"Quiz"}, karten:{parent:"trainieren", title:"Lernkarten"}, ueben:{parent:"trainieren", title:"Übungen"}};
+TITLE.schichten = "Schichten";
+MODS.forEach(m => { TITLE["modul-" + m.id] = m.title; });
+const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"},
+  schichten:{parent:"modul-osi", title:"Schichten", depth:3}, kapselung:{parent:"modul-osi", title:"Kapselung", depth:3}, fakten:{parent:"modul-osi", title:"Fakten", depth:3}, quiz:{parent:"modul-osi", title:"Quiz", depth:3}, karten:{parent:"modul-osi", title:"Lernkarten", depth:3}, ueben:{parent:"modul-osi", title:"Übungen", depth:3},
+  "pruefung-ap1":{parent:"trainieren", title:"Probeprüfung AP1"}, "pruefung-ap2":{parent:"trainieren", title:"Probeprüfung AP2"}};
 $("#sideNav").innerHTML = TABS.map(([k, label]) => `<button class="side-item" data-go="${k}" data-nav="${k}">${icon(k)}<span>${label}</span></button>`).join("") + `<button class="side-item" data-go="einstellungen" data-nav="einstellungen">${icon("gear")}<span>Einstellungen</span></button>`;
 $("#tabbar").insertAdjacentHTML("beforeend", TABS.map(([k, , short]) => `<button class="tab" data-go="${k}" data-nav="${k}">${icon(k, 23)}<span>${short}</span></button>`).join(""));
 
-let actHandler = null, keyHandler = null, encTimer = null, odTimer = null, prevRoute = null, curRoute = null, enterT = null;
+let actHandler = null, keyHandler = null, encTimer = null, odTimer = null, pzTimer = null, prevRoute = null, curRoute = null, enterT = null;
 const enc = {mode:"send", i:0, playing:false, prev:[]};
 function stopTimers() {
   clearInterval(encTimer); encTimer = null; enc.playing = false;
   clearInterval(odTimer); odTimer = null;
+  clearInterval(pzTimer); pzTimer = null;
 }
 function parseHash() {
   const h = (location.hash || "").replace("#", "");
   const m = h.match(/^schicht([1-7])$/);
-  if (m) return {key:h, view:"schicht", n:+m[1], parent:"schichten", depth:2, title:shortName(+m[1])};
-  if (PUSHED[h]) return {key:h, view:h, parent:PUSHED[h].parent, depth:PUSHED[h].depth || 2, title:PUSHED[h].title};
+  if (m) return {key:h, view:"schicht", n:+m[1], mod:"osi", parent:"schichten", depth:4, title:shortName(+m[1])};
+  const mo = h.match(/^modul-([a-z]+)(?:-(karten|quiz|rechnen|unit)(?:-([a-z0-9]+))?)?$/);
+  if (mo && MOD[mo[1]]) {
+    const md = MOD[mo[1]], parent = "modul-" + md.id;
+    if (!mo[2]) return {key:h, view:"modul", mod:md.id, parent:"themen", depth:2, title:md.title};
+    if (mo[2] === "unit") { const u = unitOf(md, mo[3]); if (u) return {key:h, view:"unit", mod:md.id, unit:u.id, parent, depth:3, title:u.title}; }
+    else return {key:h, view:{karten:"karten", quiz:"quiz", rechnen:"rechnen"}[mo[2]], mod:md.id, parent, depth:3, title:{karten:"Lernkarten", quiz:"Quiz", rechnen:"Rechentraining"}[mo[2]]};
+  }
+  if (PUSHED[h]) return {key:h, view:h, mod:PUSHED[h].parent === "modul-osi" ? "osi" : undefined, parent:PUSHED[h].parent, depth:PUSHED[h].depth || 2, title:PUSHED[h].title};
   const tab = TABS.find(t => t[0] === h) ? h : "start";
   return {key:tab, view:tab, parent:null, depth:1, title:TITLE[tab]};
 }
@@ -1487,7 +1588,8 @@ function render() {
   const layerSwap = !same && prevRoute && prevRoute.view === "schicht" && r.view === "schicht" && $("#layerBody");
   if (!layerSwap) { clearTimeout(swapT); swapT = null; }
   prevRoute = r; curRoute = r;
-  const tabKey = r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.parent || r.view;
+  if (r.mod) curMod = MOD[r.mod];
+  const tabKey = r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.mod ? "themen" : r.parent || r.view;
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   const tabI = TABS.findIndex(t => t[0] === tabKey);
   $(".tab-ind").style.setProperty("--i", Math.max(0, tabI));
@@ -1503,23 +1605,23 @@ function render() {
     clearTimeout(enterT);
     enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 900);
   }
-  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
+  ({start:vStart, themen:vThemen, suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
   window.scrollTo(0, 0);
   updateChrome();
 }
 function refreshPassive() {
   const r = parseHash();
-  if (["start", "schichten", "schicht", "trainieren", "fakten"].includes(r.view)) {
+  if (["start", "themen", "modul", "schichten", "schicht", "trainieren", "fakten"].includes(r.view)) {
     const y = window.scrollY;
-    ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view]();
+    ({start:vStart, themen:vThemen, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view]();
     window.scrollTo(0, y);
   }
   updateChrome();
 }
 function updateChrome() {
-  const p = progress();
-  $("#spPct").textContent = p.total + " %";
-  $("#spBar").style.width = p.total + "%";
+  const total = overallProgress();
+  $("#spPct").textContent = total + " %";
+  $("#spBar").style.width = total + "%";
 }
 window.addEventListener("hashchange", render);
 document.addEventListener("click", e => {
@@ -1554,13 +1656,314 @@ function mnemoHTML(mode, withId) {
   const m = MNEMO[mode];
   return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
 }
+const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="--c:${m.color}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
+const modCard = m => `<button class="mod-card" data-go="modul-${m.id}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
+const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="--c:${col}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
+function nextUnit() {
+  for (const m of MODS) {
+    if (m.osi) { const l = LAYERS.find(x => !S.learned[x.n]); if (l) return {m, go:"schicht" + l.n, title:l.de}; continue; }
+    const u = m.units.find(x => !S.unitsDone[`${m.id}.${x.id}`]);
+    if (u) return {m, go:`modul-${m.id}-unit-${u.id}`, title:u.title};
+  }
+  return null;
+}
 function vStart() {
+  const date = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
+  const due = dueCount(), streak = streakNow(), total = overallProgress(), next = nextUnit();
+  setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
+  paint(`
+  ${titleBlock(date, "Übersicht", "")}
+  <section class="card hero">
+    <div class="hero-head">
+      <div class="prog-info"><div class="prog-label">${progressLabel(total)}</div>
+        <p class="muted small">${due ? `${due} ${due === 1 ? "Aufgabe ist" : "Aufgaben sind"} heute fällig.` : "Heute ist nichts fällig. Zeit für Neues."}</p></div>
+      ${ring(total, 62, 7)}
+    </div>
+    <div class="pills">
+      <span class="pill flame${streak ? " on" : ""}">${icon("flame", 16)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
+      <span class="pill">${icon("bolt", 16)} ${S.xp} XP</span>
+      <span class="pill">${icon("check", 16)} ${doneToday()}/${CFG.goal} heute</span>
+    </div>
+    <button class="btn btn-fill btn-lg cta" data-go="heute">${icon("mix", 20)} Tagesmix starten</button>
+  </section>
+  ${next ? `<section class="card"><button class="continue" data-go="${next.go}">${modIc(next.m)}<span><small>Weiterlesen in ${next.m.title}</small><b>${next.title}</b></span>${icon("right", 16, "chev")}</button></section>` : ""}
+  <section class="section">
+    <h2 class="section-t">Themen</h2>
+    <div class="mod-list">${MODS.map(modCard).join("")}</div>
+  </section>`);
+}
+function vThemen() {
+  paint(`
+  ${titleBlock("Fachrichtung Systemintegration", "Themen", "Jedes Thema hat Lernseiten, Karten und ein Quiz. Der Inhalt orientiert sich an den Prüfungsbereichen der Ausbildungsverordnung.")}
+  <div class="mod-list">${MODS.map(modCard).join("")}</div>`);
+}
+function vModul(id) {
+  const m = MOD[id];
+  actHandler = act => { if (act === "drill") { mix.mod = id; haptic("light"); go("heute"); } };
+  const known = m.cards.filter(c => S.known.includes(c.id)).length, st = S.mq[id];
+  paint(`
+  <header class="mod-head">${modIc(m, 36)}<div><h1 class="large">${m.title}</h1><p>${m.ap}</p></div></header>
+  <section class="card hero">
+    ${modBar(m)}
+    <p class="exam-note">${m.exam}</p>
+    <button class="btn btn-fill btn-lg cta" data-act="drill">${icon("mix", 20)} Thema üben</button>
+  </section>
+  <div class="mod-tiles">
+    ${modTile(`modul-${id}-karten`, "karten", "#0a84ff", "Lernkarten", `${known} von ${m.cards.length} gewusst`)}
+    ${modTile(`modul-${id}-quiz`, "quiz", "#ff9f0a", "Quiz", st && st.quizRuns ? `Bestwert ${st.quizBest} %` : `${m.questions.length} Fragen`)}
+    ${m.drills ? modTile(`modul-${id}-rechnen`, "calc", "#30d158", "Rechentraining", "Immer neue Aufgaben") : ""}
+  </div>
+  <section class="section">
+    <h2 class="section-t">Lernseiten</h2>
+    <div class="group">${m.units.map(u => `<button class="cell with-badge" data-go="modul-${id}-unit-${u.id}"><span class="si" style="--c:${m.color}">${icon("book", 19)}</span><span class="cell-main"><span class="cell-title">${u.title}</span><span class="cell-sub">${u.sum}</span></span>${S.unitsDone[`${id}.${u.id}`] ? icon("check", 18, "ok-check") : ""}${icon("right", 16, "chev")}</button>`).join("")}</div>
+  </section>`);
+}
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function blockHTML(b) {
+  const parts = [];
+  if (b.h) parts.push(`<h2>${b.h}</h2>`);
+  if (b.p) parts.push(`<p>${b.p}</p>`);
+  if (b.list) parts.push(`<ul>${b.list.map(x => `<li>${x}</li>`).join("")}</ul>`);
+  if (b.table) parts.push(`<div class="tscroll"><table><thead><tr>${b.table.head.map(x => `<th>${x}</th>`).join("")}</tr></thead><tbody>${b.table.rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+  if (b.code) parts.push(`<pre><code>${esc(b.code)}</code></pre>`);
+  if (b.tip) parts.push(`<div class="note tip">${icon("bulb", 20)}<div>${b.tip}</div></div>`);
+  if (b.warn) parts.push(`<div class="note warn">${icon("warn", 20)}<div>${b.warn}</div></div>`);
+  return `<div>${parts.join("")}</div>`;
+}
+function vUnit(id, uid) {
+  const m = MOD[id], u = unitOf(m, uid), key = `${id}.${uid}`, i = m.units.indexOf(u), nx = m.units[i + 1];
+  const btn = () => S.unitsDone[key]
+    ? `<button class="btn done" id="learnBtn" data-act="learn" aria-pressed="true">${icon("check", 18, "check-draw")} Gelesen</button>`
+    : `<button class="btn btn-tint" id="learnBtn" data-act="learn" aria-pressed="false">Als gelesen markieren</button>`;
+  actHandler = act => {
+    if (act !== "learn") return;
+    S.unitsDone[key] = !S.unitsDone[key];
+    save();
+    $("#learnBtn").outerHTML = btn();
+    haptic(S.unitsDone[key] ? "success" : "light");
+    if (S.unitsDone[key]) island("Lernseite gelesen", "good");
+  };
+  paint(`
+  ${titleBlock(m.title, u.title, u.sum)}
+  <section class="card"><div class="lesson">${u.sec.map(blockHTML).join("")}</div></section>
+  <div class="row">${btn()}<button class="btn btn-gray" data-go="modul-${id}-quiz">Dazu Quiz machen</button></div>
+  ${nx ? `<div class="group"><button class="cell with-badge" data-go="modul-${id}-unit-${nx.id}"><span class="si" style="--c:${m.color}">${icon("book", 19)}</span><span class="cell-main"><span class="cell-sub">Nächste Lernseite</span><span class="cell-title">${nx.title}</span></span>${icon("right", 16, "chev")}</button></div>` : ""}`);
+}
+
+/* ---------------- Suche ---------------- */
+let searchDocs = null, searchText = "";
+const plain = s => String(s).replace(/<[^>]+>/g, " ");
+function buildSearch() {
+  const docs = [];
+  const unitGo = (m, u) => `modul-${m.id}-unit-${u}`;
+  LAYERS.forEach(l => docs.push({m:MOD.osi, kind:"Lernseite", title:l.de, text:plain(`${l.en} ${l.summary} ${l.tasks.join(" ")} ${l.protocols.join(" ")}`), go:"schicht" + l.n}));
+  MODS.forEach(m => {
+    m.units.forEach(u => docs.push({m, kind:"Lernseite", title:u.title, text:plain(u.sum + " " + JSON.stringify(u.sec)), go:unitGo(m, u.id)}));
+    m.cards.forEach(c => docs.push({m, kind:"Karte", title:plain(c.f), text:plain(c.b), go:c.u ? unitGo(m, c.u) : c.L ? "schicht" + c.L : "karten"}));
+    m.questions.forEach(q => docs.push({m, kind:"Frage", title:plain(q.q), text:plain(`${q.o[0]} ${q.e}`), go:q.u ? unitGo(m, q.u) : q.L ? "schicht" + q.L : "quiz"}));
+  });
+  docs.forEach(d => { d.hay = `${d.title} ${d.text}`.toLowerCase(); });
+  return docs;
+}
+function searchHTML(text) {
+  const words = text.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length) return `<p class="group-f">Suche in allen Lernseiten, Karten und Fragen, zum Beispiel nach „DMZ“, „RAID 5“ oder „Probezeit“.</p>`;
+  searchDocs = searchDocs || buildSearch();
+  const hits = searchDocs.filter(d => words.every(w => d.hay.includes(w)));
+  if (!hits.length) return `<p class="group-f">Keine Treffer. Prüfe die Schreibweise oder suche nach einem kürzeren Wort.</p>`;
+  const order = {Lernseite:0, Karte:1, Frage:2};
+  hits.sort((a, b) => order[a.kind] - order[b.kind]);
+  return `<p class="group-f">${hits.length} ${hits.length === 1 ? "Treffer" : "Treffer"}</p><div class="group">${hits.slice(0, 40).map(d => `<button class="cell with-badge" data-go="${d.go}">${modIc(d.m)}<span class="cell-main"><span class="cell-title">${d.title}</span><span class="cell-sub">${d.kind} in ${d.m.title}</span></span>${icon("right", 16, "chev")}</button>`).join("")}</div>`;
+}
+function vSuche() {
+  paint(`
+  ${titleBlock("", "Suche", "")}
+  <label class="search-box">${icon("search", 19)}<input id="searchInput" type="search" enterkeyhint="search" placeholder="Thema, Begriff, Port …" aria-label="Suche" value="${searchText.replace(/"/g, "&quot;")}"></label>
+  <div id="searchResults" class="section">${searchHTML(searchText)}</div>`);
+  $("#searchInput").addEventListener("input", e => { searchText = e.target.value; $("#searchResults").innerHTML = searchHTML(searchText); });
+}
+
+/* ---------------- Rechentraining ---------------- */
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pickOne = a => a[rnd(0, a.length - 1)];
+const num = n => String(n).replace(".", ",");
+const DRILLS = {
+  subnet:{title:"Subnetting", gen() {
+    const p = rnd(25, 30), size = 2 ** (32 - p), o = rnd(1, 254), net = Math.floor(o / size) * size, base = `192.168.${rnd(0, 40)}`;
+    const ip = `${base}.${o}/${p}`, mask = `255.255.255.${256 - size}`, hosts = size - 2;
+    const blockE = `Blockgröße 256 - ${256 - size} = ${size}. Der Block geht von .${net} bis .${net + size - 1}.`;
+    const kind = pickOne(["net", "bc", "hosts", "mask"]);
+    if (kind === "net") return {q:`Wie lautet die Netzadresse von ${ip}?`, r:`${base}.${net}`, w:[`${base}.${o}`, `${base}.${net + size - 1}`, `${base}.${(net + size) % 256}`, `${base}.${Math.max(0, net - size)}`, `${base}.0`], e:blockE};
+    if (kind === "bc") return {q:`Wie lautet die Broadcastadresse von ${ip}?`, r:`${base}.${net + size - 1}`, w:[`${base}.${net}`, `${base}.255`, `${base}.${net + size - 2}`, `${base}.${(net + size) % 256}`], e:blockE};
+    if (kind === "hosts") return {q:`Wie viele Hosts sind in einem /${p}-Netz nutzbar?`, r:String(hosts), w:[String(size), String(hosts - 2), String(size * 2 - 2), String(size / 2 > 2 ? size / 2 - 2 : size + 2)], e:`${32 - p} Hostbits: 2 hoch ${32 - p} sind ${size}, minus Netz und Broadcast.`};
+    return {q:`Welche Subnetzmaske gehört zu /${p}?`, r:mask, w:[25, 26, 27, 28, 29, 30].filter(x => x !== p).map(x => `255.255.255.${256 - 2 ** (32 - x)}`), e:`Von den 8 Bit im letzten Oktett sind ${p - 24} gesetzt. Das ergibt ${256 - size}.`};
+  }},
+  binary:{title:"Binär und Hex", gen() {
+    const n = rnd(1, 255), bin = n.toString(2).padStart(8, "0"), hex = n.toString(16).toUpperCase().padStart(2, "0");
+    const near = [n + 1, n - 1, n + 16, n ^ 1, n ^ 16, n ^ 128].filter(x => x >= 0 && x <= 255 && x !== n);
+    const kind = pickOne(["d2b", "b2d", "d2h", "h2d"]);
+    if (kind === "d2b") return {q:`Wie lautet ${n} im Binärsystem?`, r:bin, w:near.map(x => x.toString(2).padStart(8, "0")), e:`Die Stellen stehen für 128, 64, 32, 16, 8, 4, 2 und 1.`};
+    if (kind === "b2d") return {q:`Welchen Dezimalwert hat ${bin}?`, r:String(n), w:near.map(String), e:`Addiere die gesetzten Stellen: 128, 64, 32, 16, 8, 4, 2, 1.`};
+    if (kind === "d2h") return {q:`Wie lautet ${n} hexadezimal?`, r:hex, w:near.map(x => x.toString(16).toUpperCase().padStart(2, "0")), e:`${n} ÷ 16 = ${Math.floor(n / 16)} Rest ${n % 16}.`};
+    return {q:`Welchen Dezimalwert hat ${hex} (hexadezimal)?`, r:String(n), w:near.map(String), e:`${parseInt(hex[0], 16)} × 16 + ${parseInt(hex[1], 16)} = ${n}.`};
+  }},
+  raid:{title:"RAID", gen() {
+    const lvl = pickOne([0, 1, 5, 6, 10]), size = pickOne([1, 2, 4, 8]), n = lvl === 10 ? pickOne([4, 6, 8]) : lvl === 6 ? rnd(4, 8) : lvl === 1 ? 2 : rnd(3, 8);
+    const cap = {0:n * size, 1:size, 5:(n - 1) * size, 6:(n - 2) * size, 10:n / 2 * size}[lvl];
+    const f = {0:"n × Größe", 1:"eine Platte", 5:"(n - 1) × Größe", 6:"(n - 2) × Größe", 10:"n ÷ 2 × Größe"}[lvl];
+    return {q:`Wie viel Speicher ist bei RAID ${lvl} aus ${n} Platten mit je ${size} TB nutzbar?`, r:`${cap} TB`, w:[n * size, (n - 1) * size, (n - 2) * size, n / 2 * size, size, cap + size, cap * 2, cap * 3, size / 2].filter(x => x > 0).map(x => `${num(x)} TB`), e:`RAID ${lvl}: ${f}.`};
+  }},
+  units:{title:"Datenraten", gen() {
+    const mb = pickOne([100, 250, 500, 1000, 2000, 5000]), rate = pickOne([10, 50, 100, 200, 500, 1000]), sec = mb * 8 / rate;
+    const t = s => `${num(+s.toFixed(1))} s`;
+    return {q:`Wie lange dauert es, ${mb} MB bei ${rate} Mbit/s zu übertragen?`, r:t(sec), w:[t(mb / rate), t(sec * 2), t(sec / 2), t(sec * 8), t(sec + 10)], e:`${mb} MB × 8 = ${mb * 8} Mbit. ${mb * 8} ÷ ${rate} = ${num(+sec.toFixed(1))} Sekunden.`};
+  }}
+};
+const dr = {mod:"", kind:"", cur:null, opts:[], picked:null, right:0, total:0};
+function newDrill() {
+  const c = DRILLS[dr.kind].gen(), seen = new Set([c.r]), w = [];
+  shuffle(c.w).forEach(x => { if (!seen.has(x) && w.length < 3) { seen.add(x); w.push(x); } });
+  dr.cur = c; dr.picked = null;
+  dr.opts = shuffle([{t:c.r, ok:true}, ...w.map(t => ({t, ok:false}))]);
+}
+function vRechnen() {
+  const list = curMod.drills || [];
+  if (dr.mod !== curMod.id) { dr.mod = curMod.id; dr.kind = list[0]; dr.right = 0; dr.total = 0; newDrill(); }
+  actHandler = (act, el) => {
+    if (act === "kind") { if (dr.kind === el.dataset.v) return; dr.kind = el.dataset.v; haptic("select"); newDrill(); drawDrill(); }
+    if (act === "pick") {
+      if (dr.picked != null) return;
+      dr.picked = +el.dataset.k;
+      const ok = dr.opts[dr.picked].ok;
+      dr.total++; if (ok) dr.right++;
+      countDay(ok ? 5 : 1); save();
+      haptic(ok ? "success" : "error"); tone(ok);
+      drawDrill();
+      pulse(ok ? "var(--green)" : "var(--red)");
+      if (ok) { const hit = $(".opt.ok"); burstAt(hit, 14); floatXP(hit, "+5 XP"); }
+      const nb = $("#nextDr"); if (nb) nb.focus({preventScroll:true});
+    }
+    if (act === "next") { haptic("light"); newDrill(); drawDrill(); window.scrollTo(0, 0); }
+  };
+  keyHandler = e => {
+    if (dr.picked == null) { const k = "1234".indexOf(e.key); if (k >= 0) { e.preventDefault(); actHandler("pick", {dataset:{k}}); } }
+    else if (e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); actHandler("next"); }
+  };
+  drawDrill();
+}
+function drawDrill() {
+  const list = curMod.drills, answered = dr.picked != null, ok = answered && dr.opts[dr.picked].ok;
+  setNav({right:`<span class="nb-btn tnum" style="cursor:default;color:var(--label-2)">${dr.right}/${dr.total}</span>`});
+  paint(`
+  ${titleBlock(curMod.title, "Rechentraining", "Jede Aufgabe wird neu erzeugt, du kannst also beliebig lange üben.")}
+  ${list.length > 1 ? seg("drkind", list.map(k => [k, DRILLS[k].title]), dr.kind, "kind") : ""}
+  <section class="qcard">
+    <h2 class="qtext">${dr.cur.q}</h2>
+    <div class="group">${dr.opts.map((o, k) => {
+      const cls = answered ? (o.ok ? "ok" : k === dr.picked ? "no" : "dim") : "";
+      const mark = answered && o.ok ? icon("check", 20, "mark") : answered && k === dr.picked ? icon("x", 20, "mark") : "<span></span>";
+      return `<button class="opt ${cls}" data-act="pick" data-k="${k}" ${answered ? "disabled" : ""}><span class="key">${"ABCD"[k]}</span><span>${o.t}</span>${mark}</button>`;
+    }).join("")}</div>
+    ${answered ? `<div class="explain ${ok ? "good" : "bad"}" role="status">${icon(ok ? "check" : "bulb", 20)}<div><b>${ok ? "Richtig" : "Nicht ganz"}</b>${dr.cur.e}</div></div>
+      <button class="btn btn-fill btn-lg" id="nextDr" data-act="next">Nächste Aufgabe</button>` : ""}
+  </section>`, {anim:false});
+}
+
+/* ---------------- Probeprüfung ---------------- */
+const PZ_COUNT = 25, PZ_MINUTES = 30;
+const pz = {phase:"intro", ap:"AP1", list:[], i:0, answers:[], left:0};
+const pzPool = ap => MODS.flatMap(m => m.questions.filter(q => m.osi || q.ap === ap || q.ap === "both"));
+function pzClock() {
+  const el = $("#pzTime");
+  if (el) el.textContent = `${Math.floor(pz.left / 60)}:${String(pz.left % 60).padStart(2, "0")}`;
+}
+function pzFinish() {
+  clearInterval(pzTimer); pzTimer = null;
+  pz.phase = "result";
+  pz.list.forEach((q, i) => { const a = pz.answers[i]; grade(q.id, !!(a && a.ok), a && a.ok ? 10 : 1); });
+  const wrong = new Set(S.wrong);
+  pz.list.forEach((q, i) => { if (pz.answers[i] && pz.answers[i].ok) wrong.delete(q.id); else wrong.add(q.id); });
+  S.wrong = [...wrong];
+  save();
+  const p = pct(pz.answers.filter(a => a && a.ok).length, pz.list.length);
+  setTimeout(() => { haptic(p >= 50 ? "success" : "medium"); if (p >= 50) celebrate(); }, 350);
+  drawPz();
+  window.scrollTo(0, 0);
+}
+function vPruefung(ap) {
+  pz.ap = ap; pz.phase = "intro";
+  actHandler = (act, el) => {
+    if (act === "pz-start") {
+      const pool = pzPool(ap);
+      pz.list = shuffle(pool).slice(0, PZ_COUNT).map(q => ({...q, opts:arrange(q.o)}));
+      pz.i = 0; pz.answers = []; pz.left = PZ_MINUTES * 60; pz.phase = "run";
+      haptic("medium");
+      clearInterval(pzTimer);
+      pzTimer = setInterval(() => { pz.left--; pzClock(); if (pz.left <= 0) pzFinish(); }, 1000);
+      drawPz();
+    }
+    if (act === "pz-pick") {
+      const q = pz.list[pz.i], o = q.opts[+el.dataset.k];
+      pz.answers[pz.i] = {ok:o.ok, yours:o.t, right:q.opts.find(x => x.ok).t};
+      haptic("select");
+      pz.i++;
+      if (pz.i >= pz.list.length) pzFinish(); else { drawPz(); window.scrollTo(0, 0); }
+    }
+    if (act === "pz-end") sheet({title:"Prüfung abgeben?", msg:"Nicht beantwortete Fragen zählen als falsch.", action:"Abgeben", onConfirm:pzFinish});
+    if (act === "pz-again") { pz.phase = "intro"; drawPz(); window.scrollTo(0, 0); }
+  };
+  keyHandler = e => {
+    if (pz.phase !== "run") return;
+    const k = "1234".indexOf(e.key);
+    if (k >= 0) { e.preventDefault(); actHandler("pz-pick", {dataset:{k}}); }
+  };
+  drawPz();
+}
+function drawPz() {
+  if (pz.phase === "intro") {
+    setNav();
+    paint(`
+    ${titleBlock("Unter Prüfungsbedingungen", `Probeprüfung ${pz.ap}`, `${PZ_COUNT} zufällige Fragen, ${PZ_MINUTES} Minuten, ohne Hinweise. Die Auswertung kommt erst am Ende.`)}
+    <section class="card hero">
+      <p class="exam-note">Die echte Prüfung nutzt überwiegend offene Aufgaben. Diese Probe trainiert dein Wissen und dein Tempo, ersetzt alte Prüfungen aber nicht.</p>
+      <button class="btn btn-fill btn-lg cta" data-act="pz-start">Prüfung starten</button>
+    </section>`, {anim:false});
+    return;
+  }
+  if (pz.phase === "result") {
+    const right = pz.answers.filter(a => a && a.ok).length, p = pct(right, pz.list.length);
+    const byMod = MODS.map(m => { const idx = pz.list.map((q, i) => i).filter(i => pz.list[i].m === m.id); return {m, n:idx.length, r:idx.filter(i => pz.answers[i] && pz.answers[i].ok).length}; }).filter(x => x.n);
+    const wrongs = pz.list.map((q, i) => ({q, a:pz.answers[i]})).filter(x => !(x.a && x.a.ok));
+    setNav({title:"Ergebnis"});
+    paint(`
+    ${titleBlock(`Probeprüfung ${pz.ap}`, "Ergebnis", "")}
+    <section class="card">
+      <div class="result-head">${ring(p, 116, 12, "richtig")}<div class="prog-info"><div class="prog-label">${right} von ${pz.list.length}</div><p class="pass ${p >= 50 ? "ok" : "no"}">${p >= 50 ? "Bestanden nach der 50-%-Grenze" : "Noch unter der 50-%-Grenze"}</p></div></div>
+      <div class="row" style="margin-top:18px"><button class="btn btn-fill" data-act="pz-again">Neue Prüfung</button></div>
+    </section>
+    <section class="section"><div class="group-h">Nach Thema</div><div class="group">${byMod.map(x => `<button class="cell with-badge" data-go="modul-${x.m.id}">${modIc(x.m)}<span class="cell-main"><span class="cell-title">${x.m.title}</span></span><span class="cell-detail">${x.r}/${x.n}</span>${icon("right", 16, "chev")}</button>`).join("")}</div></section>
+    ${wrongs.length ? `<section class="section"><div class="group-h">Das solltest du wiederholen</div><div class="group">${wrongs.map(({q, a}) => `<div class="rv"><b>${q.q}</b>${a ? `<span class="yours">Deine Antwort: ${a.yours}</span>` : `<span class="yours">Nicht beantwortet</span>`}<span class="right">Richtig: ${q.o[0]}</span><p>${q.e}</p></div>`).join("")}</div></section>` : ""}`);
+    return;
+  }
+  const q = pz.list[pz.i];
+  setNav({left:`<button class="nb-btn" data-act="pz-end">Abgeben</button>`, title:`Frage ${pz.i + 1} von ${pz.list.length}`, right:`<span class="nb-btn pz-time" id="pzTime" style="cursor:default"></span>`});
+  paint(`
+  <div class="qprog" aria-hidden="true"><i style="width:${pct(pz.i, pz.list.length)}%"></i></div>
+  <section class="qcard in">
+    <h2 class="qtext">${q.q}</h2>
+    <div class="group">${q.opts.map((o, k) => `<button class="opt" data-act="pz-pick" data-k="${k}"><span class="key">${"ABCD"[k]}</span><span>${o.t}</span><span></span></button>`).join("")}</div>
+  </section>`, {anim:false});
+  pzClock();
+}
+
+/* ---------------- OSI-Register ---------------- */
+function vOsi() {
   const p = progress();
   const next = LAYERS.find(l => !S.learned[l.n]);
-  const date = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
-  const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
-  const due = dueCount(), streak = streakNow();
+  const wrongN = S.wrong.filter(id => Q_BY_ID[id] && Q_BY_ID[id].m === "osi").length;
+  const due = ITEMS.filter(it => it.m === "osi" && isDue(it)).length, streak = streakNow();
   actHandler = (act, el) => {
+    if (act === "drill") { mix.mod = "osi"; haptic("light"); go("heute"); return; }
     if (act === "mnemo") {
       if (mnemoMode === el.dataset.v) return;
       mnemoMode = el.dataset.v; haptic("select");
@@ -1576,9 +1979,8 @@ function vStart() {
       const t = $("#factText"); t.classList.remove("swap"); void t.offsetWidth; t.textContent = FACTS[factIdx]; t.classList.add("swap");
     }
   };
-  setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
   paint(`
-  ${titleBlock(date, "Übersicht", "")}
+  <header class="mod-head">${modIc(MOD.osi, 36)}<div><h1 class="large">OSI-Modell</h1><p>${MOD.osi.ap}</p></div></header>
   <section class="card hero">
     <div class="hero-head">
       <div class="prog-info"><div class="prog-label">${progressLabel(p.total)}</div>
@@ -1597,7 +1999,7 @@ function vStart() {
         <span class="pl"><b>${shortName(n)}</b><small>Schicht ${n}, ${L(n).pduS}${S.learned[n] ? ` ${icon("check", 13)}` : ""}</small></span>
       </button>`).join("")}
     </div>
-    <button class="btn btn-fill btn-lg cta" data-go="heute">${icon("mix", 20)} Tagesmix starten</button>
+    <button class="btn btn-fill btn-lg cta" data-act="drill">${icon("mix", 20)} Thema üben</button>
   </section>
   <div class="stat-grid" style="margin:0">
     <div class="mini"><span>Schichten</span><b class="tnum">${p.learned}/7</b><div class="bar"><i style="width:${Math.round(p.pL * 100)}%"></i></div></div>
@@ -1606,8 +2008,10 @@ function vStart() {
     <div class="mini"><span>Übungen</span><b class="tnum">${p.ex}/2</b><div class="bar"><i style="width:${p.ex * 50}%"></i></div></div>
   </div>
   <section class="section">
-    <h2 class="section-t">Trainieren</h2>
+    <h2 class="section-t">Lernen und üben</h2>
     <div class="tiles">
+      <button class="tile" data-go="schichten"><span class="tile-ic">${icon("schichten")}</span><span><b>Schichten</b><small>Alle 7 im Detail</small></span></button>
+      <button class="tile" data-go="fakten"><span class="tile-ic">${icon("fakten")}</span><span><b>Fakten</b><small>Ports, Vergleich, Fehlersuche</small></span></button>
       <button class="tile" data-go="quiz"><span class="tile-ic">${icon("quiz")}</span><span><b>Quiz</b><small>${S.quizRuns ? `Bestwert ${S.quizBest} %` : `${QUESTIONS.length} Fragen`}${wrongN ? ` · ${wrongN} offen` : ""}</small></span></button>
       <button class="tile" data-go="karten"><span class="tile-ic">${icon("karten")}</span><span><b>Lernkarten</b><small>${p.known} von ${CARDS.length} gewusst</small></span></button>
       <button class="tile" data-go="ueben"><span class="tile-ic">${icon("ueben")}</span><span><b>Übungen</b><small>Zuordnen und Reihenfolge</small></span></button>
@@ -1664,7 +2068,7 @@ function exportProgress() {
   haptic("success"); island("Fortschritt exportiert", "good");
 }
 function vSettings() {
-  const p = progress(), streak = streakNow();
+  const streak = streakNow();
   actHandler = (act, el) => {
     if (act === "toggle") {
       const k = el.dataset.k;
@@ -1689,7 +2093,7 @@ function vSettings() {
   };
   paint(`
   ${titleBlock("", "Einstellungen", "")}
-  <div class="group"><div class="me"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>${p.total} % gelernt, ${S.xp} XP, ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</small></div></div></div>
+  <div class="group"><div class="me"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>${overallProgress()} % gelernt, ${S.xp} XP, ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</small></div></div></div>
   ${setSec("Darstellung",
     setRow("moon", "#5856d6", "Erscheinungsbild", "set-theme", choiceLabel("set-theme")) +
     setRow("palette", "#ff9500", "Akzentfarbe", "set-accent", choiceLabel("set-accent")) +
@@ -1719,9 +2123,9 @@ function vSettings() {
     `<button class="cell sc" data-act="import">${si("download", "#ff9500")}<span class="cell-main"><span class="cell-title">Fortschritt importieren</span></span></button>`,
     "Die Einstellungen gelten nur auf diesem Gerät. Mit dem Export nimmst du deinen Lernstand auf ein anderes Gerät mit.")}
   ${setSec("Über diese App",
-    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Modul</span></span><span class="sv">OSI-Modell</span></div>` +
-    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Lernkarten</span></span><span class="sv">${CARDS.length}</span></div>` +
-    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Quizfragen</span></span><span class="sv">${QUESTIONS.length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Themen</span></span><span class="sv">${MODS.length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Lernkarten</span></span><span class="sv">${ITEMS.filter(it => it.k === "card").length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Quizfragen</span></span><span class="sv">${ITEMS.filter(it => it.k === "q").length}</span></div>` +
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Heute fällig</span></span><span class="sv">${dueCount()}</span></div>`)}
   ${setSec("",
     `<button class="cell sc plain link" data-act="reset-set" style="justify-content:center">Einstellungen zurücksetzen</button>` +
@@ -1753,7 +2157,7 @@ function vSetSize() {
 /* ---------------- Schichten ---------------- */
 function vSchichten() {
   paint(`
-  ${titleBlock("Modul 1", "Schichten", "Von der Anwendung bis zum Kabel. Öffne eine Schicht für Aufgaben, Protokolle, Geräte und Prüfungstipps.")}
+  ${titleBlock("OSI-Modell", "Schichten", "Von der Anwendung bis zum Kabel. Öffne eine Schicht für Aufgaben, Protokolle, Geräte und Prüfungstipps.")}
   <section class="section">
     <div class="group-h">Anwendungsorientiert</div>
     <div class="group">${[7, 6, 5].map(n => layerCell(n)).join("")}</div>
@@ -1951,25 +2355,33 @@ function drawEnc(changed) {
 }
 
 /* ---------------- Trainieren ---------------- */
+const qs = () => curMod.osi ? S : (S.mq[curMod.id] = S.mq[curMod.id] || {quizBest:0, quizRuns:0, quizHist:[]});
+const modWrong = () => S.wrong.filter(id => Q_BY_ID[id] && Q_BY_ID[id].m === curMod.id);
+const qWhere = q => q.L ? `Schicht ${q.L}, ${shortName(q.L)}` : q.u ? unitOf(MOD[q.m], q.u).title : "Grundlagen";
 function histChart() {
+  const S = qs();
   if (!S.quizHist.length) return `<p class="muted">Noch keine Runde gespielt. Deine letzten Ergebnisse erscheinen hier.</p>`;
   return `<div class="hist" role="img" aria-label="Letzte Ergebnisse: ${S.quizHist.join(", ")} Prozent">${S.quizHist.map((v, k) => `<div class="hcol" style="--h:${v}%;--k:${k}"><span>${v}</span><i></i></div>`).join("")}</div>
     <div class="hist-axis"><span>ältere Runden</span><span>gestrichelt = 50 %</span><span>neueste</span></div>`;
 }
 let quizAutostart = null;
 function vTrainieren() {
-  const p = progress(), wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
-  actHandler = act => { if (act === "wrongstart") { quizAutostart = "wrong"; haptic("light"); go("quiz"); } };
+  const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length, due = dueCount();
+  actHandler = act => {
+    if (act === "wrongmix") { mix.onlyWrong = true; haptic("light"); go("heute"); }
+  };
   paint(`
-  ${titleBlock("Üben und prüfen", "Trainieren", "Wiederhole mit Lernkarten, teste dich im Quiz und festige dein Wissen mit Übungen.")}
+  ${titleBlock("Üben und prüfen", "Trainieren", "Der Tagesmix sucht die richtigen Aufgaben für dich aus. Mit der Probeprüfung testest du dich unter Zeitdruck.")}
   <div class="section">
-    <button class="hub mix" data-go="heute"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${dueCount() ? `${dueCount()} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub" data-go="quiz"><span class="cell-ic">${icon("quiz", 24)}</span><span><b>Quiz</b><small>${QUESTIONS.length} Fragen · ${S.quizRuns ? `Bestwert ${S.quizBest} %` : "noch nicht gespielt"}</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub" data-go="karten"><span class="cell-ic">${icon("karten", 24)}</span><span><b>Lernkarten</b><small>${p.known} von ${CARDS.length} gewusst</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub" data-go="ueben"><span class="cell-ic">${icon("ueben", 24)}</span><span><b>Übungen</b><small>Zuordnen${S.sortBest != null ? ` (bestes: ${S.sortBest} Fehler)` : ""} · Reihenfolge${S.orderBest != null ? ` (${fmtTime(S.orderBest)})` : ""}</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub mix" data-go="heute"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub" data-go="pruefung-ap1"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP1</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub" data-go="pruefung-ap2"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP2</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
   </div>
-  ${wrongN ? `<div class="group"><button class="cell" data-act="wrongstart"><span class="cell-ic" style="background:var(--red)">${icon("reset", 18)}</span><span class="cell-main"><span class="cell-title">Fehler wiederholen</span><span class="cell-sub">${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus früheren Runden</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
-  <section class="card"><div class="card-h"><h2 class="card-t">${icon("quiz")} Deine Quiz-Ergebnisse</h2><span class="muted small">${S.quizRuns} ${S.quizRuns === 1 ? "Runde" : "Runden"}</span></div>${histChart()}</section>`);
+  ${wrongN ? `<div class="group"><button class="cell" data-act="wrongmix"><span class="cell-ic" style="background:var(--red)">${icon("reset", 18)}</span><span class="cell-main"><span class="cell-title">Fehler wiederholen</span><span class="cell-sub">${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus allen Themen</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
+  <section class="section">
+    <h2 class="section-t">Nach Thema üben</h2>
+    <div class="group">${MODS.map(m => `<button class="cell with-badge" data-go="modul-${m.id}">${modIc(m)}<span class="cell-main"><span class="cell-title">${m.title}</span><span class="cell-sub">${m.cards.length} Karten, ${m.questions.length} Fragen</span></span><span class="cell-detail">${modProgress(m.id)} %</span>${icon("right", 16, "chev")}</button>`).join("")}</div>
+  </section>`);
 }
 
 /* ---------------- Quiz ---------------- */
@@ -1982,12 +2394,13 @@ function arrange(o) {
 }
 function startQuiz(mode) {
   let pool;
-  if (mode === "quick") pool = shuffle(QUESTIONS).slice(0, 10);
-  else if (mode === "big") pool = shuffle(QUESTIONS).slice(0, 25);
-  else pool = shuffle(QUESTIONS.filter(q => S.wrong.includes(q.id)));
+  const all = curMod.questions;
+  if (mode === "quick") pool = shuffle(all).slice(0, 10);
+  else if (mode === "big") pool = shuffle(all).slice(0, 25);
+  else pool = shuffle(all.filter(q => S.wrong.includes(q.id)));
   if (!pool.length) { drawQuiz(); return; }
   haptic("medium");
-  qz = {phase:"q", mode, list:pool.map(q => ({...q, opts:arrange(q.o)})), i:0, answers:[], picked:null, fresh:true};
+  qz = {phase:"q", mod:curMod.id, mode, list:pool.map(q => ({...q, opts:arrange(q.o)})), i:0, answers:[], picked:null, fresh:true};
   drawQuiz();
   window.scrollTo(0, 0);
 }
@@ -2016,9 +2429,10 @@ function nextQ() {
 }
 function finishQuiz() {
   const right = qz.answers.filter(a => a.ok).length, p = pct(right, qz.answers.length);
-  S.quizRuns++;
-  S.quizHist = [...S.quizHist, p].slice(-12);
-  if (qz.mode !== "wrong") S.quizBest = Math.max(S.quizBest || 0, p);
+  const st = qs();
+  st.quizRuns++;
+  st.quizHist = [...st.quizHist, p].slice(-12);
+  if (qz.mode !== "wrong") st.quizBest = Math.max(st.quizBest || 0, p);
   const wrong = new Set(S.wrong);
   qz.answers.forEach(a => { if (a.ok) wrong.delete(a.id); else wrong.add(a.id); });
   S.wrong = [...wrong];
@@ -2027,7 +2441,7 @@ function finishQuiz() {
   setTimeout(() => { haptic(p >= 80 ? "success" : "medium"); if (p >= 80) celebrate(); }, 300);
 }
 function vQuiz() {
-  if (qz.phase !== "q") qz = {phase:"intro"};
+  if (qz.phase !== "q" || qz.mod !== curMod.id) qz = {phase:"intro", mod:curMod.id};
   actHandler = (act, el) => {
     if (act === "start") startQuiz(el.dataset.m);
     if (act === "pick") pick(+el.dataset.k);
@@ -2046,17 +2460,17 @@ function vQuiz() {
   drawQuiz();
 }
 function drawQuiz() {
-  const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
+  const wrongN = modWrong().length;
   if (qz.phase === "intro") {
     setNav();
     paint(`
-    ${titleBlock("Prüfen", "Quiz", "Prüfungsnahe Fragen zum OSI-Modell. Nach jeder Antwort erfährst du, warum sie richtig oder falsch ist.")}
+    ${titleBlock("Prüfen", "Quiz", `Prüfungsnahe Fragen zu ${curMod.title}. Nach jeder Antwort erfährst du, warum sie richtig oder falsch ist.`)}
     <section class="modes">
       <button class="mode" data-act="start" data-m="quick"><span class="big">10</span><b>Schnellrunde</b><span>Zehn zufällige Fragen für zwischendurch.</span></button>
-      <button class="mode" data-act="start" data-m="big"><span class="big">25</span><b>Große Runde</b><span>25 Fragen quer durch alle Schichten.</span></button>
+      <button class="mode" data-act="start" data-m="big"><span class="big">25</span><b>Große Runde</b><span>25 Fragen quer durch das ganze Thema.</span></button>
       <button class="mode" data-act="start" data-m="wrong" ${wrongN ? "" : "disabled"}><span class="big">${wrongN}</span><b>Fehler wiederholen</b><span>${wrongN ? "Nur die Fragen, die du zuletzt falsch hattest." : "Hier landen Fragen, die du falsch beantwortest."}</span></button>
     </section>
-    <section class="card"><div class="card-h"><h2 class="card-t">${icon("quiz")} Deine Ergebnisse</h2><span class="muted small">Bestwert ${S.quizBest || 0} %</span></div>${histChart()}</section>
+    <section class="card"><div class="card-h"><h2 class="card-t">${icon("quiz")} Deine Ergebnisse</h2><span class="muted small">Bestwert ${qs().quizBest || 0} %</span></div>${histChart()}</section>
     <p class="group-f">Mit den Tasten <span class="kbd">1</span>–<span class="kbd">4</span> antwortest du, mit <span class="kbd">Enter</span> geht es weiter.</p>`);
     return;
   }
@@ -2072,10 +2486,10 @@ function drawQuiz() {
       </div>
       <div class="row" style="margin-top:20px">
         <button class="btn btn-fill" data-act="start" data-m="${qz.mode === "big" ? "big" : "quick"}">Neue Runde</button>
-        ${S.wrong.length ? `<button class="btn btn-tint" data-act="start" data-m="wrong">${S.wrong.length} Fehler wiederholen</button>` : ""}
+        ${wrongN ? `<button class="btn btn-tint" data-act="start" data-m="wrong">${wrongN} Fehler wiederholen</button>` : ""}
       </div>
     </section>
-    ${wrongs.length ? `<section class="section"><div class="group-h">Das solltest du wiederholen</div><div class="group">${wrongs.map(a => { const q = Q_BY_ID[a.id]; return `<div class="rv"><b>${q.q}</b><span class="yours">Deine Antwort: ${a.yours}</span><span class="right">Richtig: ${a.right}</span><p>${q.e}</p>${q.L ? `<button class="btn btn-plain" data-go="schicht${q.L}" style="align-self:flex-start">Schicht ${q.L} nachlesen</button>` : ""}</div>`; }).join("")}</div></section>` : ""}`);
+    ${wrongs.length ? `<section class="section"><div class="group-h">Das solltest du wiederholen</div><div class="group">${wrongs.map(a => { const q = Q_BY_ID[a.id]; return `<div class="rv"><b>${q.q}</b><span class="yours">Deine Antwort: ${a.yours}</span><span class="right">Richtig: ${a.right}</span><p>${q.e}</p>${q.L ? `<button class="btn btn-plain" data-go="schicht${q.L}" style="align-self:flex-start">Schicht ${q.L} nachlesen</button>` : q.u ? `<button class="btn btn-plain" data-go="modul-${q.m}-unit-${q.u}" style="align-self:flex-start">Lernseite öffnen</button>` : ""}</div>`; }).join("")}</div></section>` : ""}`);
     return;
   }
   const q = qz.list[qz.i], answered = qz.picked != null;
@@ -2084,7 +2498,7 @@ function drawQuiz() {
   paint(`
   <div class="qprog" aria-hidden="true"><i style="width:${pct(qz.answers.length, qz.list.length)}%"></i></div>
   <section class="qcard${qz.fresh ? " in" : ""}">
-    <div class="kicker">${q.L ? `Schicht ${q.L} · ${shortName(q.L)}` : "Grundlagen"}</div>
+    <div class="kicker">${qWhere(q)}</div>
     <h2 class="qtext">${q.q}</h2>
     <div class="group">${q.opts.map((o, k) => {
       const cls = answered ? (o.ok ? "ok" : k === qz.picked ? "no" : "dim") : "";
@@ -2097,9 +2511,9 @@ function drawQuiz() {
 }
 
 /* ---------------- Lernkarten ---------------- */
-const kc = {filter:"alle", open:false, deck:[], i:0, flipped:false, done:false, busy:false};
+const kc = {mod:"osi", filter:"alle", open:false, deck:[], i:0, flipped:false, done:false, busy:false};
 function buildDeck() {
-  kc.deck = shuffle(CARDS.filter(c => (kc.filter === "alle" || c.tag === kc.filter) && (!kc.open || !S.known.includes(c.id))).map(c => c.id));
+  kc.deck = shuffle(curMod.cards.filter(c => (kc.filter === "alle" || c.tag === kc.filter) && (!kc.open || !S.known.includes(c.id))).map(c => c.id));
   kc.i = 0; kc.flipped = false; kc.busy = false; kc.done = kc.deck.length === 0;
 }
 function decideCard(act) {
@@ -2113,6 +2527,7 @@ function decideCard(act) {
   drawCards();
 }
 function vKarten() {
+  if (kc.mod !== curMod.id) { kc.mod = curMod.id; kc.filter = "alle"; kc.open = false; kc.deck = []; kc.done = false; }
   if (!kc.deck.length && !kc.done) buildDeck();
   kc.busy = false;
   actHandler = (act, el) => {
@@ -2146,7 +2561,7 @@ function vKarten() {
   drawCards();
 }
 function drawCards() {
-  const inFilter = CARDS.filter(c => kc.filter === "alle" || c.tag === kc.filter);
+  const inFilter = curMod.cards.filter(c => kc.filter === "alle" || c.tag === kc.filter);
   const knownIn = inFilter.filter(c => S.known.includes(c.id)).length;
   let stage;
   if (kc.done) {
@@ -2161,7 +2576,7 @@ function drawCards() {
       </div></div>`;
   } else {
     const c = CARD_BY_ID[kc.deck[kc.i]];
-    const tagTxt = (c.tag === "schichten" || c.tag === "pdu") && c.L ? `Schicht ${c.L}` : TAG_LABEL[c.tag];
+    const tagTxt = (c.tag === "schichten" || c.tag === "pdu") && c.L ? `Schicht ${c.L}` : c.u ? unitOf(curMod, c.u).title : TAG_LABEL[c.tag];
     stage = `<div class="deck"><div class="flash${kc.flipped ? " flipped" : ""}" data-act="flip" role="button" tabindex="0" aria-label="Karte umdrehen">${STAMPS}
         <div class="flash-inner">
           <div class="face front"><span class="chip accent">${tagTxt}</span><div class="face-q">${c.f}</div><span class="hint">Tippen zum Umdrehen</span></div>
@@ -2176,7 +2591,7 @@ function drawCards() {
   setNav({right:kc.done ? "" : `<button class="nb-btn" data-act="shuffle" aria-label="Mischen">${icon("shuffle", 20)}</button>`});
   paint(`
   ${titleBlock("Wiederholen", "Lernkarten", "Tippe zum Umdrehen. Wische nach rechts, wenn du es wusstest, und nach links, wenn die Karte wiederkommen soll.")}
-  ${seg("kfilter", [["alle", "Alle"], ["schichten", "Schichten"], ["pdu", "PDU"], ["begriffe", "Begriffe"], ["ports", "Ports"]], kc.filter, "filter")}
+  ${curMod.osi ? seg("kfilter", [["alle", "Alle"], ["schichten", "Schichten"], ["pdu", "PDU"], ["begriffe", "Begriffe"], ["ports", "Ports"]], kc.filter, "filter") : ""}
   <div class="group"><div class="toggle-cell"><span>Nur offene Karten</span><button class="switch" role="switch" aria-label="Nur offene Karten" aria-checked="${kc.open}" data-act="open"></button></div></div>
   <div class="stage">${stage}</div>`, {anim:kc.done});
   if (kc.done) { if (knownIn === inFilter.length) celebrate(); }
@@ -2184,12 +2599,16 @@ function drawCards() {
 }
 
 /* ---------------- Tagesmix ---------------- */
-const mix = {phase:"idle", layer:0, list:[], i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before:{}};
+const mix = {phase:"idle", layer:0, mod:"", onlyWrong:false, list:[], i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before:{}};
 function startMix() {
-  const list = buildMix(mix.layer);
+  let list = buildMix(mix.layer, CFG.round, mix.mod);
+  if (mix.onlyWrong) {
+    list = shuffle(S.wrong.filter(id => Q_BY_ID[id])).slice(0, Math.max(CFG.round, 10)).map(id => ({k:"q", id, L:Q_BY_ID[id].L || 0, m:Q_BY_ID[id].m, opts:arrange(Q_BY_ID[id].o)}));
+    if (!list.length) list = buildMix(0, CFG.round);
+  }
   const before = {};
-  for (let n = 1; n <= 7; n++) before[n] = mastery(n);
-  Object.assign(mix, {phase:"run", layer:0, list, i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before});
+  MODS.forEach(m => { before[m.id] = modMastery(m.id); });
+  Object.assign(mix, {phase:"run", layer:0, mod:"", onlyWrong:false, list, i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before});
   haptic("medium");
 }
 function scoreItem(it, ok) {
@@ -2249,7 +2668,7 @@ function vHeute() {
     if (act === "flip") { mix.flipped = !mix.flipped; haptic("light"); const f = $(".flash"); if (f) f.classList.toggle("flipped", mix.flipped); }
     if (act === "know" || act === "again") mixCard(act);
     if (act === "again-round") { startMix(); drawMix(); window.scrollTo(0, 0); }
-    if (act === "weak") { mix.layer = +el.dataset.n; startMix(); drawMix(); window.scrollTo(0, 0); }
+    if (act === "weak") { mix.mod = el.dataset.n; startMix(); drawMix(); window.scrollTo(0, 0); }
   };
   keyHandler = e => {
     if (mix.phase !== "run") return;
@@ -2265,8 +2684,8 @@ function vHeute() {
 }
 function drawMix() {
   if (mix.phase === "done") return drawMixDone();
-  const it = mix.list[mix.i], lh = it.L ? HUE[it.L] : "var(--accent)";
-  const where = it.L ? `Schicht ${it.L}, ${shortName(it.L)}` : "Grundlagen";
+  const it = mix.list[mix.i], lh = it.L ? HUE[it.L] : MOD[it.m].color, src = it.k === "q" ? Q_BY_ID[it.id] : CARD_BY_ID[it.id];
+  const where = it.L ? `Schicht ${it.L}, ${shortName(it.L)}` : src.u ? `${MOD[it.m].title}, ${unitOf(MOD[it.m], src.u).title}` : MOD[it.m].title;
   setNav({left:`<button class="nb-btn" data-go="start">Beenden</button>`, title:`${mix.i + 1} von ${mix.list.length}`});
   const head = `<div class="qprog" aria-hidden="true"><i style="width:${pct(mix.i, mix.list.length)}%"></i></div>
     <div class="mix-top"><span class="kicker lhk" style="--lh:${lh}">${where}${it.retry ? ", zweiter Versuch" : ""}</span>${mix.combo >= 2 ? `<span class="combo">${icon("flame", 14)} ${mix.combo}er-Serie</span>` : ""}</div>`;
@@ -2298,8 +2717,8 @@ function drawMix() {
 }
 function drawMixDone() {
   const p = pct(mix.firstRight, mix.firsts);
-  const moved = [1, 2, 3, 4, 5, 6, 7].filter(n => mastery(n) !== mix.before[n]);
-  const weak = [1, 2, 3, 4, 5, 6, 7].sort((a, b) => mastery(a) - mastery(b))[0];
+  const moved = MODS.filter(m => modMastery(m.id) !== mix.before[m.id]);
+  const weak = MODS.slice().sort((a, b) => modMastery(a.id) - modMastery(b.id))[0];
   const msg = p === 100 ? "Alles beim ersten Versuch richtig." : p >= 60 ? "Das sitzt. Was offen blieb, kommt bald wieder." : "Das Falsche kommt zuerst wieder, bis es sitzt.";
   setNav({left:`<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>`, title:"Runde geschafft"});
   paint(`
@@ -2312,12 +2731,12 @@ function drawMixDone() {
       <div class="stat"><b>${streakNow()}</b><span>${streakNow() === 1 ? "Tag" : "Tage"} in Folge</span></div>
     </div>
   </section>
-  ${moved.length ? `<section class="section"><div class="group-h">So haben sich deine Schichten verändert</div><div class="group">${moved.sort((a, b) => b - a).map(n => {
-    const to = Math.round(mastery(n) * 100);
-    return `<div class="mbar" style="--lh:${HUE[n]};--from:${Math.round(mix.before[n] * 100)}%;--to:${to}%">${layerIc(n)}<span class="track"><i></i></span><span class="tnum muted">${to} %</span></div>`;
+  ${moved.length ? `<section class="section"><div class="group-h">So haben sich deine Themen verändert</div><div class="group">${moved.map(m => {
+    const to = Math.round(modMastery(m.id) * 100);
+    return `<div class="mbar" style="--lh:${m.color};--from:${Math.round(mix.before[m.id] * 100)}%;--to:${to}%">${modIc(m)}<span class="track"><i></i></span><span class="tnum muted">${to} %</span></div>`;
   }).join("")}</div></section>` : ""}
   <button class="btn btn-fill btn-lg cta" data-act="again-round">Noch eine Runde</button>
-  <button class="btn btn-gray btn-lg" data-act="weak" data-n="${weak}">Schwächste Schicht üben: ${shortName(weak)}</button>`);
+  <button class="btn btn-gray btn-lg" data-act="weak" data-n="${weak.id}">Schwächstes Thema üben: ${weak.title}</button>`);
 }
 
 /* ---------------- Übungen ---------------- */

@@ -1,0 +1,115 @@
+/* Register IT-Sicherheit. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
+(window.LERN_MODULES = window.LERN_MODULES || []).push({
+  id:"sicher", title:"IT-Sicherheit", sub:"Schutzziele, Datenschutz, Krypto, Angriffe", icon:"lock", color:"#ff375f", ap:"AP1 und AP2",
+  exam:"Teil von AP1 (Datenschutz und IT-Sicherheit am Arbeitsplatz) und AP2 (Sicherheit in Netzen)",
+  units:[
+    {id:"ziele", title:"Schutzziele und Schutzbedarf", sum:"CIA, IT-Grundschutz und die Schutzbedarfsanalyse.", sec:[
+      {h:"Die drei Schutzziele", table:{head:["Ziel", "Bedeutung", "Beispiel für eine Maßnahme"], rows:[["Vertraulichkeit", "Nur Berechtigte sehen die Daten", "Verschlüsselung, Rechtevergabe"], ["Integrität", "Daten bleiben korrekt und unverändert", "Hashwerte, digitale Signatur"], ["Verfügbarkeit", "Daten und Systeme stehen bereit", "Backup, RAID, USV, Redundanz"]]}},
+      {p:"Dazu kommen häufig Authentizität und Verbindlichkeit (Nichtabstreitbarkeit). Das BSI beschreibt mit dem IT-Grundschutz ein Vorgehen, um passende Maßnahmen systematisch auszuwählen."},
+      {h:"Schutzbedarfskategorien nach BSI", list:["Normal: Schäden sind begrenzt und überschaubar", "Hoch: Schäden können beträchtlich sein", "Sehr hoch: Schäden können existenzbedrohend sein"]},
+      {h:"Maximumprinzip", p:"Ein IT-System erbt den höchsten Schutzbedarf der Anwendungen und Daten, die darauf laufen. Liegt eine Anwendung mit sehr hohem Schutzbedarf auf einem Server, gilt das für den ganzen Server."},
+      {tip:"In Aufgaben immer zuerst das passende Schutzziel benennen und dann eine Maßnahme nennen, die genau dieses Ziel schützt."}
+    ]},
+    {id:"dsgvo", title:"Datenschutz und DSGVO", sum:"Personenbezogene Daten, Grundsätze, Betroffenenrechte und TOM.", sec:[
+      {p:"Die DSGVO schützt personenbezogene Daten natürlicher Personen. Das sind alle Angaben, die sich auf eine bestimmte oder bestimmbare Person beziehen, zum Beispiel Name, E-Mail-Adresse oder eine IP-Adresse. Besonders geschützt sind etwa Gesundheitsdaten."},
+      {h:"Wichtige Grundsätze (Art. 5 DSGVO)", list:["Rechtmäßigkeit und Transparenz", "Zweckbindung: nur für den festgelegten Zweck", "Datenminimierung: nur so viel wie nötig", "Richtigkeit", "Speicherbegrenzung: löschen, wenn der Zweck entfällt", "Integrität und Vertraulichkeit"]},
+      {h:"Betroffenenrechte", list:["Auskunft (Art. 15)", "Berichtigung (Art. 16)", "Löschung, das Recht auf Vergessenwerden (Art. 17)", "Einschränkung der Verarbeitung (Art. 18)", "Datenübertragbarkeit (Art. 20)", "Widerspruch (Art. 21)"]},
+      {h:"Pflichten des Unternehmens", list:["Datenpanne innerhalb von 72 Stunden an die Aufsichtsbehörde melden (Art. 33)", "Technische und organisatorische Maßnahmen (TOM) treffen (Art. 32)", "Bei externen Dienstleistern einen Auftragsverarbeitungsvertrag schließen (Art. 28)", "Bußgelder bis 20 Mio. Euro oder 4 % des weltweiten Jahresumsatzes möglich"]},
+      {warn:"Datenschutz schützt Menschen vor Missbrauch ihrer Daten. Datensicherheit schützt Daten aller Art vor Verlust und Manipulation. Die Begriffe sind nicht gleich."}
+    ]},
+    {id:"krypto", title:"Verschlüsselung und Hashes", sum:"Symmetrisch, asymmetrisch, Hash, Signatur und Zertifikate.", sec:[
+      {h:"Verfahren im Vergleich", table:{head:["Verfahren", "Schlüssel", "Beispiele", "Stärke"], rows:[["Symmetrisch", "ein gemeinsamer", "AES", "sehr schnell, aber Schlüsselaustausch ist schwierig"], ["Asymmetrisch", "öffentlich und privat", "RSA, ECC", "sicherer Austausch, aber langsam"], ["Hybrid", "beides", "TLS", "asymmetrisch den Schlüssel tauschen, symmetrisch die Daten"]]}},
+      {h:"Wer nutzt welchen Schlüssel?", list:["Verschlüsseln: mit dem öffentlichen Schlüssel des Empfängers", "Entschlüsseln: mit dem eigenen privaten Schlüssel", "Signieren: Hash mit dem eigenen privaten Schlüssel verschlüsseln", "Signatur prüfen: mit dem öffentlichen Schlüssel des Absenders"]},
+      {h:"Hashfunktionen", p:"Ein Hash ist ein Fingerabdruck fester Länge. Er lässt sich nicht zurückrechnen und ändert sich schon bei einem veränderten Zeichen. SHA-256 gilt als sicher, MD5 und SHA-1 nicht mehr. Passwörter speichert man als Hash mit Salt."},
+      {h:"Zertifikate und PKI", p:"Ein Zertifikat nach X.509 bestätigt, dass ein öffentlicher Schlüssel zu einem Inhaber gehört. Eine Zertifizierungsstelle (CA) signiert es, und Browser vertrauen bekannten Stammzertifikaten."},
+      {warn:"Ein Hash ist keine Verschlüsselung: Verschlüsseltes lässt sich mit dem Schlüssel wiederherstellen, ein Hash grundsätzlich nicht."}
+    ]},
+    {id:"angriffe", title:"Angriffe und Schadsoftware", sum:"Malware, Social Engineering und typische Netzangriffe.", sec:[
+      {h:"Schadsoftware", table:{head:["Art", "Merkmal"], rows:[["Virus", "hängt sich an Dateien und braucht einen Auslöser"], ["Wurm", "verbreitet sich selbstständig über Netze"], ["Trojaner", "tarnt sich als nützliches Programm"], ["Ransomware", "verschlüsselt Daten und fordert Lösegeld"], ["Spyware", "spioniert den Nutzer aus"], ["Rootkit", "versteckt sich tief im System"]]}},
+      {h:"Social Engineering", list:["Phishing: gefälschte Mails locken auf falsche Seiten", "Spear-Phishing: gezielt auf eine Person zugeschnitten", "CEO-Fraud: angeblicher Chef fordert eine Überweisung", "Tailgating: Unbefugter geht hinter jemandem durch die Tür"]},
+      {h:"Netz- und Anwendungsangriffe", table:{head:["Angriff", "Vorgehen", "Gegenmaßnahme"], rows:[["DDoS", "Viele Systeme überlasten ein Ziel", "Filterung beim Provider, Redundanz"], ["Man in the Middle", "Täter klinkt sich in die Verbindung ein", "TLS, VPN, Zertifikate prüfen"], ["SQL-Injection", "Schadcode über Eingabefelder", "Prepared Statements"], ["Brute Force", "Passwörter durchprobieren", "Lange Passwörter, Sperren, MFA"], ["ARP-Spoofing", "Falsche MAC-Zuordnung im LAN", "Dynamic ARP Inspection"]]}},
+      {tip:"Der Mensch gilt als größte Schwachstelle. Schulungen sind deshalb eine echte Schutzmaßnahme und gehören in jede Aufzählung."}
+    ]},
+    {id:"schutz", title:"Schutzmaßnahmen im Netz", sum:"Firewall, DMZ, VPN und Zugriffskontrolle.", sec:[
+      {h:"Firewall-Arten", list:["Paketfilter: prüft IP-Adressen und Ports", "Stateful Inspection: merkt sich den Zustand einer Verbindung", "Application Layer Gateway / Proxy: versteht Inhalte auf Schicht 7", "Next-Generation Firewall: ergänzt etwa Angriffserkennung"]},
+      {h:"DMZ", p:"Die demilitarisierte Zone ist ein eigenes Netz zwischen Internet und internem LAN. Öffentlich erreichbare Server wie der Webserver stehen dort. Wird einer übernommen, bleibt das interne Netz geschützt."},
+      {h:"VPN", table:{head:["Art", "Einsatz", "Protokolle"], rows:[["Site-to-Site", "verbindet zwei Standorte", "meist IPsec"], ["Client-to-Site", "Mitarbeiter im Homeoffice", "IPsec, SSL/TLS, WireGuard"]]}},
+      {h:"Zugriff absichern", list:["Least Privilege: nur die wirklich nötigen Rechte", "MFA: kombiniert Wissen, Besitz und Biometrie", "Zero Trust: jeder Zugriff wird geprüft, auch intern", "IDS erkennt Angriffe, IPS blockiert sie zusätzlich", "Netzsegmentierung über VLANs begrenzt Schäden"]},
+      {warn:"Zwei Passwörter sind keine echte 2FA: Es müssen zwei verschiedene Faktoren sein, etwa Passwort und Token."}
+    ]},
+    {id:"backup", title:"Backup und Notfall", sum:"Sicherungsarten, 3-2-1-Regel und Wiederanlauf.", sec:[
+      {h:"Sicherungsarten", table:{head:["Art", "Sichert", "Wiederherstellung braucht"], rows:[["Voll", "alle Daten", "nur das Vollbackup"], ["Differenziell", "Änderungen seit dem letzten Vollbackup", "Voll + letztes differenzielles"], ["Inkrementell", "Änderungen seit der letzten Sicherung", "Voll + alle inkrementellen"]]}},
+      {h:"Die 3-2-1-Regel", list:["3 Kopien der Daten", "auf 2 verschiedenen Medientypen", "davon 1 Kopie außer Haus", "Gegen Ransomware hilft zusätzlich eine Offline-Kopie oder ein unveränderbarer Speicher"]},
+      {h:"Kennzahlen", list:["RPO (Recovery Point Objective): maximal tolerierter Datenverlust in Zeit", "RTO (Recovery Time Objective): maximale Dauer bis zum Wiederanlauf"]},
+      {warn:"RAID ist kein Backup: Es schützt vor Plattenausfall, aber nicht vor Löschen, Ransomware oder Brand. Auch Wiederherstellen muss regelmäßig getestet werden."}
+    ]}
+  ],
+  cards:[
+    {u:"ziele", f:"Die drei Schutzziele", b:"Vertraulichkeit, Integrität, Verfügbarkeit"},
+    {u:"ziele", f:"Welches Schutzziel sichert ein Hashwert?", b:"Integrität"},
+    {u:"ziele", f:"Welches Schutzziel sichert eine USV?", b:"Verfügbarkeit"},
+    {u:"ziele", f:"Was ist das Maximumprinzip?", b:"Ein System erbt den höchsten Schutzbedarf seiner Anwendungen und Daten"},
+    {u:"ziele", f:"Schutzbedarfskategorien nach BSI", b:"Normal, hoch, sehr hoch"},
+    {u:"dsgvo", f:"Was sind personenbezogene Daten?", b:"Angaben zu einer bestimmten oder bestimmbaren natürlichen Person"},
+    {u:"dsgvo", f:"Frist für die Meldung einer Datenpanne", b:"72 Stunden an die Aufsichtsbehörde"},
+    {u:"dsgvo", f:"Was bedeutet Datenminimierung?", b:"Nur so viele Daten erheben, wie für den Zweck nötig sind"},
+    {u:"dsgvo", f:"Was bedeutet TOM?", b:"Technische und organisatorische Maßnahmen zum Schutz der Daten"},
+    {u:"dsgvo", f:"Vertrag mit einem externen Dienstleister", b:"Auftragsverarbeitungsvertrag (Art. 28 DSGVO)"},
+    {u:"dsgvo", f:"Maximales Bußgeld nach DSGVO", b:"Bis 20 Mio. Euro oder 4 % des weltweiten Jahresumsatzes"},
+    {u:"krypto", f:"Symmetrische Verschlüsselung: Beispiel", b:"AES"},
+    {u:"krypto", f:"Asymmetrische Verschlüsselung: Beispiele", b:"RSA, ECC"},
+    {u:"krypto", f:"Womit verschlüsselt man für einen Empfänger?", b:"Mit dessen öffentlichem Schlüssel"},
+    {u:"krypto", f:"Womit erstellt man eine digitale Signatur?", b:"Mit dem eigenen privaten Schlüssel"},
+    {u:"krypto", f:"Warum Hash mit Salt für Passwörter?", b:"Gleiche Passwörter ergeben unterschiedliche Hashes, Rainbow Tables helfen nicht"},
+    {u:"krypto", f:"Wie arbeitet TLS?", b:"Hybrid: asymmetrischer Schlüsselaustausch, danach symmetrische Verschlüsselung"},
+    {u:"krypto", f:"Was bestätigt ein X.509-Zertifikat?", b:"Dass ein öffentlicher Schlüssel zu einem Inhaber gehört"},
+    {u:"angriffe", f:"Virus vs. Wurm", b:"Virus: braucht Wirtsdatei und Auslöser.<br>Wurm: verbreitet sich selbstständig."},
+    {u:"angriffe", f:"Was macht Ransomware?", b:"Verschlüsselt Daten und fordert Lösegeld"},
+    {u:"angriffe", f:"Was ist Phishing?", b:"Gefälschte Nachrichten sollen Zugangsdaten entlocken"},
+    {u:"angriffe", f:"Gegenmaßnahme gegen SQL-Injection", b:"Prepared Statements und Eingabeprüfung"},
+    {u:"angriffe", f:"Was ist ein DDoS-Angriff?", b:"Viele verteilte Systeme überlasten gemeinsam ein Ziel"},
+    {u:"schutz", f:"Was ist eine DMZ?", b:"Eigenes Netz für öffentlich erreichbare Server, getrennt vom LAN"},
+    {u:"schutz", f:"IDS vs. IPS", b:"IDS erkennt Angriffe.<br>IPS blockiert sie zusätzlich."},
+    {u:"schutz", f:"Faktoren bei MFA", b:"Wissen, Besitz, Biometrie"},
+    {u:"schutz", f:"Was bedeutet Least Privilege?", b:"Jeder erhält nur die Rechte, die er wirklich braucht"},
+    {u:"schutz", f:"Was ist Stateful Inspection?", b:"Die Firewall merkt sich den Zustand von Verbindungen"},
+    {u:"backup", f:"Inkrementell sichert ...", b:"Änderungen seit der letzten Sicherung jeder Art"},
+    {u:"backup", f:"Differenziell sichert ...", b:"Änderungen seit dem letzten Vollbackup"},
+    {u:"backup", f:"3-2-1-Regel", b:"3 Kopien, 2 Medientypen, 1 Kopie außer Haus"},
+    {u:"backup", f:"RPO vs. RTO", b:"RPO: maximaler Datenverlust.<br>RTO: maximale Dauer bis zum Wiederanlauf."}
+  ],
+  questions:[
+    {u:"ziele", ap:"AP1", q:"Ein Mitarbeiter ändert unbemerkt Rechnungsbeträge. Welches Schutzziel ist verletzt?", o:["Integrität","Vertraulichkeit","Verfügbarkeit","Skalierbarkeit"], e:"Integrität heißt: Daten bleiben korrekt und unverändert."},
+    {u:"ziele", ap:"AP1", q:"Der Webshop ist wegen eines Stromausfalls offline. Welches Schutzziel ist betroffen?", o:["Verfügbarkeit","Integrität","Vertraulichkeit","Authentizität"], e:"Das System steht nicht bereit. Eine USV und Redundanz würden helfen."},
+    {u:"ziele", ap:"AP1", q:"Ein Laptop mit Kundendaten wird gestohlen, die Platte ist unverschlüsselt. Welches Schutzziel ist vor allem gefährdet?", o:["Vertraulichkeit","Verfügbarkeit","Integrität","Skalierbarkeit"], e:"Unbefugte können die Daten lesen. Festplattenverschlüsselung schützt davor."},
+    {u:"ziele", ap:"AP2", q:"Auf einem Server laufen Anwendungen mit normalem und mit hohem Schutzbedarf. Welchen Schutzbedarf hat der Server?", o:["Hoch","Normal","Den Durchschnitt","Das entscheidet nur der Hersteller"], e:"Das ist das Maximumprinzip: Der höchste Schutzbedarf bestimmt."},
+    {u:"ziele", ap:"AP1", q:"Welche Organisation veröffentlicht in Deutschland den IT-Grundschutz?", o:["BSI","DIN","IHK","ICANN"], e:"Das Bundesamt für Sicherheit in der Informationstechnik gibt den IT-Grundschutz heraus."},
+    {u:"dsgvo", ap:"AP1", q:"Welche Angabe ist ein personenbezogenes Datum?", o:["E-Mail-Adresse eines Kunden","Umsatz einer Abteilung","Anzahl der Server","Quartalsbilanz ohne Namen"], e:"Die E-Mail-Adresse lässt sich einer bestimmten Person zuordnen."},
+    {u:"dsgvo", ap:"AP1", q:"Wie schnell muss eine Datenpanne in der Regel an die Aufsichtsbehörde gemeldet werden?", o:["Innerhalb von 72 Stunden","Innerhalb von 24 Stunden","Innerhalb von 14 Tagen","Sofort nach Monatsende"], e:"Art. 33 DSGVO nennt 72 Stunden, nachdem die Panne bekannt wurde."},
+    {u:"dsgvo", ap:"AP1", q:"Ein Formular fragt für den Newsletter auch nach dem Geburtsdatum, ohne dass es gebraucht wird. Welcher Grundsatz ist verletzt?", o:["Datenminimierung","Datenübertragbarkeit","Verfügbarkeit","Rechtsschutz"], e:"Es dürfen nur Daten erhoben werden, die für den Zweck nötig sind."},
+    {u:"dsgvo", ap:"AP1", q:"Welches Recht nutzt ein Kunde, der wissen will, welche Daten über ihn gespeichert sind?", o:["Auskunftsrecht","Recht auf Vergessenwerden","Widerspruchsrecht","Recht auf Berichtigung"], e:"Art. 15 DSGVO regelt das Auskunftsrecht."},
+    {u:"dsgvo", ap:"AP2", q:"Eine Firma lässt Kundendaten bei einem Cloud-Anbieter verarbeiten. Was muss sie schließen?", o:["Einen Auftragsverarbeitungsvertrag","Einen Kaufvertrag über die Daten","Einen Werkvertrag mit dem Kunden","Nichts, Cloud-Anbieter sind ausgenommen"], e:"Art. 28 DSGVO verlangt für die Verarbeitung im Auftrag einen solchen Vertrag."},
+    {u:"krypto", ap:"both", q:"Welcher Schlüssel entschlüsselt eine Nachricht, die mit deinem öffentlichen Schlüssel verschlüsselt wurde?", o:["Dein privater Schlüssel","Dein öffentlicher Schlüssel","Der öffentliche Schlüssel des Absenders","Der private Schlüssel des Absenders"], e:"Nur der passende private Schlüssel kann das entschlüsseln."},
+    {u:"krypto", ap:"both", q:"Warum nutzt TLS ein hybrides Verfahren?", o:["Asymmetrisch löst den Schlüsseltausch, symmetrisch ist für die Daten schnell","Weil AES allein gebrochen ist","Weil RSA nur mit Zertifikaten rechnen kann","Damit keine Schlüssel nötig sind"], e:"So verbindet TLS den sicheren Austausch mit hoher Geschwindigkeit."},
+    {u:"krypto", ap:"AP2", q:"Womit prüft der Empfänger eine digitale Signatur?", o:["Mit dem öffentlichen Schlüssel des Absenders","Mit dem privaten Schlüssel des Absenders","Mit seinem eigenen privaten Schlüssel","Mit einem gemeinsamen AES-Schlüssel"], e:"Der Absender signiert privat, jeder kann öffentlich prüfen."},
+    {u:"krypto", ap:"both", q:"Welches Verfahren ist symmetrisch?", o:["AES","RSA","ECC","Diffie-Hellman"], e:"AES nutzt einen gemeinsamen Schlüssel. RSA und ECC sind asymmetrisch, Diffie-Hellman dient dem Schlüsselaustausch."},
+    {u:"krypto", ap:"AP2", q:"Welche Hashfunktion sollte man heute noch einsetzen?", o:["SHA-256","MD5","SHA-1","CRC32"], e:"MD5 und SHA-1 gelten als gebrochen, CRC ist nur eine Prüfsumme."},
+    {u:"krypto", ap:"AP2", q:"Wozu dient ein Salt beim Speichern von Passwörtern?", o:["Gleiche Passwörter ergeben verschiedene Hashes","Das Passwort lässt sich wieder entschlüsseln","Der Hash wird kürzer","Der Login wird schneller"], e:"Ein zufälliger Salt macht vorberechnete Tabellen wertlos."},
+    {u:"angriffe", ap:"AP1", q:"Ein Programm verschlüsselt alle Dateien und fordert Bitcoin. Was ist das?", o:["Ransomware","Spyware","Rootkit","Adware"], e:"Ransomware erpresst Lösegeld. Gegen den Datenverlust hilft ein Offline-Backup."},
+    {u:"angriffe", ap:"AP1", q:"Schadsoftware verbreitet sich ohne Zutun des Nutzers über das Netz. Was ist es?", o:["Wurm","Trojaner","Klassischer Virus","Keylogger"], e:"Würmer verbreiten sich selbstständig."},
+    {u:"angriffe", ap:"AP1", q:"Eine Mail vom angeblichen Geschäftsführer fordert eine eilige Überweisung. Wie heißt das?", o:["CEO-Fraud","DDoS","SQL-Injection","Tailgating"], e:"CEO-Fraud ist eine Form von Social Engineering."},
+    {u:"angriffe", ap:"AP2", q:"Wie schützt man eine Anwendung am besten vor SQL-Injection?", o:["Prepared Statements","Längere Passwörter","Mehr Arbeitsspeicher","Ein VLAN"], e:"Die Eingaben werden so nie als SQL-Befehl ausgeführt."},
+    {u:"angriffe", ap:"AP2", q:"Ein Angreifer liest Daten mit, indem er sich zwischen Client und Server schaltet. Was hilft?", o:["TLS mit Zertifikatsprüfung","DHCP","Spanning Tree","Ein RAID 1"], e:"TLS verschlüsselt, und das Zertifikat zeigt, ob der Server echt ist."},
+    {u:"schutz", ap:"AP2", q:"Wo sollte ein öffentlich erreichbarer Webserver idealerweise stehen?", o:["In der DMZ","Im internen LAN","Im VLAN der Geschäftsführung","Direkt am Client"], e:"Die DMZ schützt das LAN, falls der Webserver übernommen wird."},
+    {u:"schutz", ap:"AP2", q:"Zwei Firmenstandorte sollen dauerhaft sicher über das Internet verbunden werden. Was passt?", o:["Site-to-Site-VPN mit IPsec","Client-to-Site-VPN je PC","Portweiterleitung auf alle Server","Offenes WLAN"], e:"Site-to-Site verbindet ganze Netze dauerhaft."},
+    {u:"schutz", ap:"both", q:"Welche Kombination ist echte Zwei-Faktor-Authentifizierung?", o:["Passwort und Einmalcode vom Token","Passwort und PIN","Benutzername und Passwort","Zwei verschiedene Passwörter"], e:"Es müssen zwei verschiedene Faktoren sein: hier Wissen und Besitz."},
+    {u:"schutz", ap:"AP2", q:"Was unterscheidet ein IPS von einem IDS?", o:["Das IPS blockiert Angriffe aktiv","Das IPS arbeitet nur auf Schicht 1","Das IDS verschlüsselt den Verkehr","Es gibt keinen Unterschied"], e:"Ein IDS meldet nur, ein IPS greift auch ein."},
+    {u:"schutz", ap:"both", q:"Eine Praktikantin bekommt nur Lesezugriff auf den einen Ordner, den sie braucht. Welches Prinzip ist das?", o:["Least Privilege","Maximumprinzip","Zweckbindung","Round Robin"], e:"Jeder erhält nur die Rechte, die er braucht."},
+    {u:"backup", ap:"AP1", q:"Welche Sicherungsart ist am schnellsten erstellt, aber am aufwendigsten wiederherzustellen?", o:["Inkrementell","Voll","Differenziell","Spiegelung"], e:"Sie sichert am wenigsten, zum Wiederherstellen brauchst du aber das Vollbackup und alle Inkremente."},
+    {u:"backup", ap:"AP2", q:"Sonntag Voll, dann täglich differenziell. Am Donnerstag fällt der Server aus. Was brauchst du?", o:["Sonntag und Mittwoch","Nur Mittwoch","Sonntag, Montag, Dienstag und Mittwoch","Nur Sonntag"], e:"Das letzte differenzielle Backup enthält alle Änderungen seit dem Vollbackup."},
+    {u:"backup", ap:"AP2", q:"Sonntag Voll, dann täglich inkrementell. Am Donnerstag fällt der Server aus. Was brauchst du?", o:["Sonntag, Montag, Dienstag und Mittwoch","Sonntag und Mittwoch","Nur Mittwoch","Nur Sonntag"], e:"Inkremente bauen aufeinander auf, deshalb werden alle gebraucht."},
+    {u:"backup", ap:"both", q:"Was verlangt die 3-2-1-Regel?", o:["3 Kopien, 2 Medientypen, 1 Kopie außer Haus","3 Server, 2 Standorte, 1 Admin","3 Vollbackups in 2 Tagen und 1 Test","3 Medien, 2 Passwörter, 1 Cloud"], e:"So überstehen Daten auch einen Brand oder den Ausfall eines Mediums."},
+    {u:"backup", ap:"AP2", q:"Ein Unternehmen darf höchstens eine Stunde Daten verlieren. Welche Kennzahl ist das?", o:["RPO","RTO","SLA","USV"], e:"RPO beschreibt den maximal tolerierten Datenverlust, RTO die Dauer bis zum Wiederanlauf."},
+    {u:"backup", ap:"both", q:"Warum ersetzt ein RAID 1 kein Backup?", o:["Versehentlich gelöschte Daten fehlen auch auf der Spiegelplatte","RAID 1 ist zu langsam","RAID 1 braucht Bandlaufwerke","RAID 1 funktioniert nur mit SSDs"], e:"Der Spiegel übernimmt jede Änderung sofort, auch das Löschen und die Verschlüsselung durch Ransomware."}
+  ]
+});
