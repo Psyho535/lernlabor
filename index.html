@@ -1,0 +1,1855 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lernlabor">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAZ7SURBVHhe7d1ZbJRlFIfxQ9kXgYqJiUajXqk3Gi8wMSGRRKMmJuqVV65UcFdAEWkLaNkXl7hvURATcEkEo0ZUYtHE3QgR2RdlsYWWdjrtTBfoMV8TIvleh2rxwvf/PSf53czde96n05lJGezURe6ACks/AMTMTl3Y7YAKgoYUgoYUgoYUK19w1AEVBA0pBA0pVj7/iAMqCBpSCBpSCBpSCBpSrHxelwMqCBpSCBpSbPS8LgdUEDSkEDSk2Oi5nQ6oIGhIIWhIIWhIsdFzOhxQQdCQQtCQQtCQYqNq2h1QQdCQQtCQQtCQYqMeLzqggqAhhaAhhaAhxUY9VnBABUFDCkFDio2c3eaACoKGFIKGFIKGFBs5q9UBFQQNKQQNKQQNKTZyZqsDKuyUmXkHVBA0pBA0pNgp1XkHVBA0pNiI6hYHVNiIqhZXNf6lNn/ko3aft64D6zp6dnHNa23BnpTIBZ1EvHZblzMnng0HjvoNywrB/mInE/Rps1t8aW1H+t6YXmbFT51+5px8sM9YyQSd/Epl+jbvbOwK9hkrG1GV89hd9lyrF3mVcVIz6b3k5Ue429jYiMqcx279Lmo+2anLdwd7jZFE0M3F7vT9MH2YC5fkg93GJvqgL3kqn74Xpo9z66pCsN/Y2PDKZo/Z+BcJ+r+aaR8Wg/3GJvqgz6jJpe+F6eNc/WprsN/YRB90YuvBo+m7YfowY2aFu42NDZ/R7LFb8kV7+m6YfzlrNnUGe42RDZ/R5LEbMzN5lj6SviPmH07yKdF583PBXmMkEXRi/At5Pr7r49yysi3YZ6xkgk4kzzJrt3am74spMclvteSJIL3HmNnwRw+7mutfz/vcz4q+fmcX/saSL4o+6Z1WH1PdFOwudpJBI7sIGlIIGlJs2PRGB1QQNKQQNKQQNKTYsEcaHFBB0JBC0JBC0JBiw6Y1OKDChk075IoumH/Yb1yW87mftslKznduTWNw9iyTC/q613Je15Ktf5KV/Bno5c82BbvIIhv68CFXUP5ogy//vpi+60zN4nWFnj2kd5MlMkG/8nW2Yz42c9a2BbvJEomgr3qxOX2vmZ1iV7df+mRTsKOssKEPH/TY1e7gn10dP2t+aQ92lBU29KGDHrvkWYn5a5I3xekdZUX0QV/6xOH0fTLufv7cxmBXWRB90Fe90JS+S8a95wc9vassiD7o8umH0neZ+WkudAd7ygobOrXeY7dhP194fvzU7ugIdpQVEkFXf8hX6h4/E1fmgh1lhUTQiW/38NFdMms3Z/fZOSET9MULGzL3Nxzp2VJ/xM+ZfSjYTZbYkCl1ruL0ynpf/l0hfc+ZmMWft/roafXBTrJGKuhjxi5t8Ifeb/G3fyr2vEFSlfzw3vduzi9a0BDsIKskg0Z22ZDJfziggqAhhaAhhaAhxYZMPuCAChvy4AEHVBA0pBA0pNjgB/c7oIKgIYWgIcUGP7DfFV35TINXfZDz1RuLXru9/X/t5a9aveKtJh+76GBwDvw7NviBfa4kibjYGe/XGmyp6/JxTyZhh2dD72SCPrv6D/92d0e6j2in5uOW4IzonUzQq37U+8P+m5Y1BufEidng+/d67G56ozHdgsTU5Y742VUHgvOiNImglV5qpKdqTXNwXpQWfdCjpu6L+k1gb7N6YyE4M0qLPuixC+vSDUjNnsau4MwozQbd97vHbNxS7aCT19HpM6O06IMeOWWv9kuODYXgzCgt+qATP+/T/dakyjXNwXlRmkTQFSs0P7ZrKhz1syr3B+dFaTbo3t9cwSeb9P7ToIo3G4Jz4sRkgj5rxj7/Znd7uolo56Uv88EZ0TuZoI+pXN0U9ZvE5FONa5+vD86Ff0Yu6ETybJ1EUfNRs9duK/7vrfqhrecH8YqnCflk2aB7fnNAhQ26Z48DKggaUmzg3XscUEHQkELQkGID797tgAobeNduB1QQNKQQNKQQNKTYwDt3OaDCBty5ywEVBA0pBA0pNmDSTgdUEDSkWP9JOx1QYf0n7nBABUFDCkFDCkFDivWfuN0BFdb/ju0OqCBoSCFoSLGyO7Y5oIKgIYWgIcXKKrY5oMLKKrY6oIKgIYWgIcXKJmx1QIWVTdjigAqChhSChhTrd/sWB1QQNKQQNKRYv9s3O6DC+t222QEVBA0pBA0pBA0p1u/WXx1QQdCQQtCQYnbLJgdkBA8AMQseAGIWPADEzG7+xQEZwQNAxP4Exg0qEdq12IEAAAAASUVORK5CYII=">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAauSURBVHhe7d1JbNzlGcfxJw7ZQxITJFBzaNVDb2wXJJBoxYEKDkhw4QgFwr6EFAiBxE5SOwYCqCIREm2EugASKkICFQVwWBSEQL5QBUFWyEIb48SOl/EyXnnQOxAJ/V8aM8nkMM/v+0ify9zeZ+b7n/9MYtvO2eQOqLLiA4ASO+fJbx1QRQCQRgCQRgCQZo1PTDmgigAgjQAgjQAgzRofn3RAFQFAGgFAGgFAGgFAmjW2TTigigAgjQAgzZa0TTigigAgjQAgzZZsHHdAFQFAGgFAGgFAGgFAmi1pHXNAFQFAGgFAGgFAmi1uGXVAFQFAGgFAGgFAmi3+U9kBVQQAaQQAaQQAabZ4w4gDqggA0ggA0ggA0mzR+mEHVBEApBEApBEApNmidUMOqCIASCMASCMASLNFzUMOqLKzmwcdUEUAkEYAkGZnNw06oIoAII0AIM0WNpUcUGUL15Y8snPXl/yaF4a9uX3UX/1swj88MImT+PeuCW97f6yys2Wtg9k+owkdwJV/Gfa9x6acObXpGvzWr//HSLbXSMIGkK5iTG3mpU/Hs/1GETKAdNViajvpFrK45whs4doBj2RZa6ny1s3UdsoT7pc/N5Ttu97ZwjUDHknbe6PF546p0aQPyMV917twAaQniTkzc7h3Ktt3vQsXALc/Z3aWtZSyndczW7Cm36NYuq6/+HwxNZ4rnx/M9l7PQgWQ8L3/mZ10kSnuvJ6FC+DVnePF54yp0ezsnMz2Xe9swWP9HsmK1/k3gDM1WzvGsn3XO1vwWJ9HsrS5v3KlYmo7XaUp//XjA9m+6124AJLLtpS8PMG3QbWcm14ZzvYcQcgAkuv+PlS5ajGnN+lCsurNkWy/UYQNIElv2e17+VB8qtPx9YRf8udSttdIbMGjvR7d0qY+v3pryZvfHvGN75YxjbSrX2zoy/YYkUQAwP9DAJBGAJBm81cfd0AVAUAaAUAaAUCazX+kxwFVBABpBABpBABpNn9VjwOqbP6qbgdUhQ/g4qd6feP2YW/fMyb18wHprOnM6expB8W94HuhA2jaNsRPhv3wQy1pF8X9oNtt3sPdHtGOL/lBmOKknTQ+2pPtSlnIANLVjvnpaW0fzvalLFwA6X6X256Tz++29GV7U2XzHj7mkWz5kN8LNN1s/WQk25sqm/fQMY+Ee//pZ+eRiWxvqsIF0D/C7c90k24RG1d3Z7tTFCqA9KRy///z5vwmAkhCBZCkt3fm5LPn6GS2N1U278GjHsnWj/kQPN386z/lbG+qwgVww9/4IxnTzY0vDmR7UxUugCRd4ZifnvbdY9m+lIUM4Ffru6X+49vPnfQNWdpNcV/KbO4fuzyiX65L/ybAX4s/MR2Hxv2iJ3qyPakLG8AJa98crDz5qpPOnnZQ3Au+Fz6AH/vts8f998/1SkhnLZ4fOakAgCKbu/IbB1QRAKQRAKQRAKTZ3JWdDqiyuQ90OqCKACCNACDN5jxwxAFVBABpBABpNmfFEVdxYdtRv2pLT135zYau7ByoHZuz4n8e2fKXe33H/lEvj9fvb4voG5mqnOHa53uy8+H0hA3gvNWd/s+O4eJrqe7nrx8N+eKH0tUrPzOqFzKA9AI5dHyy+NoJMx0Hx4igRkIGkK6S0aflrVJ2blTP5tz/X4/kqs3Hiq+VsHPpk13Z+VGdcAFs/mCw+DoJO5u2l7LzozrhAkj3xyrzzq5ydn5UJ1wA9fx1Z7WTvh4tnh/Vsdn3fe2RpBeFynQNTGbnR3XCBbBj32jxdRJ23tg5kp0f1QkXwOYPSsXXSdhp2TaQnR/VCRfAFc90SXwOSGe8oPWb7Pyojs2+97BH07It/q9If/C13uzcqF7IABatTJ8F4v6K9He+KGdnxqkJGcAJ0d4J0m3Pmjf6snPi1IUOILni6S7f1D5QeUeox88Glf8Kva9cifmCls7sfDg9Nvueww6ostn3HHJAFQFAGgFAms26+5ADqggA0ggA0mzW3QcdUGWz7jrogCoCgDQCgDQCgDSbdecBB1TZWXcecEAVAUAaAUCanXXHVw6oIgBIIwBIs5l3fOWAKpt5+5cOqCIASCMASCMASLOZt+93QJXNvG2/A6oIANIIANKs4bZ9DqgiAEgjAEizhuX7HFBlDcv3OqCKACCNACCNACDNGm7d64Aqa7h1jwOqCADSCADSbMYtexxQRQCQRgCQZjNu2e2AKptx824HVBEApBEApBEApNmMP+xyQBUBQBoBQBoBQJrZTV84ICt7AFCSPQAoyR4AlNiNnzsgK3sAEPIdsnN8LXE1wXQAAAAASUVORK5CYII=">
+<title>IT-Lernlabor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&display=swap">
+<style>
+body{margin:0}
+button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.navbar{top:0!important;height:calc(52px + env(safe-area-inset-top,0px))!important;padding-top:env(safe-area-inset-top,0px)!important}
+.island{top:calc(10px + env(safe-area-inset-top,0px))!important}
+</style>
+</head>
+<body><style>
+:root{
+  /* Layout: iOS-style app shell. Large titles that collapse into a frosted nav bar, inset grouped lists,
+     a floating tab bar on phones and a plain sidebar on desktop. One accent; green/red only for feedback. */
+  --bg:#f2f2f7;
+  --side:#fbfbfd;
+  --surface:#ffffff;
+  --fill:rgba(118,118,128,.12);
+  --fill-2:rgba(118,118,128,.075);
+  --fill-3:rgba(120,120,128,.22);
+  --label:#0b0b0f;
+  --label-2:rgba(60,60,67,.64);
+  --label-3:rgba(60,60,67,.32);
+  --sep:rgba(60,60,67,.17);
+  --accent:#007aff;
+  --accent-tint:rgba(0,122,255,.1);
+  --green:#34c759;
+  --green-ink:#248a3d;
+  --red:#ff3b30;
+  --red-ink:#d70015;
+  --material:rgba(249,249,251,.8);
+  --material-strong:rgba(249,249,251,.92);
+  --thumb:#ffffff;
+  --island:#0b0b0f;
+  --island-edge:transparent;
+  --card-shadow:0 18px 40px -24px rgba(0,0,0,.28),0 1px 2px rgba(0,0,0,.04);
+  --pop-shadow:0 14px 40px -14px rgba(0,0,0,.32);
+  --ease-ios:cubic-bezier(.32,.72,0,1);
+  --ease-spring:cubic-bezier(.34,1.5,.64,1);
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Geist",system-ui,"Segoe UI",Roboto,sans-serif;
+  --f-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,"Segoe UI",Roboto,sans-serif;
+  --f-mono:ui-monospace,"SF Mono","Geist Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000;--side:#0e0e10;--surface:#1c1c1e;
+    --fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.15);--fill-3:rgba(120,120,128,.36);
+    --label:#ffffff;--label-2:rgba(235,235,245,.62);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
+    --accent:#0a84ff;--accent-tint:rgba(10,132,255,.2);
+    --green:#30d158;--green-ink:#30d158;--red:#ff453a;--red-ink:#ff6961;
+    --material:rgba(28,28,30,.78);--material-strong:rgba(44,44,46,.94);--thumb:#636366;
+    --island:#1c1c1e;--island-edge:rgba(255,255,255,.12);
+    --card-shadow:0 18px 40px -24px rgba(0,0,0,.9),0 0 0 .5px rgba(255,255,255,.06);
+    --pop-shadow:0 14px 40px -14px rgba(0,0,0,.9);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000;--side:#0e0e10;--surface:#1c1c1e;
+  --fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.15);--fill-3:rgba(120,120,128,.36);
+  --label:#ffffff;--label-2:rgba(235,235,245,.62);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
+  --accent:#0a84ff;--accent-tint:rgba(10,132,255,.2);
+  --green:#30d158;--green-ink:#30d158;--red:#ff453a;--red-ink:#ff6961;
+  --material:rgba(28,28,30,.78);--material-strong:rgba(44,44,46,.94);--thumb:#636366;
+  --island:#1c1c1e;--island-edge:rgba(255,255,255,.12);
+  --card-shadow:0 18px 40px -24px rgba(0,0,0,.9),0 0 0 .5px rgba(255,255,255,.06);
+  --pop-shadow:0 14px 40px -14px rgba(0,0,0,.9);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--label);font:16px/1.47 var(--f-ui);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;min-height:100vh;overflow-x:hidden}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:2px}
+.ic{display:block;flex:none}
+.muted{color:var(--label-2)}
+.small{font-size:13.5px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.sidebar{display:none}
+main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom,0px))}
+.col{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:22px;min-width:0;padding-top:4px}
+@media (min-width:900px){
+  .sidebar{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:260px;z-index:20;background:var(--side);border-right:.5px solid var(--sep);padding:calc(20px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+  main{margin-left:260px;padding-inline:40px;padding-block:0 64px}
+  .tabbar{display:none!important}
+}
+.side-head{display:flex;align-items:center;gap:12px;padding:0 10px 22px}
+.app-mark{width:38px;height:38px;flex:none;border-radius:10px;background:var(--label);display:flex;flex-direction:column;justify-content:center;gap:3.5px;padding:0 9px}
+.app-mark i{display:block;height:3.5px;border-radius:2px;background:var(--surface)}
+.app-mark i:nth-child(2){margin-right:3px}
+.app-mark i:nth-child(3){margin-right:6px}
+.side-head b{font:700 16px/1.2 var(--f-display);display:block;letter-spacing:-.01em}
+.side-head small{font-size:12.5px;color:var(--label-2)}
+.side-nav{display:flex;flex-direction:column;gap:2px}
+.side-item{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;border:0;background:transparent;font-size:15px;font-weight:500;cursor:pointer;text-align:left;width:100%;color:var(--label);transition:background .15s,color .15s}
+.side-item .ic{color:var(--accent)}
+.side-item:hover{background:var(--fill-2)}
+.side-item[aria-current="page"]{background:var(--accent);color:#fff}
+.side-item[aria-current="page"] .ic{color:#fff}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:16px 12px 0}
+.side-prog .top{display:flex;justify-content:space-between;font-size:13px;color:var(--label-2);margin-bottom:7px}
+.side-prog .top b{color:var(--label);font-variant-numeric:tabular-nums}
+.sync-line{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--label-2)}
+
+.navbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:52px;margin-inline:-16px;padding-inline:6px;border-bottom:.5px solid transparent;transition:background-color .3s,border-color .3s}
+.navbar.scrolled{background:var(--material);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom-color:var(--sep)}
+@media (min-width:900px){.navbar{margin-inline:-40px;padding-inline:26px}}
+.nb-left{justify-self:start;min-width:0;display:flex}
+.nb-right{justify-self:end;min-width:0;display:flex;gap:4px}
+.nav-title{font-weight:620;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(52vw,420px);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .4s var(--ease-ios)}
+.navbar.scrolled .nav-title{opacity:1;transform:none}
+.back,.nb-btn{display:inline-flex;align-items:center;gap:4px;height:40px;border:0;background:transparent;color:var(--accent);font-size:16.5px;border-radius:12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;max-width:100%}
+.back{padding:0 10px 0 2px;gap:0}
+.back span{overflow:hidden;text-overflow:ellipsis}
+.nb-btn{padding:0 10px}
+.back:active,.nb-btn:active{opacity:.35}
+
+.tabbar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),440px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:5px;border-radius:999px;
+  background:var(--material);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);border:.5px solid var(--sep);box-shadow:0 12px 32px -14px rgba(0,0,0,.35)}
+.tab-ind{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px) / 5);border-radius:999px;background:var(--fill);transform:translateX(calc(var(--i,0) * 100%));transition:transform .55s var(--ease-spring)}
+.tab{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:52px;border:0;background:transparent;border-radius:999px;color:var(--label-2);font-size:10.5px;font-weight:600;cursor:pointer;min-width:0;transition:color .2s}
+.tab span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.tab .ic{transition:transform .4s var(--ease-spring)}
+.tab:active .ic{transform:scale(.8)}
+.tab[aria-current="page"]{color:var(--accent)}
+
+/* ---------- type & blocks ---------- */
+.title-block{display:flex;flex-direction:column;gap:3px}
+.kicker{font-size:13px;font-weight:600;color:var(--label-2);text-transform:uppercase;letter-spacing:.03em}
+.large{font:700 clamp(30px,6.2vw,36px)/1.12 var(--f-display);letter-spacing:-.025em;overflow-wrap:break-word;hyphens:auto}
+.lede{font-size:16.5px;line-height:1.5;color:var(--label-2);max-width:60ch}
+.section{display:flex;flex-direction:column;gap:10px;min-width:0}
+.section-t{font:700 21px/1.25 var(--f-display);letter-spacing:-.016em;padding-inline:2px}
+.group-h{font-size:13px;color:var(--label-2);text-transform:uppercase;letter-spacing:.03em;padding:4px 16px 0}
+.group-f{font-size:13px;color:var(--label-2);padding:0 16px;line-height:1.45}
+.group{background:var(--surface);border-radius:16px;overflow:hidden;min-width:0}
+.cell,.kv,.opt,.target,.slot{position:relative}
+.cell + .cell::before,.kv + .kv::before,.opt + .opt::before,.target + .target::before,.slot + .slot::before{content:"";position:absolute;top:0;right:0;left:var(--inset,16px);border-top:.5px solid var(--sep)}
+.cell{display:flex;align-items:center;gap:14px;min-height:52px;padding:10px 16px;width:100%;text-align:left;background:transparent;border:0;color:var(--label);font-size:16px;cursor:pointer;transition:background .2s}
+.cell:active{background:var(--fill-2)}
+.cell.static{cursor:default}
+.cell.static:active{background:transparent}
+.cell.with-badge{--inset:62px}
+.cell-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.cell-title{font-size:16px;font-weight:500;overflow-wrap:break-word;hyphens:auto}
+.cell-sub{font-size:13.5px;color:var(--label-2);line-height:1.4}
+.cell-sub.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cell-detail{color:var(--label-2);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cell .chev{color:var(--label-3)}
+.cell.danger{color:var(--red-ink);justify-content:center;font-weight:500}
+.cell-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--accent);color:#fff;flex:none}
+.cell-ic.gray{background:var(--fill-3);color:var(--label)}
+.ok-check{color:var(--green-ink)}
+.badge{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--fill);color:var(--label);font:650 15px/1 var(--f-display);font-variant-numeric:tabular-nums;flex:none;transition:background .3s,color .3s}
+.badge.sm{width:26px;height:26px;border-radius:8px;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--fill-2);font-size:14px;font-weight:500;line-height:1.25}
+.chip.accent{background:var(--accent-tint);color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.card{background:var(--surface);border-radius:20px;padding:20px;min-width:0}
+@media (min-width:700px){.card{padding:24px}}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;margin-bottom:14px}
+.card-t{font:650 17px/1.3 var(--f-display);display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+.card-t .ic{color:var(--accent)}
+.card p{line-height:1.55}
+.card.tint{background:var(--accent-tint)}
+.grid2{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px) and (max-width:899px),(min-width:1080px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ---------- controls ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 18px;border-radius:12px;border:0;font-weight:600;font-size:16px;cursor:pointer;white-space:nowrap;text-decoration:none;transition:transform .35s var(--ease-spring),background .2s,color .2s,opacity .2s}
+.btn:active:not([disabled]){transform:scale(.95)}
+.btn-fill{background:var(--accent);color:#fff}
+.btn-tint{background:var(--accent-tint);color:var(--accent)}
+.btn-gray{background:var(--fill);color:var(--label)}
+.btn-plain{background:transparent;color:var(--accent);padding:0 6px;height:36px}
+.btn-lg{height:52px;border-radius:14px;width:100%;font-size:17px}
+.btn-round{width:52px;height:52px;border-radius:50%;padding:0}
+.btn-round.big{width:64px;height:64px}
+.btn[disabled]{opacity:.3;cursor:not-allowed}
+.btn.done{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green-ink)}
+.seg{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));padding:2px;border-radius:10px;background:var(--fill);isolation:isolate;min-width:0}
+.seg-thumb{position:absolute;z-index:-1;top:2px;bottom:2px;left:2px;width:calc((100% - 4px) / var(--n));border-radius:8px;background:var(--thumb);box-shadow:0 3px 8px rgba(0,0,0,.12),0 1px 1px rgba(0,0,0,.04);transform:translateX(calc(var(--i) * 100%));transition:transform .4s var(--ease-ios)}
+.seg button{position:relative;border:0;background:transparent;height:32px;padding:0 4px;font-size:13px;font-weight:500;cursor:pointer;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--label);transition:transform .3s var(--ease-spring)}
+.seg button[aria-pressed="true"]{font-weight:620}
+.seg button:active{transform:scale(.95)}
+.switch{width:51px;height:31px;border-radius:999px;background:var(--fill-3);position:relative;border:0;cursor:pointer;flex:none;transition:background .3s}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:999px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 3px 1px rgba(0,0,0,.06);transition:transform .4s var(--ease-spring),width .2s var(--ease-ios)}
+.switch[aria-checked="true"]{background:var(--green)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.switch:active::after{width:33px}
+.switch[aria-checked="true"]:active::after{transform:translateX(14px)}
+.bar{height:4px;border-radius:4px;background:var(--fill);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:inherit;transition:width .9s var(--ease-ios)}
+
+/* ---------- start ---------- */
+.prog-row{display:flex;align-items:center;gap:20px}
+.ring{position:relative;flex:none}
+.ring svg{display:block;transform:rotate(-90deg)}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ring-label b{font:700 26px var(--f-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ring-label small{font-size:11.5px;color:var(--label-2);margin-top:5px}
+.prog-info{display:flex;flex-direction:column;gap:4px;min-width:0}
+.prog-label{font:700 22px/1.2 var(--f-display);letter-spacing:-.02em}
+.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}
+@media (min-width:600px){.stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mini{background:var(--fill-2);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.mini span{font-size:12.5px;color:var(--label-2)}
+.mini b{font:700 20px/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.tile{display:flex;flex-direction:column;gap:14px;padding:16px;border-radius:20px;background:var(--surface);border:0;text-align:left;cursor:pointer;min-width:0;color:var(--label);transition:transform .4s var(--ease-spring)}
+.tile:active{transform:scale(.95)}
+.tile-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-tint);color:var(--accent)}
+.tile b{font:650 16px/1.25 var(--f-display);display:block}
+.tile small{display:block;color:var(--label-2);font-size:13.5px;margin-top:3px;line-height:1.35}
+.mnemo{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:14px}
+.mw{display:flex;flex-direction:column;line-height:1.1}
+.mw-word{font:600 19px var(--f-display);letter-spacing:-.01em}
+.mw-word b{color:var(--accent);font-weight:780}
+.mw small{color:var(--label-2);font-size:12px;margin-top:5px}
+.mnemo.swap{animation:rise .45s var(--ease-ios)}
+.fact{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+.fact-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:var(--accent-tint)}
+.fact p{font-size:16.5px;line-height:1.5;margin:4px 0 10px;max-width:62ch}
+.fact p.swap{animation:rise .45s var(--ease-ios)}
+
+/* ---------- layer detail ---------- */
+.layer-pick{display:flex;gap:8px;flex-wrap:wrap}
+.lp{position:relative;width:40px;height:40px;border-radius:50%;border:0;background:var(--surface);color:var(--label);font:650 15px var(--f-display);cursor:pointer;transition:transform .35s var(--ease-spring),background .2s,color .2s}
+.lp:active{transform:scale(.86)}
+.lp[aria-current="page"]{background:var(--accent);color:#fff}
+.lp.learned::after{content:"";position:absolute;right:1px;top:1px;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid var(--bg)}
+.layer-en{color:var(--label-2);font-size:15.5px;margin-top:4px}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.ticks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;line-height:1.5}
+.ticks li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin:9px 0 0 6px}
+.ticks.warn li::before{background:var(--red)}
+.kv{display:grid;grid-template-columns:minmax(104px,auto) minmax(0,1fr);gap:4px 16px;padding:13px 16px;align-items:baseline}
+.kv dt{color:var(--label-2);font-size:15px}
+.kv dd{margin:0;font-size:15.5px;overflow-wrap:anywhere}
+dl.group{margin:0}
+.hscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.frame-bar{display:flex;gap:4px;min-width:620px}
+.fb{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:10px 8px;border-radius:10px;min-width:0;background:var(--fill)}
+.fb.phy{background:transparent;border:1px dashed var(--fill-3)}
+.fb.pay{background:var(--accent-tint)}
+.fb b{font-size:13px;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb.pay b{color:var(--accent)}
+.fb small{font:500 11.5px var(--f-mono);color:var(--label-2)}
+.media3{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:620px){.media3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mcell{padding:14px;border-radius:14px;background:var(--fill-2)}
+.mcell b{display:block;margin-bottom:4px;font-weight:620}
+.mcell p{color:var(--label-2);font-size:14px;line-height:1.5}
+.sub-h{font:620 14px var(--f-ui);color:var(--label-2);margin:20px 0 10px}
+.sublayer{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:14px;border-radius:14px;background:var(--fill-2)}
+.sublayer + .sublayer{margin-top:8px}
+.sublayer p{color:var(--label-2);font-size:14px;margin-top:2px}
+.handshake{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px 14px;align-items:center}
+.hs-end{font-weight:620;font-size:14px;padding:6px 12px;border-radius:10px;background:var(--fill)}
+.hs-arrow{position:relative;height:28px;display:flex;align-items:center;justify-content:center}
+.hs-arrow::before{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--accent)}
+.hs-arrow::after{content:"";position:absolute;top:50%;right:1px;width:8px;height:8px;border-top:1.5px solid var(--accent);border-right:1.5px solid var(--accent);transform:translateY(-50%) rotate(45deg)}
+.hs-arrow.back::after{right:auto;left:1px;transform:translateY(-50%) rotate(-135deg)}
+.hs-arrow span{position:relative;background:var(--surface);padding:2px 10px;border-radius:999px;font:600 12.5px var(--f-mono);color:var(--accent);border:1px solid var(--accent-tint)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.t{border-collapse:collapse;width:100%;font-size:14.5px}
+table.t.wide{min-width:760px}
+.t th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--label-2);font-weight:600;padding:8px 12px;border-bottom:.5px solid var(--sep);white-space:nowrap}
+.t td{padding:11px 12px;border-bottom:.5px solid var(--sep);vertical-align:top;line-height:1.45}
+.t tr:last-child td{border-bottom:0}
+.t td.mono{white-space:nowrap}
+.t .lname{display:flex;align-items:center;gap:10px;font-weight:600;white-space:nowrap}
+
+/* ---------- encapsulation ---------- */
+.enc-grid{display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px) and (max-width:899px),(min-width:1060px){.enc-grid{grid-template-columns:176px minmax(0,1fr)}}
+.who{font-size:12.5px;font-weight:600;color:var(--label-2);text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.steps-ms{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.ms{display:flex;align-items:center;gap:10px;padding:5px 8px 5px 5px;border-radius:10px;color:var(--label-3);font-size:14px;transition:background .35s var(--ease-ios),color .35s}
+.ms .badge{width:26px;height:26px;border-radius:8px;font-size:13px;color:var(--label-3)}
+.ms.done{color:var(--label-2)}
+.ms.done .badge{color:var(--label)}
+.ms .ok{margin-left:auto;color:var(--green-ink)}
+.ms.active{background:var(--accent-tint);color:var(--accent);font-weight:620}
+.ms.active .badge{background:var(--accent);color:#fff}
+@media (max-width:639px),(min-width:900px) and (max-width:1059px){
+  .steps-ms{flex-direction:row;justify-content:space-between}
+  .ms{padding:4px;background:transparent!important}
+  .ms span:not(.badge),.ms .ok{display:none}
+}
+.enc-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.enc-main.swap{animation:qIn .45s var(--ease-ios)}
+.step-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px;color:var(--label-2)}
+.enc-main h2{font:700 23px/1.22 var(--f-display);letter-spacing:-.02em}
+.enc-main > p{font-size:16px;line-height:1.55;color:var(--label-2);max-width:60ch}
+.packet{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:16px;background:var(--fill-2);min-height:72px;align-items:stretch}
+.pkt{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:9px 12px;border-radius:11px;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.07);min-width:0;transition:background .4s,color .4s}
+.pkt b{font-size:14px;font-weight:650;white-space:nowrap}
+.pkt small{font:500 11.5px var(--f-mono);color:var(--label-2);white-space:nowrap}
+.pkt.data{flex:1 1 140px;background:transparent;box-shadow:none;border:1px dashed var(--fill-3)}
+.pkt.new{background:var(--accent);color:#fff}
+.pkt.new small{color:rgba(255,255,255,.82)}
+.pkt.enter{animation:pktIn .6s var(--ease-spring)}
+.pkt.leaving{opacity:.5;background:transparent;box-shadow:none;border:1px dashed var(--red);animation:leave .9s var(--ease-ios)}
+.pkt.leaving b{text-decoration:line-through;color:var(--red-ink)}
+.bits{display:flex;flex-direction:column;gap:10px;width:100%;padding:6px}
+.bits code{font:500 13.5px/1.7 var(--f-mono);word-spacing:4px;overflow-wrap:anywhere}
+.wave{width:100%;height:34px;display:block;animation:reveal 1.3s var(--ease-ios) both}
+.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:0}
+.fields div{padding:10px 12px;border-radius:12px;background:var(--fill-2);min-width:0}
+.fields dt{font-size:12px;color:var(--label-2)}
+.fields dd{margin:2px 0 0;font:550 13.5px var(--f-mono);overflow-wrap:anywhere}
+.media-ctrl{display:flex;align-items:center;justify-content:center;gap:20px;padding-top:18px;margin-top:18px;border-top:.5px solid var(--sep)}
+.stepper{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.stepper button{width:8px;height:8px;border-radius:4px;background:var(--fill-3);border:0;padding:0;cursor:pointer;transition:width .45s var(--ease-ios),background .3s}
+.stepper button.on{width:24px;background:var(--accent)}
+.pdu-chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.pdu-chain .ic{color:var(--label-3)}
+.calc{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14.5px}
+.calc + .calc{margin-top:10px}
+.calc .eq{color:var(--label-3);font-weight:600}
+
+/* ---------- trainieren ---------- */
+.hub{display:flex;align-items:center;gap:16px;padding:18px;border-radius:20px;background:var(--surface);border:0;width:100%;text-align:left;cursor:pointer;color:var(--label);transition:transform .4s var(--ease-spring)}
+.hub:active{transform:scale(.97)}
+.hub .cell-ic{width:48px;height:48px;border-radius:14px}
+.hub b{font:650 18px/1.25 var(--f-display);display:block;letter-spacing:-.01em}
+.hub small{display:block;color:var(--label-2);font-size:14px;margin-top:2px}
+.hub .chev{margin-left:auto;color:var(--label-3)}
+.hist{position:relative;display:flex;align-items:flex-end;gap:6px;height:100px;margin-top:24px;border-bottom:.5px solid var(--sep)}
+.hist::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--sep)}
+.hcol{position:relative;flex:1;max-width:40px;height:100%;display:flex;align-items:flex-end}
+.hcol i{display:block;width:100%;height:var(--h);border-radius:6px 6px 2px 2px;background:var(--fill-3);min-height:3px;transform-origin:bottom;animation:grow .7s var(--ease-ios) both;animation-delay:calc(var(--k) * 40ms)}
+.hcol:last-child i{background:var(--accent)}
+.hcol span{position:absolute;left:0;right:0;bottom:calc(var(--h) + 4px);text-align:center;font-size:11px;color:var(--label-2);font-variant-numeric:tabular-nums}
+.hcol:last-child span{color:var(--label);font-weight:650}
+.hist-axis{display:flex;justify-content:space-between;font-size:11.5px;color:var(--label-2);margin-top:6px}
+
+/* ---------- quiz ---------- */
+.modes{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px){.modes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mode{display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:20px;background:var(--surface);border:0;text-align:left;cursor:pointer;color:var(--label);transition:transform .4s var(--ease-spring)}
+.mode:active:not([disabled]){transform:scale(.96)}
+.mode[disabled]{opacity:.45;cursor:not-allowed}
+.mode .big{font:750 34px/1 var(--f-display);letter-spacing:-.03em;color:var(--accent);font-variant-numeric:tabular-nums}
+.mode b{font:650 17px var(--f-display)}
+.mode span{color:var(--label-2);font-size:14px;line-height:1.4}
+.qprog{height:4px;border-radius:4px;background:var(--fill);overflow:hidden}
+.qprog i{display:block;height:100%;background:var(--accent);border-radius:inherit;transition:width .55s var(--ease-ios)}
+.qcard{display:flex;flex-direction:column;gap:18px}
+.qcard.in{animation:qIn .5s var(--ease-ios)}
+.qtext{font:650 clamp(20px,3.2vw,25px)/1.3 var(--f-display);letter-spacing:-.016em;max-width:44ch}
+.opt{display:grid;grid-template-columns:30px minmax(0,1fr) 22px;gap:12px;align-items:center;width:100%;text-align:left;padding:14px 16px;border:0;background:transparent;font-size:16px;line-height:1.4;cursor:pointer;color:var(--label);transition:background .25s,opacity .3s;--inset:58px}
+.opt:active:not([disabled]){background:var(--fill-2)}
+.opt .key{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:650 13px var(--f-display);background:var(--fill);color:var(--label-2)}
+.opt[disabled]{cursor:default}
+.opt.ok{background:color-mix(in srgb,var(--green) 14%,transparent)}
+.opt.ok .key{background:var(--green);color:#fff;animation:pop .5s var(--ease-spring)}
+.opt.no{background:color-mix(in srgb,var(--red) 11%,transparent);animation:shake .42s}
+.opt.no .key{background:var(--red);color:#fff}
+.opt.dim{opacity:.42}
+.opt .mark{color:var(--green-ink)}
+.opt.no .mark{color:var(--red-ink)}
+.explain{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:16px;border-radius:16px;background:var(--fill-2);font-size:15.5px;line-height:1.55;animation:rise .45s var(--ease-ios)}
+.explain b{display:block;margin-bottom:2px}
+.explain.good b,.explain.good .ic{color:var(--green-ink)}
+.explain.bad b,.explain.bad .ic{color:var(--red-ink)}
+.result-head{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.rv{padding:16px;display:flex;flex-direction:column;gap:6px}
+.rv + .rv{border-top:.5px solid var(--sep)}
+.rv b{font-weight:620;line-height:1.4}
+.rv .yours{color:var(--red-ink);font-size:14.5px}
+.rv .right{color:var(--green-ink);font-size:14.5px;font-weight:600}
+.rv p{color:var(--label-2);font-size:14.5px}
+.kbd{font:600 11px var(--f-mono);padding:2px 6px;border-radius:6px;background:var(--fill);color:var(--label-2)}
+
+/* ---------- flashcards ---------- */
+.stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+.deck{position:relative;width:100%;max-width:560px}
+.deck::before,.deck::after{content:"";position:absolute;left:6%;right:6%;bottom:-10px;height:40px;border-radius:24px;background:var(--surface);opacity:.6;z-index:0;box-shadow:var(--card-shadow)}
+.deck::after{left:12%;right:12%;bottom:-19px;opacity:.35}
+.flash{position:relative;z-index:1;perspective:1600px;width:100%;height:clamp(250px,42vw,320px);cursor:pointer;border-radius:24px;animation:cardIn .5s var(--ease-ios)}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .6s var(--ease-ios);transform-style:preserve-3d}
+.flash.flipped .flash-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;background:var(--surface);box-shadow:var(--card-shadow);padding:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;overflow:auto}
+.face.back{transform:rotateY(180deg)}
+.face-q{font:700 clamp(22px,3.6vw,30px)/1.2 var(--f-display);letter-spacing:-.02em;max-width:22ch}
+.face-a{font-size:clamp(16.5px,2.3vw,19px);line-height:1.5;font-weight:500;max-width:38ch}
+.face .hint{font-size:12.5px;color:var(--label-3)}
+.flash.fly-right{animation:flyR .26s cubic-bezier(.5,0,.75,0) forwards}
+.flash.fly-left{animation:flyL .26s cubic-bezier(.5,0,.75,0) forwards}
+.card-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:560px;margin-top:8px}
+.card-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;color:var(--label-2);font-size:13.5px;text-align:center}
+.done-card{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:560px}
+.done-card h2{font:700 25px var(--f-display);letter-spacing:-.02em}
+.toggle-cell{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 16px}
+
+/* ---------- exercises ---------- */
+.assign{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px) and (max-width:899px),(min-width:1060px){.assign{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
+.pool{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:10;box-shadow:var(--card-shadow)}
+.tchip{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;border:0;background:var(--fill);font-weight:600;font-size:15px;cursor:grab;color:var(--label);transition:transform .35s var(--ease-spring),background .2s,color .2s}
+.tchip:active{transform:scale(.9)}
+.tchip[aria-pressed="true"]{background:var(--accent);color:#fff;transform:scale(1.05)}
+.tchip.shake{animation:shake .42s;background:color-mix(in srgb,var(--red) 16%,transparent)}
+.target{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px 10px 16px;width:100%;text-align:left;cursor:pointer;min-height:58px;border:0;background:transparent;color:var(--label);transition:background .2s;--inset:62px}
+.target:active:not([disabled]){background:var(--fill-2)}
+.target.over{background:var(--accent-tint)}
+.target .plus{color:var(--accent);opacity:0;transform:scale(.6);transition:opacity .25s,transform .35s var(--ease-spring)}
+.target.ready .plus{opacity:1;transform:none}
+.tg-main{display:flex;flex-direction:column;gap:6px;min-width:0}
+.tg-main > b{font-weight:500;font-size:15.5px}
+.placed{display:flex;flex-wrap:wrap;gap:6px}
+.placed:empty{display:none}
+.placed .chip{font-size:13px;padding:4px 10px;background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green-ink)}
+.placed .chip.new{animation:pop .5s var(--ease-spring)}
+.target.flash-ok{animation:okFlash .8s var(--ease-ios)}
+.target.flash-bad{animation:badFlash .7s var(--ease-ios),shake .42s}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;font-size:14px;color:var(--label-2)}
+.status b{color:var(--label);font-variant-numeric:tabular-nums}
+.order{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px) and (max-width:899px),(min-width:1060px){.order{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+.slot{display:flex;align-items:center;gap:12px;padding:10px 16px;min-height:52px;color:var(--label-3);font-size:15px;--inset:60px}
+.slot.filled{color:var(--label);font-weight:500}
+.slot.filled .badge{background:var(--accent);color:#fff}
+.slot.new{animation:okFlash .8s var(--ease-ios)}
+.slot.new .badge{animation:pop .5s var(--ease-spring)}
+.slot.next{color:var(--accent)}
+.timer{font:700 42px/1 var(--f-display);letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.check-draw path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .5s .15s var(--ease-ios) forwards}
+.big-check{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;animation:pop .55s var(--ease-spring)}
+
+/* ---------- facts ---------- */
+.stats{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:620px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{padding:14px;border-radius:14px;background:var(--fill-2);min-width:0}
+.stat b{display:block;font:700 28px/1.05 var(--f-display);letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.stat b small{font-size:14px;font-weight:600;color:var(--accent);margin-left:4px;letter-spacing:0}
+.stat span{font-size:13px;color:var(--label-2);display:block;margin-top:6px;line-height:1.35}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto repeat(7,minmax(46px,auto));gap:6px}
+.cmp-h{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--label-2);padding:0 4px 2px}
+.cmp-o{grid-column:1;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;font-weight:500;font-size:14.5px;min-width:0;background:var(--fill-2)}
+.cmp-o span:last-child{overflow-wrap:anywhere}
+.cmp-t{grid-column:2;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:10px 14px;border-radius:12px;background:var(--accent-tint);min-width:0}
+.cmp-t b{font:650 15px var(--f-display);color:var(--accent)}
+.cmp-t small{color:var(--label-2);font-size:12.5px;line-height:1.4}
+.trouble .cell{align-items:flex-start;padding-block:14px}
+.trouble .cell-sub{margin-bottom:8px}
+.cmd{font:550 12.5px var(--f-mono);padding:3px 8px;border-radius:7px;background:var(--fill);white-space:nowrap}
+.mnemo-grid{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:700px){.mnemo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mnemo-box{padding:14px;border-radius:14px;background:var(--fill-2)}
+.mnemo-box .mnemo{margin-top:8px;gap:8px 12px}
+.mnemo-box .mw-word{font-size:16px}
+
+/* ---------- island & sheet ---------- */
+.island{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top,0px));z-index:100;display:flex;align-items:center;gap:10px;padding:9px 18px 9px 10px;border-radius:999px;background:var(--island);color:#fff;font-size:14.5px;font-weight:600;box-shadow:var(--pop-shadow);border:1px solid var(--island-edge);
+  transform:translate(-50%,-150%) scale(.6);opacity:0;transition:transform .55s var(--ease-spring),opacity .25s;pointer-events:none;max-width:calc(100% - 32px)}
+.island.show{transform:translate(-50%,0) scale(1);opacity:1}
+.island .idot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent);flex:none}
+.island.good .idot{background:var(--green)}
+.island.bad .idot{background:var(--red)}
+.island span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (min-width:900px){.island{left:calc(50% + 130px)}}
+.sheet-wrap{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;padding:12px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.34);animation:fade .3s}
+.sheet{position:relative;width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;animation:sheetUp .5s var(--ease-ios)}
+.sheet-group{background:var(--material-strong);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border-radius:14px;overflow:hidden;text-align:center}
+.sheet-msg{padding:16px 18px;font-size:13.5px;color:var(--label-2);line-height:1.4}
+.sheet-msg b{display:block;font-size:14px;font-weight:600;margin-bottom:3px}
+.sheet-btn{display:block;width:100%;height:56px;border:0;border-top:.5px solid var(--sep);background:transparent;font-size:18px;color:var(--accent);cursor:pointer;transition:background .15s}
+.sheet-btn:active{background:var(--fill)}
+.sheet-btn.destructive{color:var(--red)}
+.sheet-btn.cancel{font-weight:600;border-top:0}
+.sheet-wrap.closing .sheet{animation:sheetDown .28s var(--ease-ios) forwards}
+.sheet-wrap.closing .sheet-backdrop{animation:fade .28s reverse forwards}
+
+/* ---------- motion ---------- */
+.col.entering.enter-fade > *{animation:rise .6s var(--ease-ios) both;animation-delay:calc(var(--d,0) * 45ms)}
+.col.entering.enter-push{animation:pushIn .5s var(--ease-ios)}
+.col.entering.enter-pop{animation:popIn .5s var(--ease-ios)}
+.col > :nth-child(2){--d:1}.col > :nth-child(3){--d:2}.col > :nth-child(4){--d:3}.col > :nth-child(5){--d:4}.col > :nth-child(6){--d:5}.col > :nth-child(n+7){--d:6}
+@keyframes rise{from{opacity:.25;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pushIn{from{opacity:.3;transform:translateX(56px)}to{opacity:1;transform:none}}
+@keyframes popIn{from{opacity:.3;transform:translateX(-56px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:.25;transform:translateY(18px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes qIn{from{opacity:.25;transform:translateX(32px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.55)}60%{transform:scale(1.14)}100%{transform:scale(1)}}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes pktIn{from{opacity:.25;transform:translateX(-22px) scale(.8)}to{opacity:1;transform:none}}
+@keyframes leave{0%{opacity:1;transform:none}100%{opacity:.5;transform:translateY(3px) scale(.97)}}
+@keyframes okFlash{0%{background:color-mix(in srgb,var(--green) 26%,transparent)}100%{background:transparent}}
+@keyframes badFlash{0%{background:color-mix(in srgb,var(--red) 20%,transparent)}100%{background:transparent}}
+@keyframes flyR{to{transform:translateX(70%) rotate(9deg);opacity:0}}
+@keyframes flyL{to{transform:translateX(-70%) rotate(-9deg);opacity:0}}
+@keyframes sheetUp{from{transform:translateY(115%)}to{transform:none}}
+@keyframes sheetDown{to{transform:translateY(115%)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+@keyframes reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+</style>
+
+<aside class="sidebar" aria-label="Navigation">
+  <div class="side-head"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>Modul 1 · OSI-Modell</small></div></div>
+  <nav class="side-nav" id="sideNav"></nav>
+  <div class="side-foot">
+    <div class="side-prog"><div class="top"><span>Fortschritt</span><b id="spPct">0 %</b></div><div class="bar"><i id="spBar" style="width:0%"></i></div></div>
+    <div class="sync-line"></div>
+  </div>
+</aside>
+<main id="main">
+  <header class="navbar" id="navbar"><div class="nb-left"></div><div class="nav-title"></div><div class="nb-right"></div></header>
+  <div id="view" class="col"></div>
+</main>
+<nav class="tabbar" id="tabbar" aria-label="Navigation"><span class="tab-ind" aria-hidden="true"></span></nav>
+<div class="island" id="island" role="status" aria-live="polite"></div>
+<div id="sheetRoot"></div>
+
+<script>
+(() => {
+"use strict";
+document.documentElement.lang = "de";
+const $ = (s, r = document) => r.querySelector(s);
+const view = $("#view");
+const reduced = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+/* ---------------- Icons ---------------- */
+const ICONS = {
+  start:'<path d="M3.5 10.2 12 3.5l8.5 6.7"/><path d="M5.5 9v11h4.5v-6h4v6h4.5V9"/>',
+  schichten:'<path d="m12 3.5 8.5 4.25L12 12 3.5 7.75z"/><path d="m3.5 12 8.5 4.25L20.5 12"/><path d="m3.5 16.25 8.5 4.25 8.5-4.25"/>',
+  kapselung:'<rect x="3" y="4.5" width="18" height="15" rx="3.5"/><rect x="7" y="8.5" width="10" height="7" rx="1.8"/>',
+  trainieren:'<circle cx="12" cy="12" r="8.75"/><circle cx="12" cy="12" r="4.75"/><circle cx="12" cy="12" r=".9" fill="currentColor"/>',
+  fakten:'<path d="M5 4.75A1.75 1.75 0 0 1 6.75 3H19.5v14.5H6.75A1.75 1.75 0 0 0 5 19.25z"/><path d="M5 19.25A1.75 1.75 0 0 0 6.75 21H19.5v-3.5"/><path d="M9 7.5h6.5"/>',
+  karten:'<rect x="3.5" y="7" width="13" height="13.5" rx="2.5"/><path d="M7.5 3.5h10.5a2.5 2.5 0 0 1 2.5 2.5v10.5"/>',
+  quiz:'<circle cx="12" cy="12" r="8.75"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.25c-.75.36-1.2 1-1.2 1.85v.4"/><path d="M12 16.9h.01"/>',
+  ueben:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M17 14v6M14 17h6"/>',
+  check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  right:'<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>',
+  left:'<path d="m14.5 5.5-6.5 6.5 6.5 6.5"/>',
+  up:'<path d="M12 19.5v-15"/><path d="m6 10.5 6-6 6 6"/>',
+  down:'<path d="M12 4.5v15"/><path d="m6 13.5 6 6 6-6"/>',
+  play:'<path d="M8.5 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2a.8.8 0 0 0-1.2.7z" fill="currentColor" stroke="none"/>',
+  pause:'<rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none"/>',
+  shuffle:'<path d="M3.5 7h3.2c2 0 3.1 1 4.3 3l1.9 3.4c1.1 2 2.3 3.6 4.4 3.6h3.2"/><path d="m18 14.5 2.5 2.5-2.5 2.5"/><path d="M3.5 17h3.2c1.4 0 2.4-.6 3.2-1.6"/><path d="M14.1 8.6c.8-1 1.8-1.6 3.2-1.6h3.2"/><path d="m18 4.5 2.5 2.5-2.5 2.5"/>',
+  reset:'<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5V9h4.5"/>',
+  x:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  bulb:'<path d="M9 17.5h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V17h5v-1.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z"/>',
+  mail:'<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+  warn:'<path d="M10.3 4.6 2.9 17.5A2 2 0 0 0 4.6 20.5h14.8a2 2 0 0 0 1.7-3L13.7 4.6a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4"/><path d="M12 17h.01"/>',
+  spark:'<path d="M12 3.5l2.1 5.4 5.4 2.1-5.4 2.1L12 18.5l-2.1-5.4L4.5 11l5.4-2.1z"/>',
+  tasks:'<path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="m3.5 6.5 1.2 1.2L7 5.4M3.5 12l1.2 1.2L7 10.9M3.5 17.5l1.2 1.2L7 16.4"/>',
+  id:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.8 16c.6-1.4 1.6-2 2.7-2s2.1.6 2.7 2"/><path d="M14 10h4M14 13.5h3"/>',
+  plug:'<path d="M9 3.5v4M15 3.5v4"/><path d="M6.5 7.5h11v3a5.5 5.5 0 0 1-11 0z"/><path d="M12 16v4.5"/>',
+  cloud:'<path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17.9 9a4.75 4.75 0 0 1-.4 9.5z"/>',
+  device:'<rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/>',
+  server:'<rect x="3.5" y="4" width="17" height="7" rx="2"/><rect x="3.5" y="13" width="17" height="7" rx="2"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/>',
+  timer:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.5"/><path d="M9.5 3h5"/>',
+  wave:'<path d="M3 12h3l2-6 4 12 3-9 2 3h4"/>'
+};
+const icon = (n, s = 20, cls = "") => `<svg class="ic ${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ""}</svg>`;
+
+/* ---------------- Inhalte ---------------- */
+const LAYERS = [
+  {n:1, de:"Bitübertragungsschicht", en:"Physical Layer", alias:"auch: physikalische Schicht", pdu:"Bit", pduS:"Bit", addr:"keine", tcpip:"Netzzugangsschicht",
+   summary:"Überträgt einzelne Bits als physikalisches Signal über ein Medium: als Spannung im Kupferkabel, als Lichtimpuls in der Glasfaser oder als Funkwelle.",
+   tasks:["Bits in Signale umwandeln und zurück (Leitungscodierung)","Medium, Stecker und Pinbelegung festlegen, z. B. RJ45","Übertragungsrate und Takt definieren","Übertragungsrichtung: simplex, halbduplex oder vollduplex"],
+   protocols:["1000BASE-T (Ethernet-PHY)","RJ45 / 8P8C","Twisted Pair Cat 6A","Glasfaser (LWL)","DSL","WLAN-Funk (802.11 PHY)","Bluetooth-Funk"],
+   devices:["Hub","Repeater","Medienkonverter","Kabel und Stecker","Transceiver (SFP)"],
+   analogy:"Die Straße, das Postauto und seine Räder: der physische Weg, auf dem der Brief transportiert wird. Was im Brief steht, spielt hier keine Rolle.",
+   example:"Ein Patchkabel überträgt Spannungswechsel, eine Glasfaser Lichtimpulse. Die Link-LED am Switch-Port zeigt dir, ob überhaupt ein Signal anliegt.",
+   faults:["Kabel defekt, geknickt oder nicht gesteckt","Link-LED am Port bleibt aus","Twisted-Pair-Strecke länger als 100 m","Elektromagnetische Störungen, z. B. neben Starkstromleitungen"],
+   tip:"Hub und Repeater arbeiten auf Schicht 1. Sie verstärken oder verteilen nur Signale und verstehen keine Adressen."},
+  {n:2, de:"Sicherungsschicht", en:"Data Link Layer", alias:"auch: Datensicherungsschicht", pdu:"Frame (Rahmen)", pduS:"Frame", addr:"MAC-Adresse (48 Bit)", tcpip:"Netzzugangsschicht",
+   summary:"Sorgt für eine möglichst fehlerfreie Übertragung zwischen direkt verbundenen Geräten im selben Netz. Bits werden zu Frames gebündelt und per MAC-Adresse zugestellt.",
+   tasks:["Frames bilden (Framing) mit Header und Trailer","Physische Adressierung über MAC-Adressen","Fehlererkennung per Prüfsumme (FCS / CRC-32)","Medienzugriff regeln: CSMA/CD (Ethernet), CSMA/CA (WLAN)","Flusskontrolle zwischen zwei Nachbarn"],
+   protocols:["Ethernet (IEEE 802.3)","WLAN (IEEE 802.11)","VLAN (IEEE 802.1Q)","STP (IEEE 802.1D)","PPP","ARP (zwischen 2 und 3)"],
+   devices:["Switch","Bridge","WLAN Access Point","Netzwerkkarte (NIC)"],
+   analogy:"Der Briefträger im Ort: Er bringt den Brief von einer Station zur nächsten und steckt ihn in den richtigen Briefkasten. Er kennt nur die Hausnummern in seinem Bezirk.",
+   example:"Ein Switch liest die Ziel-MAC eines Frames, schaut in seine MAC-Adresstabelle und leitet den Frame nur an den passenden Port weiter, nicht an alle.",
+   faults:["Falsches VLAN am Switch-Port","Duplex-Mismatch zwischen zwei Geräten","Switching-Schleife ohne STP führt zum Broadcast-Sturm","Doppelte MAC-Adresse im Netz"],
+   tip:"Eine MAC-Adresse hat 48 Bit und wird als sechs Hex-Paare geschrieben, z. B. 3C:52:82:1A:9F:04. Die ersten 24 Bit (OUI) stehen für den Hersteller."},
+  {n:3, de:"Vermittlungsschicht", en:"Network Layer", alias:"auch: Netzwerkschicht", pdu:"Paket", pduS:"Paket", addr:"IP-Adresse (IPv4 32 Bit, IPv6 128 Bit)", tcpip:"Internetschicht",
+   summary:"Verbindet verschiedene Netze miteinander. Sie vergibt logische Adressen (IP) und bestimmt den Weg, den ein Paket vom Sender zum Empfänger nimmt (Routing).",
+   tasks:["Logische Adressierung mit IP-Adressen","Routing: den besten Weg durch mehrere Netze bestimmen","Pakete anhand der Routingtabelle weiterleiten","Zu große Pakete fragmentieren","Fehler- und Statusmeldungen über ICMP"],
+   protocols:["IPv4","IPv6","ICMP (ping, traceroute)","IPsec","OSPF","RIP"],
+   devices:["Router","Layer-3-Switch","Firewall mit IP-Filter"],
+   analogy:"Das Postverteilzentrum: Anhand von Postleitzahl und Ort wird entschieden, über welche Zentren der Brief zum Ziel gelangt.",
+   example:"Dein Router bekommt ein Paket an 203.0.113.10. Das Ziel liegt nicht im lokalen Netz, also schickt er es über seine Standardroute ins Internet. Jeder Router unterwegs verringert die TTL um 1.",
+   faults:["Falsches Standard-Gateway eingetragen","Falsche Subnetzmaske","IP-Adresskonflikt","Fehlende oder falsche Route"],
+   tip:"Router trennen Broadcast-Domänen, Switches trennen nur Kollisionsdomänen. Diese Unterscheidung wird in Prüfungen gern abgefragt."},
+  {n:4, de:"Transportschicht", en:"Transport Layer", alias:"", pdu:"Segment (TCP) · Datagramm (UDP)", pduS:"Segment", addr:"Portnummer (16 Bit, 0–65535)", tcpip:"Transportschicht",
+   summary:"Stellt die Ende-zu-Ende-Verbindung zwischen zwei Anwendungen her. Portnummern bestimmen, welches Programm die Daten bekommt. TCP sorgt zusätzlich für Zuverlässigkeit.",
+   tasks:["Daten in Segmente aufteilen und wieder zusammensetzen","Anwendungen über Portnummern adressieren","Zuverlässige Übertragung mit Bestätigungen (TCP)","Flusskontrolle (Sliding Window) und Staukontrolle","Richtige Reihenfolge über Sequenznummern"],
+   protocols:["TCP","UDP","Portnummern 0–65535","Well-known Ports 0–1023"],
+   devices:["Firewall (Portfilter, stateful)","Load Balancer (L4)"],
+   analogy:"Der Versandservice: Ein langer Text wird auf nummerierte Briefe verteilt. Ein Einschreiben mit Rückschein ist TCP, eine Postkarte ohne Bestätigung ist UDP.",
+   example:"Dein Browser baut per 3-Way-Handshake (SYN, SYN-ACK, ACK) eine TCP-Verbindung zu Port 443 des Webservers auf. Dein eigener Port wird zufällig gewählt, z. B. 51234.",
+   faults:["Port durch eine Firewall gesperrt","Dienst lauscht nicht auf dem erwarteten Port","Paketverlust führt zu vielen Neuübertragungen"],
+   tip:"TCP ist verbindungsorientiert und zuverlässig (HTTP, SSH, E-Mail). UDP ist verbindungslos und schnell (DNS, VoIP, Streaming, Online-Spiele)."},
+  {n:5, de:"Sitzungsschicht", en:"Session Layer", alias:"auch: Kommunikationssteuerungsschicht", pdu:"Daten", pduS:"Daten", addr:"keine eigene", tcpip:"Anwendungsschicht",
+   summary:"Steuert den Dialog zwischen zwei Systemen: Sie baut Sitzungen auf, hält sie aufrecht und beendet sie. Synchronisationspunkte erlauben, nach einem Abbruch weiterzumachen.",
+   tasks:["Sitzungen auf- und abbauen","Dialogsteuerung: wer darf wann senden","Synchronisationspunkte (Checkpoints) setzen","Wiederaufnahme nach einem Verbindungsabbruch"],
+   protocols:["NetBIOS","RPC","SOCKS","PPTP"],
+   devices:["Keine typischen Netzwerkgeräte","Gateway"],
+   analogy:"Die Absprache zum Briefwechsel: Wer schreibt wann, und ab welchem Brief macht man weiter, wenn einer verloren gegangen ist?",
+   example:"Ein großer Download bricht ab und läuft ab dem letzten Checkpoint weiter statt von vorn. Eine Videokonferenz hält deine Sitzung offen, auch wenn kurz niemand spricht.",
+   faults:["Sitzung läuft ab (Session-Timeout)","Anmeldung bleibt nicht erhalten","Verbindung wird nach Leerlauf getrennt"],
+   tip:"Im TCP/IP-Modell gibt es keine eigene Sitzungsschicht. Ihre Aufgaben übernehmen dort die Anwendungsprotokolle."},
+  {n:6, de:"Darstellungsschicht", en:"Presentation Layer", alias:"", pdu:"Daten", pduS:"Daten", addr:"keine", tcpip:"Anwendungsschicht",
+   summary:"Übersetzt Daten in ein Format, das beide Seiten verstehen. Hier werden Daten kodiert, komprimiert und verschlüsselt.",
+   tasks:["Zeichenkodierung umsetzen (ASCII, UTF-8)","Datenformate und Syntax festlegen","Daten komprimieren (z. B. JPEG, MPEG)","Ver- und Entschlüsselung (z. B. TLS)"],
+   protocols:["TLS / SSL","MIME","ASN.1","JPEG, PNG, GIF","MPEG, MP3","ASCII, UTF-8"],
+   devices:["Keine typischen Netzwerkgeräte","Gateway"],
+   analogy:"Der Übersetzer und das Siegel: Der Brief wird in eine Sprache gebracht, die der Empfänger versteht, und versiegelt, damit niemand mitliest.",
+   example:"Ein Foto wird als JPEG komprimiert, Text als UTF-8 kodiert und die Verbindung zum Onlinebanking per TLS verschlüsselt.",
+   faults:["Falsche Zeichenkodierung: aus „ä“ wird „Ã¤“","Zertifikatsfehler bei TLS","Dateiformat wird nicht unterstützt"],
+   tip:"TLS wird je nach Lehrbuch Schicht 5 oder 6 zugeordnet. Verschlüsselung als Aufgabe gehört im OSI-Modell zur Darstellungsschicht."},
+  {n:7, de:"Anwendungsschicht", en:"Application Layer", alias:"", pdu:"Daten (Nachricht)", pduS:"Daten", addr:"Hostnamen, URLs (über DNS aufgelöst)", tcpip:"Anwendungsschicht",
+   summary:"Die Schnittstelle zwischen Anwendung und Netzwerk. Sie stellt Dienste wie Web, E-Mail, Namensauflösung oder Dateiübertragung bereit, die Programme nutzen.",
+   tasks:["Netzwerkdienste für Anwendungen bereitstellen","Web-, Mail- und Dateizugriff ermöglichen","Namensauflösung über DNS","Authentifizierung und Verzeichnisdienste"],
+   protocols:["HTTP / HTTPS","DNS","DHCP","SMTP, IMAP, POP3","FTP, SFTP","SSH, Telnet","SNMP, NTP, LDAP"],
+   devices:["Proxy","Application Gateway","Next-Gen-Firewall (L7)","Server und Clients"],
+   analogy:"Du schreibst den Brief: Inhalt und Absicht. Ob er später mit dem Fahrrad oder im Flugzeug transportiert wird, ist dir egal.",
+   example:"Dein Browser sendet die Anfrage „GET /index.html“ per HTTP an den Webserver und erhält die Webseite als Antwort zurück.",
+   faults:["DNS löst den Namen nicht auf","Falsche Zugangsdaten","Server-Dienst ist abgestürzt","HTTP-Fehler wie 404 oder 500"],
+   tip:"Der Browser selbst ist nicht Schicht 7, sondern das Protokoll, das er nutzt (HTTP). Die Schicht stellt Anwendungen Dienste bereit."}
+];
+const L = n => LAYERS[n - 1];
+const shortName = n => L(n).de.replace("schicht", "");
+
+const EXTRAS = {
+  1: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("plug")} Übertragungsmedien</h2></div>
+    <div class="media3">
+      <div class="mcell"><b>Kupfer (Twisted Pair)</b><p>Elektrische Signale. Günstig und verbreitet, maximal 100 m pro Strecke.</p></div>
+      <div class="mcell"><b>Glasfaser (LWL)</b><p>Lichtimpulse. Große Distanzen und unempfindlich gegen elektromagnetische Störungen.</p></div>
+      <div class="mcell"><b>Funk</b><p>Elektromagnetische Wellen. Kein Kabel nötig, aber ein geteiltes und störanfälliges Medium.</p></div>
+    </div>
+    <h3 class="sub-h">Übertragungsrichtungen</h3>
+    <div class="media3">
+      <div class="mcell"><b>Simplex</b><p>Nur in eine Richtung, z. B. Radio.</p></div>
+      <div class="mcell"><b>Halbduplex</b><p>Beide Richtungen, aber abwechselnd, z. B. Funkgerät.</p></div>
+      <div class="mcell"><b>Vollduplex</b><p>Beide Richtungen gleichzeitig, z. B. Telefon oder Switch-Port.</p></div>
+    </div></section>`,
+  2: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("kapselung")} Aufbau eines Ethernet-Frames</h2></div>
+    <div class="hscroll"><div class="frame-bar">
+      <div class="fb phy" style="flex:5"><b>Präambel</b><small>7 B</small></div>
+      <div class="fb phy" style="flex:2"><b>SFD</b><small>1 B</small></div>
+      <div class="fb" style="flex:5"><b>Ziel-MAC</b><small>6 B</small></div>
+      <div class="fb" style="flex:5"><b>Quell-MAC</b><small>6 B</small></div>
+      <div class="fb" style="flex:3"><b>Typ</b><small>2 B</small></div>
+      <div class="fb pay" style="flex:14"><b>Nutzdaten, z. B. IP-Paket</b><small>46–1500 B</small></div>
+      <div class="fb" style="flex:3"><b>FCS</b><small>4 B</small></div>
+    </div></div>
+    <p class="muted small" style="margin-top:12px">Präambel und SFD (gestrichelt) gehören technisch zu Schicht 1. Header (14 B) und FCS (4 B) ergeben 18 Byte Overhead, ein Frame ist also 64 bis 1518 Byte groß.</p>
+    <h3 class="sub-h">Zwei Teilschichten</h3>
+    <div class="sublayer"><span class="chip accent mono">2b</span><div><b>LLC – Logical Link Control</b><p>IEEE 802.2. Schnittstelle nach oben zu Schicht 3, kennzeichnet das transportierte Protokoll.</p></div></div>
+    <div class="sublayer"><span class="chip accent mono">2a</span><div><b>MAC – Media Access Control</b><p>Regelt den Zugriff auf das Medium (CSMA/CD, CSMA/CA) und arbeitet mit MAC-Adressen.</p></div></div>
+    </section>`,
+  3: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("id")} IPv4 und IPv6</h2></div>
+    <div class="table-wrap"><table class="t">
+      <thead><tr><th></th><th>IPv4</th><th>IPv6</th></tr></thead>
+      <tbody>
+        <tr><td class="muted">Länge</td><td>32 Bit</td><td>128 Bit</td></tr>
+        <tr><td class="muted">Schreibweise</td><td class="mono">192.168.178.20</td><td class="mono">2001:db8::20</td></tr>
+        <tr><td class="muted">Adressraum</td><td>ca. 4,3 Milliarden</td><td>ca. 3,4 × 10³⁸</td></tr>
+        <tr><td class="muted">Header</td><td>20–60 Byte</td><td>40 Byte (fest)</td></tr>
+        <tr><td class="muted">Broadcast</td><td>ja</td><td>nein, dafür Multicast</td></tr>
+      </tbody></table></div></section>`,
+  4: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("tasks")} TCP und UDP im Vergleich</h2></div>
+    <div class="table-wrap"><table class="t">
+      <thead><tr><th></th><th>TCP</th><th>UDP</th></tr></thead>
+      <tbody>
+        <tr><td class="muted">Verbindung</td><td>verbindungsorientiert</td><td>verbindungslos</td></tr>
+        <tr><td class="muted">Zuverlässigkeit</td><td>Bestätigung (ACK), Neuübertragung</td><td>keine Garantie</td></tr>
+        <tr><td class="muted">Reihenfolge</td><td>über Sequenznummern gesichert</td><td>nicht gesichert</td></tr>
+        <tr><td class="muted">Header</td><td>mind. 20 Byte</td><td>8 Byte</td></tr>
+        <tr><td class="muted">Einsatz</td><td>HTTP(S), SSH, SMTP, FTP</td><td>DNS, DHCP, VoIP, Streaming</td></tr>
+      </tbody></table></div>
+    <h3 class="sub-h">3-Way-Handshake</h3>
+    <div class="handshake">
+      <div class="hs-end">Client</div><div class="hs-arrow"><span>SYN</span></div><div class="hs-end">Server</div>
+      <div></div><div class="hs-arrow back"><span>SYN-ACK</span></div><div></div>
+      <div></div><div class="hs-arrow"><span>ACK</span></div><div></div>
+    </div></section>`,
+  6: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("id")} So sehen Zeichen kodiert aus</h2></div>
+    <div class="table-wrap"><table class="t">
+      <thead><tr><th>Zeichen</th><th>Kodierung</th><th>Hex</th><th>Binär</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b></td><td>ASCII / UTF-8</td><td class="mono">41</td><td class="mono">01000001</td></tr>
+        <tr><td><b>a</b></td><td>ASCII / UTF-8</td><td class="mono">61</td><td class="mono">01100001</td></tr>
+        <tr><td><b>ä</b></td><td>UTF-8 (2 Byte)</td><td class="mono">C3 A4</td><td class="mono">11000011 10100100</td></tr>
+        <tr><td><b>€</b></td><td>UTF-8 (3 Byte)</td><td class="mono">E2 82 AC</td><td class="mono">11100010 10000010 10101100</td></tr>
+      </tbody></table></div>
+    <p class="muted small" style="margin-top:12px">Liest ein Programm die Bytes C3 A4 fälschlich als Latin-1, erscheint „Ã¤“ statt „ä“. Das ist ein typischer Fehler auf Schicht 6.</p></section>`
+};
+
+const ENCAP = {
+  send:[
+    {L:7, title:"Die Anwendung erzeugt die Anfrage", text:"Dein Browser möchte die Startseite von example.com laden und formuliert dafür eine HTTP-Anfrage.", blocks:["data"], fields:[["Methode","GET"],["Pfad","/index.html"],["Host","example.com"]]},
+    {L:6, title:"Kodieren und verschlüsseln", text:"Der Text wird als UTF-8 kodiert und per TLS verschlüsselt. Von außen sieht man ab jetzt nur noch unlesbare Bytes.", blocks:["enc"], fields:[["Kodierung","UTF-8"],["Verschlüsselung","TLS 1.3"]]},
+    {L:5, title:"Die Sitzung steuern", text:"Die Sitzung zum Server wird aufgebaut und offen gehalten, damit weitere Anfragen (Bilder, CSS) sie mitnutzen können.", blocks:["enc"], fields:[["Sitzung","aktiv"],["Wiederaufnahme","möglich"]]},
+    {L:4, title:"TCP-Header: aus Daten wird ein Segment", text:"Die Transportschicht stellt den TCP-Header voran. Die Ports legen fest, welche Anwendung auf beiden Seiten gemeint ist.", blocks:["tcp","enc"], fields:[["Quell-Port","51234"],["Ziel-Port","443 (HTTPS)"],["Sequenznummer","1"],["Flags","PSH, ACK"]]},
+    {L:3, title:"IP-Header: aus dem Segment wird ein Paket", text:"Die Vermittlungsschicht ergänzt Quell- und Ziel-IP. Damit kann das Paket durch viele Netze bis zum Server geroutet werden.", blocks:["ip","tcp","enc"], fields:[["Quell-IP","192.168.178.20"],["Ziel-IP","203.0.113.10"],["TTL","64"],["Protokoll","6 (TCP)"]]},
+    {L:2, title:"Ethernet-Header und FCS: das Frame", text:"Die Sicherungsschicht setzt Header und Trailer drumherum. Wichtig: Die Ziel-MAC gehört deinem Router, nicht dem Webserver. MAC-Adressen gelten nur im lokalen Netz.", blocks:["eth","ip","tcp","enc","fcs"], fields:[["Ziel-MAC","00:1A:2B:3C:4D:5E (Router)"],["Quell-MAC","3C:52:82:1A:9F:04"],["EtherType","0x0800 (IPv4)"],["FCS","CRC-32-Prüfsumme"]]},
+    {L:1, title:"Bits auf die Leitung", text:"Die Bitübertragungsschicht wandelt das Frame in Signale um: Spannung im Kupferkabel, Licht in der Glasfaser oder Funk.", blocks:["bits"], fields:[["Medium","Twisted Pair Cat 6A"],["Standard","1000BASE-T"],["Vorspann","Präambel 7 B + SFD 1 B"]]}
+  ],
+  recv:[
+    {L:1, title:"Signale empfangen", text:"Die Netzwerkkarte des Webservers empfängt die Signale und wandelt sie zurück in Bits.", blocks:["bits"], fields:[["Medium","Glasfaser im Rechenzentrum"],["Erkennung","Präambel + SFD"]]},
+    {L:2, title:"Frame prüfen und auspacken", text:"Die FCS wird nachgerechnet. Ist das Frame fehlerfrei und an die eigene MAC adressiert, werden Ethernet-Header und Trailer entfernt.", blocks:["eth","ip","tcp","enc","fcs"], drop:["eth","fcs"], fields:[["FCS","korrekt ✓"],["Ziel-MAC","eigene Adresse ✓"]]},
+    {L:3, title:"Paket prüfen", text:"Die Ziel-IP 203.0.113.10 gehört dem Server. Der IP-Header wird entfernt und das Segment an TCP übergeben.", blocks:["ip","tcp","enc"], drop:["ip"], fields:[["Ziel-IP","203.0.113.10 ✓"],["Protokoll","6 → an TCP"]]},
+    {L:4, title:"Segment an den Dienst übergeben", text:"Ziel-Port 443 heißt: Die Daten gehören zum Webserver-Dienst. TCP bestätigt den Empfang mit einem ACK.", blocks:["tcp","enc"], drop:["tcp"], fields:[["Ziel-Port","443 → Webserver"],["Antwort","ACK an den Client"]]},
+    {L:5, title:"Sitzung zuordnen", text:"Die Daten werden der bestehenden Sitzung mit deinem Browser zugeordnet.", blocks:["enc"], fields:[["Sitzung","bekannt ✓"]]},
+    {L:6, title:"Entschlüsseln und dekodieren", text:"TLS entschlüsselt die Daten, danach wird der Text als UTF-8 gelesen.", blocks:["data"], fields:[["TLS","entschlüsselt ✓"],["Kodierung","UTF-8"]]},
+    {L:7, title:"Die Anwendung verarbeitet die Anfrage", text:"Der Webserver liest „GET /index.html“ und schickt die Seite zurück. Die Antwort nimmt denselben Weg, nur in die andere Richtung.", blocks:["data"], fields:[["Antwort","HTTP/1.1 200 OK"]]}
+  ]
+};
+const BLK = {
+  eth:{t:"ETH-Header", s:"14 Byte"},
+  ip:{t:"IP-Header", s:"20 Byte"},
+  tcp:{t:"TCP-Header", s:"20 Byte"},
+  data:{t:"GET /index.html", s:"Nutzdaten", data:true},
+  enc:{t:"7f 3a c9 1e 88 …", s:"Nutzdaten · TLS", data:true, mono:true},
+  fcs:{t:"FCS", s:"4 Byte"}
+};
+const BITS = "10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011 00000000 00011010 00101011 00111100 01001101 01011110";
+
+const CARDS = [
+  ...LAYERS.map(l => ({id:"n" + l.n, tag:"schichten", L:l.n, f:`Schicht ${l.n}`, b:`${l.de}<br><span class="muted">${l.en}</span>`})),
+  {id:"p1", tag:"pdu", L:1, f:"PDU der Schicht 1", b:"Bit"},
+  {id:"p2", tag:"pdu", L:2, f:"PDU der Schicht 2", b:"Frame (Rahmen)"},
+  {id:"p3", tag:"pdu", L:3, f:"PDU der Schicht 3", b:"Paket"},
+  {id:"p4", tag:"pdu", L:4, f:"PDU der Schicht 4", b:"Segment (TCP) bzw. Datagramm (UDP)"},
+  {id:"p5", tag:"pdu", L:7, f:"PDU der Schichten 5 bis 7", b:"Daten (Nachricht)"},
+  {id:"g1", tag:"pdu", L:1, f:"Hub und Repeater arbeiten auf …", b:"Schicht 1: Sie verteilen bzw. verstärken nur Signale."},
+  {id:"g2", tag:"pdu", L:2, f:"Ein Switch arbeitet auf …", b:"Schicht 2: Er leitet Frames anhand der MAC-Adresse weiter."},
+  {id:"g3", tag:"pdu", L:3, f:"Ein Router arbeitet auf …", b:"Schicht 3: Er leitet Pakete anhand der IP-Adresse in andere Netze."},
+  {id:"b1", tag:"begriffe", L:0, f:"Kapselung (Encapsulation)", b:"Beim Senden fügt jede Schicht von oben nach unten ihre Steuerinformationen hinzu: Header, auf Schicht 2 auch einen Trailer."},
+  {id:"b2", tag:"begriffe", L:0, f:"Dekapsulierung", b:"Beim Empfangen entfernt jede Schicht von unten nach oben ihren Header und gibt den Rest weiter."},
+  {id:"b3", tag:"begriffe", L:4, f:"3-Way-Handshake", b:"SYN → SYN-ACK → ACK. So baut TCP eine Verbindung auf."},
+  {id:"b4", tag:"begriffe", L:2, f:"MAC-Adresse", b:"48-Bit-Hardwareadresse der Netzwerkkarte (Schicht 2). Die ersten 24 Bit (OUI) kennzeichnen den Hersteller."},
+  {id:"b5", tag:"begriffe", L:3, f:"IP-Adresse", b:"Logische Adresse auf Schicht 3. IPv4 hat 32 Bit, IPv6 hat 128 Bit."},
+  {id:"b6", tag:"begriffe", L:4, f:"Portnummer", b:"16-Bit-Nummer (0–65535) auf Schicht 4, adressiert eine Anwendung. Well-known Ports: 0–1023."},
+  {id:"b7", tag:"begriffe", L:2, f:"FCS", b:"Frame Check Sequence: 4-Byte-Prüfsumme (CRC-32) im Trailer eines Ethernet-Frames."},
+  {id:"b8", tag:"begriffe", L:3, f:"TTL", b:"Time to Live im IP-Header. Jeder Router zieht 1 ab, bei 0 wird das Paket verworfen. Verhindert endlos kreisende Pakete."},
+  {id:"b9", tag:"begriffe", L:2, f:"MTU", b:"Maximum Transmission Unit: größte Nutzlast eines Frames. Bei Ethernet 1500 Byte."},
+  {id:"b10", tag:"begriffe", L:2, f:"CSMA/CD", b:"Zugriffsverfahren im klassischen Ethernet: Medium abhören, senden, Kollisionen erkennen."},
+  {id:"b11", tag:"begriffe", L:2, f:"CSMA/CA", b:"Zugriffsverfahren im WLAN: Kollisionen werden möglichst vermieden statt erkannt."},
+  {id:"b12", tag:"begriffe", L:2, f:"ARP", b:"Address Resolution Protocol: ermittelt zu einer bekannten IP-Adresse die passende MAC-Adresse."},
+  {id:"b13", tag:"begriffe", L:2, f:"LLC und MAC", b:"Die zwei Teilschichten der Sicherungsschicht: oben LLC (IEEE 802.2), unten MAC (Medienzugriff)."},
+  {id:"b14", tag:"begriffe", L:0, f:"Transportorientierte Schichten", b:"Schichten 1 bis 4. Sie sorgen dafür, dass Daten ankommen."},
+  {id:"b15", tag:"begriffe", L:0, f:"Anwendungsorientierte Schichten", b:"Schichten 5 bis 7. Sie kümmern sich um Sitzung, Darstellung und Anwendung."},
+  {id:"b16", tag:"begriffe", L:4, f:"TCP oder UDP?", b:"TCP: verbindungsorientiert und zuverlässig. UDP: verbindungslos, schnell, ohne Bestätigung."},
+  {id:"o1", tag:"ports", L:7, f:"Port 20 / 21", b:"FTP (Daten / Steuerung)"},
+  {id:"o2", tag:"ports", L:7, f:"Port 22", b:"SSH (und SFTP)"},
+  {id:"o3", tag:"ports", L:7, f:"Port 23", b:"Telnet (unverschlüsselt)"},
+  {id:"o4", tag:"ports", L:7, f:"Port 25", b:"SMTP (E-Mail versenden)"},
+  {id:"o5", tag:"ports", L:7, f:"Port 53", b:"DNS (Namensauflösung)"},
+  {id:"o6", tag:"ports", L:7, f:"Port 67 / 68", b:"DHCP (Server / Client)"},
+  {id:"o7", tag:"ports", L:7, f:"Port 80", b:"HTTP"},
+  {id:"o8", tag:"ports", L:7, f:"Port 110", b:"POP3 (E-Mail abholen)"},
+  {id:"o9", tag:"ports", L:7, f:"Port 143", b:"IMAP (E-Mail auf dem Server verwalten)"},
+  {id:"o10", tag:"ports", L:7, f:"Port 443", b:"HTTPS"},
+  {id:"o11", tag:"ports", L:7, f:"Port 3389", b:"RDP (Windows-Remotedesktop)"}
+];
+const CARD_BY_ID = Object.fromEntries(CARDS.map(c => [c.id, c]));
+const TAG_LABEL = {schichten:"Schichten", pdu:"PDU & Geräte", begriffe:"Begriffe", ports:"Ports"};
+
+/* Fragen: erste Option ist jeweils richtig, die Reihenfolge wird beim Anzeigen gemischt. */
+const QUESTIONS = [
+  {L:0, q:"Wie viele Schichten hat das OSI-Modell?", o:["7","4","5","8"], e:"Das OSI-Referenzmodell hat sieben Schichten. Das TCP/IP-Modell kommt mit vier aus."},
+  {L:3, q:"Welche Schicht ist für das Routing zwischen verschiedenen Netzen zuständig?", o:["Schicht 3 – Vermittlung","Schicht 2 – Sicherung","Schicht 4 – Transport","Schicht 7 – Anwendung"], e:"Die Vermittlungsschicht bestimmt mit IP-Adressen den Weg durch mehrere Netze."},
+  {L:2, q:"Auf welcher Schicht arbeitet ein klassischer Switch?", o:["Schicht 2","Schicht 1","Schicht 3","Schicht 4"], e:"Ein Switch liest MAC-Adressen aus Frames und leitet sie gezielt weiter. Layer-3-Switches können zusätzlich routen."},
+  {L:1, q:"Auf welcher Schicht arbeitet ein Hub?", o:["Schicht 1","Schicht 2","Schicht 3","Schicht 7"], e:"Ein Hub verteilt eingehende Signale an alle Ports. Er versteht keine Adressen."},
+  {L:2, q:"Wie heißt die PDU (Dateneinheit) der Sicherungsschicht?", o:["Frame","Paket","Segment","Bit"], e:"Auf Schicht 2 heißen die Dateneinheiten Frames oder Rahmen."},
+  {L:3, q:"Wie heißt die PDU der Vermittlungsschicht?", o:["Paket","Frame","Segment","Datenstrom"], e:"Schicht 3 arbeitet mit Paketen. Jedes trägt eine Quell- und eine Ziel-IP-Adresse."},
+  {L:4, q:"Wie heißt die PDU der Transportschicht bei TCP?", o:["Segment","Paket","Frame","Bit"], e:"TCP teilt Daten in Segmente. Bei UDP spricht man von Datagrammen."},
+  {L:2, q:"Welche Adresse wird auf Schicht 2 zur Zustellung verwendet?", o:["MAC-Adresse","IP-Adresse","Portnummer","URL"], e:"Die MAC-Adresse ist die Hardwareadresse der Netzwerkkarte und gilt im lokalen Netz."},
+  {L:2, q:"Wie lang ist eine MAC-Adresse?", o:["48 Bit","32 Bit","64 Bit","128 Bit"], e:"48 Bit, geschrieben als sechs Hex-Paare, z. B. 3C:52:82:1A:9F:04."},
+  {L:6, q:"Welche Schicht ist für Kodierung, Komprimierung und Verschlüsselung zuständig?", o:["Schicht 6 – Darstellung","Schicht 5 – Sitzung","Schicht 7 – Anwendung","Schicht 4 – Transport"], e:"Die Darstellungsschicht bringt Daten in ein gemeinsames Format, z. B. UTF-8, JPEG oder TLS-verschlüsselt."},
+  {L:4, q:"Welches Protokoll arbeitet verbindungsorientiert mit Empfangsbestätigungen?", o:["TCP","UDP","IP","ICMP"], e:"TCP baut vor der Übertragung eine Verbindung auf und bestätigt empfangene Segmente."},
+  {L:4, q:"In welcher Reihenfolge läuft der TCP-3-Way-Handshake ab?", o:["SYN → SYN-ACK → ACK","ACK → SYN → FIN","SYN → ACK → FIN","SYN-ACK → SYN → ACK"], e:"Der Client sendet SYN, der Server antwortet mit SYN-ACK, der Client bestätigt mit ACK."},
+  {L:5, q:"Welche Schicht baut Sitzungen auf, hält sie aufrecht und beendet sie?", o:["Schicht 5 – Sitzung","Schicht 4 – Transport","Schicht 6 – Darstellung","Schicht 3 – Vermittlung"], e:"Die Sitzungsschicht (Kommunikationssteuerung) steuert den Dialog und setzt Synchronisationspunkte."},
+  {L:7, q:"Zu welcher Schicht gehört HTTP?", o:["Schicht 7","Schicht 4","Schicht 5","Schicht 3"], e:"HTTP ist ein Anwendungsprotokoll und gehört zur Anwendungsschicht."},
+  {L:1, q:"Welche Schicht legt Stecker, Kabel und Spannungspegel fest?", o:["Schicht 1","Schicht 2","Schicht 3","Schicht 6"], e:"Die Bitübertragungsschicht beschreibt alles Physikalische: Medium, Stecker, Signale."},
+  {L:0, q:"Was passiert bei der Kapselung (Encapsulation) beim Sender?", o:["Jede Schicht fügt ihre Steuerinformationen (Header) hinzu","Jede Schicht entfernt einen Header","Die Daten werden immer verschlüsselt","Nur Schicht 7 verändert die Daten"], e:"Von oben nach unten fügt jede Schicht einen Header hinzu, Schicht 2 zusätzlich einen Trailer (FCS)."},
+  {L:0, q:"Welche OSI-Schichten fasst die Anwendungsschicht des TCP/IP-Modells zusammen?", o:["5 bis 7","4 bis 7","6 und 7","nur 7"], e:"Sitzung, Darstellung und Anwendung (5–7) bilden zusammen die TCP/IP-Anwendungsschicht."},
+  {L:0, q:"Welchen OSI-Schichten entspricht die Netzzugangsschicht des TCP/IP-Modells?", o:["1 und 2","nur 1","2 und 3","1 bis 3"], e:"Die Netzzugangsschicht umfasst Bitübertragung und Sicherung."},
+  {L:3, q:"Mit „ping“ prüfst du, ob ein Host erreichbar ist. Welches Protokoll nutzt ping?", o:["ICMP (Schicht 3)","TCP (Schicht 4)","ARP (Schicht 2)","HTTP (Schicht 7)"], e:"ping sendet ICMP Echo Requests, ein Protokoll der Vermittlungsschicht."},
+  {L:2, q:"In welche zwei Teilschichten wird die Sicherungsschicht unterteilt?", o:["LLC und MAC","TCP und UDP","IP und ICMP","PHY und LAN"], e:"Oben LLC (Logical Link Control, IEEE 802.2), unten MAC (Media Access Control)."},
+  {L:4, q:"Welches Transportprotokoll eignet sich wegen geringer Verzögerung für VoIP und Streaming?", o:["UDP","TCP","FTP","SMTP"], e:"UDP verzichtet auf Verbindungsaufbau und Bestätigungen. Bei Sprache stört ein verlorenes Paket weniger als Verzögerung."},
+  {L:7, q:"Welcher Dienst nutzt standardmäßig Port 443?", o:["HTTPS","HTTP","SSH","DNS"], e:"HTTPS läuft über TCP-Port 443, unverschlüsseltes HTTP über Port 80."},
+  {L:7, q:"Welcher Dienst nutzt standardmäßig Port 53?", o:["DNS","DHCP","SMTP","FTP"], e:"DNS nutzt Port 53, meist über UDP, für große Antworten auch über TCP."},
+  {L:7, q:"Welcher Dienst nutzt standardmäßig Port 22?", o:["SSH","Telnet","FTP","RDP"], e:"SSH (verschlüsselter Fernzugriff) läuft auf Port 22. Telnet nutzt Port 23 und ist unverschlüsselt."},
+  {L:0, q:"Welche Organisation hat das OSI-Modell als Norm veröffentlicht?", o:["ISO","IEEE","IETF","W3C"], e:"Die International Organization for Standardization (ISO) veröffentlichte es als ISO 7498. Die IEEE normt z. B. Ethernet (802.3)."},
+  {L:3, q:"Anhand welcher Information entscheidet ein Router, wohin er ein Paket weiterleitet?", o:["Ziel-IP-Adresse","Ziel-MAC-Adresse","Quell-Port","Prüfsumme (FCS)"], e:"Der Router vergleicht die Ziel-IP mit seiner Routingtabelle."},
+  {L:4, q:"Auf welcher Schicht werden Portnummern verwendet?", o:["Schicht 4","Schicht 3","Schicht 2","Schicht 7"], e:"Ports adressieren auf der Transportschicht die Anwendung bzw. den Dienst."},
+  {L:2, q:"Wo steht die Prüfsumme FCS bei einem Ethernet-Frame?", o:["Im Trailer am Ende des Frames","Im IP-Header","Im TCP-Header","Vor der Präambel"], e:"Die Frame Check Sequence (CRC-32, 4 Byte) bildet den Trailer. Der Empfänger rechnet sie nach."},
+  {L:3, q:"Eselsbrücke „Alle Deutschen Studenten Trinken Verschiedene Sorten Bier“: Wofür steht das V?", o:["Vermittlungsschicht","Verbindungsschicht","Verschlüsselungsschicht","Verteilungsschicht"], e:"V steht für Vermittlung, Schicht 3. Die Eselsbrücke geht von Schicht 7 nach 1."},
+  {L:1, q:"Ein Kollege meldet: „Die Link-LED am Switch-Port leuchtet nicht.“ Auf welcher Schicht suchst du zuerst?", o:["Schicht 1","Schicht 2","Schicht 3","Schicht 7"], e:"Kein Link bedeutet kein Signal. Prüfe Kabel, Stecker und Port: Bitübertragungsschicht."},
+  {L:4, q:"Ein Server antwortet auf ping, aber die Webseite lädt nicht, weil eine Firewall Port 443 sperrt. Welche Schicht ist betroffen?", o:["Schicht 4","Schicht 1","Schicht 2","Schicht 3"], e:"Schicht 3 funktioniert, denn ping klappt. Gesperrt ist ein Port, und Ports gehören zu Schicht 4."},
+  {L:0, q:"Was ist das OSI-Modell?", o:["Ein Referenzmodell, das Netzwerkkommunikation in Schichten beschreibt","Ein Protokoll für den Datentransport","Ein Betriebssystem für Router","Eine Programmiersprache für Netzwerke"], e:"OSI ist ein Referenzmodell. Es beschreibt Aufgaben, setzt selbst aber nichts um."},
+  {L:3, q:"Welches Gerät arbeitet typischerweise auf Schicht 3?", o:["Router","Switch","Hub","Repeater"], e:"Router verbinden Netze und arbeiten mit IP-Adressen."},
+  {L:3, q:"Wie viele Bit hat eine IPv4-Adresse?", o:["32 Bit","48 Bit","64 Bit","128 Bit"], e:"IPv4: 32 Bit (vier Oktette). IPv6: 128 Bit. MAC: 48 Bit."},
+  {L:2, q:"Auf welchen Schichten arbeitet ein WLAN Access Point hauptsächlich?", o:["Schicht 1 und 2","Schicht 3 und 4","nur Schicht 7","Schicht 5 und 6"], e:"Er überträgt per Funk (Schicht 1) und arbeitet nach IEEE 802.11 mit MAC-Adressen (Schicht 2)."},
+  {L:0, q:"Was passiert bei der Dekapsulierung beim Empfänger?", o:["Die Header werden Schicht für Schicht von unten nach oben entfernt","Die Header werden von oben nach unten hinzugefügt","Alle Header bleiben bis Schicht 7 erhalten","Nur Schicht 1 wertet die Daten aus"], e:"Jede Schicht wertet ihren Header aus, entfernt ihn und gibt den Rest nach oben weiter."},
+  {L:4, q:"Welche Schicht übernimmt Segmentierung, Flusskontrolle und die richtige Reihenfolge der Daten?", o:["Schicht 4","Schicht 2","Schicht 3","Schicht 5"], e:"Die Transportschicht. TCP nutzt dafür Sequenznummern und ein Sliding Window."},
+  {L:2, q:"Welcher IEEE-Standard beschreibt Ethernet?", o:["IEEE 802.3","IEEE 802.11","IEEE 802.1Q","IEEE 802.15"], e:"802.3 = Ethernet, 802.11 = WLAN, 802.1Q = VLAN-Tagging, 802.15 = WPAN, z. B. Bluetooth."},
+  {L:2, q:"Wofür wird ARP verwendet?", o:["Zu einer IP-Adresse die MAC-Adresse ermitteln","Einen Hostnamen in eine IP-Adresse auflösen","IP-Adressen automatisch vergeben","Pakete zwischen Netzen routen"], e:"ARP fragt per Broadcast: „Wer hat 192.168.178.1?“ Der Besitzer antwortet mit seiner MAC. Namen löst DNS auf, Adressen vergibt DHCP."},
+  {L:6, q:"Ein Foto wird vor dem Versand als JPEG komprimiert. Welche Schicht beschreibt das?", o:["Schicht 6","Schicht 7","Schicht 5","Schicht 2"], e:"Datenformate und Komprimierung sind Aufgaben der Darstellungsschicht."},
+  {L:3, q:"Was passiert, wenn die TTL eines IP-Pakets 0 erreicht?", o:["Der Router verwirft das Paket","Das Paket wird beschleunigt","Das Paket geht an alle Hosts","Die TTL wird auf 64 zurückgesetzt"], e:"Jeder Router zieht 1 ab. Bei 0 wird das Paket verworfen, meist mit einer ICMP-Meldung „Time Exceeded“ an den Absender."},
+  {L:0, q:"Welche Schichten gelten als transportorientiert?", o:["1 bis 4","5 bis 7","1 bis 3","4 bis 7"], e:"Schichten 1–4 sorgen für den Transport, 5–7 sind anwendungsorientiert."},
+  {L:7, q:"Welches Protokoll vergibt IP-Adressen automatisch an Clients?", o:["DHCP","DNS","ARP","NTP"], e:"DHCP (UDP-Ports 67/68) verteilt IP-Adresse, Subnetzmaske, Gateway und DNS-Server."},
+  {L:5, q:"Ein großer Download bricht ab und wird ab einem Synchronisationspunkt fortgesetzt. Welche Schicht ist dafür im OSI-Modell vorgesehen?", o:["Schicht 5","Schicht 4","Schicht 6","Schicht 3"], e:"Synchronisationspunkte (Checkpoints) sind eine klassische Aufgabe der Sitzungsschicht."}
+];
+QUESTIONS.forEach((q, i) => { q.id = "q" + (i + 1); });
+const Q_BY_ID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+
+const SORT_POOL = [
+  ["HTTP",7],["DNS",7],["SMTP",7],["FTP",7],["DHCP",7],["SSH",7],["IMAP",7],["Proxy",7],
+  ["TLS-Verschlüsselung",6],["JPEG",6],["UTF-8",6],["MIME",6],["Komprimierung",6],
+  ["NetBIOS",5],["RPC",5],["Sitzungsaufbau",5],["Checkpoints",5],
+  ["TCP",4],["UDP",4],["Portnummer",4],["Segment",4],["3-Way-Handshake",4],
+  ["IPv4",3],["ICMP",3],["Router",3],["Paket",3],["OSPF",3],["IP-Adresse",3],["TTL",3],
+  ["Switch",2],["MAC-Adresse",2],["Frame",2],["VLAN",2],["Bridge",2],["FCS-Prüfsumme",2],["Access Point",2],
+  ["Hub",1],["Repeater",1],["RJ45",1],["Glasfaser",1],["Bit",1],["Twisted Pair",1]
+].map(([t, l]) => ({t, L:l}));
+
+const FACTS = [
+  "Das OSI-Modell wurde 1984 von der ISO als Norm ISO 7498 veröffentlicht. Die Arbeit daran begann schon 1977.",
+  "OSI steht für Open Systems Interconnection, also die Kommunikation offener Systeme unterschiedlicher Hersteller.",
+  "Das Internet basiert nicht direkt auf OSI, sondern auf dem TCP/IP-Modell mit vier Schichten. OSI dient als gemeinsame Sprache.",
+  "„Layer-8-Problem“ ist IT-Slang für einen Fehler, der vor dem Bildschirm sitzt: den Menschen.",
+  "Die Broadcast-MAC-Adresse lautet FF:FF:FF:FF:FF:FF. Ein solches Frame geht an alle Geräte im lokalen Netz.",
+  "Ein Ethernet-Frame ist mindestens 64 und ohne VLAN-Tag höchstens 1518 Byte groß.",
+  "Twisted-Pair-Kabel dürfen im Ethernet höchstens 100 m lang sein: 90 m fest verlegt plus 10 m Patchkabel.",
+  "Jeder Router verringert die TTL eines Pakets um 1. tracert nutzt genau das, um den Weg durchs Netz sichtbar zu machen.",
+  "IPv6-Adressen sind 128 Bit lang. Das reicht für rund 3,4 × 10³⁸ Adressen.",
+  "Bei der Fehlersuche arbeitet man oft bottom-up: erst Kabel (1), dann Switch (2), dann IP (3) und so weiter.",
+  "Die Ziel-MAC in einem Frame ins Internet ist die deines Routers, nicht die des Webservers. MAC-Adressen gelten nur im lokalen Netz.",
+  "Eine Fritz!Box vergibt standardmäßig Adressen aus 192.168.178.0/24. Darum siehst du diese Adressen in vielen Heimnetzen."
+];
+
+const MNEMO = {
+  de:{label:"Von Schicht 7 nach 1 · deutsche Namen", words:[["Alle",7],["Deutschen",6],["Studenten",5],["Trinken",4],["Verschiedene",3],["Sorten",2],["Bier",1]], name:n => shortName(n)},
+  en:{label:"Von Schicht 1 nach 7 · englische Namen", words:[["Please",1],["Do",2],["Not",3],["Throw",4],["Sausage",5],["Pizza",6],["Away",7]], name:n => L(n).en.replace(" Layer", "")},
+  en2:{label:"Von Schicht 7 nach 1 · englische Namen", words:[["All",7],["People",6],["Seem",5],["To",4],["Need",3],["Data",2],["Processing",1]], name:n => L(n).en.replace(" Layer", "")}
+};
+
+/* ---------------- Fortschritt ---------------- */
+const LS_KEY = "itlernlabor.osi.v1";
+const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, updatedAt:0});
+const clone = o => JSON.parse(JSON.stringify(o));
+let S = DEFAULT();
+try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
+let hapticsOn = true;
+try { hapticsOn = localStorage.getItem("itlernlabor.haptics") !== "0"; } catch (e) {}
+
+let dbRef = null, saveTimer = null, writing = false, pendingWrite = false, syncState = "loading";
+function writeLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
+function save() {
+  S.updatedAt = Date.now();
+  writeLocal();
+  updateChrome();
+  if (!dbRef) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 800);
+}
+async function flush() {
+  if (!dbRef) return;
+  if (writing) { pendingWrite = true; return; }
+  writing = true;
+  try { await dbRef.set(clone(S)); setSync("cloud"); }
+  catch (e) {
+    if (e && e.code === "unavailable") setTimeout(flush, 1500 + Math.random() * 1500);
+    else { dbRef = null; setSync("local"); }
+  }
+  writing = false;
+  if (pendingWrite) { pendingWrite = false; flush(); }
+}
+async function connectDb() {
+  if (!window.claude || typeof window.claude.use !== "function") { setSync("local"); return; }
+  try {
+    const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    if (!db || !user) { setSync("local"); return; }
+    const id = await user.id();
+    if (!id) { setSync("local"); return; }
+    const ref = db.collection("data/users/" + id).doc("osi");
+    const snap = await Promise.race([ref.get(), new Promise((_, rej) => setTimeout(() => rej({code:"timeout"}), 10000))]);
+    dbRef = ref;
+    if (snap.exists) {
+      const remote = clone(snap.data() || {});
+      if ((remote.updatedAt || 0) > (S.updatedAt || 0)) { S = Object.assign(DEFAULT(), remote); writeLocal(); refreshPassive(); }
+      else if ((S.updatedAt || 0) > (remote.updatedAt || 0)) flush();
+    } else if (S.updatedAt) flush();
+    setSync("cloud");
+  } catch (e) { dbRef = null; setSync("local"); }
+}
+function setSync(s) {
+  syncState = s;
+  const full = s === "cloud" ? `${icon("cloud", 15)} In deinem Konto gesichert` : s === "loading" ? `${icon("cloud", 15)} Wird geladen …` : `${icon("device", 15)} Auf diesem Gerät gespeichert`;
+  const short = s === "cloud" ? "In deinem Konto" : s === "loading" ? "Wird geladen …" : "Auf diesem Gerät";
+  document.querySelectorAll(".sync-line").forEach(el => { el.innerHTML = full; });
+  document.querySelectorAll(".sync-short").forEach(el => { el.textContent = short; });
+}
+function progress() {
+  const learned = LAYERS.filter(l => S.learned[l.n]).length;
+  const known = S.known.filter(id => CARD_BY_ID[id]).length;
+  const pL = learned / 7, pQ = Math.min(1, (S.quizBest || 0) / 100), pC = Math.min(1, known / CARDS.length);
+  const ex = (S.sortRounds > 0 ? 1 : 0) + (S.orderBest != null ? 1 : 0);
+  const total = Math.round((pL * .4 + pQ * .25 + pC * .2 + (ex / 2) * .15) * 100);
+  return {learned, known, ex, pL, pQ, pC, total};
+}
+const progressLabel = p => p === 0 ? "Los geht’s" : p < 30 ? "Guter Anfang" : p < 60 ? "Du bist dabei" : p < 90 ? "Fast prüfungsreif" : "Prüfungsreif";
+
+/* ---------------- Haptik, Island, Sheet ---------------- */
+const coarse = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches);
+let hapticLabel = null;
+function haptic(kind = "light") {
+  if (!hapticsOn) return;
+  const pattern = {select:6, light:10, medium:16, heavy:24, success:[12, 60, 18], error:[28, 45, 28, 45, 28]}[kind] || 10;
+  try { if (typeof navigator.vibrate === "function") { navigator.vibrate(pattern); return; } } catch (e) {}
+  // iOS-Safari hat keine Vibration-API, gibt beim Umschalten eines Switch-Elements aber ein kurzes Haptik-Signal.
+  if (!coarse) return;
+  try {
+    if (!hapticLabel) {
+      hapticLabel = document.createElement("label");
+      hapticLabel.setAttribute("aria-hidden", "true");
+      hapticLabel.style.cssText = "position:fixed;left:-200px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none";
+      const inp = document.createElement("input");
+      inp.type = "checkbox"; inp.setAttribute("switch", ""); inp.tabIndex = -1;
+      hapticLabel.appendChild(inp);
+      document.body.appendChild(hapticLabel);
+    }
+    hapticLabel.click();
+  } catch (e) {}
+}
+let islandT;
+function island(msg, kind = "") {
+  const el = $("#island");
+  const ic = kind === "good" ? "check" : kind === "bad" ? "x" : "spark";
+  el.innerHTML = `<span class="idot">${icon(ic, 14)}</span><span></span>`;
+  el.lastChild.textContent = msg;
+  el.className = "island " + kind;
+  void el.offsetWidth;
+  el.classList.add("show");
+  clearTimeout(islandT);
+  islandT = setTimeout(() => el.classList.remove("show"), 2100);
+}
+let sheetCb = null;
+function sheet({title, msg, action, onConfirm}) {
+  sheetCb = onConfirm;
+  $("#sheetRoot").innerHTML = `<div class="sheet-wrap"><div class="sheet-backdrop" data-sheet="cancel"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="${title}">
+      <div class="sheet-group"><div class="sheet-msg"><b>${title}</b>${msg}</div><button class="sheet-btn destructive" data-sheet="ok">${action}</button></div>
+      <div class="sheet-group"><button class="sheet-btn cancel" data-sheet="cancel">Abbrechen</button></div>
+    </div></div>`;
+  haptic("medium");
+  const c = $("#sheetRoot .sheet-btn.cancel"); if (c) c.focus({preventScroll:true});
+}
+function closeSheet(ok) {
+  const w = $("#sheetRoot .sheet-wrap");
+  if (!w) return;
+  const cb = sheetCb; sheetCb = null;
+  w.classList.add("closing");
+  setTimeout(() => { $("#sheetRoot").innerHTML = ""; }, reduced() ? 0 : 260);
+  if (ok && cb) cb();
+}
+
+/* ---------------- Helfer ---------------- */
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+const fmtTime = s => s.toFixed(1).replace(".", ",") + " s";
+function ring(p, size = 112, stroke = 11, sub = "") {
+  const r = (size - stroke) / 2, c = 2 * Math.PI * r, off = c * (1 - p / 100), h = size / 2;
+  return `<div class="ring" style="width:${size}px;height:${size}px">
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true">
+      <circle cx="${h}" cy="${h}" r="${r}" fill="none" style="stroke:var(--fill)" stroke-width="${stroke}"/>
+      ${p > 0 ? `<circle class="ring-val" cx="${h}" cy="${h}" r="${r}" fill="none" stroke-width="${stroke}" stroke-linecap="round" style="stroke:var(--accent);stroke-dasharray:${c.toFixed(2)};stroke-dashoffset:${off.toFixed(2)}" data-c="${c.toFixed(2)}" data-off="${off.toFixed(2)}"/>` : ""}
+    </svg>
+    <div class="ring-label"><b data-count="${p}" data-suffix=" %">${p} %</b>${sub ? `<small>${sub}</small>` : ""}</div></div>`;
+}
+function seg(key, opts, cur, act) {
+  const i = Math.max(0, opts.findIndex(o => o[0] === cur));
+  return `<div class="seg" data-seg="${key}" data-i="${i}" style="--n:${opts.length};--i:${i}" role="group"><span class="seg-thumb" aria-hidden="true"></span>${opts.map(([v, l]) => `<button data-act="${act}" data-v="${v}" aria-pressed="${v === cur}">${l}</button>`).join("")}</div>`;
+}
+const segPrev = {};
+function animateSegs() {
+  view.querySelectorAll(".seg[data-seg]").forEach(s => {
+    const k = s.dataset.seg, i = +s.dataset.i, p = segPrev[k];
+    segPrev[k] = i;
+    if (p == null || p === i || reduced()) return;
+    const th = s.querySelector(".seg-thumb");
+    th.style.transition = "none";
+    s.style.setProperty("--i", p);
+    void th.offsetWidth;
+    th.style.transition = "";
+    s.style.setProperty("--i", i);
+  });
+}
+function animateRings() {
+  if (reduced()) return;
+  view.querySelectorAll(".ring-val").forEach(el => {
+    el.style.transition = "none";
+    el.style.strokeDashoffset = el.dataset.c;
+    void el.getBoundingClientRect();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transition = "stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)";
+      el.style.strokeDashoffset = el.dataset.off;
+    }));
+  });
+  view.querySelectorAll("[data-count]").forEach(el => {
+    const to = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
+    if (!to) return;
+    const step = t => { const k = Math.min(1, (t - t0) / 1000), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e) + suf; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+}
+let io = null;
+function observeTitle() {
+  const nb = $("#navbar");
+  if (io) { io.disconnect(); io = null; }
+  const t = view.querySelector(".large");
+  if (!t || !("IntersectionObserver" in window)) { nb.classList.add("scrolled"); return; }
+  nb.classList.remove("scrolled");
+  io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
+  io.observe(t);
+}
+function paint(html, {anim = true} = {}) {
+  view.innerHTML = html;
+  animateSegs();
+  if (anim) animateRings();
+  observeTitle();
+}
+const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${lede ? `<p class="lede" style="margin-top:6px">${lede}</p>` : ""}</header>`;
+
+/* ---------------- Navigation ---------------- */
+const TABS = [["start","Übersicht","Start"],["schichten","Schichten","Schichten"],["kapselung","Kapselung","Kapselung"],["trainieren","Trainieren","Trainieren"],["fakten","Fakten","Fakten"]];
+const TITLE = Object.fromEntries(TABS.map(t => [t[0], t[1]]));
+const PUSHED = {quiz:{parent:"trainieren", title:"Quiz"}, karten:{parent:"trainieren", title:"Lernkarten"}, ueben:{parent:"trainieren", title:"Übungen"}};
+$("#sideNav").innerHTML = TABS.map(([k, label]) => `<button class="side-item" data-go="${k}" data-nav="${k}">${icon(k)}<span>${label}</span></button>`).join("");
+$("#tabbar").insertAdjacentHTML("beforeend", TABS.map(([k, , short]) => `<button class="tab" data-go="${k}" data-nav="${k}">${icon(k, 23)}<span>${short}</span></button>`).join(""));
+
+let actHandler = null, keyHandler = null, encTimer = null, odTimer = null, prevRoute = null, curRoute = null, enterT = null;
+const enc = {mode:"send", i:0, playing:false, prev:[]};
+function stopTimers() {
+  clearInterval(encTimer); encTimer = null; enc.playing = false;
+  clearInterval(odTimer); odTimer = null;
+}
+function parseHash() {
+  const h = (location.hash || "").replace("#", "");
+  const m = h.match(/^schicht([1-7])$/);
+  if (m) return {key:h, view:"schicht", n:+m[1], parent:"schichten", depth:2, title:shortName(+m[1])};
+  if (PUSHED[h]) return {key:h, view:h, parent:PUSHED[h].parent, depth:2, title:PUSHED[h].title};
+  const tab = TABS.find(t => t[0] === h) ? h : "start";
+  return {key:tab, view:tab, parent:null, depth:1, title:TITLE[tab]};
+}
+function setNav(o = {}) {
+  const r = curRoute, nb = $("#navbar");
+  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${TITLE[r.parent]}</span></button>` : "");
+  nb.querySelector(".nav-title").textContent = o.title || r.title;
+  nb.querySelector(".nb-right").innerHTML = o.right || "";
+}
+function go(token) {
+  if (location.hash === "#" + token) render();
+  else location.hash = token;
+}
+function render() {
+  stopTimers();
+  actHandler = null; keyHandler = null;
+  const r = parseHash();
+  let dir = "fade";
+  if (prevRoute) {
+    if (r.depth > prevRoute.depth) dir = "push";
+    else if (r.depth < prevRoute.depth) dir = "pop";
+    else if (r.view === "schicht" && prevRoute.view === "schicht") dir = r.n > prevRoute.n ? "push" : "pop";
+  }
+  const same = prevRoute && prevRoute.key === r.key;
+  prevRoute = r; curRoute = r;
+  const tabKey = r.parent || r.view;
+  document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  $(".tab-ind").style.setProperty("--i", Math.max(0, TABS.findIndex(t => t[0] === tabKey)));
+  setNav();
+  if (!same) {
+    view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
+    void view.offsetWidth;
+    view.classList.add("entering", "enter-" + dir);
+    clearTimeout(enterT);
+    enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 900);
+  }
+  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), kapselung:vKapselung, trainieren:vTrainieren, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
+  window.scrollTo(0, 0);
+  updateChrome();
+}
+function refreshPassive() {
+  const r = parseHash();
+  if (["start", "schichten", "schicht", "trainieren", "fakten"].includes(r.view)) {
+    const y = window.scrollY;
+    ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view]();
+    window.scrollTo(0, y);
+  }
+  updateChrome();
+}
+function updateChrome() {
+  const p = progress();
+  $("#spPct").textContent = p.total + " %";
+  $("#spBar").style.width = p.total + "%";
+}
+window.addEventListener("hashchange", render);
+document.addEventListener("click", e => {
+  const s = e.target.closest("[data-sheet]");
+  if (s) { e.preventDefault(); closeSheet(s.dataset.sheet === "ok"); return; }
+  const g = e.target.closest("[data-go]");
+  if (g) { e.preventDefault(); haptic("light"); go(g.dataset.go); return; }
+  const a = e.target.closest("[data-act]");
+  if (a && actHandler && !a.disabled) actHandler(a.dataset.act, a, e);
+});
+document.addEventListener("keydown", e => {
+  if ($("#sheetRoot .sheet-wrap")) { if (e.key === "Escape") closeSheet(false); return; }
+  if (!keyHandler || e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = e.target && e.target.tagName;
+  if ((tag === "BUTTON" || tag === "A") && (e.key === "Enter" || e.key === " ")) return;
+  keyHandler(e);
+});
+
+/* ---------------- Übersicht ---------------- */
+let mnemoMode = "de";
+let factIdx = Math.floor(Math.random() * FACTS.length);
+function layerCell(n, rich) {
+  const l = L(n);
+  return `<button class="cell with-badge" data-go="schicht${n}">
+    <span class="badge">${n}</span>
+    <span class="cell-main"><span class="cell-title">${l.de}</span><span class="cell-sub${rich ? " clamp" : ""}">${rich ? l.summary : l.en}</span></span>
+    ${S.learned[n] ? icon("check", 18, "ok-check") : ""}
+    ${rich ? "" : `<span class="cell-detail">${l.pduS}</span>`}
+    ${icon("right", 16, "chev")}
+  </button>`;
+}
+function mnemoHTML(mode, withId) {
+  const m = MNEMO[mode];
+  return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
+}
+function vStart() {
+  const p = progress();
+  const next = LAYERS.find(l => !S.learned[l.n]);
+  const date = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
+  const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
+  actHandler = (act, el) => {
+    if (act === "mnemo") {
+      if (mnemoMode === el.dataset.v) return;
+      mnemoMode = el.dataset.v; haptic("select");
+      $("#mnemoBox").innerHTML = mnemoHTML(mnemoMode, true);
+      $("#mnemoWords").classList.add("swap");
+      const s = el.closest(".seg"), btns = [...s.querySelectorAll("button")], i = btns.indexOf(el);
+      btns.forEach(b => b.setAttribute("aria-pressed", String(b === el)));
+      s.style.setProperty("--i", i); s.dataset.i = i; segPrev.mnemo = i;
+    }
+    if (act === "fact") {
+      haptic("light");
+      factIdx = (factIdx + 1) % FACTS.length;
+      const t = $("#factText"); t.classList.remove("swap"); void t.offsetWidth; t.textContent = FACTS[factIdx]; t.classList.add("swap");
+    }
+    if (act === "haptics") {
+      hapticsOn = !hapticsOn;
+      try { localStorage.setItem("itlernlabor.haptics", hapticsOn ? "1" : "0"); } catch (e) {}
+      el.setAttribute("aria-checked", String(hapticsOn));
+      haptic("medium");
+    }
+    if (act === "reset") {
+      sheet({title:"Fortschritt zurücksetzen?", msg:"Gelernte Schichten, Quiz-Ergebnisse, Lernkarten und Bestzeiten werden gelöscht.", action:"Alles zurücksetzen",
+        onConfirm:() => { S = DEFAULT(); as = null; od = null; kc.deck = []; kc.done = false; qz = {phase:"intro"}; save(); haptic("heavy"); vStart(); island("Fortschritt zurückgesetzt"); }});
+    }
+  };
+  paint(`
+  ${titleBlock(date, "Übersicht", "")}
+  <section class="card">
+    <div class="prog-row">${ring(p.total, 112, 11)}
+      <div class="prog-info"><div class="prog-label">${progressLabel(p.total)}</div>
+        <p class="muted">${next ? `Als Nächstes: Schicht ${next.n}, ${next.de}.` : "Alle Schichten gelernt. Zeit für das Quiz."}</p></div>
+    </div>
+    <div class="stat-grid">
+      <div class="mini"><span>Schichten</span><b class="tnum">${p.learned}/7</b><div class="bar"><i style="width:${Math.round(p.pL * 100)}%"></i></div></div>
+      <div class="mini"><span>Quiz-Bestwert</span><b class="tnum">${S.quizBest || 0} %</b><div class="bar"><i style="width:${Math.round(p.pQ * 100)}%"></i></div></div>
+      <div class="mini"><span>Lernkarten</span><b class="tnum">${p.known}/${CARDS.length}</b><div class="bar"><i style="width:${Math.round(p.pC * 100)}%"></i></div></div>
+      <div class="mini"><span>Übungen</span><b class="tnum">${p.ex}/2</b><div class="bar"><i style="width:${p.ex * 50}%"></i></div></div>
+    </div>
+    <button class="btn btn-fill btn-lg" data-go="${next ? "schicht" + next.n : "quiz"}">${next ? `Weiter mit Schicht ${next.n}` : "Quiz starten"}</button>
+  </section>
+  <section class="section">
+    <h2 class="section-t">Die 7 Schichten</h2>
+    <div class="group-h">Anwendungsorientiert</div>
+    <div class="group">${[7, 6, 5].map(n => layerCell(n)).join("")}</div>
+    <div class="group-h">Transportorientiert</div>
+    <div class="group">${[4, 3, 2, 1].map(n => layerCell(n)).join("")}</div>
+  </section>
+  <section class="section">
+    <h2 class="section-t">Trainieren</h2>
+    <div class="tiles">
+      <button class="tile" data-go="quiz"><span class="tile-ic">${icon("quiz")}</span><span><b>Quiz</b><small>${S.quizRuns ? `Bestwert ${S.quizBest} %` : `${QUESTIONS.length} Fragen`}${wrongN ? ` · ${wrongN} offen` : ""}</small></span></button>
+      <button class="tile" data-go="karten"><span class="tile-ic">${icon("karten")}</span><span><b>Lernkarten</b><small>${p.known} von ${CARDS.length} gewusst</small></span></button>
+      <button class="tile" data-go="ueben"><span class="tile-ic">${icon("ueben")}</span><span><b>Übungen</b><small>Zuordnen und Reihenfolge</small></span></button>
+      <button class="tile" data-go="kapselung"><span class="tile-ic">${icon("kapselung")}</span><span><b>Kapselung</b><small>Daten Schritt für Schritt</small></span></button>
+    </div>
+  </section>
+  <section class="card">
+    <div class="card-h"><h2 class="card-t">${icon("bulb")} Eselsbrücke</h2><div style="width:190px;max-width:100%">${seg("mnemo", [["de", "Deutsch"], ["en", "Englisch"]], mnemoMode, "mnemo")}</div></div>
+    <div id="mnemoBox">${mnemoHTML(mnemoMode, true)}</div>
+  </section>
+  <section class="card">
+    <div class="fact"><span class="fact-ic">${icon("spark", 21)}</span>
+      <div><div class="kicker">Wusstest du?</div><p id="factText">${FACTS[factIdx]}</p><button class="btn btn-plain" data-act="fact">Nächster Fakt</button></div></div>
+  </section>
+  <section class="section">
+    <h2 class="section-t">Einstellungen</h2>
+    <div class="group">
+      <div class="cell static"><span class="cell-ic gray">${icon("wave", 18)}</span><span class="cell-main"><span class="cell-title">Haptisches Feedback</span></span><button class="switch" role="switch" aria-label="Haptisches Feedback" aria-checked="${hapticsOn}" data-act="haptics"></button></div>
+      <div class="cell static"><span class="cell-ic gray">${icon("cloud", 18)}</span><span class="cell-main"><span class="cell-title">Fortschritt gespeichert</span></span><span class="cell-detail sync-short"></span></div>
+    </div>
+    <p class="group-f">Vibration gibt es nur, wenn Gerät und Browser sie zulassen.</p>
+    <div class="group"><button class="cell danger" data-act="reset">Fortschritt zurücksetzen</button></div>
+  </section>`);
+  setSync(syncState);
+}
+
+/* ---------------- Schichten ---------------- */
+function vSchichten() {
+  paint(`
+  ${titleBlock("Modul 1", "Schichten", "Von der Anwendung bis zum Kabel. Öffne eine Schicht für Aufgaben, Protokolle, Geräte und Prüfungstipps.")}
+  <section class="section">
+    <div class="group-h">Anwendungsorientiert · 7 bis 5</div>
+    <div class="group">${[7, 6, 5].map(n => layerCell(n, true)).join("")}</div>
+    <div class="group-h">Transportorientiert · 4 bis 1</div>
+    <div class="group">${[4, 3, 2, 1].map(n => layerCell(n, true)).join("")}</div>
+  </section>`);
+}
+const learnBtn = n => S.learned[n]
+  ? `<button class="btn done" id="learnBtn" data-act="learn" aria-pressed="true">${icon("check", 18, "check-draw")} Gelernt</button>`
+  : `<button class="btn btn-tint" id="learnBtn" data-act="learn" aria-pressed="false">Als gelernt markieren</button>`;
+function vSchicht(n) {
+  const l = L(n);
+  actHandler = act => {
+    if (act !== "learn") return;
+    S.learned[n] = !S.learned[n];
+    save();
+    $("#learnBtn").outerHTML = learnBtn(n);
+    const lp = view.querySelector(".lp[aria-current]"); if (lp) lp.classList.toggle("learned", !!S.learned[n]);
+    haptic(S.learned[n] ? "success" : "light");
+    if (S.learned[n]) island(`Schicht ${n} gelernt`, "good");
+  };
+  keyHandler = e => {
+    if (e.key === "ArrowRight" && n < 7) go("schicht" + (n + 1));
+    if (e.key === "ArrowLeft" && n > 1) go("schicht" + (n - 1));
+  };
+  paint(`
+  <nav class="layer-pick" aria-label="Schicht wählen">${[1, 2, 3, 4, 5, 6, 7].map(k => `<button class="lp${S.learned[k] ? " learned" : ""}" data-go="schicht${k}" aria-label="Schicht ${k}" ${k === n ? 'aria-current="page"' : ""}>${k}</button>`).join("")}</nav>
+  <header class="title-block">
+    <div class="kicker">Schicht ${n} · ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}</div>
+    <h1 class="large">${l.de}</h1>
+    <div class="layer-en">${l.en}${l.alias ? ` · ${l.alias}` : ""}</div>
+    <p class="lede" style="margin-top:12px">${l.summary}</p>
+    <div class="row" style="margin-top:14px">${learnBtn(n)}</div>
+  </header>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("tasks")} Aufgaben</h2></div>
+    <ul class="ticks">${l.tasks.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
+  <section class="section"><div class="group-h">Steckbrief</div>
+    <dl class="group">
+      <div class="kv"><dt>PDU</dt><dd>${l.pdu}</dd></div>
+      <div class="kv"><dt>Adressierung</dt><dd>${l.addr}</dd></div>
+      <div class="kv"><dt>TCP/IP-Modell</dt><dd>${l.tcpip}</dd></div>
+      <div class="kv"><dt>Geräte</dt><dd>${l.devices.join(", ")}</dd></div>
+    </dl></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("schichten")} Protokolle und Standards</h2></div>
+    <div class="chips">${l.protocols.map(p => `<span class="chip">${p}</span>`).join("")}</div></section>
+  ${EXTRAS[n] ? EXTRAS[n]() : ""}
+  <div class="grid2">
+    <section class="card"><div class="card-h"><h2 class="card-t">${icon("mail")} Wie bei der Post</h2></div><p>${l.analogy}</p></section>
+    <section class="card"><div class="card-h"><h2 class="card-t">${icon("device")} Praxisbeispiel</h2></div><p>${l.example}</p></section>
+  </div>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("warn")} Typische Fehler</h2></div>
+    <ul class="ticks warn">${l.faults.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
+  <section class="card tint"><div class="card-h"><h2 class="card-t">${icon("spark")} Prüfungstipp</h2></div><p>${l.tip}</p></section>
+  <div class="group">
+    ${n > 1 ? `<button class="cell with-badge" data-go="schicht${n - 1}"><span class="badge">${n - 1}</span><span class="cell-main"><span class="cell-sub">Vorherige Schicht</span><span class="cell-title">${L(n - 1).de}</span></span>${icon("right", 16, "chev")}</button>` : ""}
+    ${n < 7 ? `<button class="cell with-badge" data-go="schicht${n + 1}"><span class="badge">${n + 1}</span><span class="cell-main"><span class="cell-sub">Nächste Schicht</span><span class="cell-title">${L(n + 1).de}</span></span>${icon("right", 16, "chev")}</button>`
+            : `<button class="cell with-badge" data-go="kapselung"><span class="badge">${icon("kapselung", 17)}</span><span class="cell-main"><span class="cell-sub">Als Nächstes</span><span class="cell-title">Kapselung ansehen</span></span>${icon("right", 16, "chev")}</button>`}
+  </div>`);
+}
+
+/* ---------------- Kapselung ---------------- */
+function vKapselung() {
+  enc.prev = [];
+  actHandler = (act, el) => {
+    const last = ENCAP[enc.mode].length - 1, before = enc.i;
+    if (act === "mode") { if (el.dataset.v === enc.mode) return; stopTimers(); enc.mode = el.dataset.v; enc.i = 0; enc.prev = []; haptic("select"); }
+    if (act === "prev") { stopTimers(); enc.i = Math.max(0, enc.i - 1); }
+    if (act === "next") { stopTimers(); enc.i = Math.min(last, enc.i + 1); }
+    if (act === "jump") { stopTimers(); enc.i = +el.dataset.k; }
+    if (act === "play") {
+      haptic("medium");
+      if (enc.playing) stopTimers();
+      else {
+        if (enc.i >= last) { enc.i = 0; enc.prev = []; }
+        enc.playing = true;
+        encTimer = setInterval(tickEnc, 3200);
+      }
+    }
+    if (act !== "mode" && enc.i !== before) haptic("select");
+    const hadFocus = el && el === document.activeElement;
+    drawEnc(act === "mode" || enc.i !== before);
+    if (hadFocus && ["prev", "next", "play"].includes(act)) {
+      const b = view.querySelector(`[data-act="${act}"]:not([disabled])`) || view.querySelector('[data-act="play"]');
+      if (b) b.focus({preventScroll:true});
+    }
+  };
+  keyHandler = e => {
+    if (e.key === "ArrowRight") { e.preventDefault(); actHandler("next"); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); actHandler("prev"); }
+    if (e.key === " ") { e.preventDefault(); actHandler("play"); }
+  };
+  drawEnc(false);
+}
+function tickEnc() {
+  const last = ENCAP[enc.mode].length - 1;
+  if (enc.i < last) enc.i++;
+  if (enc.i >= last) { clearInterval(encTimer); encTimer = null; enc.playing = false; }
+  haptic("select");
+  drawEnc(true);
+}
+const pduAt = n => n >= 5 ? "Daten" : n === 4 ? "Segment" : n === 3 ? "Paket" : n === 2 ? "Frame" : "Bits";
+function wave(bits) {
+  const w = 10, hi = 5, lo = 29;
+  let x = 0, d = `M0 ${bits[0] === "1" ? hi : lo}`;
+  for (const b of bits) d += ` V${b === "1" ? hi : lo} H${x += w}`;
+  return `<svg class="wave" viewBox="0 0 ${bits.length * w} 34" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" style="stroke:var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;
+}
+function blocksHTML(st, fresh) {
+  if (st.blocks[0] === "bits") {
+    return `<div class="packet"><div class="bits"><code>${BITS}</code>${wave(BITS.replace(/ /g, "").slice(48, 96))}<span class="muted small">Präambel und SFD (10101011) kündigen das Frame an, danach folgt die Ziel-MAC.</span></div></div>`;
+  }
+  return `<div class="packet">${st.blocks.map(b => {
+    const d = BLK[b], leaving = st.drop && st.drop.includes(b), isFresh = fresh.includes(b);
+    const cls = ["pkt", d.data ? "data" : "", isFresh ? "enter" : "", isFresh && !d.data && enc.mode === "send" ? "new" : "", leaving ? "leaving" : ""].filter(Boolean).join(" ");
+    return `<div class="${cls}"><b class="${d.mono ? "mono" : ""}">${d.t}</b><small>${leaving ? "wird entfernt" : d.s}</small></div>`;
+  }).join("")}</div>`;
+}
+function drawEnc(changed) {
+  const steps = ENCAP[enc.mode], st = steps[enc.i], last = steps.length - 1, send = enc.mode === "send";
+  const fresh = st.blocks.filter(b => !enc.prev.includes(b));
+  enc.prev = st.blocks.slice();
+  const mini = [7, 6, 5, 4, 3, 2, 1].map(n => {
+    const done = send ? n > st.L : n < st.L;
+    return `<li class="ms ${n === st.L ? "active" : done ? "done" : ""}"><span class="badge">${n}</span><span>${shortName(n)}</span>${done ? icon("check", 14, "ok") : ""}</li>`;
+  }).join("");
+  paint(`
+  ${titleBlock("Datenfluss", "Kapselung", "Verfolge, wie eine Webseiten-Anfrage von deinem PC zum Webserver reist und wie jede Schicht ihren Header hinzufügt oder wieder entfernt.")}
+  ${seg("encmode", [["send", "Senden"], ["recv", "Empfangen"]], enc.mode, "mode")}
+  <section class="card">
+    <div class="enc-grid">
+      <div>
+        <div class="who">${icon(send ? "device" : "server", 15)} ${send ? "Dein PC" : "Webserver"} ${icon(send ? "down" : "up", 14)}</div>
+        <ol class="steps-ms">${mini}</ol>
+      </div>
+      <div class="enc-main${changed ? " swap" : ""}" aria-live="polite">
+        <div class="step-meta"><span>Schritt ${enc.i + 1} von ${steps.length}</span><span class="chip accent">Schicht ${st.L} · ${shortName(st.L)}</span><span class="chip">PDU: ${pduAt(st.L)}</span></div>
+        <h2>${st.title}</h2>
+        <p>${st.text}</p>
+        ${blocksHTML(st, fresh)}
+        <dl class="fields">${st.fields.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+      </div>
+    </div>
+    <div class="media-ctrl">
+      <button class="btn btn-gray btn-round" data-act="prev" aria-label="Vorheriger Schritt" ${enc.i === 0 ? "disabled" : ""}>${icon("left", 22)}</button>
+      <button class="btn btn-fill btn-round big" data-act="play" aria-label="${enc.playing ? "Pause" : "Abspielen"}">${icon(enc.playing ? "pause" : "play", 26)}</button>
+      <button class="btn btn-gray btn-round" data-act="next" aria-label="Nächster Schritt" ${enc.i === last ? "disabled" : ""}>${icon("right", 22)}</button>
+    </div>
+    <div class="stepper">${steps.map((s, k) => `<button class="${k === enc.i ? "on" : ""}" data-act="jump" data-k="${k}" aria-label="Schritt ${k + 1}"></button>`).join("")}</div>
+  </section>
+  <section class="card">
+    <div class="card-h"><h2 class="card-t">${icon("bulb")} Merke: die Dateneinheiten</h2></div>
+    <div class="pdu-chain"><span class="chip">Daten</span>${icon("right", 14)}<span class="chip">Segment</span>${icon("right", 14)}<span class="chip">Paket</span>${icon("right", 14)}<span class="chip">Frame</span>${icon("right", 14)}<span class="chip">Bits</span></div>
+    <p class="muted" style="margin-top:14px">Englische Eselsbrücke: <b>D</b>o <b>S</b>ome <b>P</b>eople <b>F</b>ear <b>B</b>irthdays. Beim Senden wird die Einheit nach unten größer, beim Empfangen nach oben wieder kleiner.</p>
+  </section>
+  <section class="card">
+    <div class="card-h"><h2 class="card-t">${icon("tasks")} Rechenbeispiel</h2></div>
+    <div class="calc"><span class="chip accent">1460 B Nutzdaten</span><span class="eq">+</span><span class="chip">20 B TCP</span><span class="eq">+</span><span class="chip">20 B IP</span><span class="eq">=</span><b>1500 B</b></div>
+    <div class="calc"><span class="chip">1500 B Paket</span><span class="eq">+</span><span class="chip">14 B Header</span><span class="eq">+</span><span class="chip">4 B FCS</span><span class="eq">=</span><b>1518 B Frame</b></div>
+    <p class="muted" style="margin-top:14px">1500 Byte ist die Ethernet-MTU. Darum passen in ein volles Frame höchstens 1460 Byte TCP-Nutzdaten (MSS).</p>
+  </section>`, {anim:false});
+}
+
+/* ---------------- Trainieren ---------------- */
+function histChart() {
+  if (!S.quizHist.length) return `<p class="muted">Noch keine Runde gespielt. Deine letzten Ergebnisse erscheinen hier.</p>`;
+  return `<div class="hist" role="img" aria-label="Letzte Ergebnisse: ${S.quizHist.join(", ")} Prozent">${S.quizHist.map((v, k) => `<div class="hcol" style="--h:${v}%;--k:${k}"><span>${v}</span><i></i></div>`).join("")}</div>
+    <div class="hist-axis"><span>ältere Runden</span><span>gestrichelt = 50 %</span><span>neueste</span></div>`;
+}
+let quizAutostart = null;
+function vTrainieren() {
+  const p = progress(), wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
+  actHandler = act => { if (act === "wrongstart") { quizAutostart = "wrong"; haptic("light"); go("quiz"); } };
+  paint(`
+  ${titleBlock("Üben und prüfen", "Trainieren", "Wiederhole mit Lernkarten, teste dich im Quiz und festige dein Wissen mit Übungen.")}
+  <div class="section">
+    <button class="hub" data-go="quiz"><span class="cell-ic">${icon("quiz", 24)}</span><span><b>Quiz</b><small>${QUESTIONS.length} Fragen · ${S.quizRuns ? `Bestwert ${S.quizBest} %` : "noch nicht gespielt"}</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub" data-go="karten"><span class="cell-ic">${icon("karten", 24)}</span><span><b>Lernkarten</b><small>${p.known} von ${CARDS.length} gewusst</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub" data-go="ueben"><span class="cell-ic">${icon("ueben", 24)}</span><span><b>Übungen</b><small>Zuordnen${S.sortBest != null ? ` (bestes: ${S.sortBest} Fehler)` : ""} · Reihenfolge${S.orderBest != null ? ` (${fmtTime(S.orderBest)})` : ""}</small></span>${icon("right", 18, "chev")}</button>
+  </div>
+  ${wrongN ? `<div class="group"><button class="cell" data-act="wrongstart"><span class="cell-ic" style="background:var(--red)">${icon("reset", 18)}</span><span class="cell-main"><span class="cell-title">Fehler wiederholen</span><span class="cell-sub">${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus früheren Runden</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("quiz")} Deine Quiz-Ergebnisse</h2><span class="muted small">${S.quizRuns} ${S.quizRuns === 1 ? "Runde" : "Runden"}</span></div>${histChart()}</section>`);
+}
+
+/* ---------------- Quiz ---------------- */
+let qz = {phase:"intro"};
+function arrange(o) {
+  const items = o.map((t, i) => ({t, ok:i === 0}));
+  const num = s => { const m = s.match(/\d+/); return m ? +m[0] : 0; };
+  const sortable = items.every(x => /^(Schicht )?\d/.test(x.t));
+  return sortable ? items.sort((a, b) => num(a.t) - num(b.t) || a.t.localeCompare(b.t)) : shuffle(items);
+}
+function startQuiz(mode) {
+  let pool;
+  if (mode === "quick") pool = shuffle(QUESTIONS).slice(0, 10);
+  else if (mode === "big") pool = shuffle(QUESTIONS).slice(0, 25);
+  else pool = shuffle(QUESTIONS.filter(q => S.wrong.includes(q.id)));
+  if (!pool.length) { drawQuiz(); return; }
+  haptic("medium");
+  qz = {phase:"q", mode, list:pool.map(q => ({...q, opts:arrange(q.o)})), i:0, answers:[], picked:null, fresh:true};
+  drawQuiz();
+  window.scrollTo(0, 0);
+}
+function pick(k) {
+  if (qz.picked != null) return;
+  const q = qz.list[qz.i], opt = q.opts[k];
+  if (!opt) return;
+  qz.picked = k; qz.fresh = false;
+  qz.answers.push({id:q.id, ok:opt.ok, yours:opt.t, right:q.opts.find(x => x.ok).t});
+  haptic(opt.ok ? "success" : "error");
+  drawQuiz();
+  const nb = $("#nextQ"); if (nb) nb.focus({preventScroll:true});
+}
+function nextQ() {
+  if (qz.picked == null) return;
+  haptic("light");
+  qz.i++; qz.picked = null; qz.fresh = true;
+  if (qz.i >= qz.list.length) finishQuiz();
+  drawQuiz();
+  window.scrollTo(0, 0);
+}
+function finishQuiz() {
+  const right = qz.answers.filter(a => a.ok).length, p = pct(right, qz.answers.length);
+  S.quizRuns++;
+  S.quizHist = [...S.quizHist, p].slice(-12);
+  if (qz.mode !== "wrong") S.quizBest = Math.max(S.quizBest || 0, p);
+  const wrong = new Set(S.wrong);
+  qz.answers.forEach(a => { if (a.ok) wrong.delete(a.id); else wrong.add(a.id); });
+  S.wrong = [...wrong];
+  save();
+  qz.phase = "result"; qz.right = right; qz.pct = p;
+  setTimeout(() => haptic(p >= 80 ? "success" : "medium"), 300);
+}
+function vQuiz() {
+  if (qz.phase !== "q") qz = {phase:"intro"};
+  actHandler = (act, el) => {
+    if (act === "start") startQuiz(el.dataset.m);
+    if (act === "pick") pick(+el.dataset.k);
+    if (act === "next") nextQ();
+    if (act === "intro") { qz = {phase:"intro"}; haptic("light"); drawQuiz(); window.scrollTo(0, 0); }
+    if (act === "quit") sheet({title:"Quiz beenden?", msg:"Diese Runde wird nicht gewertet.", action:"Quiz beenden", onConfirm:() => { qz = {phase:"intro"}; drawQuiz(); window.scrollTo(0, 0); }});
+  };
+  keyHandler = e => {
+    if (qz.phase !== "q") return;
+    if (qz.picked == null) {
+      const k = "1234".indexOf(e.key) >= 0 ? "1234".indexOf(e.key) : "abcd".indexOf(e.key.toLowerCase());
+      if (k >= 0) { e.preventDefault(); pick(k); }
+    } else if (e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); nextQ(); }
+  };
+  if (quizAutostart) { const m = quizAutostart; quizAutostart = null; startQuiz(m); return; }
+  drawQuiz();
+}
+function drawQuiz() {
+  const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
+  if (qz.phase === "intro") {
+    setNav();
+    paint(`
+    ${titleBlock("Prüfen", "Quiz", "Prüfungsnahe Fragen zum OSI-Modell. Nach jeder Antwort erfährst du, warum sie richtig oder falsch ist.")}
+    <section class="modes">
+      <button class="mode" data-act="start" data-m="quick"><span class="big">10</span><b>Schnellrunde</b><span>Zehn zufällige Fragen für zwischendurch.</span></button>
+      <button class="mode" data-act="start" data-m="big"><span class="big">25</span><b>Große Runde</b><span>25 Fragen quer durch alle Schichten.</span></button>
+      <button class="mode" data-act="start" data-m="wrong" ${wrongN ? "" : "disabled"}><span class="big">${wrongN}</span><b>Fehler wiederholen</b><span>${wrongN ? "Nur die Fragen, die du zuletzt falsch hattest." : "Hier landen Fragen, die du falsch beantwortest."}</span></button>
+    </section>
+    <section class="card"><div class="card-h"><h2 class="card-t">${icon("quiz")} Deine Ergebnisse</h2><span class="muted small">Bestwert ${S.quizBest || 0} %</span></div>${histChart()}</section>
+    <p class="group-f">Mit den Tasten <span class="kbd">1</span>–<span class="kbd">4</span> antwortest du, mit <span class="kbd">Enter</span> geht es weiter.</p>`);
+    return;
+  }
+  if (qz.phase === "result") {
+    setNav({left:`<button class="back" data-act="intro">${icon("left", 24)}<span>Quiz</span></button>`, title:"Ergebnis"});
+    const wrongs = qz.answers.filter(a => !a.ok);
+    const msg = qz.pct === 100 ? "Perfekt, alles richtig." : qz.pct >= 80 ? "Stark, das sitzt schon richtig gut." : qz.pct >= 50 ? "Solide Basis. Schau dir die Fehler noch einmal an." : "Dranbleiben. Lies die Schichten nach und versuch es noch einmal.";
+    paint(`
+    ${titleBlock("Quiz", "Ergebnis", "")}
+    <section class="card">
+      <div class="result-head">${ring(qz.pct, 132, 13, "richtig")}
+        <div class="prog-info"><div class="prog-label">${qz.right} von ${qz.answers.length} richtig</div><p class="muted">${msg}</p></div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <button class="btn btn-fill" data-act="start" data-m="${qz.mode === "big" ? "big" : "quick"}">Neue Runde</button>
+        ${S.wrong.length ? `<button class="btn btn-tint" data-act="start" data-m="wrong">${S.wrong.length} Fehler wiederholen</button>` : ""}
+      </div>
+    </section>
+    ${wrongs.length ? `<section class="section"><div class="group-h">Das solltest du wiederholen</div><div class="group">${wrongs.map(a => { const q = Q_BY_ID[a.id]; return `<div class="rv"><b>${q.q}</b><span class="yours">Deine Antwort: ${a.yours}</span><span class="right">Richtig: ${a.right}</span><p>${q.e}</p>${q.L ? `<button class="btn btn-plain" data-go="schicht${q.L}" style="align-self:flex-start">Schicht ${q.L} nachlesen</button>` : ""}</div>`; }).join("")}</div></section>` : ""}`);
+    return;
+  }
+  const q = qz.list[qz.i], answered = qz.picked != null;
+  const ok = answered && q.opts[qz.picked].ok;
+  setNav({left:`<button class="nb-btn" data-act="quit">Beenden</button>`, title:`Frage ${qz.i + 1} von ${qz.list.length}`, right:`<span class="nb-btn tnum" style="cursor:default;color:var(--label-2)">${qz.answers.filter(a => a.ok).length} ${icon("check", 16)}</span>`});
+  paint(`
+  <div class="qprog" aria-hidden="true"><i style="width:${pct(qz.answers.length, qz.list.length)}%"></i></div>
+  <section class="qcard${qz.fresh ? " in" : ""}">
+    <div class="kicker">${q.L ? `Schicht ${q.L} · ${shortName(q.L)}` : "Grundlagen"}</div>
+    <h2 class="qtext">${q.q}</h2>
+    <div class="group">${q.opts.map((o, k) => {
+      const cls = answered ? (o.ok ? "ok" : k === qz.picked ? "no" : "dim") : "";
+      const mark = answered && o.ok ? icon("check", 20, "mark") : answered && k === qz.picked ? icon("x", 20, "mark") : "<span></span>";
+      return `<button class="opt ${cls}" data-act="pick" data-k="${k}" ${answered ? "disabled" : ""}><span class="key">${"ABCD"[k]}</span><span>${o.t}</span>${mark}</button>`;
+    }).join("")}</div>
+    ${answered ? `<div class="explain ${ok ? "good" : "bad"}" role="status">${icon(ok ? "check" : "bulb", 20)}<div><b>${ok ? "Richtig" : "Nicht ganz"}</b>${q.e}</div></div>
+      <button class="btn btn-fill btn-lg" id="nextQ" data-act="next">${qz.i + 1 < qz.list.length ? "Nächste Frage" : "Ergebnis ansehen"}</button>` : ""}
+  </section>`, {anim:false});
+}
+
+/* ---------------- Lernkarten ---------------- */
+const kc = {filter:"alle", open:false, deck:[], i:0, flipped:false, done:false, busy:false};
+function buildDeck() {
+  kc.deck = shuffle(CARDS.filter(c => (kc.filter === "alle" || c.tag === kc.filter) && (!kc.open || !S.known.includes(c.id))).map(c => c.id));
+  kc.i = 0; kc.flipped = false; kc.busy = false; kc.done = kc.deck.length === 0;
+}
+function decideCard(act) {
+  const id = kc.deck[kc.i];
+  if (act === "know") { if (!S.known.includes(id)) S.known.push(id); }
+  else { S.known = S.known.filter(x => x !== id); if (kc.deck.length - kc.i > 1) kc.deck.splice(Math.min(kc.deck.length, kc.i + 4), 0, id); }
+  save();
+  kc.i++; kc.flipped = false; kc.busy = false;
+  if (kc.i >= kc.deck.length) { kc.done = true; haptic("success"); }
+  drawCards();
+}
+function vKarten() {
+  if (!kc.deck.length && !kc.done) buildDeck();
+  kc.busy = false;
+  actHandler = (act, el) => {
+    if (act === "flip") { kc.flipped = !kc.flipped; haptic("light"); const f = $(".flash"); if (f) f.classList.toggle("flipped", kc.flipped); return; }
+    if (act === "know" || act === "again") {
+      if (kc.busy || kc.done) return;
+      kc.busy = true;
+      haptic(act === "know" ? "success" : "medium");
+      const f = $(".flash");
+      if (f && !reduced()) { f.classList.add(act === "know" ? "fly-right" : "fly-left"); setTimeout(() => decideCard(act), 240); }
+      else decideCard(act);
+      return;
+    }
+    if (act === "filter") { if (kc.filter === el.dataset.v) return; kc.filter = el.dataset.v; haptic("select"); buildDeck(); }
+    if (act === "open") {
+      kc.open = !kc.open; el.setAttribute("aria-checked", String(kc.open)); haptic("light");
+      setTimeout(() => { buildDeck(); drawCards(); }, reduced() ? 0 : 260);
+      return;
+    }
+    if (act === "shuffle" || act === "restart") { haptic("medium"); buildDeck(); }
+    if (act === "openonly") { kc.open = true; haptic("light"); buildDeck(); }
+    if (act === "showall") { kc.open = false; haptic("light"); buildDeck(); }
+    drawCards();
+  };
+  keyHandler = e => {
+    if (kc.done) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); actHandler("flip"); }
+    else if (e.key === "ArrowRight" || e.key.toLowerCase() === "g") actHandler("know");
+    else if (e.key === "ArrowLeft" || e.key.toLowerCase() === "n") actHandler("again");
+  };
+  drawCards();
+}
+function drawCards() {
+  const inFilter = CARDS.filter(c => kc.filter === "alle" || c.tag === kc.filter);
+  const knownIn = inFilter.filter(c => S.known.includes(c.id)).length;
+  let stage;
+  if (kc.done) {
+    const allKnown = knownIn === inFilter.length;
+    stage = `<div class="card done-card">${ring(pct(knownIn, inFilter.length), 112, 11, "gewusst")}
+      <h2>${allKnown ? "Alles gewusst" : "Stapel geschafft"}</h2>
+      <p class="muted">${knownIn} von ${inFilter.length} Karten in dieser Auswahl gewusst.</p>
+      <div class="row" style="justify-content:center">
+        <button class="btn btn-fill" data-act="restart">${icon("shuffle", 18)} Neu mischen</button>
+        ${!kc.open && !allKnown ? `<button class="btn btn-tint" data-act="openonly">Nur offene Karten</button>` : ""}
+        ${kc.open ? `<button class="btn btn-tint" data-act="showall">Alle Karten</button>` : ""}
+      </div></div>`;
+  } else {
+    const c = CARD_BY_ID[kc.deck[kc.i]];
+    const tagTxt = (c.tag === "schichten" || c.tag === "pdu") && c.L ? `Schicht ${c.L}` : TAG_LABEL[c.tag];
+    stage = `<div class="deck"><div class="flash${kc.flipped ? " flipped" : ""}" data-act="flip" role="button" tabindex="0" aria-label="Karte umdrehen">
+        <div class="flash-inner">
+          <div class="face front"><span class="chip accent">${tagTxt}</span><div class="face-q">${c.f}</div><span class="hint">Tippen zum Umdrehen</span></div>
+          <div class="face back"><span class="kicker">Antwort</span><div class="face-a">${c.b}</div></div>
+        </div></div></div>
+      <div class="card-actions">
+        <button class="btn btn-gray btn-lg" data-act="again">Nochmal</button>
+        <button class="btn btn-fill btn-lg" data-act="know">Gewusst</button>
+      </div>
+      <div class="card-meta"><span class="tnum">Karte ${kc.i + 1} von ${kc.deck.length}</span><span class="tnum">${knownIn} von ${inFilter.length} gewusst</span></div>`;
+  }
+  setNav({right:kc.done ? "" : `<button class="nb-btn" data-act="shuffle" aria-label="Mischen">${icon("shuffle", 20)}</button>`});
+  paint(`
+  ${titleBlock("Wiederholen", "Lernkarten", "Tippe auf die Karte, um sie umzudrehen. Was du weißt, ist erledigt, der Rest kommt wieder.")}
+  ${seg("kfilter", [["alle", "Alle"], ["schichten", "Schichten"], ["pdu", "PDU"], ["begriffe", "Begriffe"], ["ports", "Ports"]], kc.filter, "filter")}
+  <div class="group"><div class="toggle-cell"><span>Nur offene Karten</span><button class="switch" role="switch" aria-label="Nur offene Karten" aria-checked="${kc.open}" data-act="open"></button></div></div>
+  <div class="stage">${stage}</div>`, {anim:kc.done});
+}
+
+/* ---------------- Übungen ---------------- */
+const ub = {tab:"zuordnen"};
+let as = null, od = null;
+function newAssign() {
+  const picks = [];
+  for (let n = 1; n <= 7; n++) { const c = SORT_POOL.filter(x => x.L === n); picks.push(c[Math.floor(Math.random() * c.length)]); }
+  const rest = shuffle(SORT_POOL.filter(x => !picks.includes(x))).slice(0, 3);
+  as = {items:shuffle([...picks, ...rest]).map((x, k) => ({...x, k, placed:false})), sel:null, errors:0, done:false, flash:null, lastK:null};
+}
+function placeAt(k, n) {
+  if (!as || as.done) return;
+  const it = as.items.find(x => x.k === k);
+  if (!it || it.placed) return;
+  if (it.L === n) {
+    it.placed = true; as.sel = null; as.flash = {n, ok:true}; as.lastK = k;
+    if (as.items.every(x => x.placed)) {
+      as.done = true;
+      S.sortRounds++;
+      S.sortBest = S.sortBest == null ? as.errors : Math.min(S.sortBest, as.errors);
+      save();
+      haptic("success");
+      island(as.errors === 0 ? "Fehlerfrei zugeordnet" : "Runde geschafft", "good");
+    } else haptic("success");
+  } else {
+    as.errors++; as.flash = {n, ok:false};
+    haptic("error");
+    island(`${it.t} gehört nicht zu Schicht ${n}`, "bad");
+  }
+  drawUeben();
+}
+function newOrder() { od = {lang:od ? od.lang : "de", chips:shuffle([1, 2, 3, 4, 5, 6, 7]), next:1, errors:0, t0:null, time:0, done:false, flash:null, last:null}; }
+function vUeben() {
+  actHandler = (act, el) => {
+    if (act === "tab") { if (ub.tab === el.dataset.v) return; ub.tab = el.dataset.v; clearInterval(odTimer); odTimer = null; haptic("select"); }
+    if (act === "sel") { const k = +el.dataset.k; as.sel = as.sel === k ? null : k; haptic("select"); }
+    if (act === "place") {
+      if (as.sel == null) { haptic("light"); island("Wähle zuerst einen Begriff"); return; }
+      placeAt(as.sel, +el.dataset.n); return;
+    }
+    if (act === "newassign") { newAssign(); haptic("medium"); }
+    if (act === "lang") { if (od.lang === el.dataset.v) return; od.lang = el.dataset.v; haptic("select"); }
+    if (act === "neworder") { clearInterval(odTimer); odTimer = null; newOrder(); haptic("medium"); }
+    if (act === "ord") {
+      const n = +el.dataset.n;
+      if (od.done) return;
+      if (!od.t0) od.t0 = Date.now();
+      if (n === od.next) {
+        od.last = n; od.next++;
+        haptic(od.next > 7 ? "success" : "light");
+        if (od.next > 7) {
+          od.done = true; clearInterval(odTimer); odTimer = null;
+          od.time = (Date.now() - od.t0) / 1000 + od.errors * 2;
+          const best = S.orderBest == null || od.time < S.orderBest;
+          if (best) S.orderBest = Math.round(od.time * 10) / 10;
+          save();
+          island(best ? "Neue Bestzeit" : "Geschafft", "good");
+        }
+      } else { od.errors++; od.flash = n; od.last = null; haptic("error"); island(`Gesucht ist Schicht ${od.next}`, "bad"); }
+    }
+    drawUeben();
+  };
+  drawUeben();
+}
+function assignHTML() {
+  if (!as) newAssign();
+  const placedN = as.items.filter(x => x.placed).length;
+  const targets = [7, 6, 5, 4, 3, 2, 1].map(n => {
+    const fl = as.flash && as.flash.n === n ? (as.flash.ok ? " flash-ok" : " flash-bad") : "";
+    const placed = as.items.filter(x => x.placed && x.L === n).map(x => `<span class="chip${x.k === as.lastK && as.flash && as.flash.ok ? " new" : ""}">${x.t}</span>`).join("");
+    return `<button class="target${as.sel != null ? " ready" : ""}${fl}" data-act="place" data-n="${n}" data-drop="${n}" ${as.done ? "disabled" : ""}>
+      <span class="badge">${n}</span><span class="tg-main"><b>${L(n).de}</b><span class="placed">${placed}</span></span>${icon("plus", 20, "plus")}</button>`;
+  }).join("");
+  const pool = as.done
+    ? `<div class="card pool" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px">
+        <span class="big-check">${icon("check", 32, "check-draw")}</span>
+        <h2 class="card-t">Runde geschafft</h2>
+        <p class="muted">${as.items.length} Begriffe mit ${as.errors} ${as.errors === 1 ? "Fehler" : "Fehlern"}. Bestes Ergebnis bisher: ${S.sortBest} ${S.sortBest === 1 ? "Fehler" : "Fehler"}.</p>
+        <button class="btn btn-fill" data-act="newassign">Neue Runde</button></div>`
+    : `<div class="card pool"><div class="card-h"><h2 class="card-t">Begriffe</h2><span class="muted small">${as.sel != null ? "Jetzt die Schicht antippen" : "Antippen oder ziehen"}</span></div>
+        <div class="chips">${as.items.filter(x => !x.placed).map(x => `<button class="tchip" draggable="true" data-drag="${x.k}" data-act="sel" data-k="${x.k}" aria-pressed="${as.sel === x.k}">${x.t}</button>`).join("")}</div>
+        <div class="status" style="margin-top:14px"><span><b>${placedN}</b> von ${as.items.length} zugeordnet</span><span><b>${as.errors}</b> Fehler</span></div></div>`;
+  return `<div class="assign">${pool}<div class="group">${targets}</div></div>`;
+}
+function orderHTML() {
+  if (!od) newOrder();
+  const name = n => od.lang === "de" ? L(n).de : L(n).en;
+  const slots = [7, 6, 5, 4, 3, 2, 1].map(n => n < od.next
+    ? `<div class="slot filled${od.last === n ? " new" : ""}"><span class="badge sm">${n}</span>${name(n)}</div>`
+    : `<div class="slot${n === od.next && !od.done ? " next" : ""}"><span class="badge sm">${n}</span>${n === od.next && !od.done ? "Welche Schicht gehört hierhin?" : "…"}</div>`).join("");
+  const left = od.done
+    ? `<div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:12px">
+        <span class="big-check">${icon("check", 32, "check-draw")}</span>
+        <div class="timer">${fmtTime(od.time)}</div>
+        <p class="muted">${od.errors ? `Inklusive ${od.errors * 2} s Strafzeit für ${od.errors} ${od.errors === 1 ? "Fehler" : "Fehler"}.` : "Ohne Fehler."} Bestzeit: ${fmtTime(S.orderBest)}</p>
+        <button class="btn btn-fill" data-act="neworder">Nochmal</button></div>`
+    : `<div class="card"><div class="card-h"><h2 class="card-t">${icon("timer")} Von unten nach oben</h2><div style="width:180px;max-width:100%">${seg("olang", [["de", "Deutsch"], ["en", "Englisch"]], od.lang, "lang")}</div></div>
+        <p class="muted">Tippe die Schichten der Reihe nach an, beginnend mit Schicht 1. Die Zeit startet beim ersten Tippen, jeder Fehler kostet 2 Sekunden.</p>
+        <div class="chips" style="margin-top:16px">${od.chips.filter(n => n >= od.next).map(n => `<button class="tchip${od.flash === n ? " shake" : ""}" data-act="ord" data-n="${n}">${name(n)}</button>`).join("")}</div>
+        <div class="status" style="margin-top:18px"><span class="timer" id="odTime">${od.t0 ? fmtTime((Date.now() - od.t0) / 1000) : "0,0 s"}</span><span><b>${od.errors}</b> Fehler</span>${S.orderBest != null ? `<span>Bestzeit <b>${fmtTime(S.orderBest)}</b></span>` : ""}</div></div>`;
+  return `<div class="order">${left}<div class="group">${slots}</div></div>`;
+}
+function drawUeben() {
+  paint(`
+  ${titleBlock("Anwenden", "Übungen", "Ordne Begriffe der richtigen Schicht zu oder bring die Schichten auf Zeit in die richtige Reihenfolge.")}
+  ${seg("utab", [["zuordnen", "Zuordnen"], ["reihenfolge", "Reihenfolge"]], ub.tab, "tab")}
+  ${ub.tab === "zuordnen" ? assignHTML() : orderHTML()}`, {anim:false});
+  if (as) as.flash = null;
+  if (od) od.flash = null;
+  if (ub.tab === "reihenfolge" && od && od.t0 && !od.done && !odTimer) {
+    odTimer = setInterval(() => { const t = $("#odTime"); if (t && od && od.t0 && !od.done) t.textContent = fmtTime((Date.now() - od.t0) / 1000); }, 100);
+  }
+}
+document.addEventListener("dragstart", e => {
+  const c = e.target instanceof Element && e.target.closest("[data-drag]");
+  if (!c || !as) return;
+  as.sel = +c.dataset.drag;
+  e.dataTransfer.setData("text/plain", c.dataset.drag);
+  e.dataTransfer.effectAllowed = "move";
+  view.querySelectorAll(".target").forEach(t => t.classList.add("ready"));
+});
+document.addEventListener("dragover", e => {
+  const t = e.target instanceof Element && e.target.closest("[data-drop]");
+  if (t && as) { e.preventDefault(); t.classList.add("over"); }
+});
+document.addEventListener("dragleave", e => {
+  const t = e.target instanceof Element && e.target.closest("[data-drop]");
+  if (t) t.classList.remove("over");
+});
+document.addEventListener("drop", e => {
+  const t = e.target instanceof Element && e.target.closest("[data-drop]");
+  if (!t || !as) return;
+  e.preventDefault();
+  const k = parseInt(e.dataTransfer.getData("text/plain"), 10);
+  if (!isNaN(k)) placeAt(k, +t.dataset.drop);
+});
+
+/* ---------------- Fakten ---------------- */
+function vFakten() {
+  const STATS = [[7, "", "Schichten im OSI-Modell"], [48, "Bit", "MAC-Adresse"], [32, "Bit", "IPv4-Adresse"], [128, "Bit", "IPv6-Adresse"],
+    [16, "Bit", "Portnummer (0–65535)"], [1500, "Byte", "Ethernet-MTU"], [100, "m", "max. Länge Twisted Pair"], [20, "Byte", "min. IPv4- und TCP-Header"]];
+  const PORTS = [
+    ["20 / 21","FTP","TCP","Dateiübertragung (Daten / Steuerung)"],["22","SSH, SFTP","TCP","verschlüsselter Fernzugriff"],["23","Telnet","TCP","Fernzugriff, unverschlüsselt"],
+    ["25","SMTP","TCP","E-Mail versenden"],["53","DNS","UDP / TCP","Namensauflösung"],["67 / 68","DHCP","UDP","IP-Adressen vergeben (Server / Client)"],
+    ["80","HTTP","TCP","Web, unverschlüsselt"],["110","POP3","TCP","E-Mail abholen"],["123","NTP","UDP","Zeitsynchronisation"],
+    ["143","IMAP","TCP","E-Mail auf dem Server verwalten"],["161","SNMP","UDP","Netzwerkgeräte überwachen"],["443","HTTPS","TCP","Web, TLS-verschlüsselt"],["3389","RDP","TCP","Windows-Remotedesktop"]];
+  const TROUBLE = [
+    ["1", "Physik prüfen", "Kabel gesteckt? Leuchtet die Link-LED? Richtiges Kabel?", ["Link-LED", "Kabeltester"]],
+    ["2", "Verbindung zum Switch", "Richtiges VLAN? Wird die MAC-Adresse gelernt?", ["arp -a", "getmac"]],
+    ["3", "IP-Konfiguration", "IP-Adresse, Subnetzmaske und Gateway korrekt? Ist das Ziel erreichbar?", ["ipconfig /all", "ping", "tracert"]],
+    ["4", "Ports und Firewall", "Ist der Port offen? Blockiert eine Firewall-Regel?", ["Test-NetConnection -Port 443", "netstat -an"]],
+    ["5–7", "Dienst und Anwendung", "Läuft der Dienst? Funktioniert DNS? Stimmen Zugangsdaten und Zertifikat?", ["nslookup", "Ereignisanzeige"]]];
+  const TCP = [["Anwendung", "2 / 5", "HTTP, DNS, SMTP, SSH"], ["Transport", "5 / 6", "TCP, UDP"], ["Internet", "6 / 7", "IP, ICMP"], ["Netzzugang", "7 / 9", "Ethernet, WLAN"]];
+  paint(`
+  ${titleBlock("Nachschlagen", "Fakten", "Alles, was du für Berufsschule und Prüfung parat haben solltest, kompakt an einem Ort.")}
+  <section class="section"><div class="group-h">Steckbrief</div>
+    <dl class="group">
+      <div class="kv"><dt>Name</dt><dd>Open Systems Interconnection Reference Model</dd></div>
+      <div class="kv"><dt>Deutsch</dt><dd>Referenzmodell für die Kommunikation offener Systeme</dd></div>
+      <div class="kv"><dt>Herausgeber</dt><dd>ISO (International Organization for Standardization)</dd></div>
+      <div class="kv"><dt>Norm</dt><dd>ISO/IEC 7498-1 · ITU-T X.200</dd></div>
+      <div class="kv"><dt>Veröffentlicht</dt><dd>1984, Entwicklung ab 1977</dd></div>
+      <div class="kv"><dt>Schichten</dt><dd>7</dd></div>
+    </dl></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("schichten")} Grundprinzip</h2></div>
+    <ul class="ticks">
+      <li><span>Jede Schicht erledigt eine klar abgegrenzte Aufgabe.</span></li>
+      <li><span><b>Vertikal:</b> Eine Schicht nutzt die Dienste der Schicht darunter und bietet der Schicht darüber Dienste an.</span></li>
+      <li><span><b>Horizontal:</b> Logisch spricht jede Schicht mit derselben Schicht beim Gegenüber, z. B. TCP mit TCP.</span></li>
+      <li><span>Schichten 1–4 sind transportorientiert, 5–7 anwendungsorientiert.</span></li>
+      <li><span>Vorteil: Hersteller können Teile austauschen, ohne den Rest zu ändern, und Fehler lassen sich einer Schicht zuordnen.</span></li>
+    </ul></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("spark")} Zahlen, die sitzen müssen</h2></div>
+    <div class="stats">${STATS.map(([v, u, label]) => `<div class="stat"><b>${v.toLocaleString("de-DE")}${u ? `<small>${u}</small>` : ""}</b><span>${label}</span></div>`).join("")}</div></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("schichten")} OSI und TCP/IP</h2></div>
+    <div class="compare">
+      <div class="cmp-h" style="grid-column:1;grid-row:1">OSI · 7 Schichten</div><div class="cmp-h" style="grid-column:2;grid-row:1">TCP/IP · 4 Schichten</div>
+      ${[7, 6, 5, 4, 3, 2, 1].map((n, i) => `<div class="cmp-o" style="grid-row:${i + 2}"><span class="badge sm">${n}</span><span>${shortName(n)}</span></div>`).join("")}
+      ${TCP.map(([name, row, ex]) => `<div class="cmp-t" style="grid-row:${row}"><b>${name}</b><small>${ex}</small></div>`).join("")}
+    </div></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("tasks")} Alle Schichten auf einen Blick</h2></div>
+    <div class="table-wrap"><table class="t wide">
+      <thead><tr><th>Schicht</th><th>Englisch</th><th>PDU</th><th>Adressierung</th><th>Geräte</th><th>Beispiele</th></tr></thead>
+      <tbody>${[7, 6, 5, 4, 3, 2, 1].map(n => { const l = L(n); return `<tr><td><span class="lname"><span class="badge sm">${n}</span>${l.de}</span></td><td>${l.en}</td><td>${l.pduS}</td><td>${l.addr}</td><td>${l.devices.slice(0, 2).join(", ")}</td><td>${l.protocols.slice(0, 3).join(", ")}</td></tr>`; }).join("")}</tbody>
+    </table></div></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("bulb")} Eselsbrücken</h2></div>
+    <div class="mnemo-grid">${["de", "en", "en2"].map(m => `<div class="mnemo-box">${mnemoHTML(m, false)}</div>`).join("")}</div></section>
+  <section class="section"><div class="group-h">Fehlersuche bottom-up · Befehle für Windows</div>
+    <div class="group trouble">${TROUBLE.map(([n, t, p, cmds]) => `<div class="cell static with-badge"><span class="badge" style="${n.length > 1 ? "width:auto;padding:0 8px" : ""}">${n}</span><span class="cell-main"><span class="cell-title">${t}</span><span class="cell-sub">${p}</span><span class="chips" style="gap:6px">${cmds.map(c => `<code class="cmd">${c}</code>`).join("")}</span></span></div>`).join("")}</div></section>
+  <section class="card"><div class="card-h"><h2 class="card-t">${icon("plug")} Wichtige Ports</h2><span class="muted small">Dienste auf Schicht 7, Ports auf Schicht 4</span></div>
+    <div class="table-wrap"><table class="t">
+      <thead><tr><th>Port</th><th>Dienst</th><th>Transport</th><th>Wofür</th></tr></thead>
+      <tbody>${PORTS.map(([p, d, t, w]) => `<tr><td class="mono"><b>${p}</b></td><td><b>${d}</b></td><td class="muted">${t}</td><td>${w}</td></tr>`).join("")}</tbody>
+    </table></div></section>`, {anim:false});
+}
+
+/* ---------------- Start ---------------- */
+function boot(data) {
+  try { if (data && data.hash && !location.hash) history.replaceState(null, "", data.hash); } catch (e) {}
+  setSync("loading");
+  render();
+  connectDb();
+}
+try { if (window.claude && window.claude.hot && typeof window.claude.hot.snapshot === "function") window.claude.hot.snapshot(() => ({hash:location.hash})); } catch (e) {}
+const hot = window.claude && window.claude.hot;
+if (hot && typeof hot.ready === "function") hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+}
+</script>
+</body>
+</html>
