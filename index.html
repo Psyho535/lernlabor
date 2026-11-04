@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#dcdee2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -25,31 +25,41 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 </head>
 <body><style>
 :root{
-  /* Layout: iOS-style app shell. Large titles that collapse into a frosted nav bar, inset grouped lists,
-     a floating tab bar on phones and a plain sidebar on desktop. One accent; green/red only for feedback. */
-  --bg:#f2f2f7;
-  --side:#fbfbfd;
-  --surface:#ffffff;
-  --fill:rgba(118,118,128,.12);
-  --fill-2:rgba(118,118,128,.075);
-  --fill-3:rgba(120,120,128,.22);
-  --label:#0b0b0f;
-  --label-2:rgba(60,60,67,.64);
-  --label-3:rgba(60,60,67,.32);
-  --sep:rgba(60,60,67,.17);
-  --accent:#007aff;
-  --accent-tint:rgba(0,122,255,.1);
-  --green:#34c759;
-  --green-ink:#248a3d;
-  --red:#ff3b30;
-  --red-ink:#d70015;
-  --material:rgba(249,249,251,.8);
-  --material-strong:rgba(249,249,251,.92);
-  --thumb:#ffffff;
-  --island:#0b0b0f;
+  /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
+     große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
+  --bg:#dcdee2;
+  --side:rgba(255,255,255,.5);
+  --surface:rgba(255,255,255,.55);
+  --face:rgba(255,255,255,.9);
+  --fill:rgba(20,20,26,.08);
+  --fill-2:rgba(20,20,26,.05);
+  --fill-3:rgba(20,20,26,.18);
+  --label:#111114;
+  --label-2:rgba(25,25,30,.68);
+  --label-3:rgba(25,25,30,.38);
+  --sep:rgba(20,20,26,.13);
+  --accent:#1d1d21;
+  --accent-tint:rgba(20,20,26,.08);
+  --grad:linear-gradient(145deg,#3a3b40,#101013);
+  --on-grad:#fff;
+  --grad-glow:rgba(0,0,0,.4);
+  --solid:#f5f6f8;
+  --o1:#ffffff;
+  --o2:#a9acb3;
+  --green:#1fbf63;
+  --green-ink:#14803f;
+  --red:#ff3b5c;
+  --red-ink:#cf1236;
+  --material:rgba(255,255,255,.6);
+  --material-strong:rgba(255,255,255,.88);
+  --thumb:rgba(255,255,255,.95);
+  --island:#111114;
   --island-edge:transparent;
-  --card-shadow:0 18px 40px -24px rgba(0,0,0,.28),0 1px 2px rgba(0,0,0,.04);
-  --pop-shadow:0 14px 40px -14px rgba(0,0,0,.32);
+  --glass-edge:rgba(255,255,255,.8);
+  --specular:rgba(255,255,255,.55);
+  --orb:.6;
+  --card-shadow:0 20px 44px -28px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.8);
+  --pop-shadow:0 14px 40px -14px rgba(0,0,0,.4);
   --ease-ios:cubic-bezier(.32,.72,0,1);
   --ease-spring:cubic-bezier(.34,1.5,.64,1);
   --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Geist",system-ui,"Segoe UI",Roboto,sans-serif;
@@ -58,27 +68,27 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#000000;--side:#0e0e10;--surface:#1c1c1e;
-    --fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.15);--fill-3:rgba(120,120,128,.36);
-    --label:#ffffff;--label-2:rgba(235,235,245,.62);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
-    --accent:#0a84ff;--accent-tint:rgba(10,132,255,.2);
-    --green:#30d158;--green-ink:#30d158;--red:#ff453a;--red-ink:#ff6961;
-    --material:rgba(28,28,30,.78);--material-strong:rgba(44,44,46,.94);--thumb:#636366;
+    --bg:#000000;--side:rgba(22,22,24,.55);--surface:rgba(255,255,255,.065);--face:rgba(30,30,33,.92);--glass-edge:rgba(255,255,255,.15);--specular:rgba(255,255,255,.1);--orb-show:none;--tint:0;--o1:#eceef2;--o2:#8f939b;--grad:linear-gradient(145deg,#f6f7f9,#b4b7bd);--on-grad:#0b0b0d;--grad-glow:rgba(220,224,232,.28);--solid:#1c1c1e;
+    --fill:rgba(255,255,255,.1);--fill-2:rgba(255,255,255,.06);--fill-3:rgba(255,255,255,.2);
+    --label:#ffffff;--label-2:rgba(235,235,240,.7);--label-3:rgba(235,235,240,.4);--sep:rgba(255,255,255,.14);
+    --accent:#d8dade;--accent-tint:rgba(255,255,255,.1);
+    --green:#2fe08a;--green-ink:#52eba2;--red:#ff4f70;--red-ink:#ff8aa0;
+    --material:rgba(24,24,26,.6);--material-strong:rgba(38,38,41,.92);--thumb:rgba(255,255,255,.2);
     --island:#1c1c1e;--island-edge:rgba(255,255,255,.12);
-    --card-shadow:0 18px 40px -24px rgba(0,0,0,.9),0 0 0 .5px rgba(255,255,255,.06);
+    --card-shadow:0 22px 44px -26px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.14);
     --pop-shadow:0 14px 40px -14px rgba(0,0,0,.9);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#000000;--side:#0e0e10;--surface:#1c1c1e;
-  --fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.15);--fill-3:rgba(120,120,128,.36);
-  --label:#ffffff;--label-2:rgba(235,235,245,.62);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
-  --accent:#0a84ff;--accent-tint:rgba(10,132,255,.2);
-  --green:#30d158;--green-ink:#30d158;--red:#ff453a;--red-ink:#ff6961;
-  --material:rgba(28,28,30,.78);--material-strong:rgba(44,44,46,.94);--thumb:#636366;
+  --bg:#000000;--side:rgba(22,22,24,.55);--surface:rgba(255,255,255,.065);--face:rgba(30,30,33,.92);--glass-edge:rgba(255,255,255,.15);--specular:rgba(255,255,255,.1);--orb-show:none;--tint:0;--o1:#eceef2;--o2:#8f939b;--grad:linear-gradient(145deg,#f6f7f9,#b4b7bd);--on-grad:#0b0b0d;--grad-glow:rgba(220,224,232,.28);--solid:#1c1c1e;
+  --fill:rgba(255,255,255,.1);--fill-2:rgba(255,255,255,.06);--fill-3:rgba(255,255,255,.2);
+  --label:#ffffff;--label-2:rgba(235,235,240,.7);--label-3:rgba(235,235,240,.4);--sep:rgba(255,255,255,.14);
+  --accent:#d8dade;--accent-tint:rgba(255,255,255,.1);
+  --green:#2fe08a;--green-ink:#52eba2;--red:#ff4f70;--red-ink:#ff8aa0;
+  --material:rgba(24,24,26,.6);--material-strong:rgba(38,38,41,.92);--thumb:rgba(255,255,255,.2);
   --island:#1c1c1e;--island-edge:rgba(255,255,255,.12);
-  --card-shadow:0 18px 40px -24px rgba(0,0,0,.9),0 0 0 .5px rgba(255,255,255,.06);
+  --card-shadow:0 22px 44px -26px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.14);
   --pop-shadow:0 14px 40px -14px rgba(0,0,0,.9);
   color-scheme:dark;
 }
@@ -499,8 +509,9 @@ table.t.wide{min-width:760px}
 
 /* ---------- motion ---------- */
 .col.entering.enter-fade > *{animation:rise .6s var(--ease-ios) both;animation-delay:calc(var(--d,0) * 45ms)}
-.col.entering.enter-push{animation:pushIn .5s var(--ease-ios)}
-.col.entering.enter-pop{animation:popIn .5s var(--ease-ios)}
+/* Die Kinder animieren, nicht .col: Opazität am Elternteil würde den Glas-Blur der Karten kurz abschalten. */
+.col.entering.enter-push > *{animation:pushIn .5s var(--ease-ios) both;animation-delay:calc(var(--d,0) * 30ms)}
+.col.entering.enter-pop > *{animation:popIn .5s var(--ease-ios) both;animation-delay:calc(var(--d,0) * 30ms)}
 .col > :nth-child(2){--d:1}.col > :nth-child(3){--d:2}.col > :nth-child(4){--d:3}.col > :nth-child(5){--d:4}.col > :nth-child(6){--d:5}.col > :nth-child(n+7){--d:6}
 @keyframes rise{from{opacity:.25;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes pushIn{from{opacity:.3;transform:translateX(56px)}to{opacity:1;transform:none}}
@@ -521,11 +532,174 @@ table.t.wide{min-width:760px}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes grow{from{transform:scaleY(0)}to{transform:none}}
 @keyframes reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- Glas ---------- */
+main{overflow-x:clip}
+#aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+#aurora i{position:absolute;display:var(--orb-show,block);width:120vmax;height:120vmax;border-radius:50%;opacity:var(--orb);will-change:transform;animation:drift 28s ease-in-out infinite alternate}
+#aurora i:nth-child(1){left:-55vmax;top:-60vmax;background:radial-gradient(closest-side,var(--o1),transparent)}
+#aurora i:nth-child(2){right:-65vmax;top:-30vmax;background:radial-gradient(closest-side,var(--o2),transparent);animation-duration:34s;animation-delay:-9s}
+#aurora i:nth-child(3){left:-40vmax;bottom:-70vmax;background:radial-gradient(closest-side,var(--o1),transparent);animation-duration:39s;animation-delay:-17s}
+#aurora i:nth-child(4){right:-60vmax;bottom:-65vmax;background:radial-gradient(closest-side,var(--o2),transparent);animation-duration:31s;animation-delay:-4s}
+#aurora b{position:absolute;inset:-20%;background:radial-gradient(60% 50% at 50% 12%,var(--route,transparent),transparent);opacity:0;transition:opacity .8s}
+#aurora.tinted b{opacity:var(--tint,.14)}
+#aurora::after{content:"";position:absolute;inset:0;opacity:0;background:var(--pulse,transparent)}
+#aurora.pulse::after{animation:pulse .7s var(--ease-ios)}
+#fx{position:fixed;inset:0;z-index:120;width:100%;height:100%;pointer-events:none}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(9vmax,7vmax,0) scale(1.14)}100%{transform:translate3d(-7vmax,12vmax,0) scale(.95)}}
+@keyframes pulse{0%{opacity:0}18%{opacity:.22}100%{opacity:0}}
+
+.card,.group,.hub,.tile,.mode,.lp{background:var(--surface);border:1px solid var(--glass-edge);box-shadow:var(--card-shadow);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%)}
+.card,.hub,.tile,.mode{position:relative;overflow:hidden}
+.card{border-radius:26px}
+.group{border-radius:22px}
+.hub,.tile,.mode{border-radius:24px}
+.card::before,.hub::before,.tile::before,.mode::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(240px 170px at var(--mx,18%) var(--my,0%),var(--specular),transparent)}
+.card.tint{background:color-mix(in srgb,var(--accent) 16%,var(--surface))}
+.sidebar{background:var(--side);-webkit-backdrop-filter:blur(30px) saturate(170%);backdrop-filter:blur(30px) saturate(170%);border-right:1px solid var(--glass-edge)}
+.app-mark{background:var(--grad)}
+.app-mark i{background:#fff}
+.navbar.scrolled{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);border-bottom-color:var(--glass-edge)}
+.tabbar{border:1px solid var(--glass-edge);box-shadow:0 18px 40px -16px rgba(5,8,40,.6),inset 0 1px 0 var(--specular)}
+.tab-ind{background:var(--fill);box-shadow:inset 0 1px 0 var(--specular),0 0 18px color-mix(in srgb,var(--accent) 30%,transparent)}
+.tab[aria-current="page"] .ic{animation:tabPop .55s var(--ease-spring)}
+@keyframes tabPop{0%{transform:scale(.7) translateY(3px)}60%{transform:scale(1.18) translateY(-2px)}100%{transform:none}}
+
+.kicker,.group-h,.cmp-h{text-transform:none;letter-spacing:0}
+.large{font-weight:700;letter-spacing:-.022em;font-size:34px;line-height:1.1}
+.col.entering .large{animation:titleIn .75s var(--ease-ios) both}
+@keyframes titleIn{from{opacity:0;transform:translateY(12px) scale(.97);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.mini,.stat,.mcell,.sublayer,.mnemo-box{border:1px solid var(--sep)}
+.seg{background:var(--fill);border:1px solid var(--sep);border-radius:13px}
+.seg-thumb{border-radius:10px;box-shadow:inset 0 1px 0 var(--specular),0 4px 10px -3px rgba(5,8,40,.35)}
+.bar i,.qprog i{background:var(--grad);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 50%,transparent)}
+.ring-val{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent) 60%,transparent))}
+
+.btn{position:relative;overflow:hidden;border-radius:15px}
+.btn-lg{border-radius:18px}
+.btn-fill{background:var(--grad);color:var(--on-grad);box-shadow:0 12px 24px -12px var(--grad-glow),inset 0 1px 0 rgba(255,255,255,.3)}
+.btn-gray,.btn-tint{border:1px solid var(--sep)}
+.btn.cta::after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);transform:skewX(-18deg);animation:sheen 5s ease-in-out infinite 1.4s}
+@keyframes sheen{0%{left:-40%}24%,100%{left:120%}}
+.side-item[aria-current="page"],.cell-ic:not(.gray),.lp[aria-current="page"],.tchip[aria-pressed="true"],.slot.filled .badge,.ms.active .badge,.pkt.new{background:var(--grad);color:var(--on-grad)}
+.side-item[aria-current="page"] .ic{color:inherit}
+.island .idot{background:#fff;color:#111114}
+.island.good .idot{background:var(--green);color:#fff}
+.island.bad .idot{background:var(--red);color:#fff}
+.hub,.tile,.mode,.cell,.opt,.target{transition:transform .4s var(--ease-spring),background .2s,opacity .3s}
+.tile:hover,.hub:hover,.mode:hover:not([disabled]){transform:translateY(-3px)}
+.ripple{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:currentColor;opacity:.24;pointer-events:none;animation:ripple .6s var(--ease-ios) forwards}
+@keyframes ripple{to{transform:scale(34);opacity:0}}
+.col > .pre{opacity:0;transform:translateY(26px) scale(.98)}
+.col > .rev{animation:rise .7s var(--ease-ios) both}
+
+/* Schichtfarben */
+.badge[style*="--lh"],.lp[style*="--lh"]{background:color-mix(in srgb,var(--lh) 30%,var(--surface));border:1px solid color-mix(in srgb,var(--lh) 55%,transparent);color:var(--label)}
+.lp[style*="--lh"][aria-current="page"]{background:var(--lh);color:#0a0d24;box-shadow:0 0 18px color-mix(in srgb,var(--lh) 60%,transparent)}
+.lhk{color:color-mix(in srgb,var(--lh) 72%,var(--label));font-weight:650}
+
+/* Glasstapel */
+.hero{display:flex;flex-direction:column;gap:16px}
+.hero-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.hero-head .ring-label b{font-size:15px;letter-spacing:-.02em}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--fill-2);border:1px solid var(--sep);font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.pill .ic{color:var(--accent)}
+.pill.flame .ic{color:#ff8a3d}
+.pill.flame.on .ic{animation:flame 1.6s ease-in-out infinite}
+@keyframes flame{0%,100%{transform:scale(1)}50%{transform:scale(1.2) translateY(-1px)}}
+.stack{position:relative;padding:20px 0 34px;display:flex;flex-direction:column}
+.prow{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;height:32px;padding:0;border:0;background:transparent;color:var(--label);text-align:left;cursor:pointer;border-radius:10px}
+.pw{position:relative;height:100%;animation:lift var(--loop,7s) linear infinite;animation-delay:var(--t)}
+.plate{position:absolute;left:20px;top:calc(50% - 46px);width:92px;height:92px;border-radius:15px;transform:rotateX(60deg) rotateZ(45deg);pointer-events:none;overflow:hidden;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--lh) 42%,transparent),color-mix(in srgb,var(--lh) 12%,transparent));border:1.5px solid color-mix(in srgb,var(--lh) 72%,#fff);box-shadow:0 0 22px color-mix(in srgb,var(--lh) 34%,transparent);transition:transform .45s var(--ease-spring)}
+.plate::before{content:"";position:absolute;inset:0;background:var(--lh);opacity:calc(var(--m,0) * .75)}
+.plate::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;animation:hit var(--loop,7s) linear infinite;animation-delay:var(--t)}
+.prow:hover .plate,.prow:focus-visible .plate{transform:rotateX(60deg) rotateZ(45deg) scale(1.08)}
+.prow:active .plate{transform:rotateX(60deg) rotateZ(45deg) scale(.92)}
+.pl{display:flex;flex-direction:column;line-height:1.15;min-width:0;padding-left:6px;animation:lit var(--loop,7s) linear infinite;animation-delay:var(--t)}
+.pl b{font:650 14px var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl small{font-size:11.5px;color:var(--label-2)}
+.pl .ic{display:inline-block;vertical-align:-2px;color:var(--green-ink)}
+.signal{position:absolute;left:58px;top:28px;width:16px;height:16px;border-radius:50%;z-index:9;pointer-events:none;background:#fff;box-shadow:0 0 8px 3px #fff,0 0 24px 8px rgba(200,204,212,.8);animation:drop var(--loop,7s) linear infinite}
+@keyframes drop{0%{transform:translateY(-30px) scale(.4);opacity:0}4%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(192px) scale(1);opacity:1}78%,100%{transform:translateY(228px) scale(.3);opacity:0}}
+@keyframes hit{0%{opacity:0}1.5%{opacity:.8}11%,100%{opacity:0}}
+@keyframes lift{0%{transform:none}1.5%{transform:translateX(5px)}11%,100%{transform:none}}
+@keyframes lit{0%{opacity:.72}1.5%{opacity:1;transform:translateX(5px)}11%{transform:none}14%,100%{opacity:1}}
+
+/* Tagesmix */
+.hub.mix{background:linear-gradient(145deg,var(--fill-3),var(--surface))}
+.mix-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:28px}
+.combo{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,#ff8a3d,#ff4f70);color:#fff;font-weight:700;font-size:13px;animation:pop .5s var(--ease-spring)}
+.xp-float{position:fixed;z-index:121;pointer-events:none;font:750 19px var(--f-display);color:var(--green-ink);text-shadow:0 2px 12px rgba(0,0,0,.35);animation:xpUp 1s var(--ease-ios) forwards}
+@keyframes xpUp{0%{opacity:0;transform:translate(-50%,8px) scale(.7)}18%{opacity:1;transform:translate(-50%,-4px) scale(1.12)}100%{opacity:0;transform:translate(-50%,-52px) scale(1)}}
+.mix-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.mbar{display:grid;grid-template-columns:32px minmax(0,1fr) 42px;gap:12px;align-items:center;padding:10px 16px;font-size:14px}
+.mbar + .mbar{border-top:.5px solid var(--sep)}
+.mbar .track{height:8px;border-radius:8px;background:var(--fill);overflow:hidden}
+.mbar .track i{display:block;height:100%;border-radius:inherit;background:var(--lh);width:var(--to);animation:fillTo 1.1s var(--ease-ios) both .3s;box-shadow:0 0 10px var(--lh)}
+@keyframes fillTo{from{width:var(--from)}to{width:var(--to)}}
+
+/* Lernkarten */
+.face{background:var(--face);border:1px solid var(--glass-edge);border-radius:30px}
+.flash{border-radius:30px;touch-action:pan-y;will-change:transform}
+.deck::before,.deck::after{border:1px solid var(--glass-edge)}
+.stamp{position:absolute;top:18px;z-index:5;padding:6px 14px;border-radius:12px;font:750 17px var(--f-display);border:2.5px solid;opacity:0;pointer-events:none;transform:rotate(var(--r))}
+.stamp.yes{left:18px;--r:-9deg;color:var(--green-ink);opacity:var(--yes,0)}
+.stamp.no{right:18px;--r:9deg;color:var(--red-ink);opacity:var(--no,0)}
+
+/* Einstellungen im Stil der iOS-App */
+main{zoom:var(--zoom,1)}
+.switch[aria-checked="true"]{background:#34c759}
+.nb-round{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;background:var(--surface);border:1px solid var(--glass-edge);color:var(--label);-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);transition:transform .35s var(--ease-spring)}
+.nb-round:active{transform:scale(.88);opacity:1}
+.nb-round .ic{transition:transform .6s var(--ease-spring)}
+.nb-round:hover .ic{transform:rotate(45deg)}
+.set{gap:10px}
+.set-sec{display:flex;flex-direction:column;gap:7px;min-width:0}
+.set-sec + .set-sec{margin-top:16px}
+.set-sec .group-h{padding:0 16px;font-size:13px}
+.cell.sc{min-height:50px;padding:9px 14px;gap:12px;--inset:56px;font-size:17px}
+.cell.sc.plain{--inset:16px}
+.cell.sc .cell-title{font-size:17px;font-weight:400;line-height:1.25}
+.cell.sc .chev{flex:none;color:var(--label-3)}
+.cell.sc.danger{color:var(--red-ink);justify-content:center}
+.cell.sc.link{color:var(--accent)}
+.si{width:30px;height:30px;flex:none;border-radius:8px;display:grid;place-items:center;color:#fff;background:var(--c,#8e8e93);box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+.sv{color:var(--label-2);font-size:17px;white-space:nowrap;flex:none;font-variant-numeric:tabular-nums}
+.swatch{width:26px;height:26px;flex:none;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.tick{color:var(--accent);flex:none;animation:pop .4s var(--ease-spring)}
+.me{display:flex;align-items:center;gap:14px;padding:14px}
+.me .app-mark{width:58px;height:58px;border-radius:14px;gap:6px;padding:0 13px;flex:none}
+.me .app-mark i{height:5px;border-radius:3px}
+.me b{display:block;font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.me small{display:block;font-size:14px;color:var(--label-2);margin-top:2px}
+.size-box{display:flex;flex-direction:column;gap:14px;padding:18px 16px}
+.size-row{display:flex;align-items:center;gap:14px}
+.size-row span{flex:none;color:var(--label);line-height:1}
+.size-row input{flex:1;min-width:0;accent-color:var(--accent);height:28px}
+
+:root[data-noglass] *,:root[data-noglass] *::before{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:root[data-noglass] .card,:root[data-noglass] .group,:root[data-noglass] .hub,:root[data-noglass] .tile,:root[data-noglass] .mode,:root[data-noglass] .lp,:root[data-noglass] .nb-round{background:var(--solid)}
+:root[data-noglass] .tabbar,:root[data-noglass] .navbar.scrolled{background:var(--material-strong)}
+:root[data-mono] [style*="--lh"]{--lh:#b4b7bd!important}
+:root[data-mono] #aurora b{display:none}
+:root[data-noshimmer] #aurora i{display:none}
+:root[data-nosignal] .signal{display:none}
+:root[data-nosignal] .pw,:root[data-nosignal] .pl,:root[data-nosignal] .plate::after{animation:none!important}
+:root[data-calm] *,:root[data-calm] *::before,:root[data-calm] *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+:root[data-calm] #aurora i,:root[data-calm] .signal,:root[data-calm] .pw,:root[data-calm] .pl,:root[data-calm] .plate::after,:root[data-calm] .btn.cta::after,:root[data-calm] .pill.flame.on .ic{animation:none!important}
+:root[data-calm] .signal{display:none}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  #aurora i,.signal,.pw,.pl,.plate::after,.btn.cta::after,.pill.flame.on .ic{animation:none!important}
+  .signal{display:none}
 }
 </style>
 
+<div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+<canvas id="fx" aria-hidden="true"></canvas>
 <aside class="sidebar" aria-label="Navigation">
   <div class="side-head"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>Modul 1 · OSI-Modell</small></div></div>
   <nav class="side-nav" id="sideNav"></nav>
@@ -548,7 +722,43 @@ table.t.wide{min-width:760px}
 document.documentElement.lang = "de";
 const $ = (s, r = document) => r.querySelector(s);
 const view = $("#view");
-const reduced = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+/* ---------------- Einstellungen (pro Gerät) ---------------- */
+const SET_KEY = "itlernlabor.settings";
+const SET_DEFAULT = () => ({theme:"auto", accent:"silber", colors:true, shimmer:true, size:2, glass:true, motion:true, confetti:true, signal:true, goal:10, round:10, content:"mix", auto:false, sound:false});
+let CFG = SET_DEFAULT();
+try { const raw = localStorage.getItem(SET_KEY); if (raw) CFG = Object.assign(SET_DEFAULT(), JSON.parse(raw)); } catch (e) {}
+const ACCENTS = {silber:["Silber", "#c9ccd2"], blau:["Blau", "#0a84ff"], indigo:["Indigo", "#6a67e8"], gruen:["Grün", "#2fa84f"], orange:["Orange", "#ee7409"], rosa:["Rosa", "#ec3f74"]};
+const SIZES = [.88, .94, 1, 1.08, 1.16];
+const SET_PAGES = {
+  "set-theme":{title:"Erscheinungsbild", key:"theme", foot:"Automatisch folgt der Einstellung deines Geräts.", opts:[["auto", "Automatisch"], ["light", "Hell"], ["dark", "Dunkel"]]},
+  "set-accent":{title:"Akzentfarbe", key:"accent", foot:"Färbt Knöpfe, Links und Fortschrittsbalken. Silber passt zum Schwarz und Silber der App.", opts:Object.entries(ACCENTS).map(([k, [name, c]]) => [k, name, c])},
+  "set-goal":{title:"Tagesziel", key:"goal", foot:"So viele Aufgaben möchtest du pro Tag schaffen. Der Stand erscheint auf der Übersicht.", opts:[5, 10, 15, 20, 30].map(n => [n, `${n} Aufgaben`])},
+  "set-round":{title:"Aufgaben pro Runde", key:"round", foot:"Gilt für den Tagesmix und fürs Üben einer einzelnen Schicht.", opts:[5, 10, 15, 20].map(n => [n, `${n} Aufgaben`])},
+  "set-content":{title:"Inhalt im Tagesmix", key:"content", foot:"Gemischt wechselt zwischen Lernkarten und Quizfragen.", opts:[["mix", "Gemischt"], ["card", "Nur Lernkarten"], ["q", "Nur Quizfragen"]]}
+};
+const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+function applySettings() {
+  const root = document.documentElement, st = root.style;
+  if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#dcdee2" : i ? "#000000" : "#dcdee2"; });
+  [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
+  st.setProperty("--zoom", SIZES[CFG.size] || 1);
+  const a = CFG.accent !== "silber" && ACCENTS[CFG.accent];
+  if (a) {
+    const c = a[1];
+    st.setProperty("--accent", c);
+    st.setProperty("--accent-tint", `color-mix(in srgb,${c} 16%,transparent)`);
+    st.setProperty("--grad", `linear-gradient(145deg,${c},color-mix(in srgb,${c} 80%,#000))`);
+    st.setProperty("--on-grad", "#fff");
+    st.setProperty("--grad-glow", `color-mix(in srgb,${c} 55%,transparent)`);
+  } else ["--accent", "--accent-tint", "--grad", "--on-grad", "--grad-glow"].forEach(p => st.removeProperty(p));
+}
+function saveSettings() {
+  try { localStorage.setItem(SET_KEY, JSON.stringify(CFG)); } catch (e) {}
+  applySettings();
+}
+applySettings();
 
 /* ---------------- Icons ---------------- */
 const ICONS = {
@@ -582,7 +792,17 @@ const ICONS = {
   device:'<rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/>',
   server:'<rect x="3.5" y="4" width="17" height="7" rx="2"/><rect x="3.5" y="13" width="17" height="7" rx="2"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/>',
   timer:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.5"/><path d="M9.5 3h5"/>',
-  wave:'<path d="M3 12h3l2-6 4 12 3-9 2 3h4"/>'
+  wave:'<path d="M3 12h3l2-6 4 12 3-9 2 3h4"/>',
+  gear:'<path d="M12.220 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.730l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.730.73l-.22.38a2 2 0 0 0 .73 2.730l.15.1a2 2 0 0 1 1 1.720v.51a2 2 0 0 1-1 1.740l-.15.09a2 2 0 0 0-.73 2.730l.22.38a2 2 0 0 0 2.730.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.730V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.730l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.730-.73l.22-.39a2 2 0 0 0-.73-2.730l-.15-.08a2 2 0 0 1-1-1.740v-.5a2 2 0 0 1 1-1.740l.15-.09a2 2 0 0 0 .73-2.730l-.22-.38a2 2 0 0 0-2.730-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.730V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
+  moon:'<path d="M20 14.500A8.500 8.500 0 0 1 9.500 4a8.500 8.500 0 1 0 10.500 10.500z"/>',
+  palette:'<path d="M12 3.500a8.500 8.500 0 0 0 0 17c1.300 0 2-.9 2-1.900 0-1.200-1-1.700-1-2.800 0-1 .8-1.800 1.900-1.800h2.300a3.300 3.300 0 0 0 3.300-3.300c0-4.300-3.800-7.200-8.500-7.200z"/><path d="M7.800 11h.01M10 7.500h.01M14.500 7.500h.01"/>',
+  text:'<path d="M3.500 18 8 6l4.500 12"/><path d="M5 14h6"/><path d="M14.500 18l3-8 3 8"/><path d="M15.500 15.500h4"/>',
+  sound:'<path d="M4 9.500v5h3.500L12.500 19V5L7.500 9.500z"/><path d="M16 9a4.200 4.200 0 0 1 0 6"/><path d="M18.500 6.500a8 8 0 0 1 0 11"/>',
+  upload:'<path d="M12 15.500v-11"/><path d="m7.500 9 4.500-4.500L16.500 9"/><path d="M4.500 15v3.500a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V15"/>',
+  download:'<path d="M12 4.500v11"/><path d="m7.500 11 4.500 4.500 4.500-4.500"/><path d="M4.500 15v3.500a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V15"/>',
+  flame:'<path d="M12 3c.6 3-2.6 4.700-3.800 7.300C7.300 12.300 7 13.300 7 14.500a5 5 0 0 0 10 0c0-2-1-3.700-2-4.800-.3 1.300-1 2-1.900 2.400C13.800 9 13.700 5.500 12 3z"/>',
+  bolt:'<path d="M13 3 5 13.500h6L10 21l8-10.500h-6z"/>',
+  mix:'<path d="m12 3.500 8.500 4.250L12 12 3.500 7.750z"/><path d="M12 12v8.500"/><path d="m5 13 7 3.500 7-3.500"/>'
 };
 const icon = (n, s = 20, cls = "") => `<svg class="ic ${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ""}</svg>`;
 
@@ -653,7 +873,7 @@ const LAYERS = [
    tip:"Der Browser selbst ist nicht Schicht 7, sondern das Protokoll, das er nutzt (HTTP). Die Schicht stellt Anwendungen Dienste bereit."}
 ];
 const L = n => LAYERS[n - 1];
-const shortName = n => L(n).de.replace("schicht", "");
+const shortName = n => L(n).de.replace(/s?schicht$/, "");
 
 const EXTRAS = {
   1: () => `<section class="card"><div class="card-h"><h2 class="card-t">${icon("plug")} Übertragungsmedien</h2></div>
@@ -875,7 +1095,7 @@ const MNEMO = {
 
 /* ---------------- Fortschritt ---------------- */
 const LS_KEY = "itlernlabor.osi.v1";
-const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, updatedAt:0});
+const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, updatedAt:0});
 const clone = o => JSON.parse(JSON.stringify(o));
 let S = DEFAULT();
 try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
@@ -939,6 +1159,43 @@ function progress() {
 }
 const progressLabel = p => p === 0 ? "Los geht’s" : p < 30 ? "Guter Anfang" : p < 60 ? "Du bist dabei" : p < 90 ? "Fast prüfungsreif" : "Prüfungsreif";
 
+/* ---------------- Wiederholung in wachsenden Abständen ---------------- */
+const HUE = {1:"#ffc94d", 2:"#86e36b", 3:"#22d3c5", 4:"#39a7ff", 5:"#8583ff", 6:"#c86bff", 7:"#ff5c8a"};
+const SRS_DAYS = [0, 1, 3, 7, 16, 35];
+const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 864e5);
+const streakNow = () => S.streak.last >= today() - 1 ? S.streak.n : 0;
+const doneToday = () => S.day.d === today() ? S.day.n : 0;
+function grade(id, ok, xp) {
+  const d = today(), rec = S.srs[id] || {b:0, d:0};
+  const b = ok ? Math.min(SRS_DAYS.length - 1, rec.b + 1) : 0;
+  S.srs[id] = {b, d:d + SRS_DAYS[b]};
+  if (S.day.d !== d) S.day = {d, n:0};
+  S.day.n++;
+  if (S.streak.last !== d) S.streak = {n:S.streak.last === d - 1 ? S.streak.n + 1 : 1, last:d};
+  S.xp += xp;
+}
+const allItems = () => [...CARDS.map(c => ({k:"card", id:c.id, L:c.L || 0})), ...QUESTIONS.map(q => ({k:"q", id:q.id, L:q.L || 0}))];
+const isDue = it => S.srs[it.id] && S.srs[it.id].d <= today();
+const dueCount = () => allItems().filter(isDue).length;
+function mastery(n) {
+  const items = allItems().filter(it => it.L === n);
+  if (!items.length) return 0;
+  return items.reduce((sum, it) => sum + (S.srs[it.id] ? S.srs[it.id].b : 0), 0) / (items.length * (SRS_DAYS.length - 1));
+}
+/* Zuerst Fälliges, dann Neues aus den schwächsten Schichten (Karte und Frage im Wechsel), sonst das Unsicherste. */
+function buildMix(layer, size = CFG.round) {
+  let all = allItems().filter(it => !layer || it.L === layer);
+  const only = all.filter(it => CFG.content === "mix" || it.k === CFG.content);
+  if (only.length) all = only;
+  const box = it => S.srs[it.id] ? S.srs[it.id].b : 0;
+  const due = shuffle(all.filter(isDue)).sort((a, b) => box(a) - box(b));
+  const newOf = k => shuffle(all.filter(it => it.k === k && !S.srs[it.id])).sort((a, b) => mastery(a.L) - mastery(b.L));
+  const cards = newOf("card"), qs = newOf("q"), fresh = [];
+  while (cards.length || qs.length) { if (cards.length) fresh.push(cards.shift()); if (qs.length) fresh.push(qs.shift()); }
+  const rest = shuffle(all.filter(it => S.srs[it.id] && !isDue(it))).sort((a, b) => box(a) - box(b));
+  return [...due, ...fresh, ...rest].slice(0, size).map(it => it.k === "q" ? {...it, opts:arrange(Q_BY_ID[it.id].o)} : it);
+}
+
 /* ---------------- Haptik, Island, Sheet ---------------- */
 const coarse = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches);
 let hapticLabel = null;
@@ -991,6 +1248,132 @@ function closeSheet(ok) {
   w.classList.add("closing");
   setTimeout(() => { $("#sheetRoot").innerHTML = ""; }, reduced() ? 0 : 260);
   if (ok && cb) cb();
+}
+
+/* ---------------- Effekte ---------------- */
+const fxCanvas = $("#fx");
+let sparks = [], fxRun = false;
+let audio = null;
+function tone(ok) {
+  if (!CFG.sound) return;
+  try {
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    (ok ? [660, 880] : [220, 180]).forEach((f, i) => {
+      const o = audio.createOscillator(), g = audio.createGain(), t = audio.currentTime + i * .09;
+      o.type = ok ? "sine" : "triangle"; o.frequency.value = f;
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.exponentialRampToValueAtTime(.12, t + .015);
+      g.gain.exponentialRampToValueAtTime(.0001, t + .18);
+      o.connect(g); g.connect(audio.destination);
+      o.start(t); o.stop(t + .2);
+    });
+  } catch (e) {}
+}
+function burst(x, y, n = 26, colors = Object.values(HUE)) {
+  if (reduced() || !CFG.confetti) return;
+  fxCanvas.width = innerWidth; fxCanvas.height = innerHeight;
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = 2 + Math.random() * 6;
+    sparks.push({x, y, vx:Math.cos(a) * v, vy:Math.sin(a) * v - 3, s:3 + Math.random() * 5, rot:Math.random() * 6, life:1, c:colors[i % colors.length]});
+  }
+  if (fxRun) return;
+  fxRun = true;
+  const ctx = fxCanvas.getContext("2d");
+  const step = () => {
+    ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    sparks = sparks.filter(p => p.life > 0);
+    sparks.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += .16; p.vx *= .985; p.rot += .14; p.life -= .014;
+      ctx.save(); ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.c; ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); ctx.restore();
+    });
+    if (sparks.length) requestAnimationFrame(step);
+    else { fxRun = false; ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height); }
+  };
+  requestAnimationFrame(step);
+}
+function burstAt(el, n, colors) {
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, n, colors);
+}
+function celebrate() {
+  burst(innerWidth * .25, innerHeight * .35, 46);
+  setTimeout(() => burst(innerWidth * .75, innerHeight * .3, 46), 180);
+}
+function floatXP(el, txt) {
+  if (!el || reduced()) return;
+  const r = el.getBoundingClientRect(), f = document.createElement("div");
+  f.className = "xp-float"; f.textContent = txt;
+  f.style.left = (r.left + r.width / 2) + "px"; f.style.top = r.top + "px";
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 1000);
+}
+function pulse(color) {
+  const a = $("#aurora");
+  a.style.setProperty("--pulse", color);
+  a.classList.remove("pulse"); void a.offsetWidth; a.classList.add("pulse");
+}
+const GLASS = ".card,.hub,.tile,.mode";
+function moveLight(e) {
+  const g = e.target.closest && e.target.closest(GLASS);
+  if (!g) return;
+  const r = g.getBoundingClientRect();
+  g.style.setProperty("--mx", (e.clientX - r.left) + "px");
+  g.style.setProperty("--my", (e.clientY - r.top) + "px");
+}
+document.addEventListener("pointermove", moveLight, {passive:true});
+document.addEventListener("pointerdown", e => {
+  moveLight(e);
+  const b = e.target.closest && e.target.closest(".btn,.hub,.tile,.mode,.cell:not(.static):not(.sc),.opt,.prow");
+  if (!b || b.disabled || reduced()) return;
+  if (getComputedStyle(b).position === "static") b.style.position = "relative";
+  b.style.overflow = "hidden";
+  const r = b.getBoundingClientRect(), s = document.createElement("span");
+  s.className = "ripple"; s.style.left = (e.clientX - r.left) + "px"; s.style.top = (e.clientY - r.top) + "px";
+  b.appendChild(s);
+  setTimeout(() => s.remove(), 600);
+}, {passive:true});
+const STAMPS = `<span class="stamp yes">Gewusst</span><span class="stamp no">Nochmal</span>`;
+/* Karte nach rechts wischen = gewusst, nach links = nochmal. Ohne Bewegung bleibt es ein Tippen zum Umdrehen. */
+function bindSwipe(decide) {
+  const f = $(".flash");
+  if (!f) return;
+  let x0 = null, y0 = 0, dx = 0, moved = false;
+  const paintDrag = () => {
+    f.style.transform = `translateX(${dx}px) rotate(${dx / 22}deg)`;
+    f.style.setProperty("--yes", Math.max(0, Math.min(1, dx / 90)));
+    f.style.setProperty("--no", Math.max(0, Math.min(1, -dx / 90)));
+  };
+  f.addEventListener("pointerdown", e => { x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; f.style.transition = "none"; });
+  f.addEventListener("pointermove", e => {
+    if (x0 == null) return;
+    dx = e.clientX - x0;
+    if (!moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - y0)) { moved = true; try { f.setPointerCapture(e.pointerId); } catch (err) {} }
+    if (moved) paintDrag();
+  });
+  const end = () => {
+    if (x0 == null) return;
+    x0 = null;
+    if (moved && Math.abs(dx) > 90) { decide(dx > 0 ? "know" : "again"); return; }
+    f.style.transition = "transform .45s var(--ease-spring)";
+    dx = 0; paintDrag();
+  };
+  f.addEventListener("pointerup", end);
+  f.addEventListener("pointercancel", end);
+  f.addEventListener("click", e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+}
+let revealIO = null;
+function revealBelow() {
+  if (revealIO) { revealIO.disconnect(); revealIO = null; }
+  if (reduced() || !("IntersectionObserver" in window)) return;
+  revealIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.remove("pre"); e.target.classList.add("rev");
+    revealIO.unobserve(e.target);
+  }), {threshold:.04});
+  [...view.children].forEach(el => {
+    if (el.getBoundingClientRect().top > innerHeight * .92) { el.classList.add("pre"); revealIO.observe(el); }
+  });
 }
 
 /* ---------------- Helfer ---------------- */
@@ -1055,7 +1438,7 @@ function observeTitle() {
 function paint(html, {anim = true} = {}) {
   view.innerHTML = html;
   animateSegs();
-  if (anim) animateRings();
+  if (anim) { animateRings(); revealBelow(); }
   observeTitle();
 }
 const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${lede ? `<p class="lede" style="margin-top:6px">${lede}</p>` : ""}</header>`;
@@ -1063,8 +1446,9 @@ const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicke
 /* ---------------- Navigation ---------------- */
 const TABS = [["start","Übersicht","Start"],["schichten","Schichten","Schichten"],["kapselung","Kapselung","Kapselung"],["trainieren","Trainieren","Trainieren"],["fakten","Fakten","Fakten"]];
 const TITLE = Object.fromEntries(TABS.map(t => [t[0], t[1]]));
-const PUSHED = {quiz:{parent:"trainieren", title:"Quiz"}, karten:{parent:"trainieren", title:"Lernkarten"}, ueben:{parent:"trainieren", title:"Übungen"}};
-$("#sideNav").innerHTML = TABS.map(([k, label]) => `<button class="side-item" data-go="${k}" data-nav="${k}">${icon(k)}<span>${label}</span></button>`).join("");
+TITLE.einstellungen = "Einstellungen";
+const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"}, quiz:{parent:"trainieren", title:"Quiz"}, karten:{parent:"trainieren", title:"Lernkarten"}, ueben:{parent:"trainieren", title:"Übungen"}};
+$("#sideNav").innerHTML = TABS.map(([k, label]) => `<button class="side-item" data-go="${k}" data-nav="${k}">${icon(k)}<span>${label}</span></button>`).join("") + `<button class="side-item" data-go="einstellungen" data-nav="einstellungen">${icon("gear")}<span>Einstellungen</span></button>`;
 $("#tabbar").insertAdjacentHTML("beforeend", TABS.map(([k, , short]) => `<button class="tab" data-go="${k}" data-nav="${k}">${icon(k, 23)}<span>${short}</span></button>`).join(""));
 
 let actHandler = null, keyHandler = null, encTimer = null, odTimer = null, prevRoute = null, curRoute = null, enterT = null;
@@ -1077,13 +1461,13 @@ function parseHash() {
   const h = (location.hash || "").replace("#", "");
   const m = h.match(/^schicht([1-7])$/);
   if (m) return {key:h, view:"schicht", n:+m[1], parent:"schichten", depth:2, title:shortName(+m[1])};
-  if (PUSHED[h]) return {key:h, view:h, parent:PUSHED[h].parent, depth:2, title:PUSHED[h].title};
+  if (PUSHED[h]) return {key:h, view:h, parent:PUSHED[h].parent, depth:PUSHED[h].depth || 2, title:PUSHED[h].title};
   const tab = TABS.find(t => t[0] === h) ? h : "start";
   return {key:tab, view:tab, parent:null, depth:1, title:TITLE[tab]};
 }
 function setNav(o = {}) {
   const r = curRoute, nb = $("#navbar");
-  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${TITLE[r.parent]}</span></button>` : "");
+  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${r.depth > 2 ? "Zurück" : TITLE[r.parent]}</span></button>` : "");
   nb.querySelector(".nav-title").textContent = o.title || r.title;
   nb.querySelector(".nb-right").innerHTML = o.right || "";
 }
@@ -1103,10 +1487,15 @@ function render() {
   }
   const same = prevRoute && prevRoute.key === r.key;
   prevRoute = r; curRoute = r;
-  const tabKey = r.parent || r.view;
+  const tabKey = r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.parent || r.view;
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
-  $(".tab-ind").style.setProperty("--i", Math.max(0, TABS.findIndex(t => t[0] === tabKey)));
+  const tabI = TABS.findIndex(t => t[0] === tabKey);
+  $(".tab-ind").style.setProperty("--i", Math.max(0, tabI));
+  $(".tab-ind").style.opacity = tabI < 0 ? 0 : 1;
   setNav();
+  const aurora = $("#aurora");
+  aurora.classList.toggle("tinted", r.view === "schicht");
+  if (r.view === "schicht") aurora.style.setProperty("--route", HUE[r.n]);
   if (!same) {
     view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
     void view.offsetWidth;
@@ -1114,7 +1503,7 @@ function render() {
     clearTimeout(enterT);
     enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 900);
   }
-  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), kapselung:vKapselung, trainieren:vTrainieren, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
+  ({start:vStart, schichten:vSchichten, schicht:() => vSchicht(r.n), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
   window.scrollTo(0, 0);
   updateChrome();
 }
@@ -1155,7 +1544,7 @@ let factIdx = Math.floor(Math.random() * FACTS.length);
 function layerCell(n, rich) {
   const l = L(n);
   return `<button class="cell with-badge" data-go="schicht${n}">
-    <span class="badge">${n}</span>
+    <span class="badge" style="--lh:${HUE[n]}">${n}</span>
     <span class="cell-main"><span class="cell-title">${l.de}</span><span class="cell-sub${rich ? " clamp" : ""}">${rich ? l.summary : l.en}</span></span>
     ${S.learned[n] ? icon("check", 18, "ok-check") : ""}
     ${rich ? "" : `<span class="cell-detail">${l.pduS}</span>`}
@@ -1171,6 +1560,7 @@ function vStart() {
   const next = LAYERS.find(l => !S.learned[l.n]);
   const date = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
   const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length;
+  const due = dueCount(), streak = streakNow();
   actHandler = (act, el) => {
     if (act === "mnemo") {
       if (mnemoMode === el.dataset.v) return;
@@ -1186,39 +1576,36 @@ function vStart() {
       factIdx = (factIdx + 1) % FACTS.length;
       const t = $("#factText"); t.classList.remove("swap"); void t.offsetWidth; t.textContent = FACTS[factIdx]; t.classList.add("swap");
     }
-    if (act === "haptics") {
-      hapticsOn = !hapticsOn;
-      try { localStorage.setItem("itlernlabor.haptics", hapticsOn ? "1" : "0"); } catch (e) {}
-      el.setAttribute("aria-checked", String(hapticsOn));
-      haptic("medium");
-    }
-    if (act === "reset") {
-      sheet({title:"Fortschritt zurücksetzen?", msg:"Gelernte Schichten, Quiz-Ergebnisse, Lernkarten und Bestzeiten werden gelöscht.", action:"Alles zurücksetzen",
-        onConfirm:() => { S = DEFAULT(); as = null; od = null; kc.deck = []; kc.done = false; qz = {phase:"intro"}; save(); haptic("heavy"); vStart(); island("Fortschritt zurückgesetzt"); }});
-    }
   };
+  setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
   paint(`
   ${titleBlock(date, "Übersicht", "")}
-  <section class="card">
-    <div class="prog-row">${ring(p.total, 112, 11)}
+  <section class="card hero">
+    <div class="hero-head">
       <div class="prog-info"><div class="prog-label">${progressLabel(p.total)}</div>
-        <p class="muted">${next ? `Als Nächstes: Schicht ${next.n}, ${next.de.replace("Bitü", "Bit&shy;ü").replace("schicht", "&shy;schicht")}.` : "Alle Schichten gelernt. Zeit für das Quiz."}</p></div>
+        <p class="muted small">${due ? `${due} ${due === 1 ? "Aufgabe ist" : "Aufgaben sind"} heute fällig.` : next ? `Als Nächstes: Schicht ${next.n}, ${shortName(next.n)}.` : "Heute ist nichts fällig."}</p></div>
+      ${ring(p.total, 62, 7)}
     </div>
-    <div class="stat-grid">
-      <div class="mini"><span>Schichten</span><b class="tnum">${p.learned}/7</b><div class="bar"><i style="width:${Math.round(p.pL * 100)}%"></i></div></div>
-      <div class="mini"><span>Quiz-Bestwert</span><b class="tnum">${S.quizBest || 0} %</b><div class="bar"><i style="width:${Math.round(p.pQ * 100)}%"></i></div></div>
-      <div class="mini"><span>Lernkarten</span><b class="tnum">${p.known}/${CARDS.length}</b><div class="bar"><i style="width:${Math.round(p.pC * 100)}%"></i></div></div>
-      <div class="mini"><span>Übungen</span><b class="tnum">${p.ex}/2</b><div class="bar"><i style="width:${p.ex * 50}%"></i></div></div>
+    <div class="pills">
+      <span class="pill flame${streak ? " on" : ""}">${icon("flame", 16)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
+      <span class="pill">${icon("bolt", 16)} ${S.xp} XP</span>
+      <span class="pill">${icon("check", 16)} ${doneToday()}/${CFG.goal} heute</span>
     </div>
-    <button class="btn btn-fill btn-lg" data-go="${next ? "schicht" + next.n : "quiz"}">${next ? `Weiter mit Schicht ${next.n}` : "Quiz starten"}</button>
+    <div class="stack" role="group" aria-label="Die 7 Schichten">
+      <span class="signal" aria-hidden="true"></span>
+      ${[7, 6, 5, 4, 3, 2, 1].map((n, k) => `<button class="prow" data-go="schicht${n}" aria-label="Schicht ${n}, ${L(n).de}" style="--lh:${HUE[n]};--m:${mastery(n).toFixed(2)};--t:${(k * .817 - 7).toFixed(2)}s;z-index:${8 - n}">
+        <span class="pw"><span class="plate"></span></span>
+        <span class="pl"><b>${n} ${shortName(n)}</b><small>${L(n).pduS}${S.learned[n] ? ` ${icon("check", 13)}` : ""}</small></span>
+      </button>`).join("")}
+    </div>
+    <button class="btn btn-fill btn-lg cta" data-go="heute">${icon("mix", 20)} Tagesmix starten</button>
   </section>
-  <section class="section">
-    <h2 class="section-t">Die 7 Schichten</h2>
-    <div class="group-h">Anwendungsorientiert</div>
-    <div class="group">${[7, 6, 5].map(n => layerCell(n)).join("")}</div>
-    <div class="group-h">Transportorientiert</div>
-    <div class="group">${[4, 3, 2, 1].map(n => layerCell(n)).join("")}</div>
-  </section>
+  <div class="stat-grid" style="margin:0">
+    <div class="mini"><span>Schichten</span><b class="tnum">${p.learned}/7</b><div class="bar"><i style="width:${Math.round(p.pL * 100)}%"></i></div></div>
+    <div class="mini"><span>Quiz-Bestwert</span><b class="tnum">${S.quizBest || 0} %</b><div class="bar"><i style="width:${Math.round(p.pQ * 100)}%"></i></div></div>
+    <div class="mini"><span>Lernkarten</span><b class="tnum">${p.known}/${CARDS.length}</b><div class="bar"><i style="width:${Math.round(p.pC * 100)}%"></i></div></div>
+    <div class="mini"><span>Übungen</span><b class="tnum">${p.ex}/2</b><div class="bar"><i style="width:${p.ex * 50}%"></i></div></div>
+  </div>
   <section class="section">
     <h2 class="section-t">Trainieren</h2>
     <div class="tiles">
@@ -1235,17 +1622,133 @@ function vStart() {
   <section class="card">
     <div class="fact"><span class="fact-ic">${icon("spark", 21)}</span>
       <div><div class="kicker">Wusstest du?</div><p id="factText">${FACTS[factIdx]}</p><button class="btn btn-plain" data-act="fact">Nächster Fakt</button></div></div>
-  </section>
-  <section class="section">
-    <h2 class="section-t">Einstellungen</h2>
-    <div class="group">
-      <div class="cell static"><span class="cell-ic gray">${icon("wave", 18)}</span><span class="cell-main"><span class="cell-title">Haptisches Feedback</span></span><button class="switch" role="switch" aria-label="Haptisches Feedback" aria-checked="${hapticsOn}" data-act="haptics"></button></div>
-      <div class="cell static"><span class="cell-ic gray">${icon("cloud", 18)}</span><span class="cell-main"><span class="cell-title">Fortschritt gespeichert</span></span><span class="cell-detail sync-short"></span></div>
-    </div>
-    <p class="group-f">Vibration gibt es nur, wenn Gerät und Browser sie zulassen.</p>
-    <div class="group"><button class="cell danger" data-act="reset">Fortschritt zurücksetzen</button></div>
   </section>`);
+}
+
+/* ---------------- Einstellungen ---------------- */
+const si = (name, c) => `<span class="si" style="--c:${c}">${icon(name, 19)}</span>`;
+const setRow = (ic, c, title, page, value) => `<button class="cell sc" data-go="${page}">${si(ic, c)}<span class="cell-main"><span class="cell-title">${title}</span></span><span class="sv">${value}</span>${icon("right", 16, "chev")}</button>`;
+const setSwitch = (ic, c, title, key, on) => `<div class="cell static sc">${si(ic, c)}<span class="cell-main"><span class="cell-title">${title}</span></span><button class="switch" role="switch" aria-label="${title}" aria-checked="${on}" data-act="toggle" data-k="${key}"></button></div>`;
+const setSec = (head, rows, foot) => `<section class="set-sec">${head ? `<div class="group-h">${head}</div>` : ""}<div class="group">${rows}</div>${foot ? `<p class="group-f">${foot}</p>` : ""}</section>`;
+const choiceLabel = page => { const p = SET_PAGES[page], o = p.opts.find(x => x[0] === CFG[p.key]); return o ? o[1].replace(" Aufgaben", "") : ""; };
+function cleanImport(d) {
+  const base = DEFAULT(), out = {};
+  Object.keys(base).forEach(k => { if (k in d && typeof d[k] === typeof base[k] && Array.isArray(d[k]) === Array.isArray(base[k])) out[k] = d[k]; });
+  if (typeof d.sortBest === "number") out.sortBest = d.sortBest;
+  if (typeof d.orderBest === "number") out.orderBest = d.orderBest;
+  if (out.quizHist) out.quizHist = out.quizHist.filter(v => typeof v === "number");
+  if (out.known) out.known = out.known.filter(id => CARD_BY_ID[id]);
+  if (out.wrong) out.wrong = out.wrong.filter(id => Q_BY_ID[id]);
+  return Object.assign(base, out);
+}
+function pickImport() {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = "application/json,.json";
+  inp.onchange = () => {
+    const file = inp.files && inp.files[0];
+    if (!file) return;
+    file.text().then(txt => {
+      const d = JSON.parse(txt);
+      if (!d || typeof d !== "object" || !d.learned) throw new Error("kein Fortschritt");
+      sheet({title:"Fortschritt ersetzen?", msg:"Dein aktueller Stand auf diesem Gerät wird durch die Datei ersetzt.", action:"Ersetzen",
+        onConfirm:() => { S = cleanImport(d); save(); vSettings(); haptic("success"); island("Fortschritt importiert", "good"); }});
+    }).catch(() => { haptic("error"); island("Datei konnte nicht gelesen werden", "bad"); });
+  };
+  inp.click();
+}
+function exportProgress() {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(S, null, 2)], {type:"application/json"}));
+  const a = document.createElement("a");
+  a.href = url; a.download = `lernlabor-fortschritt-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  haptic("success"); island("Fortschritt exportiert", "good");
+}
+function vSettings() {
+  const p = progress(), streak = streakNow();
+  actHandler = (act, el) => {
+    if (act === "toggle") {
+      const k = el.dataset.k;
+      if (k === "haptics") {
+        hapticsOn = !hapticsOn;
+        try { localStorage.setItem("itlernlabor.haptics", hapticsOn ? "1" : "0"); } catch (e) {}
+        el.setAttribute("aria-checked", String(hapticsOn));
+      } else {
+        CFG[k] = !CFG[k];
+        el.setAttribute("aria-checked", String(CFG[k]));
+        saveSettings();
+        if (k === "sound" && CFG.sound) tone(true);
+      }
+      haptic("select");
+    }
+    if (act === "export") exportProgress();
+    if (act === "import") pickImport();
+    if (act === "reset-set") sheet({title:"Einstellungen zurücksetzen?", msg:"Alle Einstellungen gehen auf den Ausgangszustand zurück. Dein Lernfortschritt bleibt erhalten.", action:"Einstellungen zurücksetzen",
+      onConfirm:() => { CFG = SET_DEFAULT(); saveSettings(); vSettings(); haptic("heavy"); island("Einstellungen zurückgesetzt"); }});
+    if (act === "reset") sheet({title:"Fortschritt zurücksetzen?", msg:"Gelernte Schichten, Quiz-Ergebnisse, Lernkarten, XP und Bestzeiten werden gelöscht.", action:"Alles zurücksetzen",
+      onConfirm:() => { S = DEFAULT(); as = null; od = null; kc.deck = []; kc.done = false; qz = {phase:"intro"}; save(); haptic("heavy"); vSettings(); island("Fortschritt zurückgesetzt"); }});
+  };
+  paint(`
+  ${titleBlock("", "Einstellungen", "")}
+  <div class="group"><div class="me"><span class="app-mark" aria-hidden="true"><i></i><i></i><i></i></span><div><b>IT-Lernlabor</b><small>${p.total} % gelernt, ${S.xp} XP, ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</small></div></div></div>
+  ${setSec("Darstellung",
+    setRow("moon", "#5856d6", "Erscheinungsbild", "set-theme", choiceLabel("set-theme")) +
+    setRow("palette", "#ff9500", "Akzentfarbe", "set-accent", choiceLabel("set-accent")) +
+    setRow("text", "#0a84ff", "Textgröße", "set-size", ["Sehr klein", "Klein", "Normal", "Groß", "Sehr groß"][CFG.size]) +
+    setSwitch("schichten", "#34c759", "Bunte Schichtfarben", "colors", CFG.colors) +
+    setSwitch("spark", "#8e8e93", "Schimmer im Hintergrund", "shimmer", CFG.shimmer),
+    "Der Schimmer gilt nur im Hellmodus. Im Dunkelmodus bleibt der Hintergrund immer tiefschwarz.")}
+  ${setSec("Glas und Bewegung",
+    setSwitch("device", "#30b0c7", "Glas-Effekt", "glass", CFG.glass) +
+    setSwitch("wave", "#af52de", "Animationen", "motion", CFG.motion) +
+    setSwitch("spark", "#ff2d55", "Konfetti", "confetti", CFG.confetti) +
+    setSwitch("schichten", "#5ac8fa", "Datenpaket im Stapel", "signal", CFG.signal),
+    "Ruckelt die App, schalte zuerst den Glas-Effekt aus.")}
+  ${setSec("Lernen",
+    setRow("trainieren", "#ff3b30", "Tagesziel", "set-goal", choiceLabel("set-goal")) +
+    setRow("tasks", "#34c759", "Aufgaben pro Runde", "set-round", choiceLabel("set-round")) +
+    setRow("mix", "#5856d6", "Inhalt im Tagesmix", "set-content", choiceLabel("set-content")) +
+    setSwitch("right", "#0a84ff", "Automatisch weiter", "auto", CFG.auto),
+    "Automatisch weiter springt nach einer richtigen Antwort von selbst zur nächsten Frage.")}
+  ${setSec("Ton und Haptik",
+    setSwitch("sound", "#ff3b30", "Töne", "sound", CFG.sound) +
+    setSwitch("wave", "#8e8e93", "Haptisches Feedback", "haptics", hapticsOn),
+    "Vibration gibt es nur, wenn Gerät und Browser sie zulassen.")}
+  ${setSec("Daten",
+    `<div class="cell static sc">${si("cloud", "#0a84ff")}<span class="cell-main"><span class="cell-title">Fortschritt</span></span><span class="sv sync-short"></span></div>` +
+    `<button class="cell sc" data-act="export">${si("upload", "#34c759")}<span class="cell-main"><span class="cell-title">Fortschritt exportieren</span></span></button>` +
+    `<button class="cell sc" data-act="import">${si("download", "#ff9500")}<span class="cell-main"><span class="cell-title">Fortschritt importieren</span></span></button>`,
+    "Die Einstellungen gelten nur auf diesem Gerät. Mit dem Export nimmst du deinen Lernstand auf ein anderes Gerät mit.")}
+  ${setSec("Über diese App",
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Modul</span></span><span class="sv">OSI-Modell</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Lernkarten</span></span><span class="sv">${CARDS.length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Quizfragen</span></span><span class="sv">${QUESTIONS.length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Heute fällig</span></span><span class="sv">${dueCount()}</span></div>`)}
+  ${setSec("",
+    `<button class="cell sc plain link" data-act="reset-set" style="justify-content:center">Einstellungen zurücksetzen</button>` +
+    `<button class="cell sc plain danger" data-act="reset">Fortschritt zurücksetzen</button>`)}`);
   setSync(syncState);
+}
+function vSetChoice(page) {
+  const p = SET_PAGES[page];
+  const rows = () => p.opts.map(([v, label, c]) => `<button class="cell sc${c ? "" : " plain"}" data-act="choose" data-v="${v}">${c ? `<span class="swatch" style="--c:${c}"></span>` : ""}<span class="cell-main"><span class="cell-title">${label}</span></span>${CFG[p.key] === v ? icon("check", 20, "tick") : ""}</button>`).join("");
+  actHandler = (act, el) => {
+    if (act !== "choose") return;
+    const raw = el.dataset.v;
+    CFG[p.key] = typeof p.opts[0][0] === "number" ? +raw : raw;
+    saveSettings();
+    haptic("select");
+    $("#choices").innerHTML = rows();
+  };
+  paint(`<section class="set-sec"><div class="group" id="choices">${rows()}</div><p class="group-f">${p.foot}</p></section>`, {anim:false});
+}
+function vSetSize() {
+  paint(`<section class="set-sec"><div class="group"><div class="size-box">
+      <div class="size-row"><span style="font-size:14px">A</span><input id="sizeRange" type="range" min="0" max="${SIZES.length - 1}" step="1" value="${CFG.size}" aria-label="Textgröße"><span style="font-size:24px">A</span></div>
+    </div></div>
+    <p class="group-f">Vergrößert Texte und Inhalte der ganzen App, die Tab-Leiste bleibt gleich groß.</p></section>
+    <section class="card"><div class="card-h"><h2 class="card-t">${icon("schichten")} Vorschau</h2></div><p>Die Vermittlungsschicht verbindet verschiedene Netze miteinander und bestimmt den Weg eines Pakets durch diese Netze.</p></section>`, {anim:false});
+  $("#sizeRange").addEventListener("input", e => { CFG.size = +e.target.value; saveSettings(); haptic("select"); });
 }
 
 /* ---------------- Schichten ---------------- */
@@ -1265,6 +1768,7 @@ const learnBtn = n => S.learned[n]
 function vSchicht(n) {
   const l = L(n);
   actHandler = act => {
+    if (act === "drill") { mix.layer = n; haptic("light"); go("heute"); return; }
     if (act !== "learn") return;
     S.learned[n] = !S.learned[n];
     save();
@@ -1278,13 +1782,13 @@ function vSchicht(n) {
     if (e.key === "ArrowLeft" && n > 1) go("schicht" + (n - 1));
   };
   paint(`
-  <nav class="layer-pick" aria-label="Schicht wählen">${[1, 2, 3, 4, 5, 6, 7].map(k => `<button class="lp${S.learned[k] ? " learned" : ""}" data-go="schicht${k}" aria-label="Schicht ${k}" ${k === n ? 'aria-current="page"' : ""}>${k}</button>`).join("")}</nav>
-  <header class="title-block">
-    <div class="kicker">Schicht ${n} · ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}</div>
+  <nav class="layer-pick" aria-label="Schicht wählen">${[1, 2, 3, 4, 5, 6, 7].map(k => `<button class="lp${S.learned[k] ? " learned" : ""}" style="--lh:${HUE[k]}" data-go="schicht${k}" aria-label="Schicht ${k}" ${k === n ? 'aria-current="page"' : ""}>${k}</button>`).join("")}</nav>
+  <header class="title-block" style="--lh:${HUE[n]}">
+    <div class="kicker lhk">Schicht ${n}, ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}</div>
     <h1 class="large">${l.de}</h1>
     <div class="layer-en">${l.en}${l.alias ? ` · ${l.alias}` : ""}</div>
     <p class="lede" style="margin-top:12px">${l.summary}</p>
-    <div class="row" style="margin-top:14px">${learnBtn(n)}</div>
+    <div class="row" style="margin-top:14px"><button class="btn btn-fill" data-act="drill">${icon("mix", 18)} Schicht üben</button>${learnBtn(n)}</div>
   </header>
   <section class="card"><div class="card-h"><h2 class="card-t">${icon("tasks")} Aufgaben</h2></div>
     <ul class="ticks">${l.tasks.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
@@ -1427,6 +1931,7 @@ function vTrainieren() {
   paint(`
   ${titleBlock("Üben und prüfen", "Trainieren", "Wiederhole mit Lernkarten, teste dich im Quiz und festige dein Wissen mit Übungen.")}
   <div class="section">
+    <button class="hub mix" data-go="heute"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${dueCount() ? `${dueCount()} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
     <button class="hub" data-go="quiz"><span class="cell-ic">${icon("quiz", 24)}</span><span><b>Quiz</b><small>${QUESTIONS.length} Fragen · ${S.quizRuns ? `Bestwert ${S.quizBest} %` : "noch nicht gespielt"}</small></span>${icon("right", 18, "chev")}</button>
     <button class="hub" data-go="karten"><span class="cell-ic">${icon("karten", 24)}</span><span><b>Lernkarten</b><small>${p.known} von ${CARDS.length} gewusst</small></span>${icon("right", 18, "chev")}</button>
     <button class="hub" data-go="ueben"><span class="cell-ic">${icon("ueben", 24)}</span><span><b>Übungen</b><small>Zuordnen${S.sortBest != null ? ` (bestes: ${S.sortBest} Fehler)` : ""} · Reihenfolge${S.orderBest != null ? ` (${fmtTime(S.orderBest)})` : ""}</small></span>${icon("right", 18, "chev")}</button>
@@ -1461,7 +1966,12 @@ function pick(k) {
   qz.picked = k; qz.fresh = false;
   qz.answers.push({id:q.id, ok:opt.ok, yours:opt.t, right:q.opts.find(x => x.ok).t});
   haptic(opt.ok ? "success" : "error");
+  grade(q.id, opt.ok, opt.ok ? 10 : 1);
+  tone(opt.ok);
   drawQuiz();
+  pulse(opt.ok ? "var(--green)" : "var(--red)");
+  if (opt.ok) { const hit = $(".opt.ok"); burstAt(hit, 18); floatXP(hit, "+10 XP"); }
+  if (opt.ok && CFG.auto) setTimeout(() => { if (qz.phase === "q" && qz.list[qz.i] === q && qz.picked === k && parseHash().view === "quiz") { nextQ(); } }, 1100);
   const nb = $("#nextQ"); if (nb) nb.focus({preventScroll:true});
 }
 function nextQ() {
@@ -1482,7 +1992,7 @@ function finishQuiz() {
   S.wrong = [...wrong];
   save();
   qz.phase = "result"; qz.right = right; qz.pct = p;
-  setTimeout(() => haptic(p >= 80 ? "success" : "medium"), 300);
+  setTimeout(() => { haptic(p >= 80 ? "success" : "medium"); if (p >= 80) celebrate(); }, 300);
 }
 function vQuiz() {
   if (qz.phase !== "q") qz = {phase:"intro"};
@@ -1562,6 +2072,7 @@ function buildDeck() {
 }
 function decideCard(act) {
   const id = kc.deck[kc.i];
+  grade(id, act === "know", act === "know" ? 5 : 1);
   if (act === "know") { if (!S.known.includes(id)) S.known.push(id); }
   else { S.known = S.known.filter(x => x !== id); if (kc.deck.length - kc.i > 1) kc.deck.splice(Math.min(kc.deck.length, kc.i + 4), 0, id); }
   save();
@@ -1619,7 +2130,7 @@ function drawCards() {
   } else {
     const c = CARD_BY_ID[kc.deck[kc.i]];
     const tagTxt = (c.tag === "schichten" || c.tag === "pdu") && c.L ? `Schicht ${c.L}` : TAG_LABEL[c.tag];
-    stage = `<div class="deck"><div class="flash${kc.flipped ? " flipped" : ""}" data-act="flip" role="button" tabindex="0" aria-label="Karte umdrehen">
+    stage = `<div class="deck"><div class="flash${kc.flipped ? " flipped" : ""}" data-act="flip" role="button" tabindex="0" aria-label="Karte umdrehen">${STAMPS}
         <div class="flash-inner">
           <div class="face front"><span class="chip accent">${tagTxt}</span><div class="face-q">${c.f}</div><span class="hint">Tippen zum Umdrehen</span></div>
           <div class="face back"><span class="kicker">Antwort</span><div class="face-a">${c.b}</div></div>
@@ -1632,10 +2143,149 @@ function drawCards() {
   }
   setNav({right:kc.done ? "" : `<button class="nb-btn" data-act="shuffle" aria-label="Mischen">${icon("shuffle", 20)}</button>`});
   paint(`
-  ${titleBlock("Wiederholen", "Lernkarten", "Tippe auf die Karte, um sie umzudrehen. Was du weißt, ist erledigt, der Rest kommt wieder.")}
+  ${titleBlock("Wiederholen", "Lernkarten", "Tippe zum Umdrehen. Wische nach rechts, wenn du es wusstest, und nach links, wenn die Karte wiederkommen soll.")}
   ${seg("kfilter", [["alle", "Alle"], ["schichten", "Schichten"], ["pdu", "PDU"], ["begriffe", "Begriffe"], ["ports", "Ports"]], kc.filter, "filter")}
   <div class="group"><div class="toggle-cell"><span>Nur offene Karten</span><button class="switch" role="switch" aria-label="Nur offene Karten" aria-checked="${kc.open}" data-act="open"></button></div></div>
   <div class="stage">${stage}</div>`, {anim:kc.done});
+  if (kc.done) { if (knownIn === inFilter.length) celebrate(); }
+  else bindSwipe(act => actHandler(act));
+}
+
+/* ---------------- Tagesmix ---------------- */
+const mix = {phase:"idle", layer:0, list:[], i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before:{}};
+function startMix() {
+  const list = buildMix(mix.layer);
+  const before = {};
+  for (let n = 1; n <= 7; n++) before[n] = mastery(n);
+  Object.assign(mix, {phase:"run", layer:0, list, i:0, picked:null, flipped:false, busy:false, firstRight:0, firsts:0, xp:0, combo:0, best:0, retried:{}, before});
+  haptic("medium");
+}
+function scoreItem(it, ok) {
+  if (!it.retry) { mix.firsts++; if (ok) mix.firstRight++; }
+  mix.combo = ok ? mix.combo + 1 : 0;
+  mix.best = Math.max(mix.best, mix.combo);
+  const base = it.k === "q" ? 10 : 5;
+  const xp = ok ? base + Math.min(10, Math.max(0, mix.combo - 1) * 2) : 1;
+  mix.xp += xp;
+  grade(it.id, ok, xp);
+  if (it.k === "card") { if (ok) { if (!S.known.includes(it.id)) S.known.push(it.id); } else S.known = S.known.filter(x => x !== it.id); }
+  else { const w = new Set(S.wrong); if (ok) w.delete(it.id); else w.add(it.id); S.wrong = [...w]; }
+  // Falsches kommt in dieser Runde noch einmal, einmalig und ein paar Aufgaben später.
+  if (!ok && !mix.retried[it.id]) { mix.retried[it.id] = true; mix.list.splice(Math.min(mix.list.length, mix.i + 4), 0, {...it, retry:true}); }
+  save();
+  return xp;
+}
+function mixAnswer(k) {
+  const it = mix.list[mix.i];
+  if (mix.picked != null || it.k !== "q" || !it.opts[k]) return;
+  mix.picked = k;
+  const ok = it.opts[k].ok, xp = scoreItem(it, ok);
+  haptic(ok ? "success" : "error");
+  tone(ok);
+  drawMix();
+  pulse(ok ? "var(--green)" : "var(--red)");
+  if (ok) { const hit = $(".opt.ok"); burstAt(hit, 14 + Math.min(30, mix.combo * 4)); floatXP(hit, `+${xp} XP`); }
+  const nb = $("#nextMix"); if (nb) nb.focus({preventScroll:true});
+  if (ok && CFG.auto) setTimeout(() => { if (mix.phase === "run" && mix.list[mix.i] === it && mix.picked === k && parseHash().view === "heute") mixNext(); }, 1100);
+}
+function mixCard(act) {
+  if (mix.busy) return;
+  const it = mix.list[mix.i], ok = act === "know";
+  mix.busy = true;
+  const f = $(".flash"), xp = scoreItem(it, ok);
+  haptic(ok ? "success" : "medium");
+  tone(ok);
+  pulse(ok ? "var(--green)" : "var(--red)");
+  if (ok) { burstAt(f, 12); floatXP(f, `+${xp} XP`); }
+  if (f && !reduced()) { f.classList.add(ok ? "fly-right" : "fly-left"); setTimeout(mixNext, 240); }
+  else mixNext();
+}
+function mixNext() {
+  mix.i++; mix.picked = null; mix.flipped = false; mix.busy = false;
+  if (mix.i >= mix.list.length) {
+    mix.phase = "done";
+    setTimeout(() => { haptic("success"); if (mix.firstRight / Math.max(1, mix.firsts) >= .6) celebrate(); }, 350);
+  }
+  drawMix();
+  window.scrollTo(0, 0);
+}
+function vHeute() {
+  startMix();
+  actHandler = (act, el) => {
+    if (act === "pick") mixAnswer(+el.dataset.k);
+    if (act === "next") { haptic("light"); mixNext(); }
+    if (act === "flip") { mix.flipped = !mix.flipped; haptic("light"); const f = $(".flash"); if (f) f.classList.toggle("flipped", mix.flipped); }
+    if (act === "know" || act === "again") mixCard(act);
+    if (act === "again-round") { startMix(); drawMix(); window.scrollTo(0, 0); }
+    if (act === "weak") { mix.layer = +el.dataset.n; startMix(); drawMix(); window.scrollTo(0, 0); }
+  };
+  keyHandler = e => {
+    if (mix.phase !== "run") return;
+    const it = mix.list[mix.i];
+    if (it.k === "q") {
+      if (mix.picked == null) { const k = "1234".indexOf(e.key); if (k >= 0) { e.preventDefault(); mixAnswer(k); } }
+      else if (e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); mixNext(); }
+    } else if (e.key === " " || e.key === "Enter") { e.preventDefault(); actHandler("flip"); }
+    else if (e.key === "ArrowRight") actHandler("know");
+    else if (e.key === "ArrowLeft") actHandler("again");
+  };
+  drawMix();
+}
+function drawMix() {
+  if (mix.phase === "done") return drawMixDone();
+  const it = mix.list[mix.i], lh = it.L ? HUE[it.L] : "var(--accent)";
+  const where = it.L ? `Schicht ${it.L}, ${shortName(it.L)}` : "Grundlagen";
+  setNav({left:`<button class="nb-btn" data-go="start">Beenden</button>`, title:`${mix.i + 1} von ${mix.list.length}`});
+  const head = `<div class="qprog" aria-hidden="true"><i style="width:${pct(mix.i, mix.list.length)}%"></i></div>
+    <div class="mix-top"><span class="kicker lhk" style="--lh:${lh}">${where}${it.retry ? ", zweiter Versuch" : ""}</span>${mix.combo >= 2 ? `<span class="combo">${icon("flame", 14)} ${mix.combo}er-Serie</span>` : ""}</div>`;
+  if (it.k === "card") {
+    const c = CARD_BY_ID[it.id];
+    paint(`${head}
+    <div class="stage"><div class="deck"><div class="flash${mix.flipped ? " flipped" : ""}" data-act="flip" role="button" tabindex="0" aria-label="Karte umdrehen">${STAMPS}
+      <div class="flash-inner">
+        <div class="face front"><div class="face-q">${c.f}</div><span class="hint">Tippen zum Umdrehen</span></div>
+        <div class="face back"><div class="face-a">${c.b}</div></div>
+      </div></div></div>
+      <div class="card-actions"><button class="btn btn-gray btn-lg" data-act="again">Nochmal</button><button class="btn btn-fill btn-lg" data-act="know">Gewusst</button></div>
+    </div>`, {anim:false});
+    bindSwipe(mixCard);
+    return;
+  }
+  const q = Q_BY_ID[it.id], answered = mix.picked != null, ok = answered && it.opts[mix.picked].ok;
+  paint(`${head}
+  <section class="qcard${answered ? "" : " in"}">
+    <h2 class="qtext">${q.q}</h2>
+    <div class="group">${it.opts.map((o, k) => {
+      const cls = answered ? (o.ok ? "ok" : k === mix.picked ? "no" : "dim") : "";
+      const mark = answered && o.ok ? icon("check", 20, "mark") : answered && k === mix.picked ? icon("x", 20, "mark") : "<span></span>";
+      return `<button class="opt ${cls}" data-act="pick" data-k="${k}" ${answered ? "disabled" : ""}><span class="key">${"ABCD"[k]}</span><span>${o.t}</span>${mark}</button>`;
+    }).join("")}</div>
+    ${answered ? `<div class="explain ${ok ? "good" : "bad"}" role="status">${icon(ok ? "check" : "bulb", 20)}<div><b>${ok ? "Richtig" : "Nicht ganz"}</b>${q.e}</div></div>
+      <button class="btn btn-fill btn-lg" id="nextMix" data-act="next">${mix.i + 1 < mix.list.length ? "Weiter" : "Runde abschließen"}</button>` : ""}
+  </section>`, {anim:false});
+}
+function drawMixDone() {
+  const p = pct(mix.firstRight, mix.firsts);
+  const moved = [1, 2, 3, 4, 5, 6, 7].filter(n => mastery(n) !== mix.before[n]);
+  const weak = [1, 2, 3, 4, 5, 6, 7].sort((a, b) => mastery(a) - mastery(b))[0];
+  const msg = p === 100 ? "Alles beim ersten Versuch richtig." : p >= 60 ? "Das sitzt. Was offen blieb, kommt bald wieder." : "Das Falsche kommt zuerst wieder, bis es sitzt.";
+  setNav({left:`<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>`, title:"Runde geschafft"});
+  paint(`
+  ${titleBlock("", "Runde geschafft", "")}
+  <section class="card">
+    <div class="result-head">${ring(p, 116, 12, "richtig")}<div class="prog-info"><div class="prog-label">${mix.firstRight} von ${mix.firsts}</div><p class="muted">${msg}</p></div></div>
+    <div class="mix-stats">
+      <div class="stat"><b data-count="${mix.xp}">${mix.xp}</b><span>XP verdient</span></div>
+      <div class="stat"><b>${mix.best}</b><span>beste Serie</span></div>
+      <div class="stat"><b>${streakNow()}</b><span>${streakNow() === 1 ? "Tag" : "Tage"} in Folge</span></div>
+    </div>
+  </section>
+  ${moved.length ? `<section class="section"><div class="group-h">So haben sich deine Schichten verändert</div><div class="group">${moved.sort((a, b) => b - a).map(n => {
+    const to = Math.round(mastery(n) * 100);
+    return `<div class="mbar" style="--lh:${HUE[n]};--from:${Math.round(mix.before[n] * 100)}%;--to:${to}%"><span class="badge sm" style="--lh:${HUE[n]}">${n}</span><span class="track"><i></i></span><span class="tnum muted">${to} %</span></div>`;
+  }).join("")}</div></section>` : ""}
+  <button class="btn btn-fill btn-lg cta" data-act="again-round">Noch eine Runde</button>
+  <button class="btn btn-gray btn-lg" data-act="weak" data-n="${weak}">Schwächste Schicht üben: ${shortName(weak)}</button>`);
 }
 
 /* ---------------- Übungen ---------------- */
