@@ -764,6 +764,33 @@ main{overflow-x:clip}
 @keyframes introBar{from{opacity:0;transform:scaleX(.15) translateY(14px)}to{opacity:1;transform:none}}
 @keyframes introZoom{to{transform:scale(16);opacity:0}}
 @keyframes introOut{to{opacity:0;visibility:hidden}}
+/* Schieberegler Einfach und Normal */
+.easy-sw{position:sticky;top:calc(54px + env(safe-area-inset-top,0px));z-index:20;display:grid;grid-template-columns:1fr 1fr;align-items:center;height:46px;padding:4px;border-radius:999px;background:var(--material-strong);border:1px solid var(--glass-edge);-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab;--x:1}
+.easy-sw:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.easy-sw.drag{cursor:grabbing}
+.easy-thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--grad);box-shadow:0 4px 14px -6px rgba(0,0,0,.5);transform:translateX(calc(var(--x) * 100%));transition:transform .46s cubic-bezier(.3,1.14,.4,1)}
+.easy-sw.drag .easy-thumb{transition:none;transform:translateX(calc(var(--x) * 100%)) scale(1.03)}
+.easy-l{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;font-weight:600;color:var(--label-2);pointer-events:none;transition:color .22s}
+.easy-sw.on .easy-l:nth-of-type(2),.easy-sw:not(.on) .easy-l:nth-of-type(3){color:var(--on-grad)}
+.ghost .easy-sw{position:static}
+.xb{display:flex;flex-direction:column;gap:12px;min-width:0}
+.xb:empty{display:none}
+.ez-tag{display:block;margin-bottom:6px;font-size:13px;font-weight:650;color:color-mix(in srgb,var(--c,var(--accent)) 74%,var(--label))}
+.ez-lead{font-size:19px!important;font-weight:600;line-height:1.35!important;letter-spacing:-.01em}
+.ez-pic{background:color-mix(in srgb,var(--c,var(--accent)) 18%,var(--surface))}
+.ez-next{display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:22px;border:1px dashed var(--sep);font-size:15px;line-height:1.4;color:var(--label-2);text-align:center}
+.ez-next .btn{width:100%;height:48px;border-radius:15px}
+/* Weitere weiche Abläufe */
+.ph-c > :nth-child(2),.llist li:nth-child(2),.lrow:nth-child(2){--k:1}
+.ph-c > :nth-child(3),.llist li:nth-child(3),.lrow:nth-child(3){--k:2}
+.ph-c > :nth-child(4),.llist li:nth-child(4),.lrow:nth-child(4){--k:3}
+.ph-c > :nth-child(5),.llist li:nth-child(5),.lrow:nth-child(5){--k:4}
+.ph-c > :nth-child(n+6),.llist li:nth-child(n+6),.lrow:nth-child(n+6){--k:5}
+.col.entering .ph-c > *{animation:cellIn .55s var(--ease-soft) both;animation-delay:calc(var(--k,0) * 38ms + 50ms)}
+.col.entering .llist li,.col.entering .lrow,.rev .llist li,.rev .lrow,.xb-in .llist li,.xb-in .lrow{animation:cellIn .5s var(--ease-soft) both;animation-delay:calc(var(--k,0) * 30ms + 60ms)}
+.opt.ok{animation:optOk .5s var(--ease-soft)}
+@keyframes optOk{from{transform:scale(.975)}to{transform:none}}
+.ghost .lrow,.ghost .llist li{animation:none!important}
 /* Lernseite */
 .read-bar{position:fixed;left:0;right:0;top:calc(52px + env(safe-area-inset-top,0px));height:2px;z-index:26;background:var(--c);transform:scaleX(var(--p,0));transform-origin:left center;pointer-events:none}
 .lesson{display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -897,6 +924,7 @@ main{zoom:var(--zoom,1)}
 <script src="content/arbeitsplatz.js"></script>
 <script src="content/wirtschaft.js"></script>
 <script src="content/ergaenzung.js"></script>
+<script src="content/einfach.js"></script>
 <script>
 (() => {
 "use strict";
@@ -906,7 +934,7 @@ const view = $("#view");
 
 /* ---------------- Einstellungen (pro Gerät) ---------------- */
 const SET_KEY = "itlernlabor.settings";
-const SET_DEFAULT = () => ({theme:"auto", accent:"silber", colors:true, shimmer:true, size:2, glass:true, motion:true, confetti:true, signal:true, goal:10, round:10, content:"mix", auto:false, sound:false});
+const SET_DEFAULT = () => ({easy:false, theme:"auto", accent:"silber", colors:true, shimmer:true, size:2, glass:true, motion:true, confetti:true, signal:true, goal:10, round:10, content:"mix", auto:false, sound:false});
 let CFG = SET_DEFAULT();
 try { const raw = localStorage.getItem(SET_KEY); if (raw) CFG = Object.assign(SET_DEFAULT(), JSON.parse(raw)); } catch (e) {}
 const ACCENTS = {silber:["Neutral", "#8e8e93"], blau:["Blau", "#0a84ff"], indigo:["Indigo", "#6a67e8"], gruen:["Grün", "#2fa84f"], orange:["Orange", "#ee7409"], rosa:["Rosa", "#ec3f74"]};
@@ -1583,7 +1611,7 @@ function revealBelow(root = view) {
     e.target.classList.remove("pre"); e.target.classList.add("rev");
     revealIO.unobserve(e.target);
   }), {threshold:0, rootMargin:"0px 0px -9% 0px"});
-  [...root.children, ...root.querySelectorAll(".lesson > *, .layer-body > *")].filter(el => !el.matches(".lesson, .layer-body, .read-bar")).forEach(el => {
+  [...root.children, ...root.querySelectorAll(".lesson > *, .layer-body > *, .xb > *")].filter(el => !el.matches(".lesson, .layer-body, .xb, .read-bar, .easy-sw")).forEach(el => {
     if (el.getBoundingClientRect().top > innerHeight + 8) { el.classList.add("pre"); revealIO.observe(el); }
   });
 }
@@ -1655,6 +1683,103 @@ function paint(html, {anim = true} = {}) {
 }
 const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="--c:${c}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
 const heroBar = v => `<div class="ph-bar"><span class="track"><i style="width:${v}%"></i></span><span data-count="${v}" data-suffix=" %">${v} %</span></div>`;
+const EASE_SOFT = "cubic-bezier(.16,1,.3,1)";
+const EINFACH = window.LERN_EINFACH || {units:{}, layers:{}, pages:{}, intro:{}};
+let xb = null, xbT = null;
+const easySwitch = () => `<div class="easy-sw${CFG.easy ? " on" : ""}" role="switch" tabindex="0" aria-label="Einfache Erklärung" aria-checked="${!!CFG.easy}" style="--x:${CFG.easy ? 0 : 1}"><span class="easy-thumb"></span><span class="easy-l">${icon("spark", 15)} Einfach</span><span class="easy-l">${icon("book", 15)} Normal</span></div>`;
+const explainBox = (modes, attrs = "") => { xb = modes; return `<div id="xb" ${attrs || 'class="xb"'}>${CFG.easy ? modes.easy() : modes.normal()}</div>`; };
+const easyBlocks = (e, {skipK = false, next = true} = {}) => [
+  !skipK && e.k ? `<section class="lb"><span class="ez-tag">Kurz gesagt</span><p class="ez-lead">${e.k}</p></section>` : "",
+  e.b ? `<section class="lb ez-pic"><span class="ez-tag">Stell es dir so vor</span><p>${e.b}</p></section>` : "",
+  e.m ? `<section class="lb"><h2>Das Wichtigste</h2><ul class="llist">${e.m.map(x => `<li>${x}</li>`).join("")}</ul></section>` : "",
+  e.w ? `<section class="lb"><h2>Begriffe</h2><div class="lrows lpairs">${e.w.map(([a, d]) => `<div class="lrow"><b>${a}</b><span>${d}</span></div>`).join("")}</div></section>` : "",
+  next ? `<div class="ez-next"><span>Verstanden? Dann schieb auf Normal. Dort steht die ganze Erklärung, die du für die Prüfung brauchst.</span><button class="btn btn-tint" data-easy-set="normal">Zur normalen Erklärung</button></div>` : ""
+].join("");
+/* Für Seiten, die bleiben, wie sie sind, und im einfachen Modus nur eine Erklärung darüber bekommen. */
+const easyTop = (html, color) => easySwitch() + explainBox({easy:() => html, normal:() => ""}, `class="xb" style="--c:${color}"`);
+const easyIntro = m => easyTop(`<section class="lb ez-pic"><span class="ez-tag">Worum geht es hier?</span><p>${EINFACH.intro[m.id] || m.sub}</p></section>`, m.color);
+function syncEasy(x) {
+  document.querySelectorAll("#view .easy-sw").forEach(sw => {
+    const v = x == null ? (CFG.easy ? 0 : 1) : x;
+    sw.style.setProperty("--x", v);
+    sw.classList.toggle("on", v < .5);
+    sw.setAttribute("aria-checked", String(v < .5));
+  });
+}
+function setEasy(v) {
+  v = !!v;
+  if (!!CFG.easy === v) { syncEasy(); return; }
+  CFG.easy = v;
+  saveSettings();
+  syncEasy();
+  haptic("select");
+  swapExplain(v);
+}
+/* Nur die Erklärung wird getauscht. Kopfkarte und Regler bleiben stehen. */
+function swapExplain(v) {
+  const box = view.querySelector("#xb");
+  if (!box || !xb) return;
+  const sign = v ? -1 : 1, lede = xb.lede ? view.querySelector(".page-hero .ph-l") : null;
+  const seen = () => [...box.children].filter(el => el.getBoundingClientRect().top < innerHeight);
+  const fill = () => {
+    xbT = null;
+    const bg = view.querySelector(".page-hero .ph-bg"), oldH = bg ? bg.offsetHeight : 0;
+    if (lede) lede.textContent = v ? xb.lede.easy : xb.lede.normal;
+    box.innerHTML = v ? xb.easy() : xb.normal();
+    const top = box.getBoundingClientRect().top + scrollY - 124;
+    if (scrollY > top) window.scrollTo(0, Math.max(0, top));
+    dispatchEvent(new Event("scroll"));
+    if (reduced()) return;
+    if (lede && bg && oldH !== bg.offsetHeight) {
+      bg.animate([{transform:`scaleY(${oldH / bg.offsetHeight})`}, {transform:"none"}], {duration:460, easing:EASE_SOFT});
+      lede.animate([{opacity:0}, {opacity:1}], {duration:360, easing:"ease-out"});
+    }
+    box.classList.add("xb-in");
+    setTimeout(() => box.classList.remove("xb-in"), 800);
+    seen().forEach((el, i) => el.animate([{opacity:0, transform:`translateX(${sign * 26}px)`}, {opacity:1, transform:"none"}], {duration:480, delay:i * 42, easing:EASE_SOFT, fill:"backwards"}));
+    revealBelow();
+  };
+  clearTimeout(xbT);
+  if (reduced()) { fill(); return; }
+  if (xbT === null) seen().forEach(el => el.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${sign * -14}px)`}], {duration:120, easing:"ease-in", fill:"forwards"}));
+  xbT = setTimeout(fill, 110);
+}
+/* Der Regler lässt sich ziehen oder antippen. */
+let easyDrag = null;
+document.addEventListener("pointerdown", e => {
+  const sw = e.target.closest && e.target.closest(".easy-sw");
+  if (!sw) return;
+  const r = sw.getBoundingClientRect();
+  easyDrag = {sw, id:e.pointerId, x0:e.clientX, half:r.width / 2, left:r.left, from:CFG.easy ? 0 : 1, moved:false};
+  try { sw.setPointerCapture(e.pointerId); } catch (err) {}
+});
+document.addEventListener("pointermove", e => {
+  const d = easyDrag;
+  if (!d || d.id !== e.pointerId) return;
+  const dx = e.clientX - d.x0;
+  if (!d.moved && Math.abs(dx) < 5) return;
+  d.moved = true;
+  d.sw.classList.add("drag");
+  syncEasy(Math.max(0, Math.min(1, d.from + dx / d.half)));
+});
+const easyEnd = e => {
+  const d = easyDrag;
+  if (!d || d.id !== e.pointerId) return;
+  easyDrag = null;
+  d.sw.classList.remove("drag");
+  if (e.type === "pointercancel") { syncEasy(); return; }
+  if (d.moved) setEasy(parseFloat(d.sw.style.getPropertyValue("--x")) < .5);
+  else setEasy(e.clientX - d.left < d.half);
+};
+document.addEventListener("pointerup", easyEnd);
+document.addEventListener("pointercancel", easyEnd);
+document.addEventListener("keydown", e => {
+  if (!e.target.matches || !e.target.matches(".easy-sw")) return;
+  const map = {ArrowLeft:true, ArrowRight:false, " ":!CFG.easy, Enter:!CFG.easy};
+  if (!(e.key in map)) return;
+  e.preventDefault(); e.stopPropagation();
+  setEasy(map[e.key]);
+}, true);
 const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${lede ? `<p class="lede" style="margin-top:6px">${lede}</p>` : ""}</header>`;
 
 /* ---------------- Navigation ---------------- */
@@ -1702,7 +1827,6 @@ function go(token) {
   else location.hash = token;
 }
 let prevShown = false, ghostEl = null, morphSrc = null, shelfX = 0;
-const EASE_SOFT = "cubic-bezier(.16,1,.3,1)";
 /* Die alte Seite bleibt kurz als Bild stehen und blendet aus, während die neue einläuft. */
 function leavePage(dir) {
   if (ghostEl) { ghostEl.remove(); ghostEl = null; }
@@ -1758,6 +1882,7 @@ function animateBars() {
 function render() {
   stopTimers();
   actHandler = null; keyHandler = null;
+  xb = null; clearTimeout(xbT); xbT = null;
   const r = parseHash(), from = prevRoute;
   let dir = "fade";
   if (prevRoute) {
@@ -1834,6 +1959,8 @@ window.addEventListener("hashchange", render);
 document.addEventListener("click", e => {
   const s = e.target.closest("[data-sheet]");
   if (s) { e.preventDefault(); closeSheet(s.dataset.sheet === "ok"); return; }
+  const ez = e.target.closest("[data-easy-set]");
+  if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
   if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card") ? g : null; go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
@@ -1916,6 +2043,7 @@ function vModul(id) {
   const known = m.cards.filter(c => S.known.includes(c.id)).length, st = S.mq[id];
   paint(`
   ${pageHero(m.color, {ic:icon(m.icon, 42), title:m.title, en:m.ap, extra:`${heroBar(modProgress(id))}<p class="exam-note">${m.exam.replace(/ %/g, "\u00a0%")}</p><button class="btn btn-fill btn-lg cta" data-act="drill">${icon("mix", 20)} Thema üben</button>`})}
+  ${easyIntro(m)}
   <div class="mod-tiles">
     ${modTile(`modul-${id}-karten`, "karten", "#0a84ff", "Lernkarten", `${known} von ${m.cards.length} gewusst`)}
     ${modTile(`modul-${id}-quiz`, "quiz", "#ff9f0a", "Quiz", st && st.quizRuns ? `Bestwert ${st.quizBest} %` : `${m.questions.length} Fragen`)}
@@ -1969,13 +2097,15 @@ function vUnit(id, uid) {
     S.unitsDone[key] = !S.unitsDone[key];
     save();
     $("#learnBtn").outerHTML = btn();
+    if (!reduced()) $("#learnBtn").animate([{transform:"scale(.94)"}, {transform:"none"}], {duration:460, easing:EASE_SOFT});
     haptic(S.unitsDone[key] ? "success" : "light");
     if (S.unitsDone[key]) island("Lernseite gelesen", "good");
   };
   paint(`
   <div class="read-bar" id="readBar" style="--c:${m.color}"></div>
   ${pageHero(m.color, {kicker:m.title, title:u.title, lede:u.sum})}
-  <div class="lesson" style="--c:${m.color}">${u.sec.map(blockHTML).join("")}</div>
+  ${EINFACH.units[key] ? easySwitch() : ""}
+  ${explainBox({easy:() => easyBlocks(EINFACH.units[key] || {}), normal:() => u.sec.map(blockHTML).join("")}, `class="xb lesson" style="--c:${m.color}"`)}
   <div class="lesson-foot">${btn()}<button class="btn btn-gray" data-go="modul-${id}-quiz">Dazu Quiz machen</button><p class="lesson-count">Lernseite ${i + 1} von ${m.units.length}</p></div>
   ${u.src ? `<section class="set-sec"><div class="group-h">Quellen</div><div class="group">${u.src.map(([label, url]) => `<a class="cell src-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="cell-main"><span class="cell-title">${label}</span></span>${icon("right", 16, "chev")}</a>`).join("")}</div></section>` : ""}
   ${nx ? `<div class="group"><button class="cell with-badge" data-go="modul-${id}-unit-${nx.id}"><span class="si" style="--c:${m.color}">${icon("book", 19)}</span><span class="cell-main"><span class="cell-sub">Nächste Lernseite</span><span class="cell-title">${nx.title}</span></span>${icon("right", 16, "chev")}</button></div>` : ""}`);
@@ -2210,6 +2340,7 @@ function vOsi() {
   };
   paint(`
   ${pageHero(MOD.osi.color, {ic:icon(MOD.osi.icon, 42), title:"OSI-Modell", en:MOD.osi.ap, extra:`${heroBar(modProgress("osi"))}<p class="exam-note">${MOD.osi.exam.replace(/ %/g, "\u00a0%")}</p><button class="btn btn-fill btn-lg cta" data-act="drill">${icon("mix", 20)} Thema üben</button>`})}
+  ${easyIntro(MOD.osi)}
   <section class="card stack-card">
     <div class="stack" role="group" aria-label="Die 7 Schichten">
       <span class="signal" aria-hidden="true"></span>
@@ -2329,7 +2460,8 @@ function vSettings() {
     setRow("trainieren", "#ff3b30", "Tagesziel", "set-goal", choiceLabel("set-goal")) +
     setRow("tasks", "#34c759", "Aufgaben pro Runde", "set-round", choiceLabel("set-round")) +
     setRow("mix", "#5856d6", "Inhalt im Tagesmix", "set-content", choiceLabel("set-content")) +
-    setSwitch("right", "#0a84ff", "Automatisch weiter", "auto", CFG.auto),
+    setSwitch("right", "#0a84ff", "Automatisch weiter", "auto", CFG.auto) +
+    setSwitch("book", "#ff9f0a", "Einfache Erklärungen", "easy", CFG.easy),
     "Automatisch weiter springt nach einer richtigen Antwort von selbst zur nächsten Frage.")}
   ${setSec("Ton und Haptik",
     setSwitch("sound", "#ff3b30", "Töne", "sound", CFG.sound) +
@@ -2395,7 +2527,7 @@ function swapLayer(n, html, dir) {
     if (b.dataset.go === "schicht" + n) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
   const body = $("#layerBody"), sign = dir === "push" ? 1 : -1;
-  const visible = () => [...body.children].filter(el => el.getBoundingClientRect().top < innerHeight);
+  const visible = () => [...body.children].flatMap(el => el.matches(".xb") ? [...el.children] : el.matches(".easy-sw") ? [] : [el]).filter(el => el.getBoundingClientRect().top < innerHeight);
   const slide = el => el.matches(".page-hero") ? el.querySelector(".ph-c") : el;
   const fill = () => {
     swapT = null;
@@ -2428,6 +2560,7 @@ function vSchicht(n, swapDir) {
     S.learned[n] = !S.learned[n];
     save();
     $("#learnBtn").outerHTML = learnBtn(n);
+    if (!reduced()) $("#learnBtn").animate([{transform:"scale(.94)"}, {transform:"none"}], {duration:460, easing:EASE_SOFT});
     const lp = view.querySelector(".lp[aria-current]"); if (lp) lp.classList.toggle("learned", !!S.learned[n]);
     haptic(S.learned[n] ? "success" : "light");
     if (S.learned[n]) island(`Schicht ${n} gelernt`, "good");
@@ -2436,8 +2569,7 @@ function vSchicht(n, swapDir) {
     if (e.key === "ArrowRight" && n < 7) go("schicht" + (n + 1));
     if (e.key === "ArrowLeft" && n > 1) go("schicht" + (n - 1));
   };
-  const body = `
-  ${pageHero(HUE[n], {kicker:`Schicht ${n}, ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}`, title:l.de.replace(/schicht$/, "­schicht"), en:`${l.en}${l.alias ? ` · ${l.alias}` : ""}`, lede:l.summary, extra:`<div class="ph-row"><button class="btn btn-fill" data-act="drill">${icon("mix", 18)} Schicht üben</button>${learnBtn(n)}</div>`})}
+  const layerCards = () => `
   <section class="card"><div class="card-h"><h2 class="card-t">${icon("tasks")} Aufgaben</h2></div>
     <ul class="ticks">${l.tasks.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
   <section class="card"><div class="card-h"><h2 class="card-t">${icon("id")} Steckbrief</h2></div>
@@ -2457,6 +2589,11 @@ function vSchicht(n, swapDir) {
   <section class="card"><div class="card-h"><h2 class="card-t">${icon("warn")} Typische Fehler</h2></div>
     <ul class="ticks warn">${l.faults.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
   <div class="note tip">${icon("bulb", 20)}<div><b>Prüfungstipp</b><br>${l.tip}</div></div>
+`;
+  const body = `
+  ${pageHero(HUE[n], {kicker:`Schicht ${n}, ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}`, title:l.de.replace(/schicht$/, "­schicht"), en:`${l.en}${l.alias ? ` · ${l.alias}` : ""}`, lede:CFG.easy ? EINFACH.layers[n].k : l.summary, extra:`<div class="ph-row"><button class="btn btn-fill" data-act="drill">${icon("mix", 18)} Schicht üben</button>${learnBtn(n)}</div>`})}
+  ${easySwitch()}
+  ${explainBox({easy:() => easyBlocks(EINFACH.layers[n], {skipK:true}), normal:layerCards, lede:{easy:EINFACH.layers[n].k, normal:l.summary}})}
   <div class="group">
     ${n > 1 ? `<button class="cell with-badge" data-go="schicht${n - 1}">${layerIc(n - 1)}<span class="cell-main"><span class="cell-sub">Vorherige Schicht</span><span class="cell-title">${L(n - 1).de}</span></span>${icon("right", 16, "chev")}</button>` : ""}
     ${n < 7 ? `<button class="cell with-badge" data-go="schicht${n + 1}">${layerIc(n + 1)}<span class="cell-main"><span class="cell-sub">Nächste Schicht</span><span class="cell-title">${L(n + 1).de}</span></span>${icon("right", 16, "chev")}</button>`
@@ -2536,6 +2673,7 @@ function drawEnc(changed) {
   }).join("");
   paint(`
   ${titleBlock("Datenfluss", "Kapselung", "Verfolge, wie eine Webseiten-Anfrage von deinem PC zum Webserver reist und wie jede Schicht ihren Header hinzufügt oder wieder entfernt.")}
+  ${easyTop(easyBlocks(EINFACH.pages.kapselung, {next:false}), MOD.osi.color)}
   ${seg("encmode", [["send", "Senden"], ["recv", "Empfangen"]], enc.mode, "mode")}
   <section class="card">
     <div class="enc-grid">
@@ -3111,6 +3249,7 @@ function vFakten() {
   const TCP = [["Anwendung", "2 / 5", "HTTP, DNS, SMTP, SSH"], ["Transport", "5 / 6", "TCP, UDP"], ["Internet", "6 / 7", "IP, ICMP"], ["Netzzugang", "7 / 9", "Ethernet, WLAN"]];
   paint(`
   ${pageHero(MOD.osi.color, {kicker:"Nachschlagen", title:"Fakten", lede:"Alles, was du für Berufsschule und Prüfung parat haben solltest, kompakt an einem Ort."})}
+  ${easyTop(easyBlocks(EINFACH.pages.fakten, {next:false}), MOD.osi.color)}
   <section class="section"><div class="group-h">Steckbrief</div>
     <dl class="group">
       <div class="kv"><dt>Name</dt><dd>Open Systems Interconnection Reference Model</dd></div>
