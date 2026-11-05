@@ -1941,11 +1941,11 @@ function render() {
   $(".tab-ind").style.setProperty("--i", Math.max(0, tabI));
   $(".tab-ind").style.opacity = tabI < 0 ? 0 : 1;
   setNav();
-  if (!same && !layerSwap && prevShown && !reduced()) document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
+  if (moving && !reduced()) document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
   const aurora = $("#aurora");
   aurora.classList.toggle("tinted", r.view === "schicht");
   if (r.view === "schicht") aurora.style.setProperty("--route", HUE[r.n]);
-  if (prevShown && !same) endFirstOpen();
+  if (!firstPaint && !same) endFirstOpen();
   morphSrc = null;
   if (moving) {
     scrollToTop = true;
