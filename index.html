@@ -388,7 +388,7 @@ table.t.wide{min-width:760px}
 .qprog i{display:block;height:100%;background:var(--accent);border-radius:inherit;transition:width .55s var(--ease-ios)}
 .qcard{display:flex;flex-direction:column;gap:18px}
 .qcard.in{animation:qIn .46s var(--ease-soft)}
-.qcard.in .opt{animation:cellIn .46s var(--ease-soft) both;animation-delay:calc(var(--k,0) * 36ms + 70ms)}
+.qcard.in .opt{animation:cellIn .46s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 36ms + 70ms)}
 .qtext{font:650 clamp(20px,3.2vw,25px)/1.3 var(--f-display);letter-spacing:-.016em;max-width:44ch}
 .opt{display:grid;grid-template-columns:30px minmax(0,1fr) 22px;gap:12px;align-items:center;width:100%;text-align:left;padding:14px 16px;border:0;background:transparent;font-size:16px;line-height:1.4;cursor:pointer;color:var(--label);transition:background .25s,opacity .3s;--inset:58px}
 .opt:active:not([disabled]){background:var(--fill-2)}
@@ -516,15 +516,16 @@ table.t.wide{min-width:760px}
 .sheet-wrap.closing .sheet-backdrop{animation:fade .28s reverse forwards}
 
 /* ---------- motion ---------- */
-.col.entering.enter-fade > *{animation:tabIn .36s var(--ease-soft) both;animation-delay:calc(var(--d,0) * 22ms)}
+.col.entering.enter-fade > *{animation:tabIn .36s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 22ms + 70ms)}
 /* Während des Übergangs kein Blur: Das spart viel Rechenleistung und bleibt auf dem Hintergrund unsichtbar. */
-.col.entering *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.col.entering .plate{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* Die Kinder animieren, nicht .col: Opazität am Elternteil würde den Glas-Blur der Karten kurz abschalten. */
-.col.entering.enter-push > *{animation:pushIn .5s var(--ease-soft) both;animation-delay:calc(var(--d,0) * 32ms)}
-.col.entering.enter-pop > *{animation:popIn .5s var(--ease-soft) both;animation-delay:calc(var(--d,0) * 32ms)}
+.col.entering.enter-push > *{animation:pushIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 70ms)}
+.col.entering.enter-pop > *{animation:popIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 70ms)}
 .col.entering > .read-bar,.col.entering > .page-hero.morphing{animation:none!important}
 /* Listen und Kacheln laufen weich nacheinander ein. */
-.col.entering .group > *,.col.entering .mod-list > *,.col.entering .mod-tiles > *,.col.entering .tiles > *,.col.entering .stat-grid > *,.col.entering .stack > .prow{animation:cellIn .5s var(--ease-soft) both;animation-delay:calc(var(--d,0) * 32ms + var(--k,0) * 28ms)}
+.col.entering .group > *,.col.entering .mod-list > *,.col.entering .mod-tiles > *,.col.entering .tiles > *,.col.entering .stat-grid > *,.col.entering .stack > .prow{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + var(--k,0) * 28ms + 70ms)}
+.col.entering .pre *{animation:none!important}
 .group > :nth-child(2),.mod-list > :nth-child(2),.mod-tiles > :nth-child(2),.tiles > :nth-child(2),.stat-grid > :nth-child(2),.stack > :nth-child(2),.opt:nth-child(2){--k:1}
 .group > :nth-child(3),.mod-list > :nth-child(3),.mod-tiles > :nth-child(3),.tiles > :nth-child(3),.stat-grid > :nth-child(3),.stack > :nth-child(3),.opt:nth-child(3){--k:2}
 .group > :nth-child(4),.mod-list > :nth-child(4),.mod-tiles > :nth-child(4),.tiles > :nth-child(4),.stat-grid > :nth-child(4),.stack > :nth-child(4),.opt:nth-child(4){--k:3}
@@ -611,7 +612,7 @@ main{overflow-x:clip}
 .ripple{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:currentColor;opacity:.1;pointer-events:none;animation:ripple .45s ease-out forwards}
 @keyframes ripple{to{transform:scale(34);opacity:0}}
 .pre,.col.entering > .pre{opacity:0;transform:translateY(18px);animation:none!important}
-.rev{animation:revealUp .7s var(--ease-soft) both}
+.rev{animation:revealUp .7s var(--ease-soft) backwards}
 .layer-body{display:flex;flex-direction:column;gap:12px;min-width:0}
 
 /* Schichtfarben */
@@ -701,7 +702,7 @@ main{overflow-x:clip}
 .ph-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .ph-row .btn{flex:1 1 auto;height:50px;border-radius:16px}
 .page-hero .cta{width:100%;margin-top:16px;height:52px}
-.col:has(> .page-hero){gap:14px}
+.col > .page-hero{margin-bottom:-8px}
 .stack-card{padding-block:12px}
 .btn{transition:transform .46s var(--ease-soft),background .25s,color .25s,opacity .25s}
 .btn:active:not([disabled]){transform:scale(.96);transition-duration:.08s}
@@ -733,11 +734,11 @@ main{overflow-x:clip}
 .welcome-sub{font-size:20px;line-height:1.3;font-weight:500;letter-spacing:-.012em;color:var(--label-2);max-width:26ch}
 .first-open .welcome-sub{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .18s)}
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
 .glow{position:relative;margin-top:14px}
 .first-open .glow{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .32s)}
-.glow::before{content:"";position:absolute;inset:-2px;border-radius:20px;background:conic-gradient(from var(--spin),#ff375f,#bf5af2,#5e5ce6,#0a84ff,#40c8e0,#30d158,#ff9f0a,#ff375f);filter:blur(12px);opacity:.75;animation:spin 7s linear infinite}
-@keyframes spin{to{--spin:360deg}}
+.glow-fx{position:absolute;inset:-2px;border-radius:20px;overflow:hidden;filter:blur(12px);opacity:.75;pointer-events:none}
+.glow-fx i{position:absolute;left:50%;top:50%;width:170%;aspect-ratio:1;margin:-85% 0 0 -85%;background:conic-gradient(#ff375f,#bf5af2,#5e5ce6,#0a84ff,#40c8e0,#30d158,#ff9f0a,#ff375f);animation:spinFx 7s linear infinite}
+@keyframes spinFx{to{transform:rotate(360deg)}}
 .glow .btn{position:relative;height:58px;border-radius:18px;font-size:18px}
 .welcome-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;margin-top:6px;font-size:13px;color:var(--label-2);font-variant-numeric:tabular-nums}
 .first-open .welcome-meta{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .46s)}
@@ -764,8 +765,19 @@ main{overflow-x:clip}
 @keyframes introBar{from{opacity:0;transform:scaleX(.15) translateY(14px)}to{opacity:1;transform:none}}
 @keyframes introZoom{to{transform:scale(16);opacity:0}}
 @keyframes introOut{to{opacity:0;visibility:hidden}}
+.idle,.idle *,.idle *::before,.idle *::after{animation-play-state:paused!important}
+/* Farbige Karten wie auf der Startseite */
+.mod-card,.hub.solid{--c:var(--accent);background:color-mix(in srgb,var(--c) 88%,#000);border:0;box-shadow:none;color:#fff}
+:root[data-mono] .mod-card,:root[data-mono] .hub.solid{--c:#636366!important}
+.mod-card .si,.hub.solid .cell-ic{background:rgba(255,255,255,.2);color:#fff}
+.mod-card small,.hub.solid small{color:#fff;opacity:.88}
+.mod-card .chev,.hub.solid .chev{color:#fff;opacity:.7}
+.mod-card .mbar-line .track{background:rgba(255,255,255,.28)}
+.mod-card .mbar-line .track i{background:#fff}
+.mod-card .mbar-line span{color:#fff}
+.modes .mode .big{color:color-mix(in srgb,var(--c,var(--accent)) 74%,var(--label))}
 /* Schieberegler Einfach und Normal */
-.easy-sw{position:sticky;top:calc(54px + env(safe-area-inset-top,0px));z-index:20;display:grid;grid-template-columns:1fr 1fr;align-items:center;height:46px;padding:4px;border-radius:999px;background:var(--material-strong);border:1px solid var(--glass-edge);-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab;--x:1}
+.easy-sw{position:sticky;top:calc(54px + env(safe-area-inset-top,0px));z-index:20;display:grid;grid-template-columns:1fr 1fr;align-items:center;height:46px;padding:4px;border-radius:999px;background:var(--material-strong);border:1px solid var(--glass-edge);touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab;--x:1}
 .easy-sw:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .easy-sw.drag{cursor:grabbing}
 .easy-thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--grad);box-shadow:0 4px 14px -6px rgba(0,0,0,.5);transform:translateX(calc(var(--x) * 100%));transition:transform .46s cubic-bezier(.3,1.14,.4,1)}
@@ -786,8 +798,8 @@ main{overflow-x:clip}
 .ph-c > :nth-child(4),.llist li:nth-child(4),.lrow:nth-child(4){--k:3}
 .ph-c > :nth-child(5),.llist li:nth-child(5),.lrow:nth-child(5){--k:4}
 .ph-c > :nth-child(n+6),.llist li:nth-child(n+6),.lrow:nth-child(n+6){--k:5}
-.col.entering .ph-c > *{animation:cellIn .55s var(--ease-soft) both;animation-delay:calc(var(--k,0) * 38ms + 50ms)}
-.col.entering .llist li,.col.entering .lrow,.rev .llist li,.rev .lrow,.xb-in .llist li,.xb-in .lrow{animation:cellIn .5s var(--ease-soft) both;animation-delay:calc(var(--k,0) * 30ms + 60ms)}
+.col.entering .ph-c > *{animation:cellIn .55s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 38ms + 110ms)}
+.col.entering .llist li,.col.entering .lrow,.rev .llist li,.rev .lrow,.xb-in .llist li,.xb-in .lrow{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 30ms + 60ms)}
 .opt.ok{animation:optOk .5s var(--ease-soft)}
 @keyframes optOk{from{transform:scale(.975)}to{transform:none}}
 .ghost .lrow,.ghost .llist li{animation:none!important}
@@ -890,12 +902,12 @@ main{zoom:var(--zoom,1)}
 :root[data-nosignal] .signal{display:none}
 :root[data-nosignal] .pw,:root[data-nosignal] .pl,:root[data-nosignal] .plate::after{animation:none!important}
 :root[data-calm] *,:root[data-calm] *::before,:root[data-calm] *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
-:root[data-calm] #aurora i,:root[data-calm] .glow::before,:root[data-calm] .signal,:root[data-calm] .pw,:root[data-calm] .pl,:root[data-calm] .plate::after{animation:none!important}
+:root[data-calm] #aurora i,:root[data-calm] .glow-fx i,:root[data-calm] .signal,:root[data-calm] .pw,:root[data-calm] .pl,:root[data-calm] .plate::after{animation:none!important}
 :root[data-calm] .signal{display:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
-  #aurora i,.glow::before,.signal,.pw,.pl,.plate::after{animation:none!important}
+  #aurora i,.glow-fx i,.signal,.pw,.pl,.plate::after{animation:none!important}
   .signal{display:none}
 }
 </style>
@@ -924,6 +936,7 @@ main{zoom:var(--zoom,1)}
 <script src="content/arbeitsplatz.js"></script>
 <script src="content/wirtschaft.js"></script>
 <script src="content/ergaenzung.js"></script>
+<script src="content/vertiefung.js"></script>
 <script src="content/einfach.js"></script>
 <script>
 (() => {
@@ -1611,9 +1624,9 @@ function revealBelow(root = view) {
     e.target.classList.remove("pre"); e.target.classList.add("rev");
     revealIO.unobserve(e.target);
   }), {threshold:0, rootMargin:"0px 0px -9% 0px"});
-  [...root.children, ...root.querySelectorAll(".lesson > *, .layer-body > *, .xb > *")].filter(el => !el.matches(".lesson, .layer-body, .xb, .read-bar, .easy-sw")).forEach(el => {
-    if (el.getBoundingClientRect().top > innerHeight + 8) { el.classList.add("pre"); revealIO.observe(el); }
-  });
+  const limit = innerHeight + 8;
+  const later = [...root.children, ...root.querySelectorAll(".lesson > *, .layer-body > *, .xb > *")].filter(el => !el.matches(".lesson, .layer-body, .xb, .read-bar, .easy-sw") && el.getBoundingClientRect().top > limit);
+  later.forEach(el => { el.classList.add("pre"); revealIO.observe(el); });
 }
 
 /* ---------------- Helfer ---------------- */
@@ -1675,8 +1688,18 @@ function observeTitle() {
   io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
   io.observe(t);
 }
+let idleIO = null;
+function watchIdle() {
+  if (idleIO) { idleIO.disconnect(); idleIO = null; }
+  if (!("IntersectionObserver" in window)) return;
+  idleIO = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("idle", !e.isIntersecting)));
+  view.querySelectorAll(".stack, .glow").forEach(el => idleIO.observe(el));
+}
+let scrollToTop = false;
 function paint(html, {anim = true} = {}) {
   view.innerHTML = html;
+  if (scrollToTop) { scrollToTop = false; window.scrollTo(0, 0); }
+  watchIdle();
   animateSegs();
   if (anim) { animateRings(); revealBelow(); }
   observeTitle();
@@ -1832,6 +1855,8 @@ function leavePage(dir) {
   if (ghostEl) { ghostEl.remove(); ghostEl = null; }
   if (!view.firstElementChild) return;
   const box = view.getBoundingClientRect(), g = document.createElement("div"), inner = document.createElement("div");
+  const below = [...view.children, ...view.querySelectorAll(".xb > *, .layer-body > *")].filter(el => el.getBoundingClientRect().top > innerHeight);
+  below.forEach(el => el.remove());
   g.className = "ghost"; g.setAttribute("aria-hidden", "true"); g.inert = true;
   inner.className = "col";
   inner.style.cssText = `left:${box.left}px;top:${box.top}px;width:${box.width}px`;
@@ -1839,10 +1864,8 @@ function leavePage(dir) {
   inner.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
   g.append(inner);
   view.after(g);
-  const shelf = inner.querySelector(".shelf");
-  if (shelf) shelf.scrollLeft = shelfX;
-  const x = dir === "push" ? -26 : dir === "pop" ? 26 : 0;
-  const a = g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${x}px)`}], {duration:dir === "fade" ? 170 : 220, easing:"ease-out", fill:"forwards"});
+  const x = dir === "push" ? -14 : dir === "pop" ? 14 : 0;
+  const a = g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${x}px)`}], {duration:110, easing:"ease-out", fill:"forwards"});
   ghostEl = g;
   a.onfinish = () => { g.remove(); if (ghostEl === g) ghostEl = null; };
 }
@@ -1859,11 +1882,11 @@ function morphIn(m) {
 }
 /* Zurück: Die Kopfkarte schrumpft wieder auf ihre Karte. */
 function morphOut(m) {
-  const t = view.querySelector(`.shelf-card[data-go="${m.go}"], .mod-card[data-go="${m.go}"]`);
+  const t = view.querySelector(`.shelf-card[data-go="${m.go}"], .mod-card[data-go="${m.go}"], .hub[data-go="${m.go}"], .mod-tile[data-go="${m.go}"], .tile[data-go="${m.go}"], .cell[data-go="${m.go}"]`);
   if (!t) return;
   const e = t.getBoundingClientRect();
   if (e.right < 0 || e.left > innerWidth || e.top > innerHeight) return;
-  const shelf = t.matches(".shelf-card"), o = document.createElement("div");
+  const shelf = t.matches(".shelf-card, .mod-card, .hub"), o = document.createElement("div");
   o.className = "morph";
   o.style.cssText = `left:${e.left}px;top:${e.top}px;width:${e.width}px;height:${e.height}px;background:${shelf ? getComputedStyle(t).backgroundColor : m.color}`;
   if (ghostEl) ghostEl.before(o); else view.after(o);
@@ -1894,6 +1917,23 @@ function render() {
   const layerSwap = !same && prevRoute && prevRoute.view === "schicht" && r.view === "schicht" && $("#layerBody");
   if (!layerSwap) { clearTimeout(swapT); swapT = null; }
   prevRoute = r; curRoute = r;
+  const firstPaint = !prevShown, moving = !same && !layerSwap && !firstPaint;
+  prevShown = true;
+  let morph = null;
+  if (moving) {
+    const shelf = view.querySelector(".shelf");
+    if (shelf) shelfX = shelf.scrollLeft;
+    if (!reduced()) {
+      if (morphSrc && morphSrc.isConnected && morphSrc.dataset.go === r.key) {
+        morph = {dir:"in", rect:morphSrc.getBoundingClientRect(), color:morphSrc.matches(".shelf-card, .mod-card, .hub") ? getComputedStyle(morphSrc).backgroundColor : ""};
+        morphSrc.style.visibility = "hidden";
+      } else if (from && dir === "pop") {
+        const bg = view.querySelector(":scope > .page-hero .ph-bg, #layerBody > .page-hero .ph-bg");
+        if (bg && bg.getBoundingClientRect().bottom > 0) { morph = {dir:"out", rect:bg.getBoundingClientRect(), color:getComputedStyle(bg).backgroundColor, go:from.key}; bg.style.visibility = "hidden"; }
+      }
+      leavePage(dir);
+    }
+  }
   if (r.mod) curMod = MOD[r.mod];
   const tabKey = r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.mod ? "themen" : r.parent || r.view;
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
@@ -1906,36 +1946,19 @@ function render() {
   aurora.classList.toggle("tinted", r.view === "schicht");
   if (r.view === "schicht") aurora.style.setProperty("--route", HUE[r.n]);
   if (prevShown && !same) endFirstOpen();
-  const firstPaint = !prevShown, moving = !same && !layerSwap && !firstPaint;
-  prevShown = true;
-  let morph = null;
-  if (moving) {
-    const shelf = view.querySelector(".shelf");
-    if (shelf) shelfX = shelf.scrollLeft;
-    if (!reduced()) {
-      if (morphSrc && morphSrc.isConnected && morphSrc.dataset.go === r.key) {
-        const isShelf = morphSrc.matches(".shelf-card");
-        morph = {dir:"in", rect:morphSrc.getBoundingClientRect(), color:isShelf ? getComputedStyle(morphSrc).backgroundColor : ""};
-        morphSrc.style.visibility = "hidden";
-      } else if (from && from.view === "modul" && (r.view === "start" || r.view === "themen")) {
-        const bg = view.querySelector(":scope > .page-hero .ph-bg");
-        if (bg) { morph = {dir:"out", rect:bg.getBoundingClientRect(), color:getComputedStyle(bg).backgroundColor, go:"modul-" + from.mod}; bg.style.visibility = "hidden"; }
-      }
-      leavePage(dir);
-    }
-  }
   morphSrc = null;
   if (moving) {
-    window.scrollTo(0, 0);
+    scrollToTop = true;
     view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
-    void view.offsetWidth;
     view.classList.add("entering", "enter-" + dir);
     clearTimeout(enterT);
-    enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 900);
+    enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
   }
   ({start:vStart, themen:vThemen, suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
   window.scrollTo(0, 0);
   if (moving && !reduced()) {
+    const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
+    if (oldShelf) oldShelf.scrollLeft = shelfX;
     animateBars();
     if (morph) (morph.dir === "in" ? morphIn : morphOut)(morph);
   }
@@ -1962,7 +1985,7 @@ document.addEventListener("click", e => {
   const ez = e.target.closest("[data-easy-set]");
   if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
-  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card") ? g : null; go(g.dataset.go); return; }
+  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
   if (a && actHandler && !a.disabled) actHandler(a.dataset.act, a, e);
 });
@@ -1991,7 +2014,7 @@ function mnemoHTML(mode, withId) {
   return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
 }
 const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="--c:${m.color}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
-const modCard = m => `<button class="mod-card" data-go="modul-${m.id}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
+const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="--c:${m.color}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="--c:${col}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
 const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="--c:${m.color};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
@@ -2003,7 +2026,7 @@ function vStart() {
   <header class="welcome">
     <h1 class="large greet">${greeting()}</h1>
     <p class="welcome-sub">${due ? `${due} ${due === 1 ? "Aufgabe wartet" : "Aufgaben warten"} auf dich.` : "Heute ist ein guter Tag für die Prüfung von morgen."}</p>
-    <div class="glow"><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
+    <div class="glow"><span class="glow-fx" aria-hidden="true"><i></i></span><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
     <p class="welcome-meta"><span>${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</span><span>${doneToday()} von ${CFG.goal} heute</span><span>${overallProgress()} % geschafft</span></p>
   </header>
   <section class="shelf-wrap" aria-label="Themen"><div class="shelf">${MODS.map(shelfCard).join("")}</div></section>`);
@@ -2084,7 +2107,7 @@ addEventListener("scroll", () => {
     const bar = $("#readBar");
     if (!bar) return;
     const max = document.documentElement.scrollHeight - innerHeight;
-    bar.style.setProperty("--p", max > 0 ? Math.min(1, scrollY / max) : 0);
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
   });
 }, {passive:true});
 function vUnit(id, uid) {
@@ -2216,7 +2239,7 @@ function drawDrill() {
   const list = curMod.drills, answered = dr.picked != null, ok = answered && dr.opts[dr.picked].ok;
   setNav({right:`<span class="nb-btn tnum" style="cursor:default;color:var(--label-2)">${dr.right}/${dr.total}</span>`});
   paint(`
-  ${titleBlock(curMod.title, "Rechentraining", "Jede Aufgabe wird neu erzeugt, du kannst also beliebig lange üben.")}
+  ${pageHero(curMod.color, {kicker:curMod.title, title:"Rechentraining", lede:"Jede Aufgabe wird neu erzeugt, du kannst also beliebig lange üben."})}
   ${list.length > 1 ? seg("drkind", list.map(k => [k, DRILLS[k].title]), dr.kind, "kind") : ""}
   <section class="qcard">
     <h2 class="qtext">${dr.cur.q}</h2>
@@ -2284,11 +2307,8 @@ function drawPz() {
   if (pz.phase === "intro") {
     setNav();
     paint(`
-    ${titleBlock("Unter Prüfungsbedingungen", `Probeprüfung ${pz.ap}`, `${PZ_COUNT} zufällige Fragen, ${PZ_MINUTES} Minuten, ohne Hinweise. Die Auswertung kommt erst am Ende.`)}
-    <section class="card hero">
-      <p class="exam-note">Die echte Prüfung nutzt überwiegend offene Aufgaben. Diese Probe trainiert dein Wissen und dein Tempo, ersetzt alte Prüfungen aber nicht.</p>
-      <button class="btn btn-fill btn-lg cta" data-act="pz-start">Prüfung starten</button>
-    </section>`, {anim:false});
+    ${pageHero(pz.ap === "AP1" ? "#ff9f0a" : "#ff375f", {kicker:"Unter Prüfungsbedingungen", title:`Probeprüfung ${pz.ap}`, lede:`${PZ_COUNT} zufällige Fragen, ${PZ_MINUTES} Minuten, ohne Hinweise. Die Auswertung kommt erst am Ende.`, extra:`<p class="exam-note">Die echte Prüfung nutzt überwiegend offene Aufgaben. Diese Probe trainiert dein Wissen und dein Tempo, ersetzt alte Prüfungen aber nicht.</p><button class="btn btn-fill btn-lg cta" data-act="pz-start">Prüfung starten</button>`})}
+    <button class="cell with-badge" data-go="modul-wiso-unit-pruefung" style="border-radius:22px;background:var(--surface);border:1px solid var(--glass-edge)">${modIc(MOD.wiso)}<span class="cell-main"><span class="cell-sub">Gut zu wissen</span><span class="cell-title">Deine Abschlussprüfung</span></span>${icon("right", 16, "chev")}</button>`, {anim:false});
     return;
   }
   if (pz.phase === "result") {
@@ -2297,7 +2317,7 @@ function drawPz() {
     const wrongs = pz.list.map((q, i) => ({q, a:pz.answers[i]})).filter(x => !(x.a && x.a.ok));
     setNav({title:"Ergebnis"});
     paint(`
-    ${titleBlock(`Probeprüfung ${pz.ap}`, "Ergebnis", "")}
+    ${pageHero(pz.ap === "AP1" ? "#ff9f0a" : "#ff375f", {kicker:`Probeprüfung ${pz.ap}`, title:"Ergebnis"})}
     <section class="card">
       <div class="result-head">${ring(p, 116, 12, "richtig")}<div class="prog-info"><div class="prog-label">${right} von ${pz.list.length}</div><p class="pass ${p >= 50 ? "ok" : "no"}">${p >= 50 ? "Bestanden nach der 50-%-Grenze" : "Noch unter der 50-%-Grenze"}</p></div></div>
       <div class="row" style="margin-top:18px"><button class="btn btn-fill" data-act="pz-again">Neue Prüfung</button></div>
@@ -2589,6 +2609,8 @@ function vSchicht(n, swapDir) {
   <section class="card"><div class="card-h"><h2 class="card-t">${icon("warn")} Typische Fehler</h2></div>
     <ul class="ticks warn">${l.faults.map(t => `<li><span>${t}</span></li>`).join("")}</ul></section>
   <div class="note tip">${icon("bulb", 20)}<div><b>Prüfungstipp</b><br>${l.tip}</div></div>
+  ${window.LERN_OSI_NORM ? `<section class="card"><div class="card-h"><h2 class="card-t">${icon("id")} So steht es in der Norm</h2></div><p>${window.LERN_OSI_NORM[n]}</p></section>` : ""}
+  ${window.LERN_OSI_SRC ? `<section class="set-sec"><div class="group-h">Quellen</div><div class="group">${window.LERN_OSI_SRC.map(([label, url]) => `<a class="cell src-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="cell-main"><span class="cell-title">${label}</span></span>${icon("right", 16, "chev")}</a>`).join("")}</div></section>` : ""}
 `;
   const body = `
   ${pageHero(HUE[n], {kicker:`Schicht ${n}, ${n <= 4 ? "transportorientiert" : "anwendungsorientiert"}`, title:l.de.replace(/schicht$/, "­schicht"), en:`${l.en}${l.alias ? ` · ${l.alias}` : ""}`, lede:CFG.easy ? EINFACH.layers[n].k : l.summary, extra:`<div class="ph-row"><button class="btn btn-fill" data-act="drill">${icon("mix", 18)} Schicht üben</button>${learnBtn(n)}</div>`})}
@@ -2672,7 +2694,7 @@ function drawEnc(changed) {
     return `<li class="ms ${n === st.L ? "active" : done ? "done" : ""}"><span class="badge">${n}</span><span>${shortName(n)}</span>${done ? icon("check", 14, "ok") : ""}</li>`;
   }).join("");
   paint(`
-  ${titleBlock("Datenfluss", "Kapselung", "Verfolge, wie eine Webseiten-Anfrage von deinem PC zum Webserver reist und wie jede Schicht ihren Header hinzufügt oder wieder entfernt.")}
+  ${pageHero(MOD.osi.color, {kicker:"Datenfluss", title:"Kapselung", lede:"Verfolge, wie eine Webseiten-Anfrage von deinem PC zum Webserver reist und wie jede Schicht ihren Header hinzufügt oder wieder entfernt."})}
   ${easyTop(easyBlocks(EINFACH.pages.kapselung, {next:false}), MOD.osi.color)}
   ${seg("encmode", [["send", "Senden"], ["recv", "Empfangen"]], enc.mode, "mode")}
   <section class="card">
@@ -2729,9 +2751,9 @@ function vTrainieren() {
   paint(`
   ${titleBlock("Üben und prüfen", "Trainieren", "Der Tagesmix sucht die richtigen Aufgaben für dich aus. Mit der Probeprüfung testest du dich unter Zeitdruck.")}
   <div class="section">
-    <button class="hub mix" data-go="heute"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub" data-go="pruefung-ap1"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP1</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub" data-go="pruefung-ap2"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP2</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub mix solid" data-go="heute" style="--c:#5e5ce6"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub solid" data-go="pruefung-ap1" style="--c:#ff9f0a"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP1</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub solid" data-go="pruefung-ap2" style="--c:#ff375f"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP2</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
   </div>
   ${wrongN ? `<div class="group"><button class="cell" data-act="wrongmix"><span class="cell-ic" style="background:var(--red)">${icon("reset", 18)}</span><span class="cell-main"><span class="cell-title">Fehler wiederholen</span><span class="cell-sub">${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus allen Themen</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
   <section class="section">
@@ -2820,8 +2842,8 @@ function drawQuiz() {
   if (qz.phase === "intro") {
     setNav();
     paint(`
-    ${titleBlock("Prüfen", "Quiz", `Prüfungsnahe Fragen zu ${curMod.title}. Nach jeder Antwort erfährst du, warum sie richtig oder falsch ist.`)}
-    <section class="modes">
+    ${pageHero(curMod.color, {kicker:curMod.title, title:"Quiz", lede:"Nach jeder Antwort erfährst du, warum sie richtig oder falsch ist."})}
+    <section class="modes" style="--c:${curMod.color}">
       <button class="mode" data-act="start" data-m="quick"><span class="big">10</span><b>Schnellrunde</b><span>Zehn zufällige Fragen für zwischendurch.</span></button>
       <button class="mode" data-act="start" data-m="big"><span class="big">25</span><b>Große Runde</b><span>25 Fragen quer durch das ganze Thema.</span></button>
       <button class="mode" data-act="start" data-m="wrong" ${wrongN ? "" : "disabled"}><span class="big">${wrongN}</span><b>Fehler wiederholen</b><span>${wrongN ? "Nur die Fragen, die du zuletzt falsch hattest." : "Hier landen Fragen, die du falsch beantwortest."}</span></button>
@@ -2835,7 +2857,7 @@ function drawQuiz() {
     const wrongs = qz.answers.filter(a => !a.ok);
     const msg = qz.pct === 100 ? "Perfekt, alles richtig." : qz.pct >= 80 ? "Stark, das sitzt schon richtig gut." : qz.pct >= 50 ? "Solide Basis. Schau dir die Fehler noch einmal an." : "Dranbleiben. Lies die Schichten nach und versuch es noch einmal.";
     paint(`
-    ${titleBlock("Quiz", "Ergebnis", "")}
+    ${pageHero(curMod.color, {kicker:`Quiz, ${curMod.title}`, title:"Ergebnis"})}
     <section class="card">
       <div class="result-head">${ring(qz.pct, 132, 13, "richtig")}
         <div class="prog-info"><div class="prog-label">${qz.right} von ${qz.answers.length} richtig</div><p class="muted">${msg}</p></div>
@@ -2946,7 +2968,7 @@ function drawCards() {
   }
   setNav({right:kc.done ? "" : `<button class="nb-btn" data-act="shuffle" aria-label="Mischen">${icon("shuffle", 20)}</button>`});
   paint(`
-  ${titleBlock("Wiederholen", "Lernkarten", "Tippe zum Umdrehen. Wische nach rechts, wenn du es wusstest, und nach links, wenn die Karte wiederkommen soll.")}
+  ${pageHero(curMod.color, {kicker:curMod.title, title:"Lernkarten", lede:"Tippe zum Umdrehen. Wische nach rechts, wenn du es wusstest, und nach links, wenn sie wiederkommen soll."})}
   ${curMod.osi ? seg("kfilter", [["alle", "Alle"], ["schichten", "Schichten"], ["pdu", "PDU"], ["begriffe", "Begriffe"], ["ports", "Ports"]], kc.filter, "filter") : ""}
   <div class="group"><div class="toggle-cell"><span>Nur offene Karten</span><button class="switch" role="switch" aria-label="Nur offene Karten" aria-checked="${kc.open}" data-act="open"></button></div></div>
   <div class="stage">${stage}</div>`, {anim:kc.done});
@@ -3078,7 +3100,7 @@ function drawMixDone() {
   const msg = p === 100 ? "Alles beim ersten Versuch richtig." : p >= 60 ? "Das sitzt. Was offen blieb, kommt bald wieder." : "Das Falsche kommt zuerst wieder, bis es sitzt.";
   setNav({left:`<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>`, title:"Runde geschafft"});
   paint(`
-  ${titleBlock("", "Runde geschafft", "")}
+  ${pageHero("#5e5ce6", {kicker:"Tagesmix", title:"Runde geschafft"})}
   <section class="card">
     <div class="result-head">${ring(p, 116, 12, "richtig")}<div class="prog-info"><div class="prog-label">${mix.firstRight} von ${mix.firsts}</div><p class="muted">${msg}</p></div></div>
     <div class="mix-stats">
@@ -3198,7 +3220,7 @@ function orderHTML() {
 }
 function drawUeben() {
   paint(`
-  ${titleBlock("Anwenden", "Übungen", "Ordne Begriffe der richtigen Schicht zu oder bring die Schichten auf Zeit in die richtige Reihenfolge.")}
+  ${pageHero(MOD.osi.color, {kicker:"Anwenden", title:"Übungen", lede:"Ordne Begriffe der richtigen Schicht zu oder bring die Schichten auf Zeit in die richtige Reihenfolge."})}
   ${seg("utab", [["zuordnen", "Zuordnen"], ["reihenfolge", "Reihenfolge"]], ub.tab, "tab")}
   ${ub.tab === "zuordnen" ? assignHTML() : orderHTML()}`, {anim:false});
   if (as) as.flash = null;

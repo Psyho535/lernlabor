@@ -1,6 +1,6 @@
 // Offline-Cache. Die Version ändert sich bei jedem Build, damit Handys die neue Fassung holen.
-const CACHE = "lernlabor-20261106-140000";
-const CORE = ["./", "./index.html", "./manifest.webmanifest", "./content/netz.js", "./content/sicherheit.js", "./content/admin.js", "./content/arbeitsplatz.js", "./content/wirtschaft.js", "./content/ergaenzung.js", "./content/einfach.js"];
+const CACHE = "lernlabor-20261107-120000";
+const CORE = ["./", "./index.html", "./manifest.webmanifest", "./content/netz.js", "./content/sicherheit.js", "./content/admin.js", "./content/arbeitsplatz.js", "./content/wirtschaft.js", "./content/ergaenzung.js", "./content/vertiefung.js", "./content/einfach.js"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
