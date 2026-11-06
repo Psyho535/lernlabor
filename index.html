@@ -516,15 +516,15 @@ table.t.wide{min-width:760px}
 .sheet-wrap.closing .sheet-backdrop{animation:fade .28s reverse forwards}
 
 /* ---------- motion ---------- */
-.col.entering.enter-fade > *{animation:tabIn .36s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 22ms + 70ms)}
+.col.entering.enter-fade > *{animation:tabIn .36s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 22ms + 40ms)}
 /* Während des Übergangs kein Blur: Das spart viel Rechenleistung und bleibt auf dem Hintergrund unsichtbar. */
 .col.entering .plate{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* Die Kinder animieren, nicht .col: Opazität am Elternteil würde den Glas-Blur der Karten kurz abschalten. */
-.col.entering.enter-push > *{animation:pushIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 70ms)}
-.col.entering.enter-pop > *{animation:popIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 70ms)}
+.col.entering.enter-push > *{animation:pushIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 40ms)}
+.col.entering.enter-pop > *{animation:popIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + 40ms)}
 .col.entering > .read-bar,.col.entering > .page-hero.morphing{animation:none!important}
 /* Listen und Kacheln laufen weich nacheinander ein. */
-.col.entering .group > *,.col.entering .mod-list > *,.col.entering .mod-tiles > *,.col.entering .tiles > *,.col.entering .stat-grid > *,.col.entering .stack > .prow{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + var(--k,0) * 28ms + 70ms)}
+.col.entering .group > *,.col.entering .mod-list > *,.col.entering .mod-tiles > *,.col.entering .tiles > *,.col.entering .stat-grid > *,.col.entering .stack > .prow{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--d,0) * 32ms + var(--k,0) * 28ms + 40ms)}
 .col.entering .pre *{animation:none!important}
 .group > :nth-child(2),.mod-list > :nth-child(2),.mod-tiles > :nth-child(2),.tiles > :nth-child(2),.stat-grid > :nth-child(2),.stack > :nth-child(2),.opt:nth-child(2){--k:1}
 .group > :nth-child(3),.mod-list > :nth-child(3),.mod-tiles > :nth-child(3),.tiles > :nth-child(3),.stat-grid > :nth-child(3),.stack > :nth-child(3),.opt:nth-child(3){--k:2}
@@ -784,7 +784,7 @@ main{overflow-x:clip}
 .easy-sw.drag .easy-thumb{transition:none;transform:translateX(calc(var(--x) * 100%)) scale(1.03)}
 .easy-l{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;font-weight:600;color:var(--label-2);pointer-events:none;transition:color .22s}
 .easy-sw.on .easy-l:nth-of-type(2),.easy-sw:not(.on) .easy-l:nth-of-type(3){color:var(--on-grad)}
-.ghost .easy-sw{position:static}
+.ghost .easy-sw{position:relative;top:auto}
 .xb{display:flex;flex-direction:column;gap:12px;min-width:0}
 .xb:empty{display:none}
 .ez-tag{display:block;margin-bottom:6px;font-size:13px;font-weight:650;color:color-mix(in srgb,var(--c,var(--accent)) 74%,var(--label))}
@@ -798,7 +798,7 @@ main{overflow-x:clip}
 .ph-c > :nth-child(4),.llist li:nth-child(4),.lrow:nth-child(4){--k:3}
 .ph-c > :nth-child(5),.llist li:nth-child(5),.lrow:nth-child(5){--k:4}
 .ph-c > :nth-child(n+6),.llist li:nth-child(n+6),.lrow:nth-child(n+6){--k:5}
-.col.entering .ph-c > *{animation:cellIn .55s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 38ms + 110ms)}
+.col.entering .ph-c > *{animation:cellIn .55s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 38ms + 80ms)}
 .col.entering .llist li,.col.entering .lrow,.rev .llist li,.rev .lrow,.xb-in .llist li,.xb-in .lrow{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 30ms + 60ms)}
 .opt.ok{animation:optOk .5s var(--ease-soft)}
 @keyframes optOk{from{transform:scale(.975)}to{transform:none}}
@@ -1865,7 +1865,7 @@ function leavePage(dir) {
   g.append(inner);
   view.after(g);
   const x = dir === "push" ? -14 : dir === "pop" ? 14 : 0;
-  const a = g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${x}px)`}], {duration:110, easing:"ease-out", fill:"forwards"});
+  const a = g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${x}px)`}], {duration:140, easing:"linear", fill:"forwards"});
   ghostEl = g;
   a.onfinish = () => { g.remove(); if (ghostEl === g) ghostEl = null; };
 }
