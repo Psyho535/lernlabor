@@ -292,6 +292,7 @@ const strMethods = {
   "static String valueOf(char[])": (n, [x], rt) => rt.S(needArr(rt, x).a.map(charStr).join("")),
   "static String copyValueOf(char[])": (n, [x], rt) => rt.S(needArr(rt, x).a.map(charStr).join("")),
   "static String format(String,Object...)": (n, [f, args], rt) => rt.S(format(rt, f, args.a)),
+  "static String format(Locale,String,Object...)": (n, [l, f, args], rt) => rt.S(format(rt, f, args.a, l)),
   "static String join(CharSequence,CharSequence...)": (n, [d, parts], rt) => rt.S(parts.a.map(x => rt.toStr(x)).join(rt.toStr(d))),
   "static String join(CharSequence,Iterable<CharSequence>)": (n, [d, it], rt) => rt.S(rt.toArray(it).map(x => rt.toStr(x)).join(rt.toStr(d)))
 };
@@ -509,6 +510,8 @@ lib("PrintStream", {fq:"java.io.PrintStream", pkg:"java.io"}, {
   "void print(Object)": (o, [x], rt) => pr(rt, o, rt.toStr(x)),
   "PrintStream printf(String,Object...)": (o, [f, args], rt) => { if (f === null) throw rt.ex("NullPointerException", null); let s; try { s = format(rt, f, args.a); } catch (e) { if (e.partial) pr(rt, o, e.partial); throw e; } pr(rt, o, s); return o; },
   "PrintStream format(String,Object...)": (o, [f, args], rt) => { pr(rt, o, format(rt, f, args.a)); return o; },
+  "PrintStream printf(Locale,String,Object...)": (o, [l, f, args], rt) => { if (f === null) throw rt.ex("NullPointerException", null); let s; try { s = format(rt, f, args.a, l); } catch (e) { if (e.partial) pr(rt, o, e.partial); throw e; } pr(rt, o, s); return o; },
+  "PrintStream format(Locale,String,Object...)": (o, [l, f, args], rt) => { pr(rt, o, format(rt, f, args.a, l)); return o; },
   "void flush()": () => {}
 });
 lib("IO", Object.assign({fq:"java.lang.IO", final:true}, L), {
@@ -753,6 +756,25 @@ lib("Random", Object.assign({fq:"java.util.Random"}, U), {
   "void setSeed(long)": (r, [s]) => r.setSeed(s)
 });
 const sc = s => { if (s.closed) throw s.rt.ex("IllegalStateException", "Scanner closed"); return s; };
+const mkLocale = (lang, country = "") => { const o = new JObj(LIB.Locale); o.lang = String(lang).toLowerCase(); o.country = String(country).toUpperCase(); return o; };
+JV.mkLocale = mkLocale;
+lib("Locale", {fq:"java.util.Locale", pkg:"java.util", final:true}, {
+  "static final Locale GERMANY": () => mkLocale("de", "DE"), "static final Locale GERMAN": () => mkLocale("de"),
+  "static final Locale US": () => mkLocale("en", "US"), "static final Locale UK": () => mkLocale("en", "GB"), "static final Locale ENGLISH": () => mkLocale("en"),
+  "static final Locale FRANCE": () => mkLocale("fr", "FR"), "static final Locale ITALY": () => mkLocale("it", "IT"), "static final Locale ROOT": () => mkLocale(""),
+  "new(String)": (rt, [l]) => mkLocale(s$(l)),
+  "new(String,String)": (rt, [l, c]) => mkLocale(s$(l), s$(c)),
+  "static Locale of(String)": (n, [l]) => mkLocale(s$(l)),
+  "static Locale of(String,String)": (n, [l, c]) => mkLocale(s$(l), s$(c)),
+  "static Locale forLanguageTag(String)": (n, [t]) => { const [l, c] = s$(t).split(/[-_]/); return mkLocale(l || "", c || ""); },
+  "static Locale getDefault()": (n, a, rt) => rt.defLocale,
+  "static void setDefault(Locale)": (n, [l], rt) => { if (l === null) throw rt.ex("NullPointerException", "Can't set default locale to NULL"); rt.defLocale = l; },
+  "String getLanguage()": (o, a, rt) => rt.S(o.lang),
+  "String getCountry()": (o, a, rt) => rt.S(o.country),
+  "String toString()": (o, a, rt) => rt.S(o.lang + (o.country ? "_" + o.country : "")),
+  "boolean equals(Object)": (o, [x]) => x instanceof JObj && x.cls === o.cls && x.lang === o.lang && x.country === o.country,
+  "int hashCode()": (o, a, rt) => hashes.strHash(o.lang + "_" + o.country)
+});
 const parseScanInt = (rt, tok, bits) => {
   const t = tok.replace(/,/g, "");
   try { return parseIntJava(rt, t, 10, bits); } catch (e) { throw rt.ex("InputMismatchException", `For input string: "${t}"`); }
@@ -762,18 +784,19 @@ lib("Scanner", Object.assign({fq:"java.util.Scanner", final:true, ifaces:["Itera
   "new(String)": (rt, [s], cls) => new JScanner(cls, rt, s$(s)),
   "String next()": s => sc(s).next(),
   "String nextLine()": s => sc(s).nextLine(),
-  "int nextInt()": s => sc(s).nextTyped(t => INT_RE.test(t), t => parseScanInt(s.rt, t, 32)),
+  "int nextInt()": s => sc(s).nextTyped(t => s.intRe.test(t), t => parseScanInt(s.rt, s.num(t), 32)),
+  "Scanner useLocale(Locale)": (s, [l], rt) => { if (l === null) throw rt.ex("NullPointerException", null); return sc(s).useLocale(l); },
   "int nextInt(int)": (s, [r]) => sc(s).nextTyped(t => { try { parseIntJava(s.rt, t, r, 32); return true; } catch (e) { return false; } }, t => parseIntJava(s.rt, t, r, 32)),
-  "long nextLong()": s => sc(s).nextTyped(t => INT_RE.test(t), t => parseScanInt(s.rt, t, 64)),
-  "short nextShort()": s => sc(s).nextTyped(t => INT_RE.test(t), t => parseScanInt(s.rt, t, 16)),
-  "byte nextByte()": s => sc(s).nextTyped(t => INT_RE.test(t), t => parseScanInt(s.rt, t, 8)),
-  "double nextDouble()": s => sc(s).nextTyped(t => DBL_RE.test(t), t => Number(t.replace(/,/g, ""))),
-  "float nextFloat()": s => sc(s).nextTyped(t => DBL_RE.test(t), t => Math.fround(Number(t.replace(/,/g, "")))),
+  "long nextLong()": s => sc(s).nextTyped(t => s.intRe.test(t), t => parseScanInt(s.rt, s.num(t), 64)),
+  "short nextShort()": s => sc(s).nextTyped(t => s.intRe.test(t), t => parseScanInt(s.rt, s.num(t), 16)),
+  "byte nextByte()": s => sc(s).nextTyped(t => s.intRe.test(t), t => parseScanInt(s.rt, s.num(t), 8)),
+  "double nextDouble()": s => sc(s).nextTyped(t => s.dblRe.test(t), t => Number(s.num(t))),
+  "float nextFloat()": s => sc(s).nextTyped(t => s.dblRe.test(t), t => Math.fround(Number(s.num(t)))),
   "boolean nextBoolean()": s => sc(s).nextTyped(t => /^(true|false)$/i.test(t), t => t.toLowerCase() === "true"),
   "boolean hasNext()": s => sc(s).hasNext(),
-  "boolean hasNextInt()": s => sc(s).hasNext(t => INT_RE.test(t) && Math.abs(Number(t.replace(/,/g, ""))) <= 2147483648 && (() => { const v = Number(t.replace(/,/g, "")); return v >= -2147483648 && v <= 2147483647; })()),
-  "boolean hasNextLong()": s => sc(s).hasNext(t => INT_RE.test(t)),
-  "boolean hasNextDouble()": s => sc(s).hasNext(t => DBL_RE.test(t)),
+  "boolean hasNextInt()": s => sc(s).hasNext(t => { if (!s.intRe.test(t)) return false; const v = Number(s.num(t)); return v >= -2147483648 && v <= 2147483647; }),
+  "boolean hasNextLong()": s => sc(s).hasNext(t => s.intRe.test(t)),
+  "boolean hasNextDouble()": s => sc(s).hasNext(t => s.dblRe.test(t)),
   "boolean hasNextBoolean()": s => sc(s).hasNext(t => /^(true|false)$/i.test(t)),
   "boolean hasNextLine()": s => sc(s).hasNextLine(),
   "void close()": s => { if (s.std && !s.closed) s.rt.stdinClosed = true; s.closed = true; }

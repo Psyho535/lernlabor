@@ -139,6 +139,8 @@ function makeRT(opts, prog) {
     check() { this.lim = this.steps + 50000; if (now() - this.t0 > this.maxMs) throw new Halt("timeout"); },
     S: s => new String(s),
     cls: n => LIB[n],
+    defLocale:null,
+    libStatic(key, fn) { this._ls = this._ls || {}; if (!(key in this._ls)) this._ls[key] = fn(this); return this._ls[key]; },
     random() { return (rand32() * 2097152 + (rand32() >>> 11)) / 9007199254740992; },
     idHash(o) { if (!o.h) o.h = (rand32() & 0x7fffffff) || 1; return o.h; },
     newRandom(cls) { return new JRandom(cls || LIB.Random, (BigInt(rand32()) << 16n) ^ BigInt(rand32())); },
@@ -426,6 +428,7 @@ function makeRT(opts, prog) {
   };
   const ps = (isErr) => { const o = new JObj(LIB.PrintStream); o.isErr = isErr; return o; };
   rt.sysOut = ps(false); rt.sysErr = ps(true); rt.sysIn = new JObj(LIB.InputStream);
+  rt.defLocale = JV.mkLocale("en", "US");
   return rt;
 }
 
@@ -899,7 +902,7 @@ function compileProgram(src, rt, opts) {
     if (c.lib) {
       if (typeof f.value === "function") {
         const key = c.name + "." + f.name;
-        const v = key === "System.out" ? rt.sysOut : key === "System.err" ? rt.sysErr : key === "System.in" ? rt.sysIn : key === "Boolean.TRUE" ? rt.box("Boolean", true) : key === "Boolean.FALSE" ? rt.box("Boolean", false) : null;
+        const v = key === "System.out" ? rt.sysOut : key === "System.err" ? rt.sysErr : key === "System.in" ? rt.sysIn : key === "Boolean.TRUE" ? rt.box("Boolean", true) : key === "Boolean.FALSE" ? rt.box("Boolean", false) : rt.libStatic(key, f.value);
         return {f:() => v};
       }
       return {f:() => f.value, c:(f.t.k === "p" || isStrT(f.t)) ? f.value : undefined};

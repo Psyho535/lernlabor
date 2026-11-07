@@ -277,10 +277,11 @@ function webDoc(src, checks) {
 }
 
 /* ---------- Ausführen ---------- */
+const prefs = {javaLang:"de"};
 async function run(lang, src, opts = {}) {
   const L = LANG[lang];
   if (L.runner === "js") return runJS(src, opts);
-  if (L.runner === "java") return pool("java").run({src, input:opts.input || [], eof:!!opts.eof, seed:opts.seed || 1, lang:opts.de === false ? "en" : "de"});
+  if (L.runner === "java") return pool("java").run({src, input:opts.input || [], eof:!!opts.eof, seed:opts.seed || 1, lang:prefs.javaLang === "en" ? "en" : "de"});
   if (L.runner === "python") return pool("python").run({src, input:opts.input || [], eof:!!opts.eof, seed:opts.seed || 1});
   if (L.runner === "sql") return pool("sql").run({src, setup:opts.setup || ""});
   return {status:"ok"};
@@ -696,5 +697,5 @@ async function check(lang, src, task) {
   return {ok:results.every(r => r.ok), results, res:firstRes};
 }
 
-window.CodeTerm = {mount, run, check, highlight, LANG, warm:name => pool(name).warm(), webDoc};
+window.CodeTerm = {mount, run, check, highlight, LANG, prefs, warm:name => pool(name).warm(), webDoc};
 })();

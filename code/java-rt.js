@@ -108,7 +108,16 @@ JV.strHash = strHash;
 /* ---------- Formatter (String.format, printf) mit Locale en_US ---------- */
 const FMT = /%(\d+\$)?([-#+ 0,(<]*)?(\d+)?(\.\d+)?([a-zA-Z%])/g;
 function group(intStr) { return intStr.replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
-function format(rt, fmt, args) {
+/* Dezimal- und Tausendertrennzeichen je Locale, wie in den CLDR-Daten des JDK */
+const SEPS = {de:[",", "."], de_AT:[",", "\u00a0"], de_CH:[".", "\u2019"], en:[".", ","], fr:[",", "\u202f"], it:[",", "."], es:[",", "."], nl:[",", "."], pt:[",", "."], da:[",", "."], tr:[",", "."], pl:[",", "\u00a0"], ru:[",", "\u00a0"], sv:[",", "\u00a0"], cs:[",", "\u00a0"]};
+function seps(loc) {
+  if (!loc) return null;
+  const s = SEPS[loc.lang + "_" + loc.country] || SEPS[loc.lang];
+  return s ? {dec:s[0], grp:s[1]} : {dec:".", grp:","};
+}
+JV.seps = seps;
+function format(rt, fmt, args, locale) {
+  const loc = seps(locale === undefined ? rt.defLocale : locale);
   fmt = String(fmt);
   let out = "", last = 0, ord = 0, m;
   FMT.lastIndex = 0;
@@ -163,6 +172,7 @@ function format(rt, fmt, args) {
           let digits = (neg ? -v : v).toString();
           if (flags.includes(",")) digits = group(digits);
           s = signed(digits, neg, flags, width);
+          if (loc) s = s.replace(/,/g, loc.grp);
         } else {
           const bits = arg.t === "Long" ? 64 : arg.t === "Short" ? 16 : arg.t === "Byte" ? 8 : 32;
           if (v < 0n) v = BigInt.asUintN(bits, v);
@@ -189,6 +199,7 @@ function format(rt, fmt, args) {
           else body = fixedJava(a, Math.max(0, pp - 1 - (r === 0 ? 0 : Math.floor(Math.log10(r)))));
         }
         s = signed(body, neg, flags, width);
+        if (loc) s = s.replace(/[.,]/g, c => c === "." ? loc.dec : loc.grp);
         break;
       }
       default: unknownAt(m.index + spec.length - 2);
@@ -355,7 +366,17 @@ JV.JRandom = JRandom;
 /* ---------- Scanner: liest Zeile für Zeile, die Eingaben kommen aus dem Terminal ---------- */
 const WS = /[\s\u0085\u001C-\u001F]/;
 class JScanner extends JObj {
-  constructor(cls, rt, text) { super(cls); this.rt = rt; this.std = text === undefined; this.buf = this.std ? "" : String(text); this.pos = 0; this.closed = false; }
+  constructor(cls, rt, text) { super(cls); this.rt = rt; this.std = text === undefined; this.buf = this.std ? "" : String(text); this.pos = 0; this.closed = false; this.useLocale(rt.defLocale); }
+  useLocale(loc) {
+    const s = seps(loc) || {dec:".", grp:","};
+    const e = c => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const D = e(s.dec), G = e(s.grp);
+    this.sep = s;
+    this.intRe = new RegExp(`^[+-]?(\\d+|\\d{1,3}(${G}\\d{3})+)$`);
+    this.dblRe = new RegExp(`^[+-]?((\\d+|\\d{1,3}(${G}\\d{3})+)(${D}\\d*)?|${D}\\d+)([eE][+-]?\\d+)?$|^[+-]?(NaN|Infinity)$`);
+    return this;
+  }
+  num(t) { return t.split(this.sep.grp).join("").split(this.sep.dec).join("."); }
   fill() {
     if (!this.std) return false;
     const line = this.rt.readLine();

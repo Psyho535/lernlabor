@@ -117,6 +117,7 @@ main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom
 @media (min-width:900px){
   .sidebar{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:260px;z-index:20;background:var(--side);border-right:.5px solid var(--sep);padding:calc(20px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px));overflow-y:auto}
   main{margin-left:260px;padding-inline:40px;padding-block:0 64px}
+  .read-bar{left:calc(260px / var(--zoom,1))}
   .tabbar{display:none!important}
 }
 .side-head{display:flex;align-items:center;gap:12px;padding:0 10px 22px}
@@ -1004,6 +1005,8 @@ main{zoom:var(--zoom,1)}
 .check.bad .check-head{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red-ink)}
 .check.wait .check-head{color:var(--label-2)}
 .check-list{display:flex;flex-direction:column}
+.check-next{padding:4px 16px 16px}
+.check-next .btn{width:100%;height:50px;border-radius:16px;gap:6px}
 .check-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px;line-height:1.4}
 .check-row > .ic{margin-top:2px}
 .check-row.ok > .ic{color:var(--green-ink)}.check-row.bad > .ic{color:var(--red-ink)}
@@ -1074,7 +1077,7 @@ const view = $("#view");
 
 /* ---------------- Einstellungen (pro Gerät) ---------------- */
 const SET_KEY = "itlernlabor.settings";
-const SET_DEFAULT = () => ({easy:false, theme:"auto", accent:"silber", colors:true, shimmer:true, size:2, glass:true, motion:true, confetti:true, signal:true, goal:10, round:10, content:"mix", auto:false, sound:false});
+const SET_DEFAULT = () => ({easy:false, theme:"auto", accent:"silber", colors:true, shimmer:true, size:2, glass:true, motion:true, confetti:true, signal:true, goal:10, round:10, content:"mix", auto:false, sound:false, javaLang:"de"});
 let CFG = SET_DEFAULT();
 try { const raw = localStorage.getItem(SET_KEY); if (raw) CFG = Object.assign(SET_DEFAULT(), JSON.parse(raw)); } catch (e) {}
 const ACCENTS = {silber:["Neutral", "#8e8e93"], blau:["Blau", "#0a84ff"], indigo:["Indigo", "#6a67e8"], gruen:["Grün", "#2fa84f"], orange:["Orange", "#ee7409"], rosa:["Rosa", "#ec3f74"]};
@@ -1084,6 +1087,7 @@ const SET_PAGES = {
   "set-accent":{title:"Akzentfarbe", key:"accent", foot:"Färbt Knöpfe, Links und Fortschrittsbalken. Neutral ist im Dunkelmodus Weiß und im Hellmodus Schwarz.", opts:Object.entries(ACCENTS).map(([k, [name, c]]) => [k, name, c])},
   "set-goal":{title:"Tagesziel", key:"goal", foot:"So viele Aufgaben möchtest du pro Tag schaffen. Der Stand erscheint auf der Übersicht.", opts:[5, 10, 15, 20, 30].map(n => [n, `${n} Aufgaben`])},
   "set-round":{title:"Aufgaben pro Runde", key:"round", foot:"Gilt für den Tagesmix und fürs Üben einer einzelnen Schicht.", opts:[5, 10, 15, 20].map(n => [n, `${n} Aufgaben`])},
+  "set-javalang":{title:"Java-Meldungen", key:"javaLang", foot:"Deutsch zeigt die Meldungen von javac so, wie sie auf einem deutsch eingestellten Rechner erscheinen. Englisch entspricht den meisten Anleitungen und Foren im Internet. Der Hinweis darunter bleibt immer deutsch.", opts:[["de", "Deutsch"], ["en", "Englisch"]]},
   "set-content":{title:"Inhalt im Tagesmix", key:"content", foot:"Gemischt wechselt zwischen Lernkarten und Quizfragen.", opts:[["mix", "Gemischt"], ["card", "Nur Lernkarten"], ["q", "Nur Quizfragen"]]}
 };
 const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -1093,6 +1097,7 @@ function applySettings() {
   document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#dcdee2" : i ? "#000000" : "#dcdee2"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
+  if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
   const a = CFG.accent !== "silber" && ACCENTS[CFG.accent];
   if (a) {
     const c = a[1];
@@ -2445,6 +2450,14 @@ function vCodeTask(id, tid) {
     haptic("success");
     if (first) { celebrate(); island("Aufgabe gelöst", "good"); }
   };
+  // Nach dem Lösen geht es mit einem Tipp direkt zur nächsten Aufgabe
+  const weiter = () => {
+    const card = $("#checkOut .check.ok");
+    if (!card) return;
+    card.insertAdjacentHTML("beforeend", nx
+      ? `<div class="check-next"><button class="btn btn-fill" data-go="code-${id}-a-${nx.id}">Nächste Aufgabe ${icon("right", 17)}</button></div>`
+      : `<div class="check-next"><button class="btn btn-fill" data-go="code-${id}-aufgaben">Alle Aufgaben ansehen</button></div>`);
+  };
   const doCheck = async () => {
     const box = $("#checkOut");
     box.innerHTML = `<div class="check wait"><div class="check-head"><span class="spin" aria-hidden="true"></span><b>Prüfe …</b></div></div>`;
@@ -2452,8 +2465,8 @@ function vCodeTask(id, tid) {
       curIde.renderWeb(t.checks.map(c => c.test), res => {
         const r = {results:t.checks.map((c, k) => ({ok:!!res[k], label:c.label, detail:""}))};
         r.ok = r.results.every(x => x.ok);
-        box.innerHTML = checkHTML(r, l);
-        if (r.ok) solved(); else haptic("error");
+        box.innerHTML = checkHTML(r, l) ;
+        if (r.ok) { solved(); weiter(); } else haptic("error");
       });
       return;
     }
@@ -2461,7 +2474,7 @@ function vCodeTask(id, tid) {
     if (!box.isConnected) return;
     if (r.res && !r.ok) curIde.showResult(r.res);
     box.innerHTML = checkHTML(r, l);
-    if (r.ok) solved(); else haptic("error");
+    if (r.ok) { solved(); weiter(); } else haptic("error");
     if (!reduced()) box.firstElementChild.animate([{opacity:0, transform:"translateY(8px)"}, {opacity:1, transform:"none"}], {duration:420, easing:EASE_SOFT});
   };
   paint(`
@@ -2840,6 +2853,9 @@ function vSettings() {
     setSwitch("sound", "#ff3b30", "Töne", "sound", CFG.sound) +
     setSwitch("wave", "#8e8e93", "Haptisches Feedback", "haptics", hapticsOn),
     "Vibration gibt es nur, wenn Gerät und Browser sie zulassen.")}
+  ${setSec("Programmieren",
+    setRow("code", "#ff9f0a", "Java-Meldungen", "set-javalang", choiceLabel("set-javalang")),
+    "Gilt für das Java-Terminal und die Java-Aufgaben.")}
   ${setSec("Daten",
     `<div class="cell static sc">${si("cloud", "#0a84ff")}<span class="cell-main"><span class="cell-title">Fortschritt</span></span><span class="sv sync-short"></span></div>` +
     `<button class="cell sc" data-act="export">${si("upload", "#34c759")}<span class="cell-main"><span class="cell-title">Fortschritt exportieren</span></span></button>` +
@@ -2849,6 +2865,8 @@ function vSettings() {
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Themen</span></span><span class="sv">${MODS.length}</span></div>` +
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Lernkarten</span></span><span class="sv">${ITEMS.filter(it => it.k === "card").length}</span></div>` +
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Quizfragen</span></span><span class="sv">${ITEMS.filter(it => it.k === "q").length}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Programmier-Lektionen</span></span><span class="sv">${CODE.reduce((n, l) => n + l.lessons.length, 0)}</span></div>` +
+    `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Programmier-Aufgaben</span></span><span class="sv">${CODE.reduce((n, l) => n + l.tasks.length, 0)}</span></div>` +
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Heute fällig</span></span><span class="sv">${dueCount()}</span></div>` +
     `<a class="cell sc plain src-link" href="https://github.com/Psyho535/lernlabor/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><span class="cell-main"><span class="cell-title">Lizenz und Urheberrecht</span></span>${icon("right", 16, "chev")}</a>`,
     "© 2026 Alexander S. Alle Rechte vorbehalten. Texte, Aufgaben, Code und Design dieser App sind urheberrechtlich geschützt und dürfen ohne Erlaubnis nicht kopiert oder weiterverbreitet werden.")}

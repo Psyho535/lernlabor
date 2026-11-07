@@ -147,7 +147,17 @@ public class Main {
         System.out.println(zeile);
     }
 }`},
-        {warn:"printf richtet sich nach der Spracheinstellung des Rechners. Auf einem deutsch eingestellten PC steht <code>1249,50</code> mit Komma, im Übungsterminal wie auf den meisten Online-Compilern <code>1249.50</code> mit Punkt."},
+        {warn:"printf richtet sich nach der Spracheinstellung des Rechners. Auf einem deutsch eingestellten PC steht <code>1249,50</code> mit Komma, im Übungsterminal wie auf den meisten Online-Compilern <code>1249.50</code> mit Punkt. Mit einem <code>Locale</code> legst du das Format selbst fest, dann sieht es überall gleich aus."},
+        {run:`import java.util.Locale;
+
+public class Main {
+    public static void main(String[] args) {
+        double betrag = 12499.5;
+        System.out.println(String.format(Locale.GERMANY, "%,.2f Euro", betrag));
+        System.out.println(String.format(Locale.US, "%,.2f USD", betrag));
+        System.out.printf(Locale.GERMANY, "%.1f %%%n", 87.25);
+    }
+}`},
         {tip:"Strings sind unveränderlich. <code>host.toUpperCase()</code> liefert einen neuen String, <code>host</code> selbst bleibt gleich."}
       ],
       src:[["Klasse String", "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html"], ["Formatter: Syntax der Platzhalter", "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Formatter.html#syntax"], ["dev.java: Strings", "https://dev.java/learn/strings/"]]},
@@ -183,7 +193,7 @@ public class Main {
     }
 }`},
         {warn:"Tippt jemand Text, wo <code>nextInt()</code> eine Zahl erwartet, bricht das Programm mit <code>InputMismatchException</code> ab."},
-        {tip:"Auch Scanner richtet sich nach der Spracheinstellung. Auf einem deutsch eingestellten PC erwartet <code>nextDouble()</code> eine Eingabe wie <code>3,5</code>. Im Übungsterminal gilt der Punkt: <code>3.5</code>."}
+        {tip:"Auch Scanner richtet sich nach der Spracheinstellung. Auf einem deutsch eingestellten PC erwartet <code>nextDouble()</code> eine Eingabe wie <code>3,5</code>. Im Übungsterminal gilt der Punkt: <code>3.5</code>. Mit <code>new Scanner(System.in).useLocale(Locale.GERMANY)</code> erwartet der Scanner überall das Komma, mit <code>Locale.US</code> überall den Punkt."}
       ],
       src:[["Klasse Scanner", "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html"], ["dev.java: Reading user input", "https://dev.java/learn/getting-started/"]]},
     {id:"verzweigungen", title:"Verzweigungen", sum:"if, else if, else, logische Operatoren und switch.", task:"note",
