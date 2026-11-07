@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Einfache Erklärungen für den Schieberegler. Jede Aussage muss zur normalen Lernseite passen, neue Fakten gehören zuerst dorthin.
    k: kurz gesagt, b: Vergleich zum Vorstellen (nur ein Bild, keine Definition), m: das Wichtigste, w: Begriffe. */
 window.LERN_EINFACH = {

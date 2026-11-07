@@ -1,0 +1,48 @@
+IT-Lernlabor
+Copyright (c) 2026 Alexander S. Alle Rechte vorbehalten.
+
+Diese App ist urheberrechtlich geschützt. Das gilt für den Quelltext, die
+Lerninhalte (Lernseiten, Lektionen, Erklärungen, Lernkarten, Quizfragen,
+Aufgaben, Tests und Musterlösungen), das Design, die Grafiken und den
+Werbefilm. Grundlage ist das deutsche Urheberrechtsgesetz (UrhG).
+
+Erlaubt ist:
+  - die App über die veröffentlichte Website zu benutzen und damit zu lernen.
+
+Ohne vorherige schriftliche Zustimmung des Rechteinhabers ist nicht erlaubt:
+  - Quelltext, Lerninhalte oder Design ganz oder teilweise zu kopieren, zu
+    vervielfältigen, zu verbreiten oder öffentlich zugänglich zu machen,
+  - die App oder Teile davon zu verändern, weiterzuentwickeln oder unter
+    einem anderen Namen zu veröffentlichen,
+  - die App oder ihre Inhalte kommerziell zu nutzen.
+
+Hinweis zu GitHub: Das Repository ist öffentlich einsehbar. Dadurch entstehen
+nur die Rechte, die die GitHub-Nutzungsbedingungen zwingend vorsehen
+(Ansehen auf GitHub und Forken innerhalb von GitHub). Darüber hinaus werden
+keine Nutzungsrechte eingeräumt.
+
+Fremde Bestandteile
+Die folgenden Teile sind kein eigenes Werk und stehen unter ihren eigenen
+Lizenzen:
+  - Pyodide (Python im Browser), zur Laufzeit von cdn.jsdelivr.net geladen:
+    Mozilla Public License 2.0.
+  - sql.js (SQLite im Browser), zur Laufzeit von cdnjs.cloudflare.com geladen:
+    MIT-Lizenz. SQLite selbst ist gemeinfrei (Public Domain).
+  - Schriften Geist und Geist Mono, über Google Fonts geladen:
+    SIL Open Font License 1.1.
+  - Die Texte der Compilermeldungen in code/java-de.js und code/java-core.js
+    entsprechen den Meldungen des Java-Compilers javac aus OpenJDK. OpenJDK
+    steht unter der GNU General Public License, Version 2, mit Classpath
+    Exception.
+  - Java und JavaScript sind Marken von Oracle, Python ist eine Marke der
+    Python Software Foundation. Die App verwendet keine Logos dieser Marken.
+
+Anfragen zur Nutzung: über GitHub (https://github.com/Psyho535).
+
+---
+
+English summary: Copyright (c) 2026 Alexander S. All rights reserved. You may
+use the published app for learning. Copying, redistributing, modifying or
+commercially using the source code, learning content or design requires prior
+written permission. Third-party components listed above remain under their own
+licenses.

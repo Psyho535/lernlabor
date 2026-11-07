@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Zweite Runde Erweiterungen: Jede Aussage stammt aus der bei der Lernseite verlinkten Quelle.
    Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (() => {

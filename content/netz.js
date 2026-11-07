@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Register Netzwerke. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (window.LERN_MODULES = window.LERN_MODULES || []).push({
   id:"netz", title:"Netzwerke", sub:"IP, Subnetting, Routing, Dienste", icon:"globe", color:"#0a84ff", ap:"AP1 und AP2",

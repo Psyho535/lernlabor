@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Register IT-Sicherheit. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (window.LERN_MODULES = window.LERN_MODULES || []).push({
   id:"sicher", title:"IT-Sicherheit", sub:"Schutzziele, Datenschutz, Krypto, Angriffe", icon:"lock", color:"#ff375f", ap:"AP1 und AP2",

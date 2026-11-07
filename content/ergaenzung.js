@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Erweiterungen mit Quellenangabe je Lernseite. Die Aussagen stützen sich auf die dort verlinkten Quellen.
    Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 const RFC = n => [`RFC ${n}`, `https://www.rfc-editor.org/rfc/rfc${n}.txt`];

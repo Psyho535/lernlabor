@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Register Server und Administration. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (window.LERN_MODULES = window.LERN_MODULES || []).push({
   id:"admin", title:"Server & Administration", sub:"Linux, Windows, Speicher, Virtualisierung, Skripte", icon:"server", color:"#5e5ce6", ap:"AP2",

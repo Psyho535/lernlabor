@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Register Wirtschaft und Projekt. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (window.LERN_MODULES = window.LERN_MODULES || []).push({
   id:"wiso", title:"Wirtschaft & Projekt", sub:"Projektmanagement, Recht, Kalkulation, WiSo", icon:"tasks", color:"#ff9f0a", ap:"AP1 und AP2",

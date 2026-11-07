@@ -1,3 +1,4 @@
+/*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 /* Register IT-Arbeitsplatz. Neue Karten und Fragen nur hinten anhängen: Die Position bestimmt die ID und damit den Lernstand. */
 (window.LERN_MODULES = window.LERN_MODULES || []).push({
   id:"platz", title:"IT-Arbeitsplatz", sub:"Hardware, Beratung, Beschaffung, Übergabe", icon:"device", color:"#30d158", ap:"AP1",
