@@ -478,7 +478,7 @@ function mount(host, o) {
   let saved = null;
   try { saved = store ? localStorage.getItem(store) : null; } catch (e) {}
   const initial = saved !== null ? saved : (o.code || "");
-  host.innerHTML = `<div class="ide${o.check ? " has-check" : ""}" style="--c:${o.color || "#0a84ff"}">
+  host.innerHTML = `<div class="ide${o.check ? " has-check" : ""}" style="${o.colorVars || "--c:" + (o.color || "#0a84ff")}">
     <div class="ide-bar"><span class="ide-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ide-file">${esc(o.file || L.file)}</span><span class="ide-sp"></span>
       ${o.reset !== false ? `<button class="ide-btn" type="button" data-ide="reset" aria-label="Code zurücksetzen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5V9h4.5"/></svg></button>` : ""}
       ${o.check ? `<button class="ide-run ide-check" type="button" data-ide="check"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Prüfen</button>` : ""}
