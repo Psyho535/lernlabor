@@ -271,7 +271,7 @@ main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom
 .prog-label{font:700 var(--t-title2)/1.2 var(--f-display);letter-spacing:-.02em}
 .stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-3);margin:var(--sp-5) 0}
 @media (min-width:600px){.stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.mini{background:var(--fill-2);border-radius:var(--r-md);padding:12px 14px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.mini{background:var(--fill-2);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2);min-width:0}
 .mini span{font-size:var(--t-footnote);color:var(--label-2)}
 .mini b{font:700 var(--t-title3)/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .tiles{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -625,7 +625,8 @@ main{overflow-x:clip}
 
 .kicker,.group-h,.cmp-h{text-transform:none;letter-spacing:0}
 .large{font-weight:700;letter-spacing:-.022em;font-size:var(--t-large);line-height:1.1}
-.mini,.stat,.mcell,.sublayer,.mnemo-box{border:1px solid var(--sep)}
+.mini,.stat,.mcell,.sublayer,.mnemo-box{border:0;background:var(--fill-2)}
+.col > .stat-grid > .mini{background:var(--surface);box-shadow:var(--card-shadow);padding:var(--sp-4)}
 .seg{background:var(--fill);border:1px solid var(--sep);border-radius:var(--r-sm)}
 .seg-thumb{border-radius:var(--r-sm);box-shadow:inset 0 1px 0 var(--specular),0 4px 10px -3px rgba(5,8,40,.35)}
 .bar i,.qprog i{background:var(--accent)}
@@ -716,23 +717,23 @@ main{overflow-x:clip}
 .mod-tile:last-child:nth-child(odd){grid-column:1 / -1}
 .mod-tile b{display:block;font-size:var(--t-callout);font-weight:600;line-height:1.25}
 .mod-tile small{display:block;font-size:var(--t-footnote);color:var(--label-2);margin-top:1px}
-.page-hero{position:relative;z-index:1;min-width:0;border-radius:var(--r-2xl);color:#fff;isolation:isolate;--ph:var(--ch,color-mix(in srgb,var(--c) 72%,#000))}
-:root[data-mono] .page-hero{--c:#636366!important;--ch:color-mix(in srgb,#636366 72%,#000)!important}
+.page-hero{position:relative;z-index:1;min-width:0;border-radius:var(--r-2xl);color:var(--onh,#fff);isolation:isolate;--ph:var(--ch,color-mix(in srgb,var(--c) 72%,#000))}
+:root[data-mono] .page-hero{--c:#636366!important;--ch:color-mix(in srgb,#636366 72%,#000)!important;--onh:#fff!important;--ht:rgba(0,0,0,.16)!important}
 .ph-bg{position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--ph);transform-origin:0 0}
 .ph-c{position:relative;display:flex;flex-direction:column;gap:var(--sp-1);padding:var(--sp-6);overflow-wrap:break-word}
 .ph-ic{display:block;margin-bottom:var(--sp-4);line-height:0}
 .ph-ic > svg{width:32px;height:32px}
 .ph-k{font-size:var(--t-subhead);font-weight:600;line-height:1.3}
-.page-hero .large{font-size:clamp(26px,8.4vw,33px);line-height:1.08;color:#fff;-webkit-hyphens:auto;hyphens:auto}
+.page-hero .large{font-size:clamp(26px,8.4vw,33px);line-height:1.08;color:inherit;-webkit-hyphens:auto;hyphens:auto}
 .ph-l{font-size:var(--t-callout);line-height:1.4;margin-top:5px}
 .ph-en{font-size:var(--t-subhead);line-height:1.3}
 .ph-bar{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:var(--t-footnote);font-weight:600;font-variant-numeric:tabular-nums}
 .ph-bar .track{flex:1;height:5px;border-radius:5px;background:rgba(255,255,255,.28);overflow:hidden}
-.ph-bar i{display:block;height:100%;border-radius:inherit;background:#fff}
+.ph-bar i{display:block;height:100%;border-radius:inherit;background:currentColor}
 .ph-bar i,.mbar-line .track i,.mini .bar i{transform-origin:0 50%}
-.page-hero .exam-note{color:#fff;margin-top:10px}
+.page-hero .exam-note{color:inherit;margin-top:var(--sp-3)}
 .page-hero .btn-fill{background:#fff;color:#000}
-.page-hero .btn-tint,.page-hero .btn.done{background:rgba(0,0,0,.16);color:#fff;border:0}
+.page-hero .btn-tint,.page-hero .btn.done{background:var(--ht,rgba(0,0,0,.16));color:inherit;border:0}
 .ph-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .ph-row .btn{flex:1 1 auto;height:52px;border-radius:var(--r-full)}
 .page-hero .cta{width:100%;margin-top:16px;height:52px}
@@ -1512,9 +1513,8 @@ MODS.forEach(m => {
 });
 /* Lesbarkeit: Jede Farbfläche bekommt eine Schriftfarbe mit mindestens 4,6:1 Kontrast (WCAG verlangt 4,5:1).
    Weiße Schrift bleibt, wenn die Karte dafür höchstens leicht abgedunkelt werden muss (Blau, Lila, Rot, Indigo).
-   Helle Farben (Grün, Orange, Cyan) tragen auf Karten und Abzeichen dunkle Schrift; die Kopfkarte wird so weit
-   abgedunkelt, dass ihre weiße Schrift lesbar bleibt.
-   --on Schriftfarbe, --cs Kartenfläche, --cb Abzeichen und Knöpfe, --ch Kopfkarte */
+   Helle Farben (Grün, Orange, Cyan) bleiben hell und tragen überall dunkle Schrift, auch in der Kopfkarte.
+   --on Schriftfarbe, --cs Kartenfläche, --cb Abzeichen und Knöpfe, --ch Kopfkarte, --onh ihre Schrift, --ht ihre Zweitknöpfe */
 const onColor = (() => {
   const memo = new Map(), MIN = 4.6;
   const lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; };
@@ -1528,9 +1528,9 @@ const onColor = (() => {
     if (!m) return `--c:${c}`;
     const rgb = [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16)), mix = k => hex(rgb.map(v => v * k));
     const kc = shade(rgb, .88), weiss = kc >= .8;
-    const out = `--c:${c};--ch:${mix(shade(rgb, .72))};` + (weiss
-      ? `--on:#fff;--cs:${mix(kc)};--cb:${mix(shade(rgb, 1))}`
-      : `--on:#1d1d1f;--cs:${mix(.88)};--cb:${c}`);
+    const out = `--c:${c};` + (weiss
+      ? `--on:#fff;--cs:${mix(kc)};--cb:${mix(shade(rgb, 1))};--ch:${mix(shade(rgb, .72))};--onh:#fff;--ht:rgba(0,0,0,.16)`
+      : `--on:#1d1d1f;--cs:${mix(.88)};--cb:${c};--ch:${mix(.88)};--onh:#1d1d1f;--ht:rgba(255,255,255,.4)`);
     memo.set(c, out);
     return out;
   };
