@@ -30,7 +30,9 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#dcdee2;
+  --bg:#e8eaee;
+  --fl1:radial-gradient(closest-side,rgba(255,55,95,.5),rgba(191,90,242,.3) 45%,rgba(191,90,242,0) 72%);
+  --fl2:radial-gradient(closest-side,rgba(10,132,255,.42),rgba(94,92,230,.28) 45%,rgba(94,92,230,0) 72%);
   --side:rgba(255,255,255,.5);
   --surface:rgba(255,255,255,.55);
   --face:rgba(255,255,255,.9);
@@ -572,9 +574,9 @@ main{overflow-x:clip}
 #aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 #aurora i{position:absolute;display:var(--orb-show,block);width:120vmax;height:120vmax;border-radius:50%;opacity:var(--orb);will-change:transform;animation:drift 28s ease-in-out infinite alternate}
 #aurora i:nth-child(1){left:-55vmax;top:-60vmax;background:radial-gradient(closest-side,var(--o1),transparent)}
-#aurora i:nth-child(2){right:-65vmax;top:-30vmax;background:radial-gradient(closest-side,var(--o2),transparent);animation-duration:34s;animation-delay:-9s}
+#aurora i:nth-child(2){right:-65vmax;top:-30vmax;background:var(--fl1,radial-gradient(closest-side,var(--o2),transparent));animation-duration:34s;animation-delay:-9s}
 #aurora i:nth-child(3){left:-40vmax;bottom:-70vmax;background:radial-gradient(closest-side,var(--o1),transparent);animation-duration:39s;animation-delay:-17s}
-#aurora i:nth-child(4){right:-60vmax;bottom:-65vmax;background:radial-gradient(closest-side,var(--o2),transparent);animation-duration:31s;animation-delay:-4s}
+#aurora i:nth-child(4){right:-60vmax;bottom:-65vmax;background:var(--fl2,radial-gradient(closest-side,var(--o2),transparent));animation-duration:31s;animation-delay:-4s}
 #aurora b{position:absolute;inset:-20%;background:radial-gradient(60% 50% at 50% 12%,var(--route,transparent),transparent);opacity:0;transition:opacity .8s}
 #aurora.tinted b{opacity:var(--tint,.14)}
 #aurora::after{content:"";position:absolute;inset:0;opacity:0;background:var(--pulse,transparent)}
@@ -731,9 +733,18 @@ main{overflow-x:clip}
 .src-link .cell-title{font-size:15px;font-weight:400}
 /* Begrüßung */
 .welcome{display:flex;flex-direction:column;gap:14px;padding-top:9vh;min-width:0}
-.large.greet{font-size:clamp(50px,15vw,84px);line-height:1;letter-spacing:-.045em;font-weight:700;padding-bottom:.08em;
-  background:linear-gradient(100deg,var(--label) 30%,#ff375f 44%,#bf5af2 52%,#0a84ff 60%,#40c8e0 68%,var(--label) 82%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
-.first-open .large.greet{animation:greetIn 1s var(--ease-ios) both,sheenText 3.2s var(--ease-ios) both;animation-delay:var(--intro,0s)}
+.large.greet{font-size:clamp(50px,15vw,84px);line-height:1;letter-spacing:-.045em;font-weight:700;padding-bottom:.08em;color:var(--label)}
+.greet .gw{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .03em .12em 0;margin-bottom:-.12em}
+.greet .gw>span{display:inline-block}
+.greet .gw-c{background:linear-gradient(100deg,#ff375f,#bf5af2 22%,#5e5ce6 42%,#0a84ff 62%,#40c8e0 80%,#ff375f);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:greetSheen 9s linear infinite}
+@keyframes greetSheen{to{background-position:-200% 0}}
+/* Einflug: die Wörter schieben sich scharf hinter einer Maske hoch, statt aus der Unschärfe zu kommen */
+.first-open .greet .gw>span{animation:greetUp .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + var(--d,0s))}
+.first-open .greet .gw>span.gw-c{animation:greetUp .9s var(--ease-ios) both,greetSheen 9s linear infinite;animation-delay:calc(var(--intro,0s) + var(--d,0s)),0s}
+@keyframes greetUp{from{transform:translateY(108%)}to{transform:none}}
+:root[data-mono] .greet .gw-c{background:none;color:var(--label)}
+:root[data-calm] .greet .gw>span,:root[data-calm] .greet .gw-c{animation:none!important}
+@media (prefers-reduced-motion:reduce){.greet .gw>span,.greet .gw-c{animation:none!important}}
 @keyframes greetIn{from{opacity:0;transform:translateY(22px);filter:blur(14px)}to{opacity:1;transform:none;filter:none}}
 @keyframes sheenText{from{background-position:100% 0}to{background-position:0 0}}
 .welcome-sub{font-size:20px;line-height:1.3;font-weight:500;letter-spacing:-.012em;color:var(--label-2);max-width:26ch}
@@ -902,6 +913,7 @@ main{zoom:var(--zoom,1)}
 :root[data-noglass] .tabbar,:root[data-noglass] .navbar.scrolled{background:var(--material-strong)}
 :root[data-mono] [style*="--lh"]{--lh:#b4b7bd!important}
 :root[data-mono] #aurora b{display:none}
+:root[data-mono]{--fl1:radial-gradient(closest-side,#a9acb3,transparent);--fl2:radial-gradient(closest-side,#a9acb3,transparent)}
 :root[data-mono] .si.ly{--c:#8e8e93!important}
 :root[data-noshimmer] #aurora i{display:none}
 :root[data-nosignal] .signal{display:none}
@@ -2162,6 +2174,7 @@ const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line
 const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="--c:${m.color}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="--c:${col}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
+const greetHTML = () => greeting().split(" ").map((w, i, a) => `<span class="gw"><span${i === a.length - 1 ? ' class="gw-c"' : ""} style="--d:${i * .09}s">${w}</span></span>`).join(" ");
 const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="--c:${m.color};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
 function vStart() {
   const due = dueCount(), streak = streakNow(), prevShelf = view.querySelector(".shelf");
@@ -2169,7 +2182,7 @@ function vStart() {
   setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
   paint(`
   <header class="welcome">
-    <h1 class="large greet">${greeting()}</h1>
+    <h1 class="large greet">${greetHTML()}</h1>
     <p class="welcome-sub">${due ? `${due} ${due === 1 ? "Aufgabe wartet" : "Aufgaben warten"} auf dich.` : "Heute ist ein guter Tag für die Prüfung von morgen."}</p>
     <div class="glow"><span class="glow-fx" aria-hidden="true"><i></i></span><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
     <p class="welcome-meta"><span>${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</span><span>${doneToday()} von ${CFG.goal} heute</span><span>${overallProgress()} % geschafft</span></p>
