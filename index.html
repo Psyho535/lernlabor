@@ -103,7 +103,7 @@ body{background:var(--bg);color:var(--label);font:16px/1.47 var(--f-ui);-webkit-
 button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
 h1,h2,h3{text-wrap:balance;margin:0}
 p{margin:0}
-:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:2px}
+:focus-visible{outline:2px solid var(--focus,#0071e3);outline-offset:2px}
 .ic{display:block;flex:none}
 .muted{color:var(--label-2)}
 .small{font-size:13.5px}
@@ -1043,6 +1043,26 @@ main{zoom:var(--zoom,1)}
   #aurora i,.glow-fx i,.signal,.pw,.pl,.plate::after{animation:none!important}
   .signal{display:none}
 }
+/* ===== Apple-Feinschliff (maßvoll, Werbefilm-Look bleibt) ===== */
+:root{--focus:#0071e3;--lift-ease:cubic-bezier(0,0,.2,1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--focus:#0a84ff}}
+:root[data-theme="dark"]{--focus:#0a84ff}
+/* Farbige Karten schweben mit weichem, in ihrer Farbe getöntem Schatten */
+.shelf-card,.mod-card,.ph-bg{box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 28px -14px color-mix(in srgb,var(--c,#8e8e93) 70%,transparent)}
+/* Platz unter der Kartenreihe, damit der Schatten nicht abgeschnitten wird */
+.shelf{padding-bottom:28px;margin-bottom:-18px}
+/* Symbole mit leichtem Glanz oben wie iOS-Symbole */
+.si,.cell-ic{background-image:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0) 58%);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.06)}
+/* Maus und Trackpad: Karten heben sich leicht an; auf dem Handy bleibt das Drücken */
+@media (hover:hover) and (pointer:fine){
+  .shelf-card,.mod-card,.mod-tile,.hub,.tile,.mode{transition:transform .3s var(--lift-ease),box-shadow .3s var(--lift-ease)}
+  .shelf-card:hover,.mod-card:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(0,0,0,.06),0 18px 36px -16px color-mix(in srgb,var(--c,#8e8e93) 75%,transparent)}
+  .mod-tile:hover,.hub:hover,.tile:hover,.mode:not([disabled]):hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){
+  .shelf-card:hover,.mod-card:hover,.mod-tile:hover,.hub:hover,.tile:hover,.mode:hover{transform:none}
+}
+:root[data-calm] .shelf-card:hover,:root[data-calm] .mod-card:hover,:root[data-calm] .mod-tile:hover,:root[data-calm] .hub:hover,:root[data-calm] .tile:hover,:root[data-calm] .mode:hover{transform:none}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
