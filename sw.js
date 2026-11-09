@@ -1,12 +1,13 @@
 /*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 // Offline-Cache. Die Version ändert sich bei jedem Build, damit Handys die neue Fassung holen.
-const CACHE = "lernlabor-20261109-170000";
+const CACHE = "lernlabor-20261109-190000";
 // Python (Pyodide) und SQLite (sql.js) kommen einmalig vom CDN. Sie liegen in einem eigenen Cache,
 // der App-Updates übersteht, weil die Versionsnummer in ihrer Adresse steht.
 const RUNTIME = "lernlabor-laufzeiten-1";
 const RUNTIME_HOSTS = ["cdn.jsdelivr.net", "cdnjs.cloudflare.com"];
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./content/netz.js", "./content/sicherheit.js", "./content/admin.js", "./content/arbeitsplatz.js", "./content/wirtschaft.js", "./content/ergaenzung.js", "./content/vertiefung.js", "./content/einfach.js",
   "./content/code-python.js", "./content/code-java.js", "./content/code-web.js", "./content/code-js.js", "./content/code-sql.js",
+  "./fonts/figtree-latin.woff2", "./fonts/figtree-latin-ext.woff2",
   "./code/term.js", "./code/java-syntax.js", "./code/java-rt.js", "./code/java-lib.js", "./code/java-core.js", "./code/java-de.js", "./code/java-worker.js", "./code/py-worker.js", "./code/sql-worker.js"];
 
 self.addEventListener("install", e => {
