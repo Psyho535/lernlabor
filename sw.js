@@ -1,6 +1,6 @@
 /*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 // Offline-Cache. Die Version ändert sich bei jedem Build, damit Handys die neue Fassung holen.
-const CACHE = "lernlabor-20261109-220000";
+const CACHE = "lernlabor-20261114-120000";
 // Python (Pyodide) und SQLite (sql.js) kommen einmalig vom CDN. Sie liegen in einem eigenen Cache,
 // der App-Updates übersteht, weil die Versionsnummer in ihrer Adresse steht.
 const RUNTIME = "lernlabor-laufzeiten-1";
