@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#dcdee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1063,6 +1063,120 @@ main{zoom:var(--zoom,1)}
   .shelf-card:hover,.mod-card:hover,.mod-tile:hover,.hub:hover,.tile:hover,.mode:hover{transform:none}
 }
 :root[data-calm] .shelf-card:hover,:root[data-calm] .mod-card:hover,:root[data-calm] .mod-tile:hover,:root[data-calm] .hub:hover,:root[data-calm] .tile:hover,:root[data-calm] .mode:hover{transform:none}
+
+/* ===== Karten-Look: weiße Fläche, schwarze Pillen, feine Linien, große Farbkarten mit Streifenbild ===== */
+:root{
+  --line:rgba(11,11,13,.16);
+  --bg:#ffffff;--side:#f5f5f6;--surface:#ffffff;--face:#ffffff;--solid:#ffffff;
+  --fill:rgba(11,11,13,.07);--fill-2:rgba(11,11,13,.04);--fill-3:rgba(11,11,13,.16);
+  --label:#0b0b0d;--label-2:rgba(11,11,13,.62);--label-3:rgba(11,11,13,.36);--sep:rgba(11,11,13,.13);
+  --accent:#0b0b0d;--accent-tint:rgba(11,11,13,.07);--grad:#0b0b0d;--on-grad:#ffffff;
+  --glass-edge:var(--line);--specular:transparent;--orb-show:none;--card-shadow:none;
+  --material:rgba(255,255,255,.9);--material-strong:#ffffff;--thumb:#0b0b0d;
+  --f-ui:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-display:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --line:rgba(255,255,255,.2);
+    --bg:#000000;--side:#0a0a0b;--surface:#0d0d0f;--face:#141416;--solid:#141416;
+    --fill:rgba(255,255,255,.1);--fill-2:rgba(255,255,255,.06);--fill-3:rgba(255,255,255,.2);
+    --label:#ffffff;--label-2:rgba(235,235,245,.64);--label-3:rgba(235,235,245,.36);--sep:rgba(255,255,255,.14);
+    --accent:#ffffff;--accent-tint:rgba(255,255,255,.12);--grad:#ffffff;--on-grad:#000000;
+    --material:rgba(10,10,12,.9);--material-strong:#161618;--thumb:#ffffff;
+  }
+}
+:root[data-theme="dark"]{
+  --line:rgba(255,255,255,.2);
+  --bg:#000000;--side:#0a0a0b;--surface:#0d0d0f;--face:#141416;--solid:#141416;
+  --fill:rgba(255,255,255,.1);--fill-2:rgba(255,255,255,.06);--fill-3:rgba(255,255,255,.2);
+  --label:#ffffff;--label-2:rgba(235,235,245,.64);--label-3:rgba(235,235,245,.36);--sep:rgba(255,255,255,.14);
+  --accent:#ffffff;--accent-tint:rgba(255,255,255,.12);--grad:#ffffff;--on-grad:#000000;
+  --material:rgba(10,10,12,.9);--material-strong:#161618;--thumb:#ffffff;
+}
+/* Schrift: fette, enge Überschriften und kleine Versalien als Abschnittsmarken */
+.large{font-weight:800;letter-spacing:-.036em;font-size:clamp(34px,9vw,44px);line-height:1.03}
+.section-t,.card-t,.prog-label,.done-card h2,.enc-main h2{font-weight:800;letter-spacing:-.03em}
+.kicker,.group-h,.cmp-h,.who{text-transform:uppercase;letter-spacing:.09em;font-size:12px;font-weight:600;color:var(--label-2)}
+/* Flächen: weiß mit feiner Linie statt Glas und Schatten */
+.card,.group,.hub,.tile,.mode,.mod-tile,.face,.ez-next{background:var(--surface);border:1.5px solid var(--line);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.card,.group{border-radius:28px}
+.hub,.tile,.mode,.mod-tile{border-radius:30px}
+.mini,.mcell,.sublayer,.explain,.fields div{border-radius:20px}
+.sidebar{background:var(--side);-webkit-backdrop-filter:none;backdrop-filter:none;border-right:1.5px solid var(--line)}
+.side-item{border-radius:999px;height:44px;padding:0 16px}
+.navbar.scrolled{background:var(--material);border-bottom-color:var(--line)}
+.si,.cell-ic,.tile-ic,.fact-ic{border-radius:50%;background-image:none;box-shadow:none}
+.badge{border-radius:50%;background:transparent;border:1.5px solid var(--line)}
+.cell{min-height:58px}
+/* Knöpfe: schwarze Pille, sonst Umriss */
+.btn{height:48px;padding:0 22px;border-radius:999px;font-weight:650}
+.btn-lg,.glow .btn{height:60px;border-radius:999px;font-size:17px}
+.btn-round{padding:0;border-radius:50%}
+.btn-gray,.btn-tint{background:transparent;border:1.5px solid var(--line);color:var(--label)}
+.btn-plain{padding:0 8px}
+.ph-row .btn,.page-hero .cta,.ez-next .btn{border-radius:999px}
+.page-hero .btn-tint,.page-hero .btn.done{background:rgba(255,255,255,.24);border:0;color:#fff}
+.back{height:42px;margin-left:8px;padding:0 16px 0 8px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--label);font-size:15px;font-weight:600}
+.nb-round{background:var(--surface);border:1.5px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none}
+.chip,.tchip{background:transparent;border:1.5px solid var(--line)}
+.chip.accent{background:var(--grad);color:var(--on-grad);border-color:transparent}
+.seg{background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:3px}
+.seg-thumb{top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / var(--n));border-radius:999px;background:var(--grad);box-shadow:none}
+.seg button{border-radius:999px;font-weight:600;font-size:13.5px;transition:color .25s,transform .3s var(--ease-spring)}
+.seg button[aria-pressed="true"]{color:var(--on-grad)}
+.easy-sw{background:var(--surface);border:1.5px solid var(--line)}
+.easy-thumb{box-shadow:none}
+.search-box{height:56px;padding:0 22px;border-radius:999px;background:var(--surface);border:1.5px solid var(--line)}
+.tabbar{background:var(--material-strong);-webkit-backdrop-filter:none;backdrop-filter:none;border:1.5px solid var(--line);box-shadow:0 14px 34px -18px rgba(0,0,0,.4)}
+.tab-ind{background:var(--grad)}
+.tab[aria-current="page"]{color:var(--on-grad)}
+/* Quiz und Lernkarten */
+.opt .key{width:32px;height:32px;background:transparent;border:1.5px solid var(--line)}
+.opt.ok .key,.opt.no .key{border-color:transparent}
+.face,.flash{border-radius:38px}
+.deck::before,.deck::after{border:1.5px solid var(--line);background:var(--surface);box-shadow:none;border-radius:30px;opacity:1}
+.bar,.qprog,.mbar-line .track,.ph-bar .track{height:6px;border-radius:6px}
+/* Startseite: Gruß, große Zeile, schwarzer Knopf, Themen als gestapelte Bildkarten */
+.welcome{padding-top:2vh;gap:22px}
+.hello-row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0}
+.hello{font-size:16px;font-weight:500;margin-bottom:3px}
+.large.greet{font-size:clamp(40px,11.4vw,58px);line-height:1.02;letter-spacing:-.04em;font-weight:800}
+.greet .gw-n{font-weight:400;letter-spacing:-.02em}
+.hello-mark{flex:none;width:78px;height:78px;border-radius:50%;background:var(--grad);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 22px}
+.hello-mark i{display:block;height:6px;border-radius:3px;background:var(--on-grad)}
+.hello-mark i:nth-child(2){margin-right:5px}
+.hello-mark i:nth-child(3){margin-right:12px}
+.first-open .hello-row{animation:riseIn .8s var(--ease-ios) both;animation-delay:var(--intro,0s)}
+.glow{margin-top:0}
+.shelf-wrap{margin:4px 0 0}
+.shelf{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;overflow:visible;padding:0;margin:0;scroll-snap-type:none}
+@media (min-width:640px){.shelf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.shelf-card,.mod-card,.ph-bg{box-shadow:none}
+.shelf-card{position:relative;overflow:hidden;width:auto;height:auto;min-height:clamp(340px,92vw,410px);padding:28px 24px 20px;border-radius:44px;gap:20px;background-color:var(--cs,color-mix(in srgb,var(--c) 88%,#000));background-image:var(--art);background-size:cover;background-position:center;animation:none}
+.shelf-text{display:flex;flex-direction:column;gap:26px;min-width:0}
+.shelf-card b{font-size:clamp(33px,9.6vw,42px);font-weight:800;line-height:1.04;letter-spacing:-.036em;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+.shelf-meta{display:flex;align-items:center;gap:13px}
+.cap{position:relative;flex:none;width:17px;height:54px;border-radius:999px;border:2px solid currentColor;overflow:hidden}
+.cap i{position:absolute;left:0;right:0;bottom:0;border-radius:999px;background:currentColor}
+.shelf-num{display:block;line-height:1}
+.shelf-num b{font-size:31px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.shelf-num small{margin-top:6px;font-size:16px;font-weight:500}
+.shelf-foot{display:flex;align-items:center;gap:12px;min-width:0}
+.shelf-foot small{flex:1;min-width:0;margin:0;font-size:14px;line-height:1.3;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.shelf-dot{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,currentColor 20%,transparent);border:1.5px solid color-mix(in srgb,currentColor 38%,transparent)}
+.shelf-dot.go{background:rgba(255,255,255,.9);border-color:transparent;color:#0b0b0d;transition:transform .4s var(--ease-spring)}
+.shelf-card:active .shelf-dot.go{transform:scale(.9)}
+/* Themenzeilen und Kopfkarten tragen dasselbe Bild */
+.mod-card{padding:16px 18px;border-radius:38px;background-image:var(--art);background-size:cover;background-position:center}
+.mod-card b{font-weight:700;letter-spacing:-.015em}
+.page-hero{border-radius:44px}
+.ph-bg{background-image:var(--arth);background-size:cover;background-position:center}
+.ph-c{padding:28px 24px 24px}
+.page-hero .large{font-size:clamp(34px,9.6vw,44px);line-height:1.04}
+@media (hover:hover) and (pointer:fine){
+  .shelf-card:hover,.mod-card:hover,.mod-tile:hover,.hub:hover,.tile:hover,.mode:not([disabled]):hover{box-shadow:none}
+}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1506,7 +1620,38 @@ const onColor = (() => {
     return out;
   };
 })();
-const setOnColor = (el, c) => onColor(c).split(";").forEach(d => { const i = d.indexOf(":"); el.style.setProperty(d.slice(0, i), d.slice(i + 1)); });
+/* Kartenbilder: weiche Farbflächen mit Streifenkanten. Pro Farbe entsteht einmal ein kleines SVG, das als --art-<farbe> an :root hängt.
+   Die Flächen sind bei weißer Schrift dunkler und bei dunkler Schrift heller als die Karte, der Kontrast von onColor bleibt also erhalten. */
+const artVar = (() => {
+  const done = new Set(), sheet = document.head.appendChild(document.createElement("style"));
+  const toHsl = h => { const r = parseInt(h.slice(1, 3), 16) / 255, g = parseInt(h.slice(3, 5), 16) / 255, b = parseInt(h.slice(5, 7), 16) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    if (!d) return [0, 0, l];
+    const s = d / (1 - Math.abs(2 * l - 1)), hh = mx === r ? ((g - b) / d + 6) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [hh * 60, s, l]; };
+  const hsl = (h, s, l) => `hsl(${((h % 360) + 360) % 360 | 0} ${Math.round(Math.min(1, Math.max(0, s)) * 100)}% ${Math.round(Math.min(1, Math.max(0, l)) * 100)}%)`;
+  return c => {
+    const m = /^#([0-9a-f]{6})$/i.exec(c || "");
+    if (!m) return "";
+    const k = m[1].toLowerCase();
+    if (!done.has(k)) {
+      done.add(k);
+      const oc = onColor(c), pick = n => (new RegExp("--" + n + ":(#[0-9a-f]{6})", "i").exec(oc) || [0, c])[1], v = parseInt(k, 16) % 2;
+      const pic = (base, weiss) => {
+        const [h, sa, l] = toHsl(base);
+        const A = weiss ? hsl(h - 30, sa * 1.2 + .1, l * .74) : hsl(h + 16, sa * 1.05, l * 1.2 + .04);
+        const Bc = weiss ? hsl(h + 42, sa * 1.1 + .1, l * .6) : hsl(h - 14, sa * 1.1, l * 1.12 + .03);
+        const noise = v ? "0.7 0.003" : "0.003 0.7", keep = v ? "0 0 0 0 .5  0 1 0 0 0" : "1 0 0 0 0  0 0 0 0 .5";
+        const shapes = v
+          ? `<ellipse cx='150' cy='150' rx='115' ry='170' fill='${A}' transform='rotate(-32 150 150)'/><path d='M150 110 L250 70 L430 430 L310 430 Z' fill='${Bc}'/>`
+          : `<circle cx='250' cy='225' r='150' fill='${A}'/><circle cx='250' cy='225' r='82' fill='${Bc}'/>`;
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='xMidYMid slice'><defs><filter id='f' x='-40%' y='-40%' width='180%' height='180%' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='${noise}' numOctaves='1' seed='${parseInt(k, 16) % 97}'/><feColorMatrix values='${keep}  0 0 0 0 0  0 0 0 0 1' result='n'/><feGaussianBlur in='SourceGraphic' stdDeviation='10' result='b'/><feDisplacementMap in='b' in2='n' scale='120' xChannelSelector='R' yChannelSelector='G'/></filter></defs><g filter='url(#f)'>${shapes}</g></svg>`;
+        return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+      };
+      sheet.sheet.insertRule(`:root{--art-${k}:${pic(pick("cs"), oc.includes("--on:#fff"))};--arth-${k}:${pic(pick("ch"), true)}}`);
+    }
+    return `--art:var(--art-${k});--arth:var(--arth-${k})`;
+  };
+})();
+const setOnColor = (el, c) => { onColor(c).split(";").forEach(d => { const i = d.indexOf(":"); el.style.setProperty(d.slice(0, i), d.slice(i + 1)); }); artVar(c).split(";").forEach(d => { const i = d.indexOf(":"); if (i > 0) el.style.setProperty(d.slice(0, i), d.slice(i + 1)); }); };
 const modIc = (m, s = 19) => `<span class="si ly" style="${onColor(m.color)}">${icon(m.icon, s)}</span>`;
 let curMod = MOD.osi;
 
@@ -1896,7 +2041,7 @@ function paint(html, {anim = true} = {}) {
   if (anim) { animateRings(); revealBelow(); }
   observeTitle();
 }
-const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
+const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)};${artVar(c)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
 const heroBar = v => `<div class="ph-bar"><span class="track"><i style="width:${v}%"></i></span><span data-count="${v}" data-suffix=" %">${v} %</span></div>`;
 const EASE_SOFT = "cubic-bezier(.16,1,.3,1)";
 const EINFACH = window.LERN_EINFACH || {units:{}, layers:{}, pages:{}, intro:{}};
@@ -2216,19 +2361,20 @@ function mnemoHTML(mode, withId) {
   return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
 }
 const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="${onColor(m.color)}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
-const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
+const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)};${artVar(m.color)}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="${onColor(col)}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
-const greetHTML = () => greeting().split(" ").map((w, i, a) => `<span class="gw"><span${i === a.length - 1 ? ' class="gw-c"' : ""} style="--d:${i * .09}s">${w}</span></span>`).join(" ");
-const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="${onColor(m.color)};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
+const greetHTML = n => ["Deine", "Themen"].map((w, i) => `<span class="gw"><span style="--d:${i * .09}s">${w}</span></span>`).join(" ") + ` <span class="gw"><span class="gw-n" style="--d:.18s">(${n})</span></span>`;
+const shelfMeta = v => `<span class="shelf-meta"><span class="cap" aria-hidden="true"><i style="height:${v}%"></i></span><span class="shelf-num"><b>${v} %</b><small>gelernt</small></span></span>`;
+const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="${onColor(m.color)};${artVar(m.color)};--i:${i}"><span class="shelf-text"><b>${m.title}</b>${shelfMeta(modProgress(m.id))}</span><span class="shelf-foot"><span class="shelf-dot">${icon(m.icon, 26)}</span><small>${m.sub}</small><span class="shelf-dot go">${icon("right", 24)}</span></span></button>`;
 function vStart() {
   const prevShelf = view.querySelector(".shelf");
   if (prevShelf) shelfX = prevShelf.scrollLeft;
   setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
   paint(`
   <header class="welcome">
-    <h1 class="large greet">${greetHTML()}</h1>
-    <div class="glow"><span class="glow-fx" aria-hidden="true"><i></i></span><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
+    <div class="hello-row"><div><p class="hello">${greeting().replace(".", ",")}</p><h1 class="large greet">${greetHTML(MODS.length + (CODE.length ? 1 : 0))}</h1></div><span class="hello-mark" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="glow"><button class="btn btn-fill btn-lg" data-go="heute">Jetzt lernen</button></div>
   </header>
   <section class="shelf-wrap" aria-label="Themen"><div class="shelf">${MODS.map(shelfCard).join("")}${codeShelf()}</div></section>`);
   if (shelfX) view.querySelector(".shelf").scrollLeft = shelfX;
@@ -2345,7 +2491,7 @@ const lessonKey = (l, x) => `${l.id}.${x.id}`;
 const codeCounts = l => ({read:l.lessons.filter(x => S.code.read[lessonKey(l, x)]).length, done:l.tasks.filter(t => S.code.done[lessonKey(l, t)]).length});
 function codeProgress(l) { const c = codeCounts(l); return pct(c.read + c.done, l.lessons.length + l.tasks.length); }
 const codeAll = () => CODE.length ? Math.round(CODE.reduce((s, l) => s + codeProgress(l), 0) / CODE.length) : 0;
-const codeShelf = () => CODE.length ? `<button class="shelf-card" data-go="code" style="--c:#5e5ce6;--i:${MODS.length}">${icon("code", 42)}<span class="shelf-text"><b>Programmieren</b><small>Python, Java, HTML und CSS, JavaScript, SQL</small><span class="shelf-bar"><i style="width:${codeAll()}%"></i></span></span></button>` : "";
+const codeShelf = () => CODE.length ? `<button class="shelf-card" data-go="code" style="${onColor("#5e5ce6")};${artVar("#5e5ce6")};--i:${MODS.length}"><span class="shelf-text"><b>Programmieren</b>${shelfMeta(codeAll())}</span><span class="shelf-foot"><span class="shelf-dot">${icon("code", 26)}</span><small>Python, Java, HTML und CSS, JavaScript, SQL</small><span class="shelf-dot go">${icon("right", 24)}</span></span></button>` : "";
 function destroyIdes() {
   if (curIde) { curIde.destroy(); curIde = null; }
   exIdes.forEach(x => x.destroy());
