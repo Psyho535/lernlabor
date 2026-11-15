@@ -616,8 +616,6 @@ main{overflow-x:clip}
 .island.bad .idot{background:var(--red);color:#fff}
 .hub,.tile,.mode,.cell,.opt,.target{transition:transform .4s var(--ease-spring),background .2s,opacity .3s}
 .tile:hover,.hub:hover,.mode:hover:not([disabled]){transform:translateY(-3px)}
-.ripple{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:currentColor;opacity:.1;pointer-events:none;animation:ripple .45s ease-out forwards}
-@keyframes ripple{to{transform:scale(34);opacity:0}}
 .pre,.col.entering > .pre{opacity:0;transform:translateY(18px);animation:none!important}
 .rev{animation:revealUp .7s var(--ease-soft) backwards}
 .layer-body{display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -1177,6 +1175,17 @@ main{zoom:var(--zoom,1)}
 @media (hover:hover) and (pointer:fine){
   .shelf-card:hover,.mod-card:hover,.mod-tile:hover,.hub:hover,.tile:hover,.mode:not([disabled]):hover{box-shadow:none}
 }
+/* ===== iOS-Gefühl: Seitenstapel und Zurückwischen ===== */
+#view.ios-slide{position:relative;min-height:100vh}
+#view.ios-slide::before{content:"";position:absolute;z-index:-1;inset:-140px -100vw 0;background:var(--bg)}
+#view.ios-top{z-index:2}
+#view.ios-top::before{box-shadow:-14px 0 34px rgba(0,0,0,.14)}
+#view.ios-low{z-index:0}
+.ghost.ios-over{z-index:2;background:var(--bg);box-shadow:-14px 0 34px rgba(0,0,0,.14)}
+.ios-dim{position:fixed;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}
+/* Unsichtbarer Streifen am linken Rand fängt das Zurückwischen ab (nur bei Touch, nur wenn es ein Zurück gibt) */
+#edgeSwipe{position:fixed;left:0;top:calc(56px + env(safe-area-inset-top,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));width:16px;z-index:24;touch-action:pan-y;display:none}
+@media (pointer:coarse){#edgeSwipe:not([hidden]){display:block}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1913,39 +1922,32 @@ function pulse(color) {
   a.style.setProperty("--pulse", color);
   a.classList.remove("pulse"); void a.offsetWidth; a.classList.add("pulse");
 }
-document.addEventListener("pointerdown", e => {
-  const b = e.target.closest && e.target.closest(".btn,.hub,.tile,.mode,.cell:not(.static):not(.sc),.opt,.prow");
-  if (!b || b.disabled || reduced()) return;
-  if (getComputedStyle(b).position === "static") b.style.position = "relative";
-  b.style.overflow = "hidden";
-  const r = b.getBoundingClientRect(), s = document.createElement("span");
-  s.className = "ripple"; s.style.left = (e.clientX - r.left) + "px"; s.style.top = (e.clientY - r.top) + "px";
-  b.appendChild(s);
-  setTimeout(() => s.remove(), 600);
-}, {passive:true});
+/* Kein Wellen-Effekt beim Antippen: Wie bei iOS geben Hervorheben und leichtes Eindrücken die Rückmeldung. */
 const STAMPS = `<span class="stamp yes">Gewusst</span><span class="stamp no">Nochmal</span>`;
 /* Karte nach rechts wischen = gewusst, nach links = nochmal. Ohne Bewegung bleibt es ein Tippen zum Umdrehen. */
 function bindSwipe(decide) {
   const f = $(".flash");
   if (!f) return;
-  let x0 = null, y0 = 0, dx = 0, moved = false;
+  let x0 = null, y0 = 0, dx = 0, moved = false, pts = [];
   const paintDrag = () => {
     f.style.transform = `translateX(${dx}px) rotate(${dx / 22}deg)`;
     f.style.setProperty("--yes", Math.max(0, Math.min(1, dx / 90)));
     f.style.setProperty("--no", Math.max(0, Math.min(1, -dx / 90)));
   };
-  f.addEventListener("pointerdown", e => { x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; f.style.transition = "none"; });
+  f.addEventListener("pointerdown", e => { x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; pts = [[e.timeStamp, e.clientX]]; f.style.transition = "none"; });
   f.addEventListener("pointermove", e => {
     if (x0 == null) return;
     dx = e.clientX - x0;
+    pts.push([e.timeStamp, e.clientX]); if (pts.length > 6) pts.shift();
     if (!moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - y0)) { moved = true; try { f.setPointerCapture(e.pointerId); } catch (err) {} }
     if (moved) paintDrag();
   });
   const end = () => {
     if (x0 == null) return;
     x0 = null;
-    if (moved && Math.abs(dx) > 90) { decide(dx > 0 ? "know" : "again"); return; }
-    f.style.transition = "transform .45s var(--ease-spring)";
+    const v = releaseVelocity(pts);
+    if (moved && (Math.abs(dx) > 90 || (Math.abs(dx) > 28 && Math.abs(v) > .5 && Math.sign(v) === Math.sign(dx)))) { decide(dx > 0 ? "know" : "again"); return; }
+    f.style.transition = "transform .5s cubic-bezier(.34,1.45,.64,1)";
     dx = 0; paintDrag();
   };
   f.addEventListener("pointerup", end);
@@ -2161,8 +2163,8 @@ function stopTimers() {
   clearInterval(odTimer); odTimer = null;
   clearInterval(pzTimer); pzTimer = null;
 }
-function parseHash() {
-  const h = (location.hash || "").replace("#", "");
+function parseHash(tok) {
+  const h = tok != null ? tok : (location.hash || "").replace("#", "");
   const m = h.match(/^schicht([1-7])$/);
   if (m) return {key:h, view:"schicht", n:+m[1], mod:"osi", parent:"schichten", depth:4, title:shortName(+m[1])};
   const mo = h.match(/^modul-([a-z]+)(?:-(karten|quiz|rechnen|unit)(?:-([a-z0-9]+))?)?$/);
@@ -2196,8 +2198,9 @@ function go(token) {
   else location.hash = token;
 }
 let prevShown = false, ghostEl = null, morphSrc = null, shelfX = 0;
+let silentNav = false, edgeAfterRender = null, slideTok = 0;
 /* Die alte Seite bleibt kurz als Bild stehen und blendet aus, während die neue einläuft. */
-function leavePage(dir) {
+function leavePage(dir, slide = false) {
   if (ghostEl) { ghostEl.remove(); ghostEl = null; }
   if (!view.firstElementChild) return;
   const box = view.getBoundingClientRect(), g = document.createElement("div"), inner = document.createElement("div");
@@ -2210,9 +2213,10 @@ function leavePage(dir) {
   inner.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
   g.append(inner);
   view.after(g);
+  ghostEl = g;
+  if (slide) return;
   const x = dir === "push" ? -14 : dir === "pop" ? 14 : 0;
   const a = g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:`translateX(${x}px)`}], {duration:140, easing:"linear", fill:"forwards"});
-  ghostEl = g;
   a.onfinish = () => { g.remove(); if (ghostEl === g) ghostEl = null; };
 }
 /* Die angetippte Karte wächst zur farbigen Kopfkarte der neuen Seite. */
@@ -2266,11 +2270,11 @@ function render() {
   prevRoute = r; curRoute = r;
   const firstPaint = !prevShown, moving = !same && !layerSwap && !firstPaint;
   prevShown = true;
-  let morph = null;
+  let morph = null, slideNow = false;
   if (moving) {
     const shelf = view.querySelector(".shelf");
     if (shelf) shelfX = shelf.scrollLeft;
-    if (!reduced()) {
+    if (!reduced() && !silentNav) {
       if (morphSrc && morphSrc.isConnected && morphSrc.dataset.go === r.key) {
         morph = {dir:"in", rect:morphSrc.getBoundingClientRect(), color:morphSrc.matches(".shelf-card, .mod-card, .hub") ? getComputedStyle(morphSrc).backgroundColor : ""};
         morphSrc.style.visibility = "hidden";
@@ -2278,7 +2282,8 @@ function render() {
         const bg = view.querySelector(":scope > .page-hero .ph-bg, #layerBody > .page-hero .ph-bg");
         if (bg && bg.getBoundingClientRect().bottom > 0) { morph = {dir:"out", rect:bg.getBoundingClientRect(), color:getComputedStyle(bg).backgroundColor, go:from.key}; bg.style.visibility = "hidden"; }
       }
-      leavePage(dir);
+      slideNow = !morph && (dir === "push" || dir === "pop") && matchMedia("(max-width:899px)").matches;
+      leavePage(dir, slideNow);
     }
   }
   if (r.mod) curMod = MOD[r.mod];
@@ -2297,25 +2302,31 @@ function render() {
   if (moving) {
     scrollToTop = true;
     view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
-    view.classList.add("entering", "enter-" + dir);
-    clearTimeout(enterT);
-    enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
+    if (!slideNow && !silentNav) {
+      view.classList.add("entering", "enter-" + dir);
+      clearTimeout(enterT);
+      enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
+    }
   }
   ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
   window.scrollTo(0, 0);
-  if (moving && !reduced()) {
+  if (moving && !reduced() && !silentNav) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
     if (oldShelf) oldShelf.scrollLeft = shelfX;
     animateBars();
     if (morph) (morph.dir === "in" ? morphIn : morphOut)(morph);
   }
+  if (slideNow) iosSlide(dir);
+  if (silentNav) { silentNav = false; const f = edgeAfterRender; edgeAfterRender = null; if (f) f(); }
   updateChrome();
 }
+/* Seiten, die sich jederzeit ohne Nebenwirkung neu zeichnen lassen */
+const passiveFn = r => ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), ctasks:() => vCodeTasks(r.lang), modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view];
 function refreshPassive() {
   const r = parseHash();
   if (["start", "themen", "modul", "schichten", "schicht", "trainieren", "fakten", "code", "clang", "ctasks"].includes(r.view)) {
     const y = window.scrollY;
-    ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), ctasks:() => vCodeTasks(r.lang), modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view]();
+    passiveFn(r)();
     window.scrollTo(0, y);
   }
   updateChrome();
@@ -2326,6 +2337,146 @@ function updateChrome() {
   $("#spBar").style.width = total + "%";
 }
 window.addEventListener("hashchange", render);
+/* ---------------- iOS-Gefühl ---------------- */
+/* Seitenwechsel wie der Navigationsstapel auf dem iPhone: Die neue Seite schiebt sich von rechts über die alte,
+   die alte weicht ein Drittel nach links und wird leicht dunkler. Zurück läuft es genau umgekehrt. */
+const IOS_EASE = "cubic-bezier(.32,.72,0,1)";
+/* Schwung beim Loslassen: nur die letzten 100 ms zählen, wer anhält oder zurückzieht, hat keinen Schwung nach vorn */
+function releaseVelocity(pts) {
+  const tEnd = pts[pts.length - 1][0], recent = pts.filter(([t]) => tEnd - t <= 100);
+  if (recent.length < 2) return 0;
+  const [t0, x0] = recent[0], [t1, x1] = recent[recent.length - 1];
+  return t1 > t0 ? (x1 - x0) / (t1 - t0) : 0;
+}
+function iosSlide(dir) {
+  const g = ghostEl, tok = ++slideTok, W = innerWidth, push = dir === "push";
+  if (!g) return;
+  view.getAnimations().forEach(x => x.cancel());
+  document.querySelectorAll(".ios-dim").forEach(d => d.remove());
+  const dim = document.createElement("div");
+  dim.className = "ios-dim";
+  view.after(dim);
+  view.classList.remove("ios-top", "ios-low");
+  view.classList.add("ios-slide", push ? "ios-top" : "ios-low");
+  if (!push) g.classList.add("ios-over");
+  const o = {duration:500, easing:IOS_EASE, fill:"both"};
+  const a = view.animate([{transform:`translateX(${push ? W : -W * .3}px)`}, {transform:"none"}], o);
+  g.animate([{transform:"none"}, {transform:`translateX(${push ? -W * .3 : W}px)`}], o);
+  dim.animate([{opacity:push ? 0 : .1}, {opacity:push ? .1 : 0}], o);
+  a.onfinish = () => {
+    dim.remove(); g.remove();
+    if (ghostEl === g) ghostEl = null;
+    if (tok !== slideTok) return;
+    a.cancel();
+    view.classList.remove("ios-slide", "ios-top", "ios-low");
+  };
+}
+/* Vom linken Rand nach rechts wischen = zurück. Die Seite folgt dem Finger, darunter liegt schon die vorige Seite.
+   Loslassen über der Hälfte oder mit Schwung geht zurück, sonst federt die Seite an ihren Platz. */
+const PREVIEW_OK = ["start", "themen", "modul", "schichten", "trainieren", "fakten", "code", "clang", "ctasks"];
+const edgeEl = document.createElement("div");
+edgeEl.id = "edgeSwipe";
+edgeEl.setAttribute("aria-hidden", "true");
+document.body.append(edgeEl);
+const edgeSync = () => { edgeEl.hidden = !$("#navbar .nb-left .back"); };
+new MutationObserver(edgeSync).observe($("#navbar .nb-left"), {childList:true, subtree:true});
+edgeSync();
+let es = null;
+edgeEl.addEventListener("pointerdown", e => {
+  if (e.pointerType === "mouse" || es || ghostEl || $("#sheetRoot .sheet-wrap") || !$("#navbar .nb-left .back")) return;
+  es = {id:e.pointerId, x0:e.clientX, y0:e.clientY, on:false, dx:0, pts:[[e.timeStamp, e.clientX]]};
+  try { edgeEl.setPointerCapture(e.pointerId); } catch (err) {}
+});
+edgeEl.addEventListener("pointermove", e => {
+  const st = es;
+  if (!st || e.pointerId !== st.id) return;
+  const dx = e.clientX - st.x0, dy = e.clientY - st.y0;
+  if (!st.on) {
+    if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { es = null; return; }
+    if (dx < 8) return;
+    edgeStart(st);
+  }
+  st.dx = Math.max(0, dx);
+  st.pts.push([e.timeStamp, e.clientX]);
+  if (st.pts.length > 6) st.pts.shift();
+  edgePaint(st, st.dx / innerWidth);
+});
+edgeEl.addEventListener("pointerup", edgeEnd);
+edgeEl.addEventListener("pointercancel", edgeEnd);
+function edgeStart(st) {
+  st.on = true;
+  const nb = $("#navbar"), back = $("#navbar .nb-left .back");
+  st.y = scrollY;
+  const saved = {nav:nb.innerHTML, cls:nb.className, act:actHandler, key:keyHandler, xb, mod:curMod, route:curRoute};
+  // Die aktuelle Seite wandert auf eine eigene Ebene, die dem Finger folgt
+  const box = view.getBoundingClientRect(), g = document.createElement("div"), inner = document.createElement("div");
+  g.className = "ghost ios-over";
+  g.inert = true;
+  g.setAttribute("aria-hidden", "true");
+  inner.className = "col";
+  inner.style.cssText = `left:${box.left}px;top:${box.top}px;width:${box.width}px`;
+  inner.append(...view.childNodes);
+  g.append(inner);
+  view.after(g);
+  st.ghost = g;
+  st.dim = document.createElement("div");
+  st.dim.className = "ios-dim";
+  view.after(st.dim);
+  view.classList.add("ios-slide", "ios-low");
+  window.scrollTo(0, 0);
+  // Die vorige Seite schon darunter zeichnen, wenn das ohne Nebenwirkung geht
+  const tok = back && back.dataset.go, r = tok ? parseHash(tok) : null, fn = r && PREVIEW_OK.includes(r.view) ? passiveFn(r) : null;
+  if (fn) {
+    try { curRoute = r; if (r.mod) curMod = MOD[r.mod]; fn(); st.preview = true; }
+    catch (err) { view.innerHTML = ""; st.preview = false; }
+    nb.innerHTML = saved.nav; nb.className = saved.cls;
+    curRoute = saved.route; curMod = saved.mod; actHandler = saved.act; keyHandler = saved.key; xb = saved.xb;
+  }
+  edgePaint(st, 0);
+}
+function edgePaint(st, p) {
+  const W = innerWidth;
+  st.ghost.style.transform = `translateX(${p * W}px)`;
+  view.style.transform = `translateX(${-.3 * W * (1 - p)}px)`;
+  st.dim.style.opacity = .1 * (1 - p);
+}
+function edgeEnd(e) {
+  const st = es;
+  if (!st || e.pointerId !== st.id) return;
+  es = null;
+  if (!st.on) return;
+  st.pts.push([e.timeStamp, e.clientX]);
+  const W = innerWidth, p = st.dx / W;
+  const v = releaseVelocity(st.pts);
+  const commit = e.type === "pointerup" && (v > .4 || (p > .5 && v > -.2));
+  const to = commit ? 1 : 0;
+  const dur = reduced() ? 0 : Math.round(Math.max(170, Math.min(420, Math.abs(to - p) * W / Math.max(.9, Math.abs(v)))));
+  const o = {duration:dur, easing:"cubic-bezier(.2,.9,.3,1)", fill:"forwards"};
+  const a = st.ghost.animate([{transform:`translateX(${p * W}px)`}, {transform:`translateX(${to * W}px)`}], o);
+  view.animate([{transform:`translateX(${-.3 * W * (1 - p)}px)`}, {transform:`translateX(${-.3 * W * (1 - to)}px)`}], o);
+  st.dim.animate([{opacity:.1 * (1 - p)}, {opacity:.1 * (1 - to)}], o);
+  if (commit) {
+    const back = $("#navbar .nb-left .back"), before = location.hash;
+    silentNav = true;
+    if (back) back.click();
+    if (location.hash === before) silentNav = false;
+  }
+  a.onfinish = () => {
+    view.getAnimations().forEach(x => x.cancel());
+    st.dim.remove();
+    view.style.transform = "";
+    view.classList.remove("ios-slide", "ios-low");
+    if (commit) { st.ghost.remove(); return; }
+    // Abgebrochen: Die Seite kehrt unverändert zurück, mit Inhalt, Stand und Bildlaufposition
+    view.innerHTML = "";
+    view.append(...st.ghost.firstElementChild.childNodes);
+    st.ghost.remove();
+    window.scrollTo(0, st.y);
+    observeTitle();
+    watchIdle();
+    if (st.preview) revealBelow(view);
+  };
+}
 document.addEventListener("click", e => {
   const s = e.target.closest("[data-sheet]");
   if (s) { e.preventDefault(); closeSheet(s.dataset.sheet === "ok"); return; }
