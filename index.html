@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#d8dbe2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -30,7 +30,7 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#d8dbe2;
+  --bg:#eef1f7;
   /* Regenbogen der Apple-Design-Seite: Blau, Lila, Rot, Orange, Gelb, Grün */
   --rainbow:linear-gradient(90deg,#009ddc,#963d97 24%,#e03a3e 46%,#f5821f 64%,#fdb827 82%,#61bb46);
   --bar:var(--rainbow);
@@ -1134,6 +1134,156 @@ main{zoom:var(--zoom,1)}
 /* Unsichtbarer Streifen am linken Rand fängt das Zurückwischen ab (nur bei Touch, nur wenn es ein Zurück gibt) */
 #edgeSwipe{position:fixed;left:0;top:calc(56px + env(safe-area-inset-top,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));width:16px;z-index:24;touch-action:pan-y;display:none}
 @media (pointer:coarse){#edgeSwipe:not([hidden]){display:block}}
+
+/* ===== Clean-Look: helle Fläche mit sanftem Verlauf, weiße Karten ohne Rahmen, Zeilen als einzelne Karten,
+   eine Pastell-Karte für den Fortschritt, runde Symbole und eine kompakte Leiste mit runden Knöpfen ===== */
+:root{
+  --bg:#eef1f7;--bg-a:#e2ddfb;--bg-b:#d6ebf6;
+  --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.5);
+  --label:#101318;--label-2:rgba(16,19,24,.56);--label-3:rgba(16,19,24,.34);--sep:rgba(16,19,24,.09);
+  --fill:rgba(16,19,24,.06);--fill-2:#f3f5f9;--fill-3:rgba(16,19,24,.14);
+  --ink:#111318;--on-ink:#ffffff;--ink-mix:#000;
+  --hero:#a6d9f3;--hero-ink:#0c1a24;--hero-dot:#2b9fd6;--dot:#9aa1ad;
+  --sh:0 1px 2px rgba(16,24,40,.04),0 8px 22px -14px rgba(16,24,40,.18);
+  --sh-lg:0 2px 4px rgba(16,24,40,.04),0 22px 44px -22px rgba(16,24,40,.3);
+  --glass-edge:transparent;--card-shadow:var(--sh);--orb-show:none;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c0d10;--bg-a:rgba(110,96,220,.2);--bg-b:rgba(0,157,220,.16);
+  --surface:#18191d;--face:#1d1e23;--solid:#18191d;--side:rgba(24,25,29,.55);
+  --label:#f4f5f7;--label-2:rgba(244,245,247,.6);--label-3:rgba(244,245,247,.34);--sep:rgba(255,255,255,.09);
+  --fill:rgba(255,255,255,.08);--fill-2:rgba(255,255,255,.05);--fill-3:rgba(255,255,255,.16);
+  --ink:#ffffff;--on-ink:#0c0d10;--ink-mix:#fff;--dot:#4b505a;
+  --sh:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -16px rgba(0,0,0,.8);
+  --sh-lg:0 1px 0 rgba(255,255,255,.04) inset,0 24px 44px -22px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  --bg:#0c0d10;--bg-a:rgba(110,96,220,.2);--bg-b:rgba(0,157,220,.16);
+  --surface:#18191d;--face:#1d1e23;--solid:#18191d;--side:rgba(24,25,29,.55);
+  --label:#f4f5f7;--label-2:rgba(244,245,247,.6);--label-3:rgba(244,245,247,.34);--sep:rgba(255,255,255,.09);
+  --fill:rgba(255,255,255,.08);--fill-2:rgba(255,255,255,.05);--fill-3:rgba(255,255,255,.16);
+  --ink:#ffffff;--on-ink:#0c0d10;--ink-mix:#fff;--dot:#4b505a;
+  --sh:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -16px rgba(0,0,0,.8);
+  --sh-lg:0 1px 0 rgba(255,255,255,.04) inset,0 24px 44px -22px rgba(0,0,0,.9);
+}
+/* Hintergrund: zwei weiche Farbflecken über einer ruhigen Grundfarbe */
+#aurora{background:radial-gradient(110% 60% at 0% 0%,var(--bg-a),transparent 62%),radial-gradient(100% 70% at 100% 100%,var(--bg-b),transparent 60%),var(--bg)}
+#aurora i,#aurora b{display:none}
+/* Flächen: weiß, ohne Rahmen und Glas, mit weichem Schatten */
+.card,.group,.hub,.hub.solid,.tile,.mode,.mod-tile,.gtile,.face,.ez-next{background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh);-webkit-backdrop-filter:none;backdrop-filter:none}
+.card,.group{border-radius:24px}
+.tile,.mode,.mod-tile{border-radius:22px}
+.mini,.mcell,.sublayer,.mnemo-box,.stat,.fields div{background:var(--fill-2);border:0;border-radius:16px}
+.explain{border-radius:18px}
+.kicker,.group-h{font-size:13px;font-weight:550;color:var(--label-2);text-transform:none;letter-spacing:0}
+.large{font-weight:700;letter-spacing:-.03em}
+.section-t{font-size:17px;font-weight:650;letter-spacing:-.01em}
+/* Listen: jede Zeile ist eine eigene Karte, wenn eine Gruppe nur aus Zeilen besteht */
+.group:not(:has(> :not(.cell,.opt))){background:transparent;box-shadow:none;border-radius:0;overflow:visible;display:flex;flex-direction:column;gap:8px}
+.group:not(:has(> :not(.cell,.opt))) > .cell,.group:not(:has(> :not(.cell,.opt))) > .opt{background:var(--surface);border-radius:20px;box-shadow:var(--sh)}
+.group:not(:has(> :not(.cell,.opt))) > :is(.cell,.opt) + :is(.cell,.opt)::before{display:none}
+.cell{min-height:60px;padding:10px 16px 10px 12px}
+.cell-title{font-weight:550}
+.cell-sub{font-size:13px}
+.cell-detail{color:var(--label);font-weight:650}
+/* Runde, zart getönte Symbole in Zeilen und Kacheln */
+:is(.cell,.mod-card,.mod-tile,.hub) :is(.si,.cell-ic),.hub.solid .cell-ic{width:44px;height:44px;border-radius:50%;background:color-mix(in srgb,var(--c,var(--ink)) 15%,var(--surface));color:color-mix(in srgb,var(--c,var(--ink)) 82%,var(--ink-mix));background-image:none;box-shadow:none;font-weight:700}
+.cell-ic.gray{background:var(--fill);color:var(--label)}
+/* Themen- und Sprachzeilen */
+.mod-list{gap:8px}
+.mod-card,.hub,.hub.solid{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:11px 18px 11px 11px;border-radius:22px;background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh)}
+.mod-card b,.hub b{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.mod-card small,.hub small,.hub.solid small{color:var(--label-2);font-size:13px}
+.mc-v{font-size:16px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hub .chev,.hub.solid .chev{color:var(--label-3);opacity:1}
+/* Kopfkarten der Themen: Pastell in der Themenfarbe mit dunkler Schrift */
+.page-hero{color:var(--label);border-radius:28px}
+.ph-bg{background:color-mix(in srgb,var(--c) 22%,var(--surface));box-shadow:var(--sh)}
+.page-hero .large,.page-hero .ph-k,.page-hero .ph-l,.page-hero .ph-en,.page-hero .exam-note{color:inherit}
+.page-hero .ph-l,.page-hero .exam-note{color:var(--label-2)}
+.ph-ic{color:color-mix(in srgb,var(--c) 82%,var(--ink-mix))}
+.ph-bar .track{background:color-mix(in srgb,var(--label) 10%,transparent)}
+.ph-bar i{background:color-mix(in srgb,var(--c) 85%,var(--ink-mix))}
+.page-hero .btn-fill{background:var(--ink);color:var(--on-ink)}
+.page-hero .btn-tint,.page-hero .btn.done{background:var(--surface);color:var(--label);border:0}
+/* Knöpfe: dunkle Pille als Hauptknopf, sonst weiß */
+.btn{border-radius:999px;font-weight:600}
+.btn-lg{border-radius:999px;height:56px}
+.btn-fill{background:var(--ink);color:var(--on-ink)}
+.btn-gray,.btn-tint{background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh)}
+.back{height:40px;margin-left:8px;padding:0 14px 0 6px;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label);font-size:15px;font-weight:550}
+.nb-round{background:var(--surface);border:0;box-shadow:var(--sh);color:var(--label);-webkit-backdrop-filter:none;backdrop-filter:none}
+.navbar.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom-color:transparent}
+.seg{background:var(--surface);border:0;box-shadow:var(--sh);border-radius:999px;padding:3px}
+.seg-thumb{top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / var(--n));border-radius:999px;background:var(--ink);box-shadow:none}
+.seg button{border-radius:999px;transition:color .25s,transform .3s var(--ease-spring)}
+.seg button[aria-pressed="true"]{color:var(--on-ink)}
+.easy-sw{background:var(--surface);border:0;box-shadow:var(--sh)}
+.easy-thumb{background:var(--ink);box-shadow:none}
+.easy-sw.on .easy-l:nth-of-type(2),.easy-sw:not(.on) .easy-l:nth-of-type(3){color:var(--on-ink)}
+.search-box{height:52px;padding:0 18px;border-radius:999px;background:var(--surface);box-shadow:var(--sh)}
+.chip{background:var(--surface);box-shadow:var(--sh)}
+/* Quiz und Lernkarten */
+.opt .key{background:transparent;border:1.5px solid var(--sep)}
+.opt.ok .key,.opt.no .key{border-color:transparent}
+.face{border-radius:28px;box-shadow:var(--sh-lg)}
+.flash{border-radius:28px}
+.deck::before,.deck::after{background:var(--surface);border:0;box-shadow:var(--sh)}
+/* Ergebnisse als Punktsäulen */
+.hist{height:120px;gap:5px;border-bottom:0}
+.hcol i{border-radius:0;min-height:7px;background:radial-gradient(circle,var(--dot) 2.2px,transparent 2.7px) 50% 100%/7px 7px}
+.hcol:last-child i{--dot:var(--hero-dot)}
+.hcol:last-child span{bottom:calc(var(--h) + 6px);left:50%;right:auto;transform:translateX(-50%);padding:3px 8px;border-radius:8px;background:var(--hero);color:var(--hero-ink);white-space:nowrap}
+/* Tab-Leiste: kompakte Kapsel mit runden Knöpfen, der aktive ist dunkel */
+.tabbar{width:auto;grid-template-columns:repeat(5,52px);padding:6px;gap:0;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--sh-lg);-webkit-backdrop-filter:none;backdrop-filter:none}
+.tab{width:52px;height:52px;border-radius:50%;color:var(--label-2)}
+.tab span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.tab-ind{top:6px;bottom:6px;left:6px;width:52px;border-radius:50%;background:var(--ink);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.tab-ind::after{display:none}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--on-ink)}
+/* Seitenleiste am Computer */
+.sidebar{background:var(--side);border-right:0;box-shadow:1px 0 0 var(--sep)}
+.side-item{border-radius:999px}
+.side-item[aria-current="page"]{background:var(--ink);color:var(--on-ink)}
+.app-mark{background:var(--ink)}
+.app-mark i{background:var(--on-ink)}
+/* Startseite */
+.hhead{display:flex;align-items:center;gap:12px;padding-top:4px}
+.hmark{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);display:flex;flex-direction:column;justify-content:center;gap:3.5px;padding:0 12px}
+.hmark i{display:block;height:3.5px;border-radius:2px;background:var(--on-ink)}
+.hmark i:nth-child(2){margin-right:3px}
+.hmark i:nth-child(3){margin-right:7px}
+.hhi{flex:1;min-width:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.hcard{padding:7px;border-radius:30px;background:var(--surface);box-shadow:var(--sh-lg)}
+.hc-top{display:flex;flex-direction:column;align-items:center;gap:3px;padding:20px 18px 22px;border-radius:24px;background:var(--hero);color:var(--hero-ink);text-align:center}
+.hc-k{font-size:16px;font-weight:650}
+.hc-s{font-size:12px;opacity:.68}
+.hc-n{margin-top:8px;font-size:clamp(46px,13vw,60px);font-weight:750;line-height:1;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.hc-d{margin-top:6px;font-size:15px;font-weight:600}
+.hc-acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:8px 0 2px}
+.hc-acts button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:72px;padding:8px 4px;border:0;border-radius:18px;background:transparent;color:var(--label-2);font:550 13.5px/1.2 var(--f-ui);cursor:pointer;transition:background .2s,transform .35s var(--ease-spring)}
+.hc-acts button:active{background:var(--fill-2);transform:scale(.96)}
+.hc-acts button + button::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--sep)}
+.hc-i{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--sep);color:var(--label)}
+.hsec{display:flex;align-items:center;justify-content:space-between;padding:0 4px}
+.hsec h2{font-size:15px;font-weight:600;letter-spacing:-.005em}
+.hsee{min-height:44px;padding:0 4px;border:0;background:transparent;color:var(--label-2);font-size:14px;cursor:pointer}
+.ltiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(118px,1fr);gap:10px;margin:0 -16px;padding:2px 16px 10px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:16px;scrollbar-width:none}
+.ltiles::-webkit-scrollbar{display:none}
+.ltiles > .ltile:nth-child(n){grid-column:auto}
+.ltile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:132px;padding:12px;scroll-snap-align:start}
+.ltile .si{width:38px;height:38px;font-size:12.5px}
+.lt-n{margin-top:auto;font-size:12.5px;color:var(--label-2);line-height:1.25}
+.lt-v{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums}
+.ltile.dark{align-items:center;justify-content:center;gap:8px;text-align:center;background:var(--ink);color:var(--on-ink)}
+.ltile.dark b{font-size:14px;font-weight:600;line-height:1.25}
+@media (min-width:900px){.ltiles{margin:0;padding:2px 0 10px;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.first-open .hhead{animation:riseIn .8s var(--ease-ios) both;animation-delay:var(--intro,0s)}
+.first-open .hcard{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .12s)}
+.first-open .hhead ~ .section{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .26s)}
+@media (hover:hover) and (pointer:fine){
+  .mod-card:hover,.hub:hover,.mod-tile:hover,.tile:hover,.mode:not([disabled]):hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1196,7 +1346,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#d8dbe2" : i ? "#000000" : "#d8dbe2"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#eef1f7" : i ? "#000000" : "#eef1f7"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -1948,7 +2098,7 @@ let io = null;
 function observeTitle() {
   const nb = $("#navbar");
   if (io) { io.disconnect(); io = null; }
-  const t = view.querySelector(".large");
+  const t = view.querySelector(".large, .hhead");
   if (!t || !("IntersectionObserver" in window)) { nb.classList.add("scrolled"); return; }
   nb.classList.remove("scrolled");
   io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
@@ -2484,21 +2634,39 @@ function mnemoHTML(mode, withId) {
   return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
 }
 const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="${onColor(m.color)}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
-const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 26)}<span><b>${m.title}</b><small>${m.sub}</small>${modBar(m)}</span>${icon("right", 16, "chev")}</button>`;
+const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 22)}<span><b>${m.title}</b><small>${m.sub}</small></span><span class="mc-v">${modProgress(m.id)} %</span></button>`;
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="${onColor(col)}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
 const greetHTML = () => greeting().split(" ").map((w, i, a) => `<span class="gw"><span${i === a.length - 1 ? ' class="gw-c"' : ""} style="--d:${i * .09}s">${w}</span></span>`).join(" ");
 const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="${onColor(m.color)};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
 /* Startseite im Apple-Glas-Look: Gruß, Regenbogen-Regler „Jetzt lernen“, Themen als Glas-Kacheln mit farbiger Kapsel */
 const homeTile = (go, color, ic, title, v) => `<button class="gtile" data-go="${go}" style="${onColor(color)}"><span class="gcap">${icon(ic, 22)}</span><b>${title}</b><span class="gbar"><i style="width:${v}%"></i></span></button>`;
+/* Startseite im Clean-Look: Kopfzeile, Fortschrittskarte mit drei Aktionen, Themen als Zeilen, Sprachen als Kacheln */
+const langTile = l => `<button class="mod-tile ltile" data-go="code-${l.id}">${langBadge(l)}<span class="lt-n">${l.title}</span><b class="lt-v">${codeProgress(l)} %</b></button>`;
 function vStart() {
-  setNav({right:`<button class="nb-btn nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 22)}</button>`});
+  setNav({});
+  const total = overallProgress(), due = dueCount();
   paint(`
-  <header class="welcome">
-    <h1 class="large greet">${greetHTML()}</h1>
-    <button class="cta-glass" data-go="heute"><span class="cta-t">Jetzt lernen</span><span class="cta-track" aria-hidden="true"><span class="cta-knob"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5.5 19.5 12 13 18.5"/></svg></span></span></button>
+  <header class="hhead">
+    <span class="hmark" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="hhi">${greeting().replace(".", "!")}</span>
+    <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <section class="home-grid" aria-label="Themen">${MODS.map(m => homeTile(`modul-${m.id}`, m.color, m.icon, m.title, modProgress(m.id))).join("")}${CODE.length ? homeTile("code", APPLE.graphit, "code", "Programmieren", codeAll()) : ""}</section>`);
+  <section class="hcard" aria-label="Dein Fortschritt">
+    <div class="hc-top">
+      <span class="hc-k">Dein Fortschritt</span>
+      <span class="hc-s">${ITEMS.length} Karten und Fragen in ${MODS.length} Themen</span>
+      <b class="hc-n">${total} %</b>
+      <span class="hc-d">${due ? `${due} heute fällig` : "Heute ist nichts fällig"}</span>
+    </div>
+    <div class="hc-acts">
+      <button data-go="heute"><span class="hc-i">${icon("play", 17)}</span>Lernen</button>
+      <button data-go="trainieren"><span class="hc-i">${icon("trainieren", 18)}</span>Trainieren</button>
+      <button data-go="suche"><span class="hc-i">${icon("suche", 18)}</span>Suchen</button>
+    </div>
+  </section>
+  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div><div class="mod-list">${MODS.map(modCard).join("")}</div></section>
+  ${CODE.length ? `<section class="section"><div class="hsec"><h2>Programmieren</h2><button class="hsee" data-go="code">Alle</button></div><div class="ltiles">${CODE.map(langTile).join("")}<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Alle Sprachen</b></button></div></section>` : ""}`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
@@ -2621,7 +2789,7 @@ function destroyIdes() {
 }
 function codeCard(l) {
   const v = codeProgress(l);
-  return `<button class="mod-card" data-go="code-${l.id}" style="${onColor(l.color)}">${langBadge(l)}<span><b>${l.title}</b><small>${l.sub}</small><div class="mbar-line" style="${onColor(l.color)}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div></span>${icon("right", 16, "chev")}</button>`;
+  return `<button class="mod-card" data-go="code-${l.id}" style="${onColor(l.color)}">${langBadge(l)}<span><b>${l.title}</b><small>${l.sub}</small></span><span class="mc-v">${v} %</span></button>`;
 }
 function nextLesson(l) { return l.lessons.find(x => !S.code.read[lessonKey(l, x)]) || l.lessons[0]; }
 function vCode() {
