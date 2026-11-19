@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eceef5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#e2e7eb" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
 <title>IT-Lernlabor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&family=Plus+Jakarta+Sans:wght@500..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&family=Plus+Jakarta+Sans:wght@500..800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 <style>
 body{margin:0}
 button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
@@ -30,7 +30,7 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#eceef5;
+  --bg:#e2e7eb;
   /* Regenbogen der Apple-Design-Seite: Blau, Lila, Rot, Orange, Gelb, Grün */
   --rainbow:linear-gradient(90deg,#009ddc,#963d97 24%,#e03a3e 46%,#f5821f 64%,#fdb827 82%,#61bb46);
   --bar:var(--rainbow);
@@ -1138,7 +1138,7 @@ main{zoom:var(--zoom,1)}
 /* ===== Look nach der Vorlage: Mint-Lime-Verlauf, weiße Karten ohne Rahmen, gelbe XP-Karte, Zeilen als Einzelkarten,
    grüne Werte, Punktdiagramm mit gelber Säule und runde Einzelknöpfe unten ===== */
 :root{
-  --bg:#eceef5;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
+  --bg:#e2e7eb;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
   --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.45);
   --label:#121212;--label-2:rgba(18,18,18,.52);--label-3:rgba(18,18,18,.32);--sep:rgba(18,18,18,.08);
   --fill:rgba(18,18,18,.06);--fill-2:#f4f6f3;--fill-3:rgba(18,18,18,.14);
@@ -1390,7 +1390,7 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 
 /* ===== Einfach-Look: ruhiger heller Grund, ein klares Tagesziel, beschriftete Tab-Leiste ===== */
 :root{
-  --bg:#eceef5;--accent-a:#0a84ff;--accent-b:#5e5ce6;--tint:#007aff;--dot:#c9ced8;--dot-now:#007aff;
+  --bg:#e2e7eb;--accent-a:#0a84ff;--accent-b:#5e5ce6;--tint:#007aff;--dot:#c9ced8;--dot-now:#007aff;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}}
 :root[data-theme="dark"]{--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}
@@ -1460,7 +1460,7 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 
 /* ===== Learning-OS-Look: Periwinkle, Schwarz und kräftige Pastellkarten mit Strichzeichnungen ===== */
 :root{
-  --bg:#eceef5;--peri:#a5b6f7;--peri-ink:#101114;--tint:#4b5fe0;--dot-now:#4b5fe0;--orange:#f5973b;
+  --bg:#e2e7eb;--peri:#a5b6f7;--peri-ink:#101114;--tint:#4b5fe0;--dot-now:#4b5fe0;--orange:#f5973b;
   --f-display:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0c10;--tint:#8fa2ff;--dot-now:#8fa2ff}}
@@ -1540,6 +1540,80 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .page-hero .large{font-family:var(--f-display);font-weight:800}
 .first-open .hero2{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
 .first-open .hhead ~ :is(.hsearch,.howto,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .22s)}
+
+/* ===== Serifen-Look: kühles Grau, elegante Serife, große leichte Zahl, körniger Hügel, Lime als Akzent ===== */
+:root{
+  --bg:#e2e7eb;--surface:rgba(255,255,255,.78);--face:#fff;--solid:#f7f9fa;
+  --label:#18241c;--label-2:rgba(24,36,28,.55);--label-3:rgba(24,36,28,.32);--sep:rgba(24,36,28,.08);
+  --ink:#18241c;--on-ink:#ffffff;--tint:#2d5a3b;
+  --lime-a:#e3f78f;--lime-b:#c6ec5c;--slate:#7f93b5;
+  --f-serif:"Fraunces","Iowan Old Style","New York",Georgia,serif;
+  --f-display:var(--f-serif);
+  --sh:0 1px 2px rgba(30,45,60,.04),0 10px 26px -18px rgba(30,45,60,.25);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1211;--surface:rgba(255,255,255,.06);--face:#181d1b;--solid:#181d1b;
+  --label:#eef3ea;--label-2:rgba(238,243,234,.58);--label-3:rgba(238,243,234,.32);--sep:rgba(255,255,255,.08);
+  --ink:#eef3ea;--on-ink:#0e1211;--tint:#c6ec5c;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1211;--surface:rgba(255,255,255,.06);--face:#181d1b;--solid:#181d1b;
+  --label:#eef3ea;--label-2:rgba(238,243,234,.58);--label-3:rgba(238,243,234,.32);--sep:rgba(255,255,255,.08);
+  --ink:#eef3ea;--on-ink:#0e1211;--tint:#c6ec5c;
+}
+#aurora{background:radial-gradient(90% 40% at 50% 0%,rgba(255,255,255,.55),transparent 70%),var(--bg)}
+.large,.section-t,.hsec h2,.howto h2,.page-hero .large{font-family:var(--f-serif);font-weight:400;letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+.large{font-size:38px}
+.section-t,.hsec h2{font-size:24px}
+.card,.group,.hub,.hub.solid,.tile,.mode,.mod-tile,.mod-card{-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%)}
+/* Kopf: Gruß mittig mit kleinem Avatar */
+.shead{position:relative;display:flex;align-items:center;justify-content:center;min-height:48px;padding-top:2px}
+.shead .nb-round{position:absolute;right:0;top:2px}
+.shi{display:inline-flex;align-items:center;gap:8px;font:italic 400 17px var(--f-serif)}
+.shead .hav{width:30px;height:30px;padding:0 8px;gap:2.5px;box-shadow:none;background:linear-gradient(135deg,var(--lime-a),var(--slate))}
+.shead .hav i{height:2.5px}
+.shead .hav i:nth-child(3){margin-right:5px}
+/* Satz mit Lime-Chip und große Zahl */
+.sbig{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;margin-top:10px}
+.s-earn{max-width:300px;font:400 15px/1.55 var(--f-serif);color:var(--label)}
+.lchip{display:inline-flex;align-items:center;gap:3px;height:28px;margin:0 2px;padding:0 10px;border:0;border-radius:8px;background:linear-gradient(90deg,var(--lime-a),var(--lime-b));color:#18241c;font:500 14px var(--f-ui);vertical-align:1px;cursor:pointer}
+.s-num{display:flex;align-items:flex-start;gap:4px;margin:0;font:300 clamp(76px,22vw,112px)/1 var(--f-serif);letter-spacing:-.04em;font-variation-settings:"opsz" 144;color:var(--label)}
+.s-num span{font-size:.38em;margin-top:.2em;font-weight:400}
+/* Körniger Hügel als Diagramm */
+.mount{position:relative;margin:4px -16px 0;height:190px}
+.mount svg{display:block;width:100%;height:170px}
+.mt-dot{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#18241c;box-shadow:0 0 0 4px rgba(255,255,255,.75)}
+.mt-tag{position:absolute;transform:translate(calc(-100% - 12px),-50%);padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.85);color:#18241c;font:italic 400 13px var(--f-serif);white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.mt-tag b{font:600 13px var(--f-ui);font-style:normal}
+.mount figcaption{position:absolute;left:16px;bottom:0;font-size:12px;color:var(--label-2)}
+/* Knöpfe: Lime-Pille und gläserne Pille */
+.s-act{display:flex;gap:10px;justify-content:center;margin-top:-2px}
+.lpill{display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 8px 0 24px;border:0;border-radius:999px;background:linear-gradient(90deg,var(--lime-a),var(--lime-b));color:#18241c;font:600 16px var(--f-ui);cursor:pointer;box-shadow:0 10px 24px -14px rgba(120,160,30,.8);transition:transform .35s var(--ease-spring)}
+.lp-i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(24,36,28,.08)}
+.gpill{height:54px;padding:0 22px;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label);font:500 16px var(--f-ui);cursor:pointer;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:transform .35s var(--ease-spring)}
+.lpill:active,.gpill:active,.lchip:active{transform:scale(.96)}
+.s-next{margin-top:-8px;text-align:center;font-size:13px;color:var(--label-2)}
+.s-next b{font-weight:600;color:var(--label)}
+/* Zeilen wie „Recent Transaction“ */
+.srow{min-height:62px}
+.blob{flex:none;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 32% 28%,color-mix(in srgb,var(--c) 30%,#fff),var(--c) 55%,color-mix(in srgb,var(--c) 55%,#2c3a52));box-shadow:inset 0 -2px 6px rgba(0,0,0,.15)}
+.srow .cell-title{font:italic 400 17px var(--f-serif);letter-spacing:-.01em}
+.srow .cell-sub{font-size:12px}
+.sv{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;white-space:nowrap}
+.sv b{font:400 18px var(--f-serif);font-variant-numeric:tabular-nums}
+.sv small{font-size:11px;color:var(--label-2)}
+.hsee{color:var(--label-2)}
+.hw-n{background:var(--ink);color:var(--on-ink)}
+.hw-ok{background:var(--ink)!important;color:var(--on-ink)!important}
+/* Tab-Leiste: helles Glas, aktiver Tab als Lime-Pille */
+.tabbar{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border:.5px solid rgba(24,36,28,.06);box-shadow:0 12px 30px -16px rgba(30,45,60,.45)}
+.tabbar .tab-ind{background:linear-gradient(90deg,var(--lime-a),var(--lime-b));box-shadow:none}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:#18241c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabbar{background:rgba(30,34,32,.72);border-color:rgba(255,255,255,.08)}}
+:root[data-theme="dark"] .tabbar{background:rgba(30,34,32,.72);border-color:rgba(255,255,255,.08)}
+.first-open .sbig{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .05s)}
+.first-open .mount{animation:riseIn 1s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .18s)}
+.first-open .shead ~ :is(.s-act,.s-next,.howto,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .3s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1602,7 +1676,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#eceef5" : i ? "#000000" : "#eceef5"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#e2e7eb" : i ? "#000000" : "#e2e7eb"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -2362,7 +2436,7 @@ let io = null;
 function observeTitle() {
   const nb = $("#navbar");
   if (io) { io.disconnect(); io = null; }
-  const t = view.querySelector(".large, .hhead");
+  const t = view.querySelector(".large, .hhead, .shead");
   if (!t || !("IntersectionObserver" in window)) { nb.classList.add("scrolled"); return; }
   nb.classList.remove("scrolled");
   io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
@@ -3021,34 +3095,76 @@ function homeCards() {
   }
   return MODS.map((m, i) => { const [a, b] = unitsOf(m); return card(`modul-${m.id}`, m.color, m.icon, `${m.cards.length} Karten · ${m.questions.length} Fragen`, m.title, `Lernseiten ${a}/${b}`, miniRing(a, b), i); }).join("");
 }
+/* Startseite im ruhigen Serifen-Look: Gruß, Satz mit Lime-Chip, große Zahl, ein körniger Hügel als Diagramm
+   der letzten 14 Tage, Lime-Knopf zum Weiterlernen, „Zuletzt geübt“ und die Themen als ruhige Zeilen. */
+function mountainSVG() {
+  const t = today(), N = 14, W = 360, H = 170;
+  const vals = Array.from({length:N}, (_, i) => cntOf(t - (N - 1) + i));
+  const max = Math.max(DAY_GOAL, ...vals);
+  // Grundhügel, damit die Form auch ohne Daten schön ist; die Lerntage heben ihn an
+  const ys = vals.map((v, i) => { const x = i / (N - 1), base = .22 + .2 * Math.exp(-((x - .62) ** 2) / .06); return H - 14 - (base + .55 * (v / max)) * (H - 30); });
+  const xs = vals.map((_, i) => 8 + i * (W - 16) / (N - 1));
+  const pts = [[-20, H], [xs[0], ys[0]], ...xs.slice(1).map((x, i) => [x, ys[i + 1]]), [W + 20, H]];
+  let d = `M${pts[0][0]},${pts[0][1]} L${pts[1][0]},${pts[1][1]}`;
+  for (let i = 1; i < pts.length - 2; i++) {
+    const p0 = pts[i - 1], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2];
+    d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  d += ` L${W + 20},${H} Z`;
+  const front = `M-20,${H} C40,${H - 70} 90,${H - 64} 140,${H - 30} S220,${H - 6} 260,${H} Z`;
+  const tx = xs[N - 1], ty = ys[N - 1], v = vals[N - 1];
+  return `<figure class="mount" aria-label="Aufgaben der letzten 14 Tage, heute ${v}">
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="mgA" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f93b5"/><stop offset=".45" stop-color="#c9ec6c"/><stop offset="1" stop-color="#e6f6b0"/></linearGradient>
+        <linearGradient id="mgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
+        <linearGradient id="mgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f4f6e"/><stop offset="1" stop-color="#8b9ab8"/></linearGradient>
+        <filter id="mgGrain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="saturate" values="0" result="g"/><feComponentTransfer in="g" result="a"><feFuncA type="table" tableValues="0 .5"/></feComponentTransfer><feComposite in="a" in2="SourceGraphic" operator="in" result="c"/><feBlend in="c" in2="SourceGraphic" mode="multiply"/></filter>
+        <filter id="mgSoft"><feGaussianBlur stdDeviation="6"/></filter>
+      </defs>
+      <path d="${d}" fill="url(#mgA)" filter="url(#mgSoft)" opacity=".7"/>
+      <path d="${d}" fill="url(#mgA)" filter="url(#mgGrain)"/>
+      <path d="${d}" fill="url(#mgF)"/>
+      <path d="${front}" fill="url(#mgB)" filter="url(#mgGrain)" opacity=".92"/>
+    </svg>
+    <span class="mt-dot" style="left:${(tx / W * 100).toFixed(2)}%;top:${(ty / H * 100).toFixed(2)}%"></span>
+    <span class="mt-tag" style="left:${(tx / W * 100).toFixed(2)}%;top:${(ty / H * 100).toFixed(2)}%">heute <b>${v}</b></span>
+    <figcaption>Deine letzten 14 Tage</figcaption>
+  </figure>`;
+}
+const blob = c => `<span class="blob" style="--c:${c}" aria-hidden="true"></span>`;
+function recentRows() {
+  const t = today(), rows = [];
+  [t, t - 1].forEach(d => { const a = actOf(d); Object.keys(a).filter(k => a[k] > 0).sort((x, y) => a[y] - a[x]).forEach(k => rows.push({d, k, v:a[k]})); });
+  return rows.slice(0, 4).map(r => { const m = MOD[r.k];
+    return `<button class="cell srow" data-go="${m ? `modul-${m.id}` : "trainieren"}">${blob(m ? m.color : "#8b9ab8")}<span class="cell-main"><span class="cell-title">${m ? m.title : "Weitere Übungen"}</span><span class="cell-sub">${dayLabel(r.d)} geübt</span></span><span class="sv"><b>+${nf(r.v)}</b><small>Punkte</small></span></button>`; }).join("");
+}
+function topicRows() {
+  return MODS.map(m => { const [a, b] = unitsOf(m), v = modProgress(m.id);
+    return `<button class="cell srow" data-go="modul-${m.id}">${blob(m.color)}<span class="cell-main"><span class="cell-title">${m.title}</span><span class="cell-sub">${a} von ${b} Lernseiten gelesen</span></span><span class="sv"><b>${v} %</b><small>gelernt</small></span></button>`; }).join("")
+    + (CODE.length ? `<button class="cell srow" data-go="code">${blob(APPLE.graphit)}<span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML und CSS, JavaScript, SQL</span></span><span class="sv"><b>${codeAll()} %</b><small>gelernt</small></span></button>` : "");
+}
 function vStart() {
   setNav({});
-  const n = doneToday(), streak = streakNow(), lvl = Math.floor(Math.sqrt((S.xp || 0) / 50)) + 1, st = nextStep();
-  actHandler = (act, el) => {
+  const n = doneToday(), total = overallProgress(), st = nextStep(), recent = recentRows();
+  actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
-    if (act === "htab") {
-      if (homeTab === el.dataset.v) return;
-      homeTab = el.dataset.v; haptic("select");
-      view.querySelectorAll(".hchip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === homeTab));
-      const g = view.querySelector(".cgrid"); g.innerHTML = homeCards(); g.classList.remove("swap"); void g.offsetWidth; g.classList.add("swap");
-    }
   };
-  const chip = (v, ic, label) => `<button class="hchip" data-act="htab" data-v="${v}" aria-pressed="${homeTab === v}">${icon(ic, 16)}${label}</button>`;
   paint(`
-  <header class="hhead">
-    <span class="hav" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="hhi"><b>${greeting().replace(".", "!")}</b><small>Level ${lvl} · ${nf(S.xp)} Punkte</small></span>
+  <header class="shead">
+    <p class="shi">${(w => `<span>${w[0]}</span><span class="hav" aria-hidden="true"><i></i><i></i><i></i></span><span>${w.slice(1).join(" ")}</span>`)(greeting().replace(".", "").split(" "))}</p>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <button class="hsearch" data-go="suche">${icon("suche", 18)}<span>Suche nach Thema, Begriff, Port …</span></button>
-  <section class="hero2" aria-label="Dein nächster Schritt">
-    ${doodles([["bulb", 80, 26, -14, 1.5], ["globe", 74, 40, 10, 1.05], ["spark", 90, 40, 0, .9], ["lock", 86, 52, -8, 1]], "hr-dd")}
-    <div class="hr-top"><span class="hr-k">${st.started ? "Weiter geht's" : "Dein erster Schritt"}</span>${miniRing(Math.min(n, DAY_GOAL), DAY_GOAL)}</div>
-    <h2 class="hr-t">${st.started ? "Weiter mit" : "Starte mit"}<br><b>${st.m.title}</b></h2>
-    <p class="hr-s">${st.unit} · ${st.read} von ${st.total} gelesen</p>
-    <div class="hr-act"><button class="hr-go" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}${icon("right", 16)}</button><button class="hr-mix" data-go="heute">Tagesmix</button></div>
-    <div class="hr-week"><div class="hr-wh"><span>Deine Woche · ${n} von ${DAY_GOAL} Aufgaben heute</span><span>${icon("flame", 14)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span></div>${weekStrip()}</div>
+  <section class="sbig" aria-label="Dein Lernstand">
+    <p class="s-earn">Du hast heute <button class="lchip" data-go="heute">${n} ${n === 1 ? "Aufgabe" : "Aufgaben"}${icon("right", 13)}</button> gelöst, dein Lernstand liegt bei</p>
+    <h1 class="s-num">${total}<span>%</span></h1>
   </section>
+  ${mountainSVG()}
+  <div class="s-act">
+    <button class="lpill" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}<span class="lp-i">${icon("right", 16)}</span></button>
+    <button class="gpill" data-go="heute">Tagesmix</button>
+  </div>
+  <p class="s-next">Als Nächstes: <b>${st.m.title}</b> · ${st.unit}</p>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
     <ol>
@@ -3058,10 +3174,8 @@ function vStart() {
     </ol>
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  <section class="section" aria-label="Lernen">
-    <div class="hchips">${chip("themen", "themen", "Themen")}${CODE.length ? chip("code", "code", "Programmieren") : ""}${chip("pruefen", "timer", "Prüfen")}</div>
-    <div class="cgrid">${homeCards()}</div>
-  </section>`);
+  ${recent ? `<section class="section"><div class="hsec"><h2>Zuletzt geübt</h2><button class="hsee" data-go="trainieren">Alle${icon("right", 14)}</button></div><div class="group">${recent}</div></section>` : ""}
+  <section class="section"><div class="hsec"><h2>Deine Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="group">${topicRows()}</div></section>`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
