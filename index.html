@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#e7f2ea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -30,7 +30,7 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#eef1f7;
+  --bg:#e7f2ea;
   /* Regenbogen der Apple-Design-Seite: Blau, Lila, Rot, Orange, Gelb, Grün */
   --rainbow:linear-gradient(90deg,#009ddc,#963d97 24%,#e03a3e 46%,#f5821f 64%,#fdb827 82%,#61bb46);
   --bar:var(--rainbow);
@@ -1135,69 +1135,70 @@ main{zoom:var(--zoom,1)}
 #edgeSwipe{position:fixed;left:0;top:calc(56px + env(safe-area-inset-top,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));width:16px;z-index:24;touch-action:pan-y;display:none}
 @media (pointer:coarse){#edgeSwipe:not([hidden]){display:block}}
 
-/* ===== Clean-Look: helle Fläche mit sanftem Verlauf, weiße Karten ohne Rahmen, Zeilen als einzelne Karten,
-   eine Pastell-Karte für den Fortschritt, runde Symbole und eine kompakte Leiste mit runden Knöpfen ===== */
+/* ===== Look nach der Vorlage: Mint-Lime-Verlauf, weiße Karten ohne Rahmen, gelbe XP-Karte, Zeilen als Einzelkarten,
+   grüne Werte, Punktdiagramm mit gelber Säule und runde Einzelknöpfe unten ===== */
 :root{
-  --bg:#eef1f7;--bg-a:#e2ddfb;--bg-b:#d6ebf6;
-  --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.5);
-  --label:#101318;--label-2:rgba(16,19,24,.56);--label-3:rgba(16,19,24,.34);--sep:rgba(16,19,24,.09);
-  --fill:rgba(16,19,24,.06);--fill-2:#f3f5f9;--fill-3:rgba(16,19,24,.14);
-  --ink:#111318;--on-ink:#ffffff;--ink-mix:#000;
-  --hero:#a6d9f3;--hero-ink:#0c1a24;--hero-dot:#2b9fd6;--dot:#9aa1ad;
-  --sh:0 1px 2px rgba(16,24,40,.04),0 8px 22px -14px rgba(16,24,40,.18);
-  --sh-lg:0 2px 4px rgba(16,24,40,.04),0 22px 44px -22px rgba(16,24,40,.3);
+  --bg:#e7f2ea;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
+  --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.45);
+  --label:#121212;--label-2:rgba(18,18,18,.52);--label-3:rgba(18,18,18,.32);--sep:rgba(18,18,18,.08);
+  --fill:rgba(18,18,18,.06);--fill-2:#f4f6f3;--fill-3:rgba(18,18,18,.14);
+  --ink:#141414;--on-ink:#ffffff;--ink-mix:#000;
+  --hero:#f9f37d;--hero-ink:#121212;--hero-dot:#f2e600;--hero-ring:#e9da10;--dot:#5a5a5a;
+  --pos:#1f9a1f;--neg:#c42a2a;
+  --sh:0 1px 2px rgba(20,40,20,.04),0 6px 18px -12px rgba(20,40,20,.16);
+  --sh-lg:0 2px 4px rgba(20,40,20,.04),0 18px 40px -22px rgba(20,40,20,.28);
   --glass-edge:transparent;--card-shadow:var(--sh);--orb-show:none;
+  --f-ui:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-display:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0c0d10;--bg-a:rgba(110,96,220,.2);--bg-b:rgba(0,157,220,.16);
-  --surface:#18191d;--face:#1d1e23;--solid:#18191d;--side:rgba(24,25,29,.55);
-  --label:#f4f5f7;--label-2:rgba(244,245,247,.6);--label-3:rgba(244,245,247,.34);--sep:rgba(255,255,255,.09);
+  --bg:#0b0d0b;--bg-a:rgba(60,160,120,.16);--bg-b:rgba(190,210,60,.1);--bg-c:rgba(40,140,150,.1);
+  --surface:#171917;--face:#1c1e1c;--solid:#171917;--side:rgba(23,25,23,.55);
+  --label:#f3f5f2;--label-2:rgba(243,245,242,.58);--label-3:rgba(243,245,242,.32);--sep:rgba(255,255,255,.08);
   --fill:rgba(255,255,255,.08);--fill-2:rgba(255,255,255,.05);--fill-3:rgba(255,255,255,.16);
-  --ink:#ffffff;--on-ink:#0c0d10;--ink-mix:#fff;--dot:#4b505a;
+  --ink:#ffffff;--on-ink:#101210;--ink-mix:#fff;--dot:#6b6f6b;--pos:#4fd14f;--neg:#ff6b6b;
   --sh:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -16px rgba(0,0,0,.8);
   --sh-lg:0 1px 0 rgba(255,255,255,.04) inset,0 24px 44px -22px rgba(0,0,0,.9);
 }}
 :root[data-theme="dark"]{
-  --bg:#0c0d10;--bg-a:rgba(110,96,220,.2);--bg-b:rgba(0,157,220,.16);
-  --surface:#18191d;--face:#1d1e23;--solid:#18191d;--side:rgba(24,25,29,.55);
-  --label:#f4f5f7;--label-2:rgba(244,245,247,.6);--label-3:rgba(244,245,247,.34);--sep:rgba(255,255,255,.09);
+  --bg:#0b0d0b;--bg-a:rgba(60,160,120,.16);--bg-b:rgba(190,210,60,.1);--bg-c:rgba(40,140,150,.1);
+  --surface:#171917;--face:#1c1e1c;--solid:#171917;--side:rgba(23,25,23,.55);
+  --label:#f3f5f2;--label-2:rgba(243,245,242,.58);--label-3:rgba(243,245,242,.32);--sep:rgba(255,255,255,.08);
   --fill:rgba(255,255,255,.08);--fill-2:rgba(255,255,255,.05);--fill-3:rgba(255,255,255,.16);
-  --ink:#ffffff;--on-ink:#0c0d10;--ink-mix:#fff;--dot:#4b505a;
+  --ink:#ffffff;--on-ink:#101210;--ink-mix:#fff;--dot:#6b6f6b;--pos:#4fd14f;--neg:#ff6b6b;
   --sh:0 1px 0 rgba(255,255,255,.03) inset,0 10px 24px -16px rgba(0,0,0,.8);
   --sh-lg:0 1px 0 rgba(255,255,255,.04) inset,0 24px 44px -22px rgba(0,0,0,.9);
 }
-/* Hintergrund: zwei weiche Farbflecken über einer ruhigen Grundfarbe */
-#aurora{background:radial-gradient(110% 60% at 0% 0%,var(--bg-a),transparent 62%),radial-gradient(100% 70% at 100% 100%,var(--bg-b),transparent 60%),var(--bg)}
+/* Hintergrund: Mint links, Lime oben rechts, ein kühler Ton unten */
+#aurora{background:radial-gradient(90% 55% at 0% 30%,var(--bg-a),transparent 65%),radial-gradient(80% 50% at 100% 0%,var(--bg-b),transparent 65%),radial-gradient(90% 60% at 90% 100%,var(--bg-c),transparent 62%),var(--bg)}
 #aurora i,#aurora b{display:none}
-/* Flächen: weiß, ohne Rahmen und Glas, mit weichem Schatten */
+/* Flächen: weiß, ohne Rahmen und Glas */
 .card,.group,.hub,.hub.solid,.tile,.mode,.mod-tile,.gtile,.face,.ez-next{background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh);-webkit-backdrop-filter:none;backdrop-filter:none}
-.card,.group{border-radius:24px}
-.tile,.mode,.mod-tile{border-radius:22px}
-.mini,.mcell,.sublayer,.mnemo-box,.stat,.fields div{background:var(--fill-2);border:0;border-radius:16px}
-.explain{border-radius:18px}
-.kicker,.group-h{font-size:13px;font-weight:550;color:var(--label-2);text-transform:none;letter-spacing:0}
-.large{font-weight:700;letter-spacing:-.03em}
-.section-t{font-size:17px;font-weight:650;letter-spacing:-.01em}
-/* Listen: jede Zeile ist eine eigene Karte, wenn eine Gruppe nur aus Zeilen besteht */
+.card,.group{border-radius:22px}
+.tile,.mode,.mod-tile{border-radius:18px}
+.mini,.mcell,.sublayer,.mnemo-box,.stat,.fields div{background:var(--fill-2);border:0;border-radius:14px}
+.explain{border-radius:16px}
+.kicker,.group-h{font-size:13px;font-weight:500;color:var(--label-2);text-transform:none;letter-spacing:0}
+.large{font-weight:650;letter-spacing:-.03em}
+.section-t{font-size:15px;font-weight:600;letter-spacing:-.005em}
+/* Listen aus reinen Zeilen: jede Zeile eine eigene Karte */
 .group:not(:has(> :not(.cell,.opt))){background:transparent;box-shadow:none;border-radius:0;overflow:visible;display:flex;flex-direction:column;gap:8px}
-.group:not(:has(> :not(.cell,.opt))) > .cell,.group:not(:has(> :not(.cell,.opt))) > .opt{background:var(--surface);border-radius:20px;box-shadow:var(--sh)}
+.group:not(:has(> :not(.cell,.opt))) > .cell,.group:not(:has(> :not(.cell,.opt))) > .opt{background:var(--surface);border-radius:18px;box-shadow:var(--sh)}
 .group:not(:has(> :not(.cell,.opt))) > :is(.cell,.opt) + :is(.cell,.opt)::before{display:none}
 .cell{min-height:60px;padding:10px 16px 10px 12px}
-.cell-title{font-weight:550}
-.cell-sub{font-size:13px}
-.cell-detail{color:var(--label);font-weight:650}
-/* Runde, zart getönte Symbole in Zeilen und Kacheln */
-:is(.cell,.mod-card,.mod-tile,.hub) :is(.si,.cell-ic),.hub.solid .cell-ic{width:44px;height:44px;border-radius:50%;background:color-mix(in srgb,var(--c,var(--ink)) 15%,var(--surface));color:color-mix(in srgb,var(--c,var(--ink)) 82%,var(--ink-mix));background-image:none;box-shadow:none;font-weight:700}
+.cell-title{font-weight:500}
+.cell-sub{font-size:12.5px}
+.cell-detail{color:var(--label);font-weight:600}
+:is(.cell,.mod-card,.mod-tile,.hub) :is(.si,.cell-ic),.hub.solid .cell-ic{width:42px;height:42px;border-radius:50%;background:color-mix(in srgb,var(--c,var(--ink)) 15%,var(--surface));color:color-mix(in srgb,var(--c,var(--ink)) 82%,var(--ink-mix));background-image:none;box-shadow:none;font-weight:700}
 .cell-ic.gray{background:var(--fill);color:var(--label)}
-/* Themen- und Sprachzeilen */
 .mod-list{gap:8px}
-.mod-card,.hub,.hub.solid{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:11px 18px 11px 11px;border-radius:22px;background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh)}
-.mod-card b,.hub b{font-size:16px;font-weight:600;letter-spacing:-.01em}
-.mod-card small,.hub small,.hub.solid small{color:var(--label-2);font-size:13px}
-.mc-v{font-size:16px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mod-card,.hub,.hub.solid{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:11px 18px 11px 11px;border-radius:18px;background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh)}
+.mod-card b,.hub b{font-size:15.5px;font-weight:500;letter-spacing:-.005em}
+.mod-card small,.hub small,.hub.solid small{color:var(--label-2);font-size:12.5px}
+.mc-v{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .hub .chev,.hub.solid .chev{color:var(--label-3);opacity:1}
-/* Kopfkarten der Themen: Pastell in der Themenfarbe mit dunkler Schrift */
-.page-hero{color:var(--label);border-radius:28px}
+/* Kopfkarten der Themen: Pastell in der Themenfarbe, dunkle Schrift */
+.page-hero{color:var(--label);border-radius:24px}
 .ph-bg{background:color-mix(in srgb,var(--c) 22%,var(--surface));box-shadow:var(--sh)}
 .page-hero .large,.page-hero .ph-k,.page-hero .ph-l,.page-hero .ph-en,.page-hero .exam-note{color:inherit}
 .page-hero .ph-l,.page-hero .exam-note{color:var(--label-2)}
@@ -1206,84 +1207,114 @@ main{zoom:var(--zoom,1)}
 .ph-bar i{background:color-mix(in srgb,var(--c) 85%,var(--ink-mix))}
 .page-hero .btn-fill{background:var(--ink);color:var(--on-ink)}
 .page-hero .btn-tint,.page-hero .btn.done{background:var(--surface);color:var(--label);border:0}
-/* Knöpfe: dunkle Pille als Hauptknopf, sonst weiß */
-.btn{border-radius:999px;font-weight:600}
-.btn-lg{border-radius:999px;height:56px}
+/* Knöpfe */
+.btn{border-radius:16px;font-weight:600}
+.btn-lg{border-radius:18px;height:56px}
 .btn-fill{background:var(--ink);color:var(--on-ink)}
 .btn-gray,.btn-tint{background:var(--surface);color:var(--label);border:0;box-shadow:var(--sh)}
-.back{height:40px;margin-left:8px;padding:0 14px 0 6px;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label);font-size:15px;font-weight:550}
+.back{height:40px;margin-left:8px;padding:0 14px 0 6px;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label);font-size:15px;font-weight:500}
 .nb-round{background:var(--surface);border:0;box-shadow:var(--sh);color:var(--label);-webkit-backdrop-filter:none;backdrop-filter:none}
 .navbar.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom-color:transparent}
-.seg{background:var(--surface);border:0;box-shadow:var(--sh);border-radius:999px;padding:3px}
-.seg-thumb{top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / var(--n));border-radius:999px;background:var(--ink);box-shadow:none}
-.seg button{border-radius:999px;transition:color .25s,transform .3s var(--ease-spring)}
+.seg{background:var(--surface);border:0;box-shadow:var(--sh);border-radius:14px;padding:3px}
+.seg-thumb{top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / var(--n));border-radius:11px;background:var(--ink);box-shadow:none}
+.seg button{border-radius:11px;transition:color .25s,transform .3s var(--ease-spring)}
 .seg button[aria-pressed="true"]{color:var(--on-ink)}
 .easy-sw{background:var(--surface);border:0;box-shadow:var(--sh)}
 .easy-thumb{background:var(--ink);box-shadow:none}
 .easy-sw.on .easy-l:nth-of-type(2),.easy-sw:not(.on) .easy-l:nth-of-type(3){color:var(--on-ink)}
-.search-box{height:52px;padding:0 18px;border-radius:999px;background:var(--surface);box-shadow:var(--sh)}
+.search-box{height:52px;padding:0 18px;border-radius:16px;background:var(--surface);box-shadow:var(--sh)}
 .chip{background:var(--surface);box-shadow:var(--sh)}
-/* Quiz und Lernkarten */
 .opt .key{background:transparent;border:1.5px solid var(--sep)}
 .opt.ok .key,.opt.no .key{border-color:transparent}
-.face{border-radius:28px;box-shadow:var(--sh-lg)}
-.flash{border-radius:28px}
+.face{border-radius:24px;box-shadow:var(--sh-lg)}
+.flash{border-radius:24px}
 .deck::before,.deck::after{background:var(--surface);border:0;box-shadow:var(--sh)}
-/* Ergebnisse als Punktsäulen */
-.hist{height:120px;gap:5px;border-bottom:0}
+/* Quiz-Ergebnisse als Punktsäulen */
+.hist{height:130px;gap:4px;border-bottom:0}
 .hcol i{border-radius:0;min-height:7px;background:radial-gradient(circle,var(--dot) 2.2px,transparent 2.7px) 50% 100%/7px 7px}
 .hcol:last-child i{--dot:var(--hero-dot)}
 .hcol:last-child span{bottom:calc(var(--h) + 6px);left:50%;right:auto;transform:translateX(-50%);padding:3px 8px;border-radius:8px;background:var(--hero);color:var(--hero-ink);white-space:nowrap}
-/* Tab-Leiste: kompakte Kapsel mit runden Knöpfen, der aktive ist dunkel */
-.tabbar{width:auto;grid-template-columns:repeat(5,52px);padding:6px;gap:0;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--sh-lg);-webkit-backdrop-filter:none;backdrop-filter:none}
-.tab{width:52px;height:52px;border-radius:50%;color:var(--label-2)}
+/* Tab-Leiste: fünf runde weiße Knöpfe, der aktive ist schwarz */
+.tabbar{width:auto;grid-template-columns:repeat(5,62px);padding:6px 5px;gap:0;border:0;border-radius:0;background:radial-gradient(circle at 31px 32px,var(--surface) 25.5px,transparent 26.5px) 5px 0/62px 100% repeat-x;box-shadow:none;filter:drop-shadow(0 6px 10px rgba(20,40,20,.14));-webkit-backdrop-filter:none;backdrop-filter:none}
+.tab{width:62px;height:52px;border-radius:50%;color:var(--label)}
 .tab span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.tab-ind{top:6px;bottom:6px;left:6px;width:52px;border-radius:50%;background:var(--ink);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.tabbar .tab-ind{top:6px;bottom:6px;left:10px;width:52px;border-radius:50%;background:var(--ink);box-shadow:none;transform:translateX(calc(var(--i,0) * 62px));-webkit-backdrop-filter:none;backdrop-filter:none}
 .tab-ind::after{display:none}
 .tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--on-ink)}
+.tabbar.dragging .tab[aria-current="page"]:not(.hov){color:var(--label)}
 /* Seitenleiste am Computer */
 .sidebar{background:var(--side);border-right:0;box-shadow:1px 0 0 var(--sep)}
-.side-item{border-radius:999px}
+.side-item{border-radius:12px}
 .side-item[aria-current="page"]{background:var(--ink);color:var(--on-ink)}
 .app-mark{background:var(--ink)}
 .app-mark i{background:var(--on-ink)}
-/* Startseite */
-.hhead{display:flex;align-items:center;gap:12px;padding-top:4px}
-.hmark{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);display:flex;flex-direction:column;justify-content:center;gap:3.5px;padding:0 12px}
-.hmark i{display:block;height:3.5px;border-radius:2px;background:var(--on-ink)}
+/* Startseite: Kopfzeile */
+.hhead{display:flex;align-items:center;gap:10px;padding-top:4px}
+.hmark{flex:none;width:40px;height:40px;border-radius:50%;background:var(--ink);display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 11px}
+.hmark i{display:block;height:3px;border-radius:2px;background:var(--on-ink)}
 .hmark i:nth-child(2){margin-right:3px}
-.hmark i:nth-child(3){margin-right:7px}
-.hhi{flex:1;min-width:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
-.hcard{padding:7px;border-radius:30px;background:var(--surface);box-shadow:var(--sh-lg)}
-.hc-top{display:flex;flex-direction:column;align-items:center;gap:3px;padding:20px 18px 22px;border-radius:24px;background:var(--hero);color:var(--hero-ink);text-align:center}
-.hc-k{font-size:16px;font-weight:650}
-.hc-s{font-size:12px;opacity:.68}
-.hc-n{margin-top:8px;font-size:clamp(46px,13vw,60px);font-weight:750;line-height:1;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
-.hc-d{margin-top:6px;font-size:15px;font-weight:600}
-.hc-acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:8px 0 2px}
-.hc-acts button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:72px;padding:8px 4px;border:0;border-radius:18px;background:transparent;color:var(--label-2);font:550 13.5px/1.2 var(--f-ui);cursor:pointer;transition:background .2s,transform .35s var(--ease-spring)}
+.hmark i:nth-child(3){margin-right:6px}
+.hhi{flex:1;min-width:0;font-size:15px;font-weight:500}
+.hic{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:var(--label);cursor:pointer;transition:background .2s}
+.hic:active{background:var(--fill)}
+/* Gelbe XP-Karte in weißer Karte, darunter drei Aktionen */
+.hcard{padding:6px;border-radius:26px;background:var(--surface);box-shadow:var(--sh-lg)}
+.hc-top{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:18px 18px 22px;border-radius:21px;background:var(--hero);color:var(--hero-ink);text-align:center}
+.hc-k{font-size:15px;font-weight:650;letter-spacing:.01em}
+.hc-eye{position:absolute;top:10px;right:10px;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer}
+.hc-eye:active{background:rgba(0,0,0,.06)}
+.hc-s{font-size:11.5px;opacity:.62}
+.hc-n{margin-top:10px;font-size:clamp(46px,13.5vw,60px);font-weight:700;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hc-d{margin-top:8px;font-size:15px;font-weight:600}
+.hc-acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:6px 0 0}
+.hc-acts button{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:70px;padding:8px 4px;border:0;border-radius:16px;background:transparent;color:var(--label-2);font:500 13px/1.2 var(--f-ui);cursor:pointer;transition:background .2s,transform .35s var(--ease-spring)}
 .hc-acts button:active{background:var(--fill-2);transform:scale(.96)}
-.hc-acts button + button::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--sep)}
-.hc-i{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--sep);color:var(--label)}
-.hsec{display:flex;align-items:center;justify-content:space-between;padding:0 4px}
-.hsec h2{font-size:15px;font-weight:600;letter-spacing:-.005em}
-.hsee{min-height:44px;padding:0 4px;border:0;background:transparent;color:var(--label-2);font-size:14px;cursor:pointer}
-.ltiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(118px,1fr);gap:10px;margin:0 -16px;padding:2px 16px 10px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:16px;scrollbar-width:none}
+.hc-acts button + button::before{content:"";position:absolute;left:0;top:24%;bottom:24%;width:1px;background:var(--sep)}
+.hc-i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--label-3);color:var(--label)}
+.hsec{display:flex;align-items:center;justify-content:space-between;padding:0 4px;margin-bottom:-4px}
+.hsec h2{font-size:14px;font-weight:500}
+.hsee{min-height:40px;padding:0 4px;border:0;background:transparent;color:var(--label-2);font-size:13px;cursor:pointer}
+/* Aktivität: Zeilen mit rundem Avatar und grünem Wert */
+.tday{margin:2px 4px -2px;font-size:13px;color:var(--label-2)}
+.trow{min-height:64px}
+.tav{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--cs,var(--ink));color:var(--on,var(--on-ink))}
+.trow .cell-sub{display:flex;align-items:center;gap:5px}
+.trow .cell-sub .ic{opacity:.7}
+.tval{font-size:17px;font-weight:550;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--label-2)}
+.tval.pos{color:var(--pos)}
+.tval.neg{color:var(--neg)}
+/* Kacheln wie die Währungskacheln */
+.ltiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(104px,calc((100% - 20px) / 3));gap:10px;margin:0 -16px;padding:2px 16px 10px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:16px;scrollbar-width:none}
 .ltiles::-webkit-scrollbar{display:none}
 .ltiles > .ltile:nth-child(n){grid-column:auto}
-.ltile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:132px;padding:12px;scroll-snap-align:start}
-.ltile .si{width:38px;height:38px;font-size:12.5px}
-.lt-n{margin-top:auto;font-size:12.5px;color:var(--label-2);line-height:1.25}
-.lt-v{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums}
-.ltile.dark{align-items:center;justify-content:center;gap:8px;text-align:center;background:var(--ink);color:var(--on-ink)}
-.ltile.dark b{font-size:14px;font-weight:600;line-height:1.25}
-@media (min-width:900px){.ltiles{margin:0;padding:2px 0 10px;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.ltile{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:118px;padding:11px;scroll-snap-align:start;text-align:left}
+.ltile .si{width:30px;height:30px;font-size:11px}
+.lt-n{margin-top:auto;font-size:11.5px;color:var(--label-2);line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lt-v{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.ltile.dark{align-items:center;justify-content:center;gap:6px;text-align:center;background:var(--ink);color:var(--on-ink)}
+.ltile.dark b{font-size:13px;font-weight:500;line-height:1.25}
+/* Punktdiagramm */
+.dchart{padding:18px 18px 16px;border-radius:24px}
+.dc-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dc-h h2{font-size:15px;font-weight:500}
+.dc-span{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 2px 0 8px;border:0;background:transparent;color:var(--label-2);font:500 13.5px var(--f-ui);cursor:pointer}
+.dc-plot{position:relative;display:flex;align-items:flex-end;justify-content:space-between;height:178px;padding-top:24px;touch-action:pan-y;cursor:crosshair}
+.dc{display:block;flex:none;width:7px;height:calc(var(--n) * 7px);background:radial-gradient(circle,var(--dot) 2px,transparent 2.5px) 50% 100%/7px 7px repeat-y;transform-origin:bottom;animation:grow .7s var(--ease-ios) both}
+.dc.on{--dot:var(--hero-dot);position:relative}
+.dc.on::before{content:"";position:absolute;left:50%;top:-14px;width:12px;height:12px;margin-left:-6px;border-radius:50%;border:3px solid var(--hero-ring);background:var(--surface)}
+.dc-tip{position:absolute;z-index:2;top:0;left:0;display:flex;flex-direction:column;gap:1px;padding:7px 10px;border-radius:9px;background:var(--hero);color:var(--hero-ink);white-space:nowrap;pointer-events:none;transform:translate(12px,-14px);transition:left .18s var(--ease-soft),top .18s var(--ease-soft)}
+.dc-tip.flip{transform:translate(calc(-100% - 12px),-14px)}
+.dc-tip b{font-size:15px;font-weight:650;font-variant-numeric:tabular-nums}
+.dc-tip small{font-size:11px}
 .first-open .hhead{animation:riseIn .8s var(--ease-ios) both;animation-delay:var(--intro,0s)}
 .first-open .hcard{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .12s)}
-.first-open .hhead ~ .section{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .26s)}
+.first-open .hhead ~ :is(.section,.dchart):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .26s)}
+@media (min-width:900px){.ltiles{margin:0;padding:2px 0 10px;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}}
 @media (hover:hover) and (pointer:fine){
   .mod-card:hover,.hub:hover,.mod-tile:hover,.tile:hover,.mode:not([disabled]):hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
 }
+@media (prefers-reduced-motion:reduce){.dc{animation:none}.dc-tip{transition:none}}
+@media (min-width:600px){.dc{width:14px;background-repeat:repeat}.dc.on::before{width:14px;height:14px;margin-left:-7px}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1346,7 +1377,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#eef1f7" : i ? "#000000" : "#eef1f7"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#e7f2ea" : i ? "#000000" : "#e7f2ea"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -1774,7 +1805,7 @@ const MNEMO = {
 
 /* ---------------- Fortschritt ---------------- */
 const LS_KEY = "itlernlabor.osi.v1";
-const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, mq:{}, unitsDone:{}, code:{read:{}, done:{}, last:null}, updatedAt:0});
+const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, act:{}, mq:{}, unitsDone:{}, code:{read:{}, done:{}, last:null}, updatedAt:0});
 const clone = o => JSON.parse(JSON.stringify(o));
 let S = DEFAULT();
 try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
@@ -1850,12 +1881,17 @@ function grade(id, ok, xp) {
   const d = today(), rec = S.srs[id] || {b:0, d:0};
   const b = ok ? Math.min(SRS_DAYS.length - 1, rec.b + 1) : 0;
   S.srs[id] = {b, d:d + SRS_DAYS[b]};
-  countDay(xp);
+  countDay(xp, (CARD_BY_ID[id] || Q_BY_ID[id] || {}).m);
 }
-function countDay(xp) {
+/* Zählt die Übung des Tages; S.act merkt sich pro Tag und Thema die XP (für das Punktdiagramm und „Heute / Gestern“). */
+function countDay(xp, m) {
   const d = today();
   if (S.day.d !== d) S.day = {d, n:0};
   S.day.n++;
+  if (!S.act || typeof S.act !== "object") S.act = {};
+  const a = S.act[d] || (S.act[d] = {}), k = m || "x";
+  a[k] = (a[k] || 0) + xp;
+  Object.keys(S.act).forEach(k2 => { if (+k2 < d - 400) delete S.act[k2]; });
   if (S.streak.last !== d) S.streak = {n:S.streak.last === d - 1 ? S.streak.n + 1 : 1, last:d};
   S.xp += xp;
 }
@@ -2641,32 +2677,102 @@ const greetHTML = () => greeting().split(" ").map((w, i, a) => `<span class="gw"
 const shelfCard = (m, i) => `<button class="shelf-card" data-go="modul-${m.id}" style="${onColor(m.color)};--i:${i}">${icon(m.icon, 42)}<span class="shelf-text"><b>${m.title}</b><small>${m.sub}</small><span class="shelf-bar"><i style="width:${modProgress(m.id)}%"></i></span></span></button>`;
 /* Startseite im Apple-Glas-Look: Gruß, Regenbogen-Regler „Jetzt lernen“, Themen als Glas-Kacheln mit farbiger Kapsel */
 const homeTile = (go, color, ic, title, v) => `<button class="gtile" data-go="${go}" style="${onColor(color)}"><span class="gcap">${icon(ic, 22)}</span><b>${title}</b><span class="gbar"><i style="width:${v}%"></i></span></button>`;
-/* Startseite im Clean-Look: Kopfzeile, Fortschrittskarte mit drei Aktionen, Themen als Zeilen, Sprachen als Kacheln */
+/* Startseite nach der Vorlage: Kopfzeile, gelbe XP-Karte mit drei Aktionen, Aktivität „Heute / Gestern“,
+   Themen als Kacheln und ein Punktdiagramm der gesammelten XP */
 const langTile = l => `<button class="mod-tile ltile" data-go="code-${l.id}">${langBadge(l)}<span class="lt-n">${l.title}</span><b class="lt-v">${codeProgress(l)} %</b></button>`;
+const topicTile = m => `<button class="mod-tile ltile" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 16)}<span class="lt-n">${m.title}</span><b class="lt-v">${modProgress(m.id)} %</b></button>`;
+const nf = n => Math.round(n).toLocaleString("de-DE");
+const actOf = d => (S.act && S.act[d]) || {};
+const actSum = d => Object.values(actOf(d)).reduce((a, b) => a + b, 0);
+const dayDate = d => new Date(d * 864e5);
+const dayLabel = d => { const t = today(); return d === t ? "Heute" : d === t - 1 ? "Gestern" : dayDate(d).toLocaleDateString("de-DE", {weekday:"short", day:"2-digit", month:"2-digit", timeZone:"UTC"}); };
+const EYE = '<svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 5.6A10 10 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-2.7 3.4M6.4 6.4C3.9 8.1 2.5 12 2.5 12S6 18.5 12 18.5a9.6 9.6 0 0 0 5.2-1.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="m3.5 3.5 17 17"/></svg>';
+let hideXp = false;
+try { hideXp = localStorage.getItem("itlernlabor.hidexp") === "1"; } catch (e) {}
+let chartSpan = "w";
+function actRows(d) {
+  const a = actOf(d), keys = Object.keys(a).filter(k => a[k] > 0).sort((x, y) => a[y] - a[x]);
+  return keys.map(k => {
+    const m = MOD[k];
+    const av = m ? `<span class="tav" style="${onColor(m.color)}">${icon(m.icon, 19)}</span>` : `<span class="tav">${icon("mix", 19)}</span>`;
+    return `<button class="cell trow" data-go="${m ? `modul-${m.id}` : "trainieren"}">${av}<span class="cell-main"><span class="cell-title">${m ? m.title : "Weitere Übungen"}</span><span class="cell-sub">Geübt ${icon("spark", 13)}</span></span><span class="tval pos">+${nf(a[k])} XP</span></button>`;
+  }).join("");
+}
+function chartData() {
+  const t = today();
+  if (chartSpan === "w") return Array.from({length:28}, (_, i) => { const d = t - 27 + i; return {v:actSum(d), label:dayLabel(d)}; });
+  return Array.from({length:52}, (_, i) => {
+    const end = t - (51 - i) * 7;
+    let v = 0;
+    for (let d = end - 6; d <= end; d++) v += actSum(d);
+    return {v, label:i === 51 ? "Diese Woche" : "Woche bis " + dayDate(end).toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit", timeZone:"UTC"})};
+  });
+}
+function chartHTML() {
+  const data = chartData(), max = Math.max(1, ...data.map(x => x.v)), total = data.reduce((a, x) => a + x.v, 0);
+  const sel = data.reduce((bi, x, i) => x.v > data[bi].v ? i : bi, data.length - 1);
+  const cols = data.map((x, i) => `<i class="dc${i === sel ? " on" : ""}" style="--n:${3 + Math.round((x.v / max) * 17)}" data-v="${x.v}" data-l="${x.label}"></i>`).join("");
+  return `<section class="card dchart" aria-label="Gesammelte XP">
+    <div class="dc-h"><h2>Gesammelte XP</h2><button class="dc-span" data-act="span">${chartSpan === "w" ? "4 Wochen" : "12 Monate"}${icon("down", 14)}</button></div>
+    <div class="dc-plot" role="img" aria-label="${total} XP in ${chartSpan === "w" ? "den letzten 4 Wochen" : "den letzten 12 Monaten"}">${cols}<span class="dc-tip"><b></b><small></small></span></div>
+  </section>`;
+}
+/* Tooltip und gelbe Säule folgen Finger oder Maus */
+function wireChart() {
+  const plot = view.querySelector(".dc-plot");
+  if (!plot) return;
+  const cols = [...plot.querySelectorAll(".dc")], tip = plot.querySelector(".dc-tip");
+  const pick = c => {
+    cols.forEach(x => x.classList.toggle("on", x === c));
+    tip.querySelector("b").textContent = (hideXp ? "••••" : nf(+c.dataset.v)) + " XP";
+    tip.querySelector("small").textContent = c.dataset.l;
+    const x = c.offsetLeft + c.offsetWidth / 2, right = x > plot.clientWidth * .6;
+    tip.style.left = x + "px";
+    tip.style.top = c.offsetTop + "px";
+    tip.classList.toggle("flip", right);
+  };
+  const at = e => { const x = e.clientX; let best = cols[0], bd = Infinity; cols.forEach(c => { const r = c.getBoundingClientRect(), dd = Math.abs(r.left + r.width / 2 - x); if (dd < bd) { bd = dd; best = c; } }); if (!best.classList.contains("on")) { pick(best); haptic("select"); } };
+  plot.addEventListener("pointerdown", at);
+  plot.addEventListener("pointermove", e => { if (e.pointerType === "mouse" || e.buttons) at(e); });
+  requestAnimationFrame(() => pick(plot.querySelector(".dc.on") || cols[cols.length - 1]));
+}
 function vStart() {
   setNav({});
-  const total = overallProgress(), due = dueCount();
+  const t = today(), due = dueCount(), xpToday = actSum(t), streak = streakNow();
+  actHandler = act => {
+    if (act === "hide") { hideXp = !hideXp; try { localStorage.setItem("itlernlabor.hidexp", hideXp ? "1" : "0"); } catch (e) {} haptic("light"); vStart(); }
+    if (act === "span") { chartSpan = chartSpan === "w" ? "y" : "w"; haptic("select"); const c = view.querySelector(".dchart"); if (c) { c.outerHTML = chartHTML(); wireChart(); } }
+  };
+  const rowsT = actRows(t), rowsY = actRows(t - 1);
+  const activity = rowsT || rowsY
+    ? `${rowsT ? `<p class="tday">Heute</p><div class="group">${rowsT}</div>` : ""}${rowsY ? `<p class="tday">Gestern</p><div class="group">${rowsY}</div>` : ""}`
+    : `<div class="group"><button class="cell trow" data-go="heute"><span class="tav">${icon("mix", 19)}</span><span class="cell-main"><span class="cell-title">Tagesmix</span><span class="cell-sub">${due ? `${due} fällig` : "Noch nichts geübt"}</span></span><span class="tval">0 XP</span></button></div>`;
   paint(`
   <header class="hhead">
     <span class="hmark" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="hhi">${greeting().replace(".", "!")}</span>
-    <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
+    <button class="hic" data-go="trainieren" aria-label="Trainieren">${icon("bolt", 21)}</button>
+    <button class="hic" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <section class="hcard" aria-label="Dein Fortschritt">
+  <section class="hcard" aria-label="Deine XP">
     <div class="hc-top">
-      <span class="hc-k">Dein Fortschritt</span>
-      <span class="hc-s">${ITEMS.length} Karten und Fragen in ${MODS.length} Themen</span>
-      <b class="hc-n">${total} %</b>
-      <span class="hc-d">${due ? `${due} heute fällig` : "Heute ist nichts fällig"}</span>
+      <span class="hc-k">XP</span>
+      <button class="hc-eye" data-act="hide" aria-label="${hideXp ? "Zahlen zeigen" : "Zahlen verbergen"}" aria-pressed="${hideXp}">${hideXp ? EYE : EYE_OFF}</button>
+      <span class="hc-s">${overallProgress()} % gelernt • ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</span>
+      <b class="hc-n">${hideXp ? "••••" : nf(S.xp)}</b>
+      <span class="hc-d">${hideXp ? "••" : `+${nf(xpToday)}`} heute${due ? ` · ${due} fällig` : ""}</span>
     </div>
     <div class="hc-acts">
-      <button data-go="heute"><span class="hc-i">${icon("play", 17)}</span>Lernen</button>
-      <button data-go="trainieren"><span class="hc-i">${icon("trainieren", 18)}</span>Trainieren</button>
-      <button data-go="suche"><span class="hc-i">${icon("suche", 18)}</span>Suchen</button>
+      <button data-go="heute"><span class="hc-i">${icon("play", 16)}</span>Lernen</button>
+      <button data-go="trainieren"><span class="hc-i">${icon("trainieren", 17)}</span>Trainieren</button>
+      <button data-go="suche"><span class="hc-i">${icon("suche", 17)}</span>Suchen</button>
     </div>
   </section>
-  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div><div class="mod-list">${MODS.map(modCard).join("")}</div></section>
-  ${CODE.length ? `<section class="section"><div class="hsec"><h2>Programmieren</h2><button class="hsee" data-go="code">Alle</button></div><div class="ltiles">${CODE.map(langTile).join("")}<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Alle Sprachen</b></button></div></section>` : ""}`);
+  <section class="section"><div class="hsec"><h2>Letzte Aktivität</h2><button class="hsee" data-go="trainieren">Alle</button></div>${activity}</section>
+  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div><div class="ltiles">${MODS.map(topicTile).join("")}${CODE.length ? `<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Programmieren</b></button>` : ""}</div></section>
+  ${chartHTML()}`);
+  wireChart();
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
@@ -3078,7 +3184,7 @@ function vRechnen() {
       dr.picked = +el.dataset.k;
       const ok = dr.opts[dr.picked].ok;
       dr.total++; if (ok) dr.right++;
-      countDay(ok ? 5 : 1); save();
+      countDay(ok ? 5 : 1, curMod.id); save();
       haptic(ok ? "success" : "error"); tone(ok);
       drawDrill();
       pulse(ok ? "var(--green)" : "var(--red)");
