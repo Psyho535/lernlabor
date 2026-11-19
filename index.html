@@ -1315,6 +1315,78 @@ main{zoom:var(--zoom,1)}
 }
 @media (prefers-reduced-motion:reduce){.dc{animation:none}.dc-tip{transition:none}}
 @media (min-width:600px){.dc{width:14px;background-repeat:repeat}.dc.on::before{width:14px;height:14px;margin-left:-7px}}
+
+/* ===== Apple-Feinschliff: SF-Schrift und iOS-Schriftgrößen, Systemfarben, Glas für Leisten,
+   iOS-Segmentregler, Aktivitätsringe und echtes Schwarz im Dunkelmodus ===== */
+:root{
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Geist",system-ui,"Segoe UI",Roboto,sans-serif;
+  --f-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,"Segoe UI",Roboto,sans-serif;
+  --f-round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Geist",system-ui,sans-serif;
+  --tint:#007aff;--pos:#248a3d;--neg:#d70015;--green:#34c759;--red:#ff3b30;
+  --glass:rgba(255,255,255,.66);--glass-line:rgba(0,0,0,.08);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#000000;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e;--fill-2:#2c2c2e;
+  --tint:#0a84ff;--pos:#30d158;--neg:#ff453a;--green:#30d158;--red:#ff453a;
+  --glass:rgba(30,30,32,.62);--glass-line:rgba(255,255,255,.1);
+}}
+:root[data-theme="dark"]{
+  --bg:#000000;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e;--fill-2:#2c2c2e;
+  --tint:#0a84ff;--pos:#30d158;--neg:#ff453a;--green:#30d158;--red:#ff453a;
+  --glass:rgba(30,30,32,.62);--glass-line:rgba(255,255,255,.1);
+}
+body{font-family:var(--f-ui);letter-spacing:-.012em}
+/* Schriftgrößen wie bei iOS: 34 Titel, 22 Abschnitt, 17 Text, 15 Unterzeile, 13 Fußnote */
+.large{font:700 34px/1.12 var(--f-display);letter-spacing:-.022em}
+.section-t{font:700 22px/1.25 var(--f-display);letter-spacing:-.02em}
+.cell-title,.mod-card b,.hub b{font-size:17px;font-weight:400;letter-spacing:-.022em}
+.cell-sub,.mod-card small,.hub small,.hub.solid small{font-size:13px;letter-spacing:-.005em}
+.cell-detail,.mc-v{font-size:17px;font-weight:400;color:var(--label-2)}
+.kicker{font-size:13px;letter-spacing:-.005em}
+/* Leisten aus Glas */
+.navbar.scrolled{background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:.5px solid var(--glass-line)}
+.nav-title{font-size:17px;font-weight:600;letter-spacing:-.022em}
+.back{background:transparent;box-shadow:none;color:var(--tint);padding:0 10px 0 2px;margin-left:4px;font-size:17px;font-weight:400}
+.tabbar{grid-template-columns:repeat(5,62px);padding:6px 5px;border-radius:999px;background:var(--glass);border:.5px solid var(--glass-line);box-shadow:0 10px 30px -12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.5);filter:none;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+.tab{color:var(--label)}
+.tabbar .tab-ind{box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
+/* Segmentregler wie bei iOS: graue Spur, weißer Schieber */
+.seg{background:var(--fill);box-shadow:none;border-radius:9px;padding:2px}
+.seg-thumb{top:2px;bottom:2px;left:2px;width:calc((100% - 4px) / var(--n));border-radius:7px;background:var(--thumb,#fff);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)}
+.seg button{border-radius:7px;font-size:13px}
+.seg button[aria-pressed="true"]{color:var(--label);font-weight:600}
+:root{--thumb:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--thumb:#636366}}
+:root[data-theme="dark"]{--thumb:#636366}
+.easy-sw{background:var(--fill);box-shadow:none}
+.easy-thumb{background:var(--thumb);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)}
+.easy-sw.on .easy-l:nth-of-type(2),.easy-sw:not(.on) .easy-l:nth-of-type(3){color:var(--label)}
+.search-box{height:44px;border-radius:12px;background:var(--fill);box-shadow:none;padding:0 12px}
+.search-box input{font-size:17px}
+/* Startseite: Datum über dem Gruß, Abschnittstitel mit „Alle ›“ in Systemblau */
+.hdate{margin:4px 4px -14px;font-size:13px;font-weight:600;color:var(--label-2);text-transform:uppercase;letter-spacing:.02em}
+.hhi{font:700 22px/1.2 var(--f-display);letter-spacing:-.02em}
+.hsec h2{font:700 20px/1.2 var(--f-display);letter-spacing:-.02em}
+.hsee{display:inline-flex;align-items:center;gap:2px;color:var(--tint);font-size:15px}
+.hsee .ic{margin-top:1px}
+.tval{font-family:var(--f-round);font-size:17px;font-weight:600}
+/* Gelbe Karte mit sanftem Verlauf und Glanzkante wie Karten in Wallet */
+.hc-top{background:linear-gradient(160deg,color-mix(in srgb,var(--hero) 82%,#fff) 0%,var(--hero) 48%,color-mix(in srgb,var(--hero) 92%,#e0b800) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.04)}
+.hc-n{font-family:var(--f-round);font-weight:700;letter-spacing:-.03em}
+.hc-d{font-family:var(--f-round)}
+.lt-v,.mc-v,.dc-tip b{font-family:var(--f-round)}
+.hc-acts button{color:var(--label);font-size:12px;font-weight:500}
+.hc-i{width:38px;height:38px;border:0;background:var(--fill);color:var(--label)}
+/* Aktivitätsringe um die Themen-Symbole */
+.ring-ic{position:relative;display:grid;place-items:center;width:40px;height:40px;color:color-mix(in srgb,var(--c) 85%,var(--ink-mix))}
+.ring-ic .rg{position:absolute;inset:0;width:40px;height:40px;transform:rotate(-90deg)}
+.ring-ic .rg circle{fill:none;stroke-width:4}
+.ring-ic .rt{stroke:color-mix(in srgb,var(--c) 18%,transparent)}
+.ring-ic .rp{stroke:var(--c);stroke-linecap:round;transition:stroke-dasharray .9s var(--ease-ios)}
+.ltile{min-height:124px}
+/* Drücken wie bei iOS: kurz abdunkeln statt anheben */
+.cell:active:not(.static),.mod-card:active,.mod-tile:active,.hub:active{filter:brightness(.96)}
+:root[data-theme="dark"] .cell:active:not(.static){filter:brightness(1.25)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -2680,7 +2752,8 @@ const homeTile = (go, color, ic, title, v) => `<button class="gtile" data-go="${
 /* Startseite nach der Vorlage: Kopfzeile, gelbe XP-Karte mit drei Aktionen, Aktivität „Heute / Gestern“,
    Themen als Kacheln und ein Punktdiagramm der gesammelten XP */
 const langTile = l => `<button class="mod-tile ltile" data-go="code-${l.id}">${langBadge(l)}<span class="lt-n">${l.title}</span><b class="lt-v">${codeProgress(l)} %</b></button>`;
-const topicTile = m => `<button class="mod-tile ltile" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 16)}<span class="lt-n">${m.title}</span><b class="lt-v">${modProgress(m.id)} %</b></button>`;
+const ringIc = (m, v) => `<span class="ring-ic" aria-hidden="true"><svg class="rg" viewBox="0 0 40 40"><circle class="rt" cx="20" cy="20" r="17"/><circle class="rp" cx="20" cy="20" r="17" pathLength="100" stroke-dasharray="${Math.max(v, .01)} 100"/></svg>${icon(m.icon, 15)}</span>`;
+const topicTile = m => `<button class="mod-tile ltile" data-go="modul-${m.id}" style="${onColor(m.color)}">${ringIc(m, modProgress(m.id))}<span class="lt-n">${m.title}</span><b class="lt-v">${modProgress(m.id)} %</b></button>`;
 const nf = n => Math.round(n).toLocaleString("de-DE");
 const actOf = d => (S.act && S.act[d]) || {};
 const actSum = d => Object.values(actOf(d)).reduce((a, b) => a + b, 0);
@@ -2749,6 +2822,7 @@ function vStart() {
     ? `${rowsT ? `<p class="tday">Heute</p><div class="group">${rowsT}</div>` : ""}${rowsY ? `<p class="tday">Gestern</p><div class="group">${rowsY}</div>` : ""}`
     : `<div class="group"><button class="cell trow" data-go="heute"><span class="tav">${icon("mix", 19)}</span><span class="cell-main"><span class="cell-title">Tagesmix</span><span class="cell-sub">${due ? `${due} fällig` : "Noch nichts geübt"}</span></span><span class="tval">0 XP</span></button></div>`;
   paint(`
+  <p class="hdate">${new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"})}</p>
   <header class="hhead">
     <span class="hmark" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="hhi">${greeting().replace(".", "!")}</span>
@@ -2769,8 +2843,8 @@ function vStart() {
       <button data-go="suche"><span class="hc-i">${icon("suche", 17)}</span>Suchen</button>
     </div>
   </section>
-  <section class="section"><div class="hsec"><h2>Letzte Aktivität</h2><button class="hsee" data-go="trainieren">Alle</button></div>${activity}</section>
-  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div><div class="ltiles">${MODS.map(topicTile).join("")}${CODE.length ? `<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Programmieren</b></button>` : ""}</div></section>
+  <section class="section"><div class="hsec"><h2>Letzte Aktivität</h2><button class="hsee" data-go="trainieren">Alle${icon("right", 14)}</button></div>${activity}</section>
+  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="ltiles">${MODS.map(topicTile).join("")}${CODE.length ? `<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Programmieren</b></button>` : ""}</div></section>
   ${chartHTML()}`);
   wireChart();
 }
