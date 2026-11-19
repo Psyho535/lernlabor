@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f2f4f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#eceef5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
 <title>IT-Lernlabor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&family=Plus+Jakarta+Sans:wght@500..800&display=swap">
 <style>
 body{margin:0}
 button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
@@ -30,7 +30,7 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#f2f4f8;
+  --bg:#eceef5;
   /* Regenbogen der Apple-Design-Seite: Blau, Lila, Rot, Orange, Gelb, Grün */
   --rainbow:linear-gradient(90deg,#009ddc,#963d97 24%,#e03a3e 46%,#f5821f 64%,#fdb827 82%,#61bb46);
   --bar:var(--rainbow);
@@ -1138,7 +1138,7 @@ main{zoom:var(--zoom,1)}
 /* ===== Look nach der Vorlage: Mint-Lime-Verlauf, weiße Karten ohne Rahmen, gelbe XP-Karte, Zeilen als Einzelkarten,
    grüne Werte, Punktdiagramm mit gelber Säule und runde Einzelknöpfe unten ===== */
 :root{
-  --bg:#f2f4f8;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
+  --bg:#eceef5;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
   --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.45);
   --label:#121212;--label-2:rgba(18,18,18,.52);--label-3:rgba(18,18,18,.32);--sep:rgba(18,18,18,.08);
   --fill:rgba(18,18,18,.06);--fill-2:#f4f6f3;--fill-3:rgba(18,18,18,.14);
@@ -1390,7 +1390,7 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 
 /* ===== Einfach-Look: ruhiger heller Grund, ein klares Tagesziel, beschriftete Tab-Leiste ===== */
 :root{
-  --bg:#f2f4f8;--accent-a:#0a84ff;--accent-b:#5e5ce6;--tint:#007aff;--dot:#c9ced8;--dot-now:#007aff;
+  --bg:#eceef5;--accent-a:#0a84ff;--accent-b:#5e5ce6;--tint:#007aff;--dot:#c9ced8;--dot-now:#007aff;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}}
 :root[data-theme="dark"]{--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}
@@ -1457,6 +1457,89 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .tabbar.dragging .tab[aria-current="page"]:not(.hov){color:var(--label-2)}
 .first-open .today{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
 .first-open .hhead ~ :is(.stats,.howto,.week,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .22s)}
+
+/* ===== Learning-OS-Look: Periwinkle, Schwarz und kräftige Pastellkarten mit Strichzeichnungen ===== */
+:root{
+  --bg:#eceef5;--peri:#a5b6f7;--peri-ink:#101114;--tint:#4b5fe0;--dot-now:#4b5fe0;--orange:#f5973b;
+  --f-display:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0c10;--tint:#8fa2ff;--dot-now:#8fa2ff}}
+:root[data-theme="dark"]{--bg:#0b0c10;--tint:#8fa2ff;--dot-now:#8fa2ff}
+#aurora{background:var(--bg)}
+.large,.section-t,.hsec h2,.howto h2{font-family:var(--f-display);font-weight:800;letter-spacing:-.025em}
+/* Kopf */
+.hhead{display:flex;align-items:center;gap:12px;padding-top:4px}
+.hav{flex:none;width:46px;height:46px;border-radius:50%;background:var(--peri);display:flex;flex-direction:column;justify-content:center;gap:3.5px;padding:0 13px;box-shadow:inset 0 0 0 2px #fff}
+.hav i{display:block;height:3.5px;border-radius:2px;background:#101114}
+.hav i:nth-child(2){margin-right:3px}
+.hav i:nth-child(3){margin-right:7px}
+.hhi{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.hhi b{font:800 19px/1.2 var(--f-display);letter-spacing:-.02em}
+.hhi small{font-size:13px;color:var(--label-2)}
+.hsearch{display:flex;align-items:center;gap:10px;width:100%;height:50px;padding:0 18px;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label-2);font:400 15px var(--f-ui);cursor:pointer;text-align:left}
+/* Große Karte mit dem nächsten Schritt */
+.hero2{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;padding:20px 18px 14px;border-radius:30px;background:var(--peri);color:var(--peri-ink);box-shadow:0 20px 40px -26px rgba(60,80,180,.7)}
+.hr-dd{position:absolute;inset:0;pointer-events:none;color:var(--peri-ink);opacity:.8}
+.hr-dd > span,.cc-dd > span{position:absolute;display:block;line-height:0}
+.hr-top{position:relative;display:flex;align-items:center;justify-content:space-between}
+.hr-k{font-size:14px;font-weight:600}
+.hr-t{position:relative;max-width:72%;font:600 24px/1.2 var(--f-display);letter-spacing:-.02em}
+.hr-t b{font-weight:800;font-size:30px;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:anywhere}
+.hr-s{position:relative;max-width:72%;font-size:14px;line-height:1.35;opacity:.78}
+.hr-act{position:relative;display:flex;gap:8px;margin-top:4px}
+.hr-go{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 20px;border:0;border-radius:999px;background:#101114;color:#fff;font:700 15px var(--f-ui);cursor:pointer;transition:transform .35s var(--ease-spring)}
+.hr-mix{height:48px;padding:0 18px;border:0;border-radius:999px;background:rgba(255,255,255,.55);color:#101114;font:600 15px var(--f-ui);cursor:pointer;transition:transform .35s var(--ease-spring)}
+.hr-go:active,.hr-mix:active{transform:scale(.96)}
+.hr-week{position:relative;margin-top:8px}
+.hr-wh{display:flex;justify-content:space-between;gap:8px;margin:0 4px 6px;font-size:12px;font-weight:600;opacity:.8}
+.hr-wh span:last-child{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.wstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:8px 6px;border-radius:999px;background:#fff}
+.wd{display:flex;flex-direction:column;align-items:center;gap:4px}
+.wd small{font-size:11px;font-weight:600;color:#6b6f7a}
+.wd i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid #d6d9e3;color:#fff}
+.wd.some i,.wd.full i{background:#101114;border-color:#101114}
+.wd.now i{background:var(--orange);border-color:var(--orange)}
+.wd.now small{color:#101114}
+.wd.fut i{border-style:dashed}
+/* Ringe */
+.mring{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:none}
+.mring svg{position:absolute;inset:0;width:44px;height:44px;transform:rotate(-90deg)}
+.mring circle{fill:none;stroke-width:3}
+.mring .rt{stroke:rgba(16,17,20,.18)}
+.mring .rp{stroke:#101114;stroke-linecap:round}
+.mring b{font:700 11px var(--f-ui)}
+/* Chips */
+.hchips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px;scrollbar-width:none}
+.hchips::-webkit-scrollbar{display:none}
+.hchip{display:inline-flex;align-items:center;gap:7px;flex:none;height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--sh);color:var(--label);font:600 14px var(--f-ui);cursor:pointer;transition:background .2s,color .2s,transform .3s var(--ease-spring)}
+.hchip:active{transform:scale(.95)}
+.hchip[aria-pressed="true"]{background:#101114;color:#fff}
+/* Bunte Karten */
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cgrid.swap > *{animation:cellIn .45s var(--ease-soft) backwards}
+.mod-tile.cc{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;gap:4px;min-height:196px;padding:12px 12px 14px;border:0;border-radius:24px;background:color-mix(in srgb,var(--cc) 58%,#fff);color:#101114;box-shadow:none;text-align:left}
+.cc-dd{position:absolute;inset:0;pointer-events:none;opacity:.55}
+.cc-top{position:relative;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:auto}
+.cc-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#101114;color:#fff}
+.cc .mring{width:40px;height:40px}
+.cc .mring svg{width:40px;height:40px}
+.cc-by{position:relative;margin-top:22px;font-size:12px;font-weight:500;opacity:.72;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cc-ic b{font:800 13px var(--f-display)}
+.cc-t{position:relative;font:800 17px/1.2 var(--f-display);letter-spacing:-.015em;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:anywhere}
+.cc-f{position:relative;display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;opacity:.8}
+@media (min-width:640px){.cgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1100px){.cgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* So funktioniert's */
+.hw-n{background:#101114;color:#fff}
+.hw-ok{width:100%;height:48px;border-radius:999px;background:#101114!important;color:#fff!important}
+/* Tab-Leiste: weiß, Beschriftung, aktiver Tab farbig mit Punkt */
+.tabbar{background:var(--surface);border:0;box-shadow:0 10px 30px -14px rgba(20,24,60,.35);-webkit-backdrop-filter:none;backdrop-filter:none}
+.tabbar .tab-ind{background:transparent}
+.tab[aria-current="page"] span{font-weight:700}
+/* Kopfkarten und Abschnitte */
+.page-hero .large{font-family:var(--f-display);font-weight:800}
+.first-open .hero2{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
+.first-open .hhead ~ :is(.hsearch,.howto,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .22s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1519,7 +1602,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#f2f4f8" : i ? "#000000" : "#f2f4f8"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#eceef5" : i ? "#000000" : "#eceef5"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -2901,30 +2984,70 @@ function weekHTML() {
   }).join("");
   return `<section class="card week" aria-label="Diese Woche"><div class="wk-h"><h2>Diese Woche</h2><span>${sum} ${sum === 1 ? "Aufgabe" : "Aufgaben"}</span></div><div class="wk" role="img" aria-label="Aufgaben pro Tag in dieser Woche">${cols}</div><p class="wk-f">Ein Punkt steht für zwei Aufgaben. Dein Ziel sind ${DAY_GOAL} am Tag.</p></section>`;
 }
+/* Startseite im „Learning OS“-Stil: Kopf mit Level, Suche, große Periwinkle-Karte mit dem nächsten Schritt,
+   Wochenleiste mit runden Tagen, Chips zum Umschalten und bunte Karten mit Fortschrittsring. */
+const DOODLE = ["bulb", "globe", "lock", "server", "code", "spark", "book", "calc", "net", "plug", "cloud", "timer"];
+const doodles = (list, cls) => `<span class="${cls}" aria-hidden="true">${list.map(([ic, x, y, r, z]) => `<span style="left:${x}%;top:${y}%;transform:rotate(${r}deg) scale(${z})">${icon(ic, 22)}</span>`).join("")}</span>`;
+const miniRing = (a, b) => { const p = b ? Math.round(a / b * 100) : 0; return `<span class="mring" aria-label="${a} von ${b}"><svg viewBox="0 0 36 36"><circle class="rt" cx="18" cy="18" r="15"/><circle class="rp" cx="18" cy="18" r="15" pathLength="100" stroke-dasharray="${Math.max(p, .01)} 100"/></svg><b>${a}/${b}</b></span>`; };
+function nextStep() {
+  const ms = MODS.map(m => ({m, v:modProgress(m.id)}));
+  const c = ms.filter(x => x.v > 0 && x.v < 100).sort((a, b) => b.v - a.v)[0] || ms.find(x => x.v < 100) || ms[0], m = c.m;
+  if (m.osi) {
+    const nx = LAYERS.find(l => !S.learned[l.n]), read = LAYERS.filter(l => S.learned[l.n]).length;
+    return {m, read, total:7, go:nx ? `schicht${nx.n}` : "modul-osi", unit:nx ? `Schicht ${nx.n}: ${nx.de}` : "Alle Schichten gelesen", started:c.v > 0};
+  }
+  const nx = m.units.find(u => !S.unitsDone[`${m.id}.${u.id}`]), read = m.units.filter(u => S.unitsDone[`${m.id}.${u.id}`]).length;
+  return {m, read, total:m.units.length, go:nx ? `modul-${m.id}-unit-${nx.id}` : `modul-${m.id}`, unit:nx ? nx.title : "Alle Lernseiten gelesen", started:c.v > 0};
+}
+const unitsOf = m => m.osi ? [LAYERS.filter(l => S.learned[l.n]).length, 7] : [m.units.filter(u => S.unitsDone[`${m.id}.${u.id}`]).length, m.units.length];
+function weekStrip() {
+  const t = today(), start = t - (dayDate(t).getUTCDay() + 6) % 7, names = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  return `<div class="wstrip" role="img" aria-label="Lerntage dieser Woche">${names.map((n, i) => {
+    const d = start + i, v = d > t ? 0 : cntOf(d), st = d === t ? "now" : d > t ? "fut" : v >= DAY_GOAL ? "full" : v > 0 ? "some" : "none";
+    const ic = st === "full" ? icon("check", 15) : st === "some" || st === "now" ? icon("book", 14) : "";
+    return `<span class="wd ${st}"><small>${n}</small><i>${ic}</i></span>`;
+  }).join("")}</div>`;
+}
+let homeTab = "themen";
+function homeCards() {
+  const card = (go, col, ic, by, title, foot, ring, i) => `<button class="mod-tile cc" data-go="${go}" style="--cc:${col}">${doodles([[DOODLE[(i * 3) % 12], 66, 34, -12, 1.1], [DOODLE[(i * 3 + 5) % 12], 82, 44, 18, .85]], "cc-dd")}<span class="cc-top"><span class="cc-ic">${ic.startsWith("t:") ? `<b>${ic.slice(2)}</b>` : icon(ic, 18)}</span>${ring}</span><span class="cc-by">${by}</span><b class="cc-t">${title}</b><span class="cc-f">${icon("book", 13)}${foot}</span></button>`;
+  if (homeTab === "code") return CODE.map((l, i) => { const c = codeCounts(l), n = l.lessons.length + l.tasks.length; return card(`code-${l.id}`, l.color, "t:" + l.badge, l.sub, l.title, `${l.lessons.length} Lektionen`, miniRing(c.read + c.done, n), i); }).join("");
+  if (homeTab === "pruefen") {
+    const wrongN = S.wrong.filter(id => Q_BY_ID[id]).length, due = dueCount();
+    return [card("heute", "#5e5ce6", "mix", due ? `${due} fällig` : "Karten und Fragen", "Tagesmix", "etwa 5 Minuten", miniRing(Math.min(doneToday(), DAY_GOAL), DAY_GOAL), 0),
+      card("pruefung-ap1", "#ff9f0a", "timer", `${PZ_COUNT} Fragen · ${PZ_MINUTES} Min.`, "Probeprüfung AP1", "Teil 1 der Abschlussprüfung", "", 1),
+      card("pruefung-ap2", "#ff375f", "timer", `${PZ_COUNT} Fragen · ${PZ_MINUTES} Min.`, "Probeprüfung AP2", "Teil 2 der Abschlussprüfung", "", 2),
+      ...(wrongN ? [card("trainieren", "#30d158", "reset", `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"}`, "Fehler wiederholen", "aus allen Themen", "", 3)] : [])].join("");
+  }
+  return MODS.map((m, i) => { const [a, b] = unitsOf(m); return card(`modul-${m.id}`, m.color, m.icon, `${m.cards.length} Karten · ${m.questions.length} Fragen`, m.title, `Lernseiten ${a}/${b}`, miniRing(a, b), i); }).join("");
+}
 function vStart() {
   setNav({});
-  const n = doneToday(), due = dueCount(), streak = streakNow(), total = overallProgress(), done = n >= DAY_GOAL;
-  actHandler = act => {
+  const n = doneToday(), streak = streakNow(), lvl = Math.floor(Math.sqrt((S.xp || 0) / 50)) + 1, st = nextStep();
+  actHandler = (act, el) => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
+    if (act === "htab") {
+      if (homeTab === el.dataset.v) return;
+      homeTab = el.dataset.v; haptic("select");
+      view.querySelectorAll(".hchip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === homeTab));
+      const g = view.querySelector(".cgrid"); g.innerHTML = homeCards(); g.classList.remove("swap"); void g.offsetWidth; g.classList.add("swap");
+    }
   };
+  const chip = (v, ic, label) => `<button class="hchip" data-act="htab" data-v="${v}" aria-pressed="${homeTab === v}">${icon(ic, 16)}${label}</button>`;
   paint(`
-  <p class="hdate">${new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"})}</p>
   <header class="hhead">
-    <h1 class="hhi">${greeting().replace(".", "!")}</h1>
+    <span class="hav" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="hhi"><b>${greeting().replace(".", "!")}</b><small>Level ${lvl} · ${nf(S.xp)} Punkte</small></span>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <section class="today" aria-label="Dein Ziel für heute">
-    <div class="td-top">
-      <div class="td-txt"><p class="td-k">Dein Ziel für heute</p><p class="td-n"><b>${n}</b> von ${DAY_GOAL} Aufgaben</p></div>
-      ${bigRing(n, DAY_GOAL)}
-    </div>
-    <button class="td-go" data-go="heute">${icon("play", 18)}<span>${done ? "Weiter üben" : n ? "Weiterlernen" : "Jetzt starten"}</span></button>
-    <p class="td-s">${done ? "Ziel geschafft, stark!" : due ? `${due} zum Wiederholen · ca. 5 Min.` : "Neue Karten aus deinen Themen · ca. 5 Min."}</p>
-  </section>
-  <section class="stats" aria-label="Dein Stand">
-    <div class="st"><span class="st-i" style="--c:#ff9500">${icon("flame", 18)}</span><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} in Folge</small></div>
-    <div class="st"><span class="st-i" style="--c:#34c759">${icon("check", 18)}</span><b>${total} %</b><small>vom Stoff gelernt</small></div>
-    <div class="st"><span class="st-i" style="--c:#007aff">${icon("spark", 18)}</span><b>${nf(S.xp)}</b><small>Punkte gesammelt</small></div>
+  <button class="hsearch" data-go="suche">${icon("suche", 18)}<span>Suche nach Thema, Begriff, Port …</span></button>
+  <section class="hero2" aria-label="Dein nächster Schritt">
+    ${doodles([["bulb", 80, 26, -14, 1.5], ["globe", 74, 40, 10, 1.05], ["spark", 90, 40, 0, .9], ["lock", 86, 52, -8, 1]], "hr-dd")}
+    <div class="hr-top"><span class="hr-k">${st.started ? "Weiter geht's" : "Dein erster Schritt"}</span>${miniRing(Math.min(n, DAY_GOAL), DAY_GOAL)}</div>
+    <h2 class="hr-t">${st.started ? "Weiter mit" : "Starte mit"}<br><b>${st.m.title}</b></h2>
+    <p class="hr-s">${st.unit} · ${st.read} von ${st.total} gelesen</p>
+    <div class="hr-act"><button class="hr-go" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}${icon("right", 16)}</button><button class="hr-mix" data-go="heute">Tagesmix</button></div>
+    <div class="hr-week"><div class="hr-wh"><span>Deine Woche · ${n} von ${DAY_GOAL} Aufgaben heute</span><span>${icon("flame", 14)} ${streak} ${streak === 1 ? "Tag" : "Tage"}</span></div>${weekStrip()}</div>
   </section>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
@@ -2933,10 +3056,12 @@ function vStart() {
       <li><span class="hw-n">2</span><span><b>Üben</b><small>Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran.</small></span></li>
       <li><span class="hw-n">3</span><span><b>Prüfen</b><small>Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist.</small></span></li>
     </ol>
-    <button class="btn btn-gray hw-ok" data-act="howto">Verstanden</button>
+    <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  ${weekHTML()}
-  <section class="section"><div class="hsec"><h2>Deine Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="mod-list">${MODS.map(modCard).join("")}${CODE.length ? `<button class="mod-card" data-go="code" style="${onColor(APPLE.graphit)}"><span class="si" style="${onColor(APPLE.graphit)}">${icon("code", 22)}</span><span><b>Programmieren</b><small>Python, Java, HTML und CSS, JavaScript, SQL</small><span class="mc-bar" aria-hidden="true"><i style="width:${codeAll()}%"></i></span></span><span class="mc-v">${codeAll()} %</span></button>` : ""}</div></section>`);
+  <section class="section" aria-label="Lernen">
+    <div class="hchips">${chip("themen", "themen", "Themen")}${CODE.length ? chip("code", "code", "Programmieren") : ""}${chip("pruefen", "timer", "Prüfen")}</div>
+    <div class="cgrid">${homeCards()}</div>
+  </section>`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
