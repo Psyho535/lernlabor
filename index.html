@@ -1681,6 +1681,101 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabbar{background:rgba(28,28,30,.72)}}
 :root[data-theme="dark"] .tabbar{background:rgba(28,28,30,.72)}
 .first-open .shead ~ .promo:not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .34s)}
+
+/* ===== Schlicht iOS: Systemgrau, SF, Systemblau, gruppierte Listen, nichts Überflüssiges ===== */
+:root{
+  --bg:#f2f2f7;--surface:#fff;--face:#fff;--solid:#fff;
+  --label:#000;--label-2:rgba(60,60,67,.6);--label-3:rgba(60,60,67,.3);--sep:rgba(60,60,67,.2);
+  --fill:rgba(120,120,128,.12);--fill-2:rgba(120,120,128,.08);--fill-3:rgba(120,120,128,.2);
+  --ink:#000;--on-ink:#fff;--accent:#007aff;--tint:#007aff;--accent-tint:rgba(0,122,255,.12);
+  --ring-a:#34c759;--ring-b:#007aff;
+  --f-serif:-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,sans-serif;
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Geist",system-ui,sans-serif;
+  --f-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Geist",system-ui,sans-serif;
+  --f-round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Geist",system-ui,sans-serif;
+  --sh:none;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#000;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e;
+  --label:#fff;--label-2:rgba(235,235,245,.6);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
+  --fill:rgba(120,120,128,.24);--fill-2:rgba(120,120,128,.16);--fill-3:rgba(120,120,128,.32);
+  --ink:#fff;--on-ink:#000;--accent:#0a84ff;--tint:#0a84ff;--accent-tint:rgba(10,132,255,.2);
+  --ring-a:#30d158;--ring-b:#0a84ff;
+}}
+:root[data-theme="dark"]{
+  --bg:#000;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e;
+  --label:#fff;--label-2:rgba(235,235,245,.6);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
+  --fill:rgba(120,120,128,.24);--fill-2:rgba(120,120,128,.16);--fill-3:rgba(120,120,128,.32);
+  --ink:#fff;--on-ink:#000;--accent:#0a84ff;--tint:#0a84ff;--accent-tint:rgba(10,132,255,.2);
+  --ring-a:#30d158;--ring-b:#0a84ff;
+}
+#aurora{background:var(--bg)}
+#aurora > *{display:none}
+.large,.page-hero .large{font:700 34px/1.12 var(--f-display);letter-spacing:-.022em;font-variation-settings:normal}
+.section-t,.hsec h2,.howto h2{font:700 22px/1.25 var(--f-display);letter-spacing:-.02em;font-variation-settings:normal}
+.card,.group,.hub,.hub.solid,.tile,.mode,.mod-tile,.mod-card{background:var(--surface);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+/* Gruppierte Listen wie in den Einstellungen */
+.group{border-radius:20px}
+.group:has(> .cell):not(:has(> :not(.cell))){display:block;background:var(--surface);border-radius:20px;overflow:hidden;box-shadow:none}
+.group:has(> .cell):not(:has(> :not(.cell))) > .cell{background:transparent;border-radius:0;box-shadow:none}
+.group:has(> .cell):not(:has(> :not(.cell))) > .cell + .cell::before{display:block}
+.cell{min-height:52px;padding:9px 16px}
+.cell:has(.cell-ic){--inset:62px}
+.group > .cell + .cell:has(.cell-ic)::before{left:62px}
+.cell-title{font-size:17px;font-weight:400;letter-spacing:-.01em}
+.cell-sub{font-size:13px}
+.cell-detail{color:var(--label-2);font-weight:400;font-size:17px}
+:is(.cell,.mod-card,.mod-tile,.hub) :is(.si,.cell-ic),.hub.solid .cell-ic{width:32px;height:32px;border-radius:8px;background:var(--c,var(--accent));color:#fff}
+.hub .chev,.cell .chev{color:var(--label-3)}
+/* Knöpfe wie in iOS */
+.btn{border-radius:999px;font-weight:600;box-shadow:none}
+.btn-fill,.hw-ok{background:var(--accent)!important;color:#fff!important}
+.btn-gray,.btn-tint{background:var(--accent-tint);color:var(--accent);border:0;box-shadow:none}
+.nb-round{background:var(--fill);border:0;box-shadow:none;color:var(--accent);-webkit-backdrop-filter:none;backdrop-filter:none}
+.seg{background:var(--fill);box-shadow:none;border-radius:10px;padding:2px}
+.seg-thumb{top:2px;bottom:2px;left:2px;width:calc((100% - 4px) / var(--n));border-radius:8px;background:var(--surface);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)}
+.seg button[aria-pressed="true"]{color:var(--label)}
+.easy-sw,.search-box,.chip,.back{box-shadow:none}
+.back{background:transparent;color:var(--accent);padding-left:0}
+.hsee{color:var(--accent);font-size:17px}
+.hsee .ic{display:none}
+.hsec{padding:0 4px;margin-bottom:-2px}
+.hw-n{background:var(--accent);color:#fff}
+.navbar.scrolled{background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:.5px solid var(--sep)}
+/* Tab-Leiste: helles Glas, aktiver Tab blau auf grauer Pille */
+.tabbar{background:color-mix(in srgb,var(--surface) 75%,transparent);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);border:.5px solid var(--sep);box-shadow:0 8px 24px -12px rgba(0,0,0,.25)}
+.tabbar .tab-ind{background:var(--fill);box-shadow:none}
+.tab{color:var(--label)}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--accent)}
+/* Startseite */
+.ihead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:8px 4px 0}
+.ihead small{display:block;margin-bottom:2px;font:600 13px var(--f-ui);color:var(--label-2);text-transform:uppercase;letter-spacing:.01em}
+.ihead .large{margin:0}
+.ihead .nb-round{width:40px;height:40px;margin-bottom:2px}
+.itoday{padding:18px 18px 14px;border-radius:20px;background:var(--surface)}
+.it-top{display:flex;align-items:center;gap:20px}
+.it-ring{flex:none;width:112px;height:112px;transform:rotate(-90deg)}
+.it-ring circle{fill:none;stroke-width:14;stroke-linecap:round}
+.it-stats{display:flex;flex-direction:column;gap:12px;min-width:0}
+.it-k{display:block;font:600 15px var(--f-ui);color:var(--label)}
+.it-v{font:600 28px/1.1 var(--f-round);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.it-v small{font-size:17px;font-weight:600}
+.it-v.a{color:var(--ring-a)}
+.it-v.b{color:var(--ring-b)}
+.it-wh{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px;padding-top:14px;border-top:.5px solid var(--sep)}
+.it-wh b{font:600 15px var(--f-ui)}
+.it-wh span{font-size:13px;color:var(--label-2)}
+.it-week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+.wb{display:flex;flex-direction:column;align-items:center;gap:6px}
+.wb i{position:relative;width:100%;max-width:28px;height:64px;border-radius:6px;background:var(--fill-2);overflow:hidden}
+.wb i b{position:absolute;left:0;right:0;bottom:0;border-radius:6px;background:var(--ring-a)}
+.wb small{font-size:11px;font-weight:600;color:var(--label-2)}
+.wb.now small{color:var(--accent)}
+.wb.fut i{opacity:.5}
+.iact{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.iact .btn{width:100%;height:50px;font-size:17px}
+.inext{margin-top:-10px;padding:0 4px;font-size:13px;color:var(--label-2);text-align:center}
+.first-open .ihead ~ :is(.itoday,.iact,.inext,.howto,.section):not(.pre,.rev){animation:riseIn .8s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -2084,7 +2179,7 @@ QUESTIONS.forEach(q => { q.m = "osi"; });
 /* Apples Farben: die sechs Streifen des klassischen Apple-Logos und Graphit. Alle bisherigen Kennfarben werden hierauf abgebildet. */
 const APPLE = {gruen:"#61bb46", gelb:"#fdb827", orange:"#f5821f", rot:"#e03a3e", lila:"#963d97", blau:"#009ddc", graphit:"#636366"};
 const AP = {"#30d158":APPLE.gruen, "#34c759":APPLE.gruen, "#ff9f0a":APPLE.orange, "#ff9500":APPLE.orange, "#ff375f":APPLE.rot, "#ff3b30":APPLE.rot, "#bf5af2":APPLE.lila, "#0a84ff":APPLE.blau, "#40c8e0":APPLE.blau, "#5e5ce6":APPLE.gelb, "#5856d6":APPLE.gelb};
-const ap = c => AP[String(c).toLowerCase()] || c;
+const ap = c => c; // schlichtes iOS: Systemfarben bleiben
 const MODS = [
   {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#bf5af2", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
   ...(window.LERN_MODULES || [])
@@ -3240,28 +3335,51 @@ function topicRows() {
     return `<button class="cell srow" data-go="modul-${m.id}">${blob(m.color)}<span class="cell-main"><span class="cell-title">${m.title}</span><span class="cell-sub">${a} von ${b} Lernseiten gelesen</span></span><span class="sv"><b>${v} %</b><small>gelernt</small></span></button>`; }).join("")
     + (CODE.length ? `<button class="cell srow" data-go="code">${blob(APPLE.graphit)}<span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML und CSS, JavaScript, SQL</span></span><span class="sv"><b>${codeAll()} %</b><small>gelernt</small></span></button>` : "");
 }
+/* Zwei Ringe wie in der Fitness-App: außen die Aufgaben von heute, innen der Lernstand. */
+function iosRings(a, b) {
+  const r = (rad, p, c) => { const C = 2 * Math.PI * rad;
+    return `<circle cx="50" cy="50" r="${rad}" style="stroke:${c};opacity:.18"/>` + (p > 0 ? `<circle cx="50" cy="50" r="${rad}" style="stroke:${c}" stroke-dasharray="${(C * Math.min(p, 1)).toFixed(1)} ${C.toFixed(1)}"/>` : ""); };
+  return `<svg class="it-ring" viewBox="0 0 100 100" aria-hidden="true">${r(42, a, "var(--ring-a)")}${r(25, b, "var(--ring-b)")}</svg>`;
+}
+/* Die laufende Woche als einfache Säulen, heute hervorgehoben. */
+function iosWeek() {
+  const t = today(), start = t - (dayDate(t).getUTCDay() + 6) % 7, names = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  const vals = names.map((_, i) => start + i > t ? 0 : cntOf(start + i)), max = Math.max(DAY_GOAL, ...vals), sum = vals.reduce((x, y) => x + y, 0);
+  return `<div class="it-wh"><b>Diese Woche</b><span>${nf(sum)} ${sum === 1 ? "Aufgabe" : "Aufgaben"}</span></div>
+  <div class="it-week" role="img" aria-label="Aufgaben pro Tag in dieser Woche">${names.map((n, i) => {
+    const d = start + i, v = vals[i], h = v ? Math.max(8, Math.round(v / max * 100)) : 0;
+    return `<span class="wb${d === t ? " now" : ""}${d > t ? " fut" : ""}"><i>${h ? `<b style="height:${h}%"></b>` : ""}</i><small>${n}</small></span>`;
+  }).join("")}</div>`;
+}
+const iosCell = (go, color, ic, title, sub, detail) => `<button class="cell" data-go="${go}"><span class="cell-ic" style="--c:${color}">${ic}</span><span class="cell-main"><span class="cell-title">${title}</span>${sub ? `<span class="cell-sub">${sub}</span>` : ""}</span>${detail ? `<span class="cell-detail">${detail}</span>` : ""}${icon("right", 16, "chev")}</button>`;
 function vStart() {
   setNav({});
-  const n = doneToday(), total = overallProgress(), st = nextStep(), recent = recentRows();
+  const n = doneToday(), total = overallProgress(), st = nextStep();
+  const wrongN = (S.wrong || []).filter(id => Q_BY_ID[id]).length;
+  const date = dayDate(today()).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
   paint(`
-  <header class="shead">
-    <p class="shi">${(w => `<span>${w[0]}</span><span class="hav" aria-hidden="true"><i></i><i></i><i></i></span><span>${w.slice(1).join(" ")}</span>`)(greeting().replace(".", "").split(" "))}</p>
+  <header class="ihead">
+    <div><small>${date}</small><h1 class="large">Übersicht</h1></div>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <section class="sbig" aria-label="Dein Lernstand">
-    <p class="s-earn">Du hast heute <button class="lchip" data-go="heute">${n} ${n === 1 ? "Aufgabe" : "Aufgaben"}${icon("right", 13)}</button> gelöst, dein Lernstand liegt bei</p>
-    <h1 class="s-num">${total}<span>%</span></h1>
-    <p class="s-sub">gelernt in ${MODS.length} Themen</p>
+  <section class="itoday" aria-label="Heute">
+    <div class="it-top">
+      ${iosRings(n / DAY_GOAL, total / 100)}
+      <div class="it-stats">
+        <div><span class="it-k">Heute gelöst</span><b class="it-v a">${n}<small>/${DAY_GOAL} Aufgaben</small></b></div>
+        <div><span class="it-k">Lernstand</span><b class="it-v b">${total}<small> %</small></b></div>
+      </div>
+    </div>
+    ${iosWeek()}
   </section>
-  ${mountainSVG()}
-  <div class="s-act">
-    <button class="lpill" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}<span class="lp-i">${icon("right", 16)}</span></button>
-    <button class="gpill" data-go="heute">Tagesmix</button>
+  <div class="iact">
+    <button class="btn btn-fill" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}</button>
+    <button class="btn btn-tint" data-go="heute">Tagesmix</button>
   </div>
-  <p class="s-next">Als Nächstes: <b>${st.m.title}</b> · ${st.unit}</p>
+  <p class="inext">Als Nächstes: ${st.m.title}, ${st.unit}</p>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
     <ol>
@@ -3271,9 +3389,17 @@ function vStart() {
     </ol>
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  ${recent ? `<section class="section"><div class="hsec"><h2>Zuletzt geübt</h2><button class="hsee" data-go="trainieren">Alle${icon("right", 14)}</button></div><div class="group">${recent}</div></section>` : ""}
-  ${promoCard()}
-  <section class="section"><div class="hsec"><h2>Deine Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="group">${topicRows()}</div></section>`);
+  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
+    <div class="group">${MODS.map(m => { const [x, y] = unitsOf(m); return iosCell(`modul-${m.id}`, m.color, icon(m.icon, 18), m.title, `${x} von ${y} Lernseiten`, `${modProgress(m.id)} %`); }).join("")}
+    ${CODE.length ? iosCell("code", "#8e8e93", icon("code", 18), "Programmieren", "Python, Java, HTML, JavaScript, SQL", `${codeAll()} %`) : ""}</div>
+  </section>
+  <section class="section"><div class="hsec"><h2>Prüfen</h2></div>
+    <div class="group">
+      ${iosCell("pruefung-ap1", "#ff9500", icon("timer", 18), "Probeprüfung AP1", "Mit Zeit und Auswertung", "")}
+      ${iosCell("pruefung-ap2", "#ff3b30", icon("timer", 18), "Probeprüfung AP2", "Mit Zeit und Auswertung", "")}
+      ${wrongN ? iosCell("trainieren", "#5856d6", icon("reset", 18), "Fehler wiederholen", `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus allen Themen`, "") : ""}
+    </div>
+  </section>`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
