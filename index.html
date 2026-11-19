@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#e2e7eb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1614,6 +1614,73 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .first-open .sbig{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .05s)}
 .first-open .mount{animation:riseIn 1s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .18s)}
 .first-open .shead ~ :is(.s-act,.s-next,.howto,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .3s)}
+
+/* ===== Serifen-Look × Apple: iOS-Grau, SF für Bedienung, Serife für Zahlen und Titel, Apples Logo-Farben ===== */
+:root{
+  --bg:#f2f2f7;--surface:rgba(255,255,255,.82);--face:#fff;--solid:#fff;
+  --label:#1d1d1f;--label-2:rgba(60,60,67,.62);--label-3:rgba(60,60,67,.3);--sep:rgba(60,60,67,.12);
+  --ink:#1d1d1f;--on-ink:#fff;--tint:#3f9a2a;
+  --lime-a:#8fd06c;--lime-b:#61bb46;--slate:#009ddc;
+  --f-serif:ui-serif,"New York","Fraunces","Iowan Old Style",Georgia,serif;
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Geist",system-ui,sans-serif;
+  --sh:0 1px 1px rgba(0,0,0,.02),0 8px 24px -14px rgba(0,0,0,.18);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#000;--surface:rgba(28,28,30,.82);--face:#1c1c1e;--solid:#1c1c1e;
+  --label:#f5f5f7;--label-2:rgba(235,235,245,.6);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.5);
+  --ink:#f5f5f7;--on-ink:#000;--tint:#7fd062;
+}}
+:root[data-theme="dark"]{
+  --bg:#000;--surface:rgba(28,28,30,.82);--face:#1c1c1e;--solid:#1c1c1e;
+  --label:#f5f5f7;--label-2:rgba(235,235,245,.6);--label-3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.5);
+  --ink:#f5f5f7;--on-ink:#000;--tint:#7fd062;
+}
+#aurora{background:var(--bg)}
+.group{background:var(--face);border-radius:22px;box-shadow:var(--sh)}
+/* Kopf */
+.shi{font:400 19px var(--f-serif);letter-spacing:-.01em;gap:9px}
+.shead .hav{width:32px;height:32px;background:linear-gradient(135deg,#9ad97a,#009ddc)}
+/* Satz, Chip, große Zahl */
+.s-earn{max-width:310px;font:400 16px/1.6 var(--f-serif);color:var(--label)}
+.lchip{height:29px;padding:0 9px 0 11px;border-radius:9px;background:linear-gradient(180deg,#86cc63,#5bb33f);color:#fff;font:600 14px var(--f-ui);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 10px -5px rgba(70,150,40,.7)}
+.s-num{font:300 clamp(84px,24vw,120px)/.95 var(--f-serif);letter-spacing:-.045em;margin-top:4px}
+.s-num span{font-size:.34em;margin-top:.16em;margin-left:2px;font-weight:400;color:var(--label-2)}
+.s-sub{margin:-2px 0 0;font-size:13px;color:var(--label-2)}
+/* Hügel in runder Karte */
+.mount{position:relative;height:224px;margin:14px 0 0;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f4f6f3 100%);box-shadow:var(--sh);isolation:isolate}
+.mount svg{position:absolute;inset:0;width:100%;height:100%}
+.mount figcaption{position:absolute;left:20px;top:16px;bottom:auto;display:flex;flex-direction:column;gap:1px;font-size:12px;color:var(--label-2)}
+.mount figcaption b{font:400 17px var(--f-serif);color:var(--label);letter-spacing:-.01em}
+.mt-dot{width:14px;height:14px;margin:-7px 0 0 -7px;background:#fff;box-shadow:0 0 0 4px #61bb46,0 6px 14px rgba(0,0,0,.25)}
+.mt-tag{padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.78);color:#1d1d1f;font:400 13px var(--f-serif);box-shadow:0 4px 12px -6px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(12px) saturate(180%);backdrop-filter:blur(12px) saturate(180%)}
+.mt-tag b{font:600 13px var(--f-ui)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mount{background:linear-gradient(180deg,#1c1c1e,#111113)}}
+:root[data-theme="dark"] .mount{background:linear-gradient(180deg,#1c1c1e,#111113)}
+/* Knöpfe */
+.s-act{margin-top:18px}
+.lpill{height:54px;padding:0 7px 0 24px;background:linear-gradient(180deg,#86cc63,#5bb33f);color:#fff;font:600 17px var(--f-ui);letter-spacing:-.01em;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(70,150,40,.8)}
+.lp-i{width:40px;height:40px;background:rgba(255,255,255,.22)}
+.gpill{background:var(--face);font:600 17px var(--f-ui);letter-spacing:-.01em}
+.s-next{margin-top:-6px}
+/* Zeilen */
+.srow .cell-title{font:400 17px var(--f-serif);font-style:normal}
+.blob{width:40px;height:40px}
+.sv b{font:400 19px var(--f-serif)}
+/* Promo-Karte */
+.promo{position:relative;display:flex;align-items:stretch;width:100%;min-height:150px;margin-top:22px;padding:0;border:0;border-radius:26px;overflow:hidden;background:var(--face);box-shadow:var(--sh);color:var(--label);text-align:left;cursor:pointer;transition:transform .35s var(--ease-spring)}
+.promo:active{transform:scale(.98)}
+.pr-t{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:20px 0 18px 20px;max-width:62%}
+.pr-t b{font:400 21px/1.15 var(--f-serif);letter-spacing:-.015em}
+.pr-t small{font-size:13px;line-height:1.4;color:var(--label-2)}
+.pr-btn{display:inline-flex;align-items:center;gap:4px;margin-top:6px;height:34px;padding:0 12px 0 15px;border-radius:999px;background:linear-gradient(180deg,#86cc63,#5bb33f);color:#fff;font:600 14px var(--f-ui);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.pr-m{position:absolute;right:-6px;bottom:0;width:46%;height:100%}
+/* Tab-Leiste: Glas, aktiver Tab als grüne Pille */
+.tabbar .tab-ind{background:linear-gradient(180deg,#86cc63,#5bb33f);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -8px rgba(70,150,40,.8)}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:#fff}
+.tabbar{background:rgba(255,255,255,.7)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabbar{background:rgba(28,28,30,.72)}}
+:root[data-theme="dark"] .tabbar{background:rgba(28,28,30,.72)}
+.first-open .shead ~ .promo:not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .34s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1676,7 +1743,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#e2e7eb" : i ? "#000000" : "#e2e7eb"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#f2f2f7" : i ? "#000000" : "#f2f2f7"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -3097,40 +3164,69 @@ function homeCards() {
 }
 /* Startseite im ruhigen Serifen-Look: Gruß, Satz mit Lime-Chip, große Zahl, ein körniger Hügel als Diagramm
    der letzten 14 Tage, Lime-Knopf zum Weiterlernen, „Zuletzt geübt“ und die Themen als ruhige Zeilen. */
-function mountainSVG() {
-  const t = today(), N = 14, W = 360, H = 170;
-  const vals = Array.from({length:N}, (_, i) => cntOf(t - (N - 1) + i));
-  const max = Math.max(DAY_GOAL, ...vals);
-  // Grundhügel, damit die Form auch ohne Daten schön ist; die Lerntage heben ihn an
-  const ys = vals.map((v, i) => { const x = i / (N - 1), base = .22 + .2 * Math.exp(-((x - .62) ** 2) / .06); return H - 14 - (base + .55 * (v / max)) * (H - 30); });
-  const xs = vals.map((_, i) => 8 + i * (W - 16) / (N - 1));
-  const pts = [[-20, H], [xs[0], ys[0]], ...xs.slice(1).map((x, i) => [x, ys[i + 1]]), [W + 20, H]];
+/* Weiches Licht von oben links, Glanz und feines Korn: macht aus einer flachen Fläche einen plastischen Hügel. */
+const filter3d = (id, blur = 16, depth = 9) => `<filter id="${id}" x="-10%" y="-30%" width="120%" height="160%" color-interpolation-filters="sRGB">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="${blur}" result="b"/>
+  <feDiffuseLighting in="b" surfaceScale="${depth}" diffuseConstant="1.15" lighting-color="#fff" result="df"><feDistantLight azimuth="240" elevation="42"/></feDiffuseLighting>
+  <feComposite in="df" in2="SourceAlpha" operator="in" result="dfc"/>
+  <feBlend in="SourceGraphic" in2="dfc" mode="multiply" result="sh"/>
+  <feSpecularLighting in="b" surfaceScale="${depth}" specularConstant=".75" specularExponent="14" lighting-color="#fff" result="sp"><feDistantLight azimuth="240" elevation="36"/></feSpecularLighting>
+  <feComposite in="sp" in2="SourceAlpha" operator="in" result="spc"/>
+  <feComposite in="sh" in2="spc" operator="arithmetic" k2="1" k3=".55" result="lit"/>
+  <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.15" result="na"/>
+  <feComposite in="na" in2="SourceAlpha" operator="in" result="nc"/>
+  <feComposite in="lit" in2="nc" operator="arithmetic" k2="1" k3="-.24" result="gr"/>
+  <feComposite in="gr" in2="SourceAlpha" operator="in"/>
+</filter>`;
+const smooth = pts => {
   let d = `M${pts[0][0]},${pts[0][1]} L${pts[1][0]},${pts[1][1]}`;
   for (let i = 1; i < pts.length - 2; i++) {
     const p0 = pts[i - 1], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2];
     d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
   }
-  d += ` L${W + 20},${H} Z`;
-  const front = `M-20,${H} C40,${H - 70} 90,${H - 64} 140,${H - 30} S220,${H - 6} 260,${H} Z`;
-  const tx = xs[N - 1], ty = ys[N - 1], v = vals[N - 1];
-  return `<figure class="mount" aria-label="Aufgaben der letzten 14 Tage, heute ${v}">
+  return d + ` L${pts[pts.length - 1][0]},${pts[pts.length - 1][1]} Z`;
+};
+/* Der Hügel zeigt die gelösten Aufgaben der letzten 14 Tage. Ein Grundhügel sorgt dafür, dass er auch ohne Daten schön aussieht. */
+function mountainSVG() {
+  const t = today(), N = 14, W = 360, H = 220;
+  const vals = Array.from({length:N}, (_, i) => cntOf(t - (N - 1) + i));
+  const max = Math.max(DAY_GOAL, ...vals);
+  const ys = vals.map((v, i) => { const x = i / (N - 1), base = .16 + .2 * Math.exp(-((x - .58) ** 2) / .05); return H - 30 - (base + .5 * (v / max)) * (H - 74); });
+  const xs = vals.map((_, i) => 4 + i * (W - 40) / (N - 1));
+  const d = smooth([[-30, H + 20], [xs[0], ys[0]], ...xs.slice(1).map((x, i) => [x, ys[i + 1]]), [W + 30, H + 20]]);
+  const front = `M-40,${H + 20} C10,${H - 96} 84,${H - 104} 150,${H - 52} S246,${H - 6} 296,${H + 20} Z`;
+  const tx = xs[N - 1], ty = ys[N - 1], v = vals[N - 1], week = vals.slice(-7).reduce((x, y) => x + y, 0);
+  return `<figure class="mount" aria-label="Gelöste Aufgaben der letzten 14 Tage, heute ${v}">
     <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
       <defs>
-        <linearGradient id="mgA" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f93b5"/><stop offset=".45" stop-color="#c9ec6c"/><stop offset="1" stop-color="#e6f6b0"/></linearGradient>
-        <linearGradient id="mgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
-        <linearGradient id="mgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f4f6e"/><stop offset="1" stop-color="#8b9ab8"/></linearGradient>
-        <filter id="mgGrain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="saturate" values="0" result="g"/><feComponentTransfer in="g" result="a"><feFuncA type="table" tableValues="0 .5"/></feComponentTransfer><feComposite in="a" in2="SourceGraphic" operator="in" result="c"/><feBlend in="c" in2="SourceGraphic" mode="multiply"/></filter>
-        <filter id="mgSoft"><feGaussianBlur stdDeviation="6"/></filter>
+        <linearGradient id="mgA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4ea9e"/><stop offset=".55" stop-color="#8fd06c"/><stop offset="1" stop-color="${APPLE.gruen}"/></linearGradient>
+        <linearGradient id="mgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a6f9c"/><stop offset="1" stop-color="#62c6ee"/></linearGradient>
+        ${filter3d("mg3d")}
+        <filter id="mgGlow"><feGaussianBlur stdDeviation="14"/></filter>
       </defs>
-      <path d="${d}" fill="url(#mgA)" filter="url(#mgSoft)" opacity=".7"/>
-      <path d="${d}" fill="url(#mgA)" filter="url(#mgGrain)"/>
-      <path d="${d}" fill="url(#mgF)"/>
-      <path d="${front}" fill="url(#mgB)" filter="url(#mgGrain)" opacity=".92"/>
+      <path d="${d}" fill="#a8dc7e" opacity=".5" filter="url(#mgGlow)"/>
+      <path d="${d}" fill="url(#mgA)" filter="url(#mg3d)"/>
+      <path d="${front}" fill="url(#mgB)" filter="url(#mg3d)"/>
     </svg>
+    <figcaption><b>Letzte 14 Tage</b><span>${nf(week)} ${week === 1 ? "Aufgabe" : "Aufgaben"} diese Woche</span></figcaption>
     <span class="mt-dot" style="left:${(tx / W * 100).toFixed(2)}%;top:${(ty / H * 100).toFixed(2)}%"></span>
     <span class="mt-tag" style="left:${(tx / W * 100).toFixed(2)}%;top:${(ty / H * 100).toFixed(2)}%">heute <b>${v}</b></span>
-    <figcaption>Deine letzten 14 Tage</figcaption>
   </figure>`;
+}
+/* Kleine Karte wie im Vorbild: Text links, Pille, plastischer Hügel rechts. Führt zur Probeprüfung. */
+function promoCard() {
+  const W = 150, H = 130, d = smooth([[-20, H + 20], [6, 96], [44, 52], [70, 70], [100, 30], [132, 66], [W + 20, H + 20]]);
+  return `<button class="promo" data-go="pruefung-ap1">
+    <span class="pr-t"><b>Bereit für die Prüfung?</b><small>Teste dich wie in der echten AP1, mit Zeit und Auswertung.</small><span class="pr-btn">Probeprüfung${icon("right", 14)}</span></span>
+    <svg class="pr-m" viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs>
+      <linearGradient id="prA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="${APPLE.orange}"/></linearGradient>
+      <linearGradient id="prB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${APPLE.lila}"/><stop offset="1" stop-color="${APPLE.rot}"/></linearGradient>
+      ${filter3d("pr3d", 10, 6)}</defs>
+      <path d="${d}" fill="url(#prA)" filter="url(#pr3d)"/>
+      <path d="M30,${H + 20} C60,${H - 46} 110,${H - 52} 170,${H + 20} Z" fill="url(#prB)" filter="url(#pr3d)"/>
+    </svg>
+  </button>`;
 }
 const blob = c => `<span class="blob" style="--c:${c}" aria-hidden="true"></span>`;
 function recentRows() {
@@ -3158,6 +3254,7 @@ function vStart() {
   <section class="sbig" aria-label="Dein Lernstand">
     <p class="s-earn">Du hast heute <button class="lchip" data-go="heute">${n} ${n === 1 ? "Aufgabe" : "Aufgaben"}${icon("right", 13)}</button> gelöst, dein Lernstand liegt bei</p>
     <h1 class="s-num">${total}<span>%</span></h1>
+    <p class="s-sub">gelernt in ${MODS.length} Themen</p>
   </section>
   ${mountainSVG()}
   <div class="s-act">
@@ -3175,6 +3272,7 @@ function vStart() {
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
   ${recent ? `<section class="section"><div class="hsec"><h2>Zuletzt geübt</h2><button class="hsee" data-go="trainieren">Alle${icon("right", 14)}</button></div><div class="group">${recent}</div></section>` : ""}
+  ${promoCard()}
   <section class="section"><div class="hsec"><h2>Deine Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="group">${topicRows()}</div></section>`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
