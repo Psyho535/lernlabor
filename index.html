@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#e7f2ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#f2f4f8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -30,7 +30,7 @@ button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 :root{
   /* Layout: app shell aus Glasscheiben über einem Farbverlauf. Jede OSI-Schicht hat ihre eigene Farbe (HUE im Script),
      große Titel klappen in eine gläserne Leiste ein, auf dem Handy schwebt die Tab-Leiste. */
-  --bg:#e7f2ea;
+  --bg:#f2f4f8;
   /* Regenbogen der Apple-Design-Seite: Blau, Lila, Rot, Orange, Gelb, Grün */
   --rainbow:linear-gradient(90deg,#009ddc,#963d97 24%,#e03a3e 46%,#f5821f 64%,#fdb827 82%,#61bb46);
   --bar:var(--rainbow);
@@ -1138,7 +1138,7 @@ main{zoom:var(--zoom,1)}
 /* ===== Look nach der Vorlage: Mint-Lime-Verlauf, weiße Karten ohne Rahmen, gelbe XP-Karte, Zeilen als Einzelkarten,
    grüne Werte, Punktdiagramm mit gelber Säule und runde Einzelknöpfe unten ===== */
 :root{
-  --bg:#e7f2ea;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
+  --bg:#f2f4f8;--bg-a:#cfeade;--bg-b:#e6f3c2;--bg-c:#d3ecea;
   --surface:#ffffff;--face:#ffffff;--solid:#ffffff;--side:rgba(255,255,255,.45);
   --label:#121212;--label-2:rgba(18,18,18,.52);--label-3:rgba(18,18,18,.32);--sep:rgba(18,18,18,.08);
   --fill:rgba(18,18,18,.06);--fill-2:#f4f6f3;--fill-3:rgba(18,18,18,.14);
@@ -1387,6 +1387,76 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 /* Drücken wie bei iOS: kurz abdunkeln statt anheben */
 .cell:active:not(.static),.mod-card:active,.mod-tile:active,.hub:active{filter:brightness(.96)}
 :root[data-theme="dark"] .cell:active:not(.static){filter:brightness(1.25)}
+
+/* ===== Einfach-Look: ruhiger heller Grund, ein klares Tagesziel, beschriftete Tab-Leiste ===== */
+:root{
+  --bg:#f2f4f8;--accent-a:#0a84ff;--accent-b:#5e5ce6;--tint:#007aff;--dot:#c9ced8;--dot-now:#007aff;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}}
+:root[data-theme="dark"]{--bg:#000000;--dot:#3a3a3c;--dot-now:#0a84ff;--tint:#0a84ff}
+#aurora{background:radial-gradient(120% 45% at 50% 0%,color-mix(in srgb,var(--accent-a) 10%,transparent),transparent 70%),var(--bg)}
+/* Kopf */
+.hdate{margin:6px 2px -16px}
+.hhead{padding-top:0}
+.hhi{margin:0;font:700 30px/1.15 var(--f-display);letter-spacing:-.025em}
+/* Tagesziel */
+.today{display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:26px;color:#fff;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));box-shadow:0 18px 36px -20px color-mix(in srgb,var(--accent-b) 80%,transparent)}
+.td-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.td-k{font-size:15px;font-weight:500;opacity:.88}
+.td-n{margin-top:2px;font:500 17px/1.3 var(--f-ui)}
+.td-n b{font:700 34px/1 var(--f-round);letter-spacing:-.02em;margin-right:2px}
+.td-ring{position:relative;flex:none;display:grid;place-items:center;width:72px;height:72px}
+.td-ring svg{position:absolute;inset:0;width:72px;height:72px;transform:rotate(-90deg)}
+.td-ring circle{fill:none;stroke-width:7}
+.td-ring .rt{stroke:rgba(255,255,255,.28)}
+.td-ring .rp{stroke:#fff;stroke-linecap:round;transition:stroke-dasharray .9s var(--ease-ios)}
+.td-ring b{font:700 15px var(--f-round)}
+.td-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;border:0;border-radius:16px;background:#fff;color:var(--accent-a);font:600 17px var(--f-ui);cursor:pointer;transition:transform .35s var(--ease-spring)}
+.td-go:active{transform:scale(.97)}
+.td-s{margin-top:-6px;font-size:13px;text-align:center;opacity:.88}
+/* Drei Zahlen */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.st{display:flex;flex-direction:column;gap:2px;padding:14px 12px;border-radius:18px;background:var(--surface);box-shadow:var(--sh);min-width:0}
+.st-i{display:grid;place-items:center;width:32px;height:32px;margin-bottom:6px;border-radius:50%;background:color-mix(in srgb,var(--c) 15%,var(--surface));color:var(--c)}
+.st b{font:700 20px/1.1 var(--f-round);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.st small{font-size:12px;line-height:1.25;color:var(--label-2)}
+/* So funktioniert's */
+.howto h2{font:700 20px/1.2 var(--f-display);letter-spacing:-.02em;margin-bottom:12px}
+.howto ol{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:12px}
+.howto li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start}
+.hw-n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--tint) 14%,var(--surface));color:var(--tint);font:700 15px var(--f-round)}
+.howto li b{display:block;font-size:16px;font-weight:600}
+.howto li small{display:block;font-size:14px;line-height:1.4;color:var(--label-2);margin-top:1px}
+.hw-ok{width:100%;height:48px;background:var(--fill)!important;box-shadow:none!important}
+/* Woche als Punktsäulen mit Wochentagen */
+.week{padding:18px 16px 14px}
+.wk-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 2px 10px}
+.wk-h h2{font:700 20px/1.2 var(--f-display);letter-spacing:-.02em}
+.wk-h span{font-size:14px;color:var(--label-2)}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:end;height:142px}
+.wk-c{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%}
+.wk-c i{display:block;width:26px;height:calc(var(--n) * 8px);background:radial-gradient(circle,var(--dot) 2.6px,transparent 3.1px) 50% 100%/8px 8px repeat;transform-origin:bottom;animation:grow .7s var(--ease-ios) both}
+.wk-c.now i{--dot:var(--dot-now)}
+.wk-c.fut i{opacity:.45}
+.wk-v{font:600 13px var(--f-round);color:var(--label-2);font-variant-numeric:tabular-nums}
+.wk-c.now .wk-v{color:var(--dot-now)}
+.wk-l{font-size:12px;font-weight:500;color:var(--label-2)}
+.wk-c.now .wk-l{color:var(--label);font-weight:700}
+.wk-f{margin:8px 2px 0;font-size:12px;color:var(--label-3)}
+/* Themenzeilen mit Balken */
+.mc-bar{display:block;height:5px;margin-top:7px;border-radius:5px;background:color-mix(in srgb,var(--c,var(--tint)) 15%,var(--fill));overflow:hidden}
+.mc-bar i{display:block;height:100%;border-radius:inherit;background:var(--c,var(--tint))}
+.mod-card .mc-v{color:var(--label);font-weight:600}
+.hsec h2{font-size:20px}
+/* Tab-Leiste mit Beschriftung */
+.tabbar{width:min(calc(100% - 24px),440px);grid-template-columns:repeat(5,minmax(0,1fr));padding:5px;border-radius:999px}
+.tab{width:auto;height:56px;border-radius:999px;color:var(--label-2);gap:3px}
+.tab span{position:static;width:auto;height:auto;overflow:hidden;clip-path:none;font-size:10.5px;font-weight:600}
+.tabbar .tab-ind{top:5px;bottom:5px;left:5px;width:calc((100% - 10px) / 5);border-radius:999px;background:color-mix(in srgb,var(--tint) 14%,transparent);box-shadow:none;transform:translateX(calc(var(--i,0) * 100%))}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--tint)}
+.tabbar.dragging .tab[aria-current="page"]:not(.hov){color:var(--label-2)}
+.first-open .today{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
+.first-open .hhead ~ :is(.stats,.howto,.week,.section):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .22s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1449,7 +1519,7 @@ const reduced = () => !CFG.motion || !!(window.matchMedia && matchMedia("(prefer
 function applySettings() {
   const root = document.documentElement, st = root.style;
   if (CFG.theme === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", CFG.theme);
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#e7f2ea" : i ? "#000000" : "#e7f2ea"; });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.content = CFG.theme === "dark" ? "#000000" : CFG.theme === "light" ? "#f2f4f8" : i ? "#000000" : "#f2f4f8"; });
   [["data-mono", !CFG.colors], ["data-noshimmer", !CFG.shimmer], ["data-noglass", !CFG.glass], ["data-calm", !CFG.motion], ["data-nosignal", !CFG.signal]].forEach(([a, on]) => root.toggleAttribute(a, on));
   st.setProperty("--zoom", SIZES[CFG.size] || 1);
   if (window.CodeTerm) CodeTerm.prefs.javaLang = CFG.javaLang || "de";
@@ -1877,7 +1947,7 @@ const MNEMO = {
 
 /* ---------------- Fortschritt ---------------- */
 const LS_KEY = "itlernlabor.osi.v1";
-const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, act:{}, mq:{}, unitsDone:{}, code:{read:{}, done:{}, last:null}, updatedAt:0});
+const DEFAULT = () => ({learned:{}, quizBest:0, quizRuns:0, quizHist:[], wrong:[], known:[], sortRounds:0, sortBest:null, orderBest:null, srs:{}, xp:0, streak:{n:0, last:0}, day:{d:0, n:0}, act:{}, cnt:{}, mq:{}, unitsDone:{}, code:{read:{}, done:{}, last:null}, updatedAt:0});
 const clone = o => JSON.parse(JSON.stringify(o));
 let S = DEFAULT();
 try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
@@ -1964,6 +2034,9 @@ function countDay(xp, m) {
   const a = S.act[d] || (S.act[d] = {}), k = m || "x";
   a[k] = (a[k] || 0) + xp;
   Object.keys(S.act).forEach(k2 => { if (+k2 < d - 400) delete S.act[k2]; });
+  if (!S.cnt || typeof S.cnt !== "object") S.cnt = {};
+  S.cnt[d] = S.day.n;
+  Object.keys(S.cnt).forEach(k2 => { if (+k2 < d - 400) delete S.cnt[k2]; });
   if (S.streak.last !== d) S.streak = {n:S.streak.last === d - 1 ? S.streak.n + 1 : 1, last:d};
   S.xp += xp;
 }
@@ -2742,7 +2815,7 @@ function mnemoHTML(mode, withId) {
   return `<p class="muted small">${m.label}</p><div class="mnemo"${withId ? ' id="mnemoWords"' : ""}>${m.words.map(([w, n]) => `<div class="mw"><span class="mw-word"><b>${w[0]}</b>${w.slice(1)}</span><small>${n} · ${m.name(n)}</small></div>`).join("")}</div>`;
 }
 const modBar = m => { const v = modProgress(m.id); return `<div class="mbar-line" style="${onColor(m.color)}"><div class="track"><i style="width:${v}%"></i></div><span>${v} %</span></div>`; };
-const modCard = m => `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 22)}<span><b>${m.title}</b><small>${m.sub}</small></span><span class="mc-v">${modProgress(m.id)} %</span></button>`;
+const modCard = m => { const v = modProgress(m.id); return `<button class="mod-card" data-go="modul-${m.id}" style="${onColor(m.color)}">${modIc(m, 22)}<span><b>${m.title}</b><small>${m.sub}</small><span class="mc-bar" aria-hidden="true"><i style="width:${v}%"></i></span></span><span class="mc-v">${v} %</span></button>`; };
 const modTile = (go, ic, col, title, sub) => `<button class="mod-tile" data-go="${go}"><span class="si" style="${onColor(col)}">${icon(ic, 19)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 const greeting = () => { const h = new Date().getHours(); return h < 5 ? "Gute Nacht." : h < 11 ? "Guten Morgen." : h < 18 ? "Guten Tag." : "Guten Abend."; };
 const greetHTML = () => greeting().split(" ").map((w, i, a) => `<span class="gw"><span${i === a.length - 1 ? ' class="gw-c"' : ""} style="--d:${i * .09}s">${w}</span></span>`).join(" ");
@@ -2810,43 +2883,60 @@ function wireChart() {
   plot.addEventListener("pointermove", e => { if (e.pointerType === "mouse" || e.buttons) at(e); });
   requestAnimationFrame(() => pick(plot.querySelector(".dc.on") || cols[cols.length - 1]));
 }
+/* Startseite, die man sofort versteht: Tagesziel mit einem großen Knopf, drei klare Zahlen,
+   die Woche als Punktsäulen mit Wochentagen und die Themen als Zeilen mit Fortschrittsbalken. */
+const DAY_GOAL = 20;
+const cntOf = d => d === today() ? doneToday() : ((S.cnt && S.cnt[d]) || 0);
+let howtoSeen = false;
+try { howtoSeen = localStorage.getItem("itlernlabor.howto") === "1"; } catch (e) {}
+const bigRing = (v, max) => { const p = Math.min(100, Math.round(v / max * 100)); return `<span class="td-ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="27"/><circle class="rp" cx="32" cy="32" r="27" pathLength="100" stroke-dasharray="${Math.max(p, .01)} 100"/></svg>${p >= 100 ? icon("check", 26) : `<b>${p} %</b>`}</span>`; };
+function weekHTML() {
+  const t = today(), start = t - (dayDate(t).getUTCDay() + 6) % 7, names = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  let sum = 0;
+  const cols = names.map((n, i) => {
+    const d = start + i, fut = d > t, v = fut ? 0 : cntOf(d);
+    sum += v;
+    const dots = fut ? 1 : Math.max(1, Math.min(12, Math.ceil(v / 2)));
+    return `<div class="wk-c${d === t ? " now" : ""}${fut ? " fut" : ""}"><span class="wk-v">${fut ? "" : v}</span><i style="--n:${dots}"></i><span class="wk-l">${n}</span></div>`;
+  }).join("");
+  return `<section class="card week" aria-label="Diese Woche"><div class="wk-h"><h2>Diese Woche</h2><span>${sum} ${sum === 1 ? "Aufgabe" : "Aufgaben"}</span></div><div class="wk" role="img" aria-label="Aufgaben pro Tag in dieser Woche">${cols}</div><p class="wk-f">Ein Punkt steht für zwei Aufgaben. Dein Ziel sind ${DAY_GOAL} am Tag.</p></section>`;
+}
 function vStart() {
   setNav({});
-  const t = today(), due = dueCount(), xpToday = actSum(t), streak = streakNow();
+  const n = doneToday(), due = dueCount(), streak = streakNow(), total = overallProgress(), done = n >= DAY_GOAL;
   actHandler = act => {
-    if (act === "hide") { hideXp = !hideXp; try { localStorage.setItem("itlernlabor.hidexp", hideXp ? "1" : "0"); } catch (e) {} haptic("light"); vStart(); }
-    if (act === "span") { chartSpan = chartSpan === "w" ? "y" : "w"; haptic("select"); const c = view.querySelector(".dchart"); if (c) { c.outerHTML = chartHTML(); wireChart(); } }
+    if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
-  const rowsT = actRows(t), rowsY = actRows(t - 1);
-  const activity = rowsT || rowsY
-    ? `${rowsT ? `<p class="tday">Heute</p><div class="group">${rowsT}</div>` : ""}${rowsY ? `<p class="tday">Gestern</p><div class="group">${rowsY}</div>` : ""}`
-    : `<div class="group"><button class="cell trow" data-go="heute"><span class="tav">${icon("mix", 19)}</span><span class="cell-main"><span class="cell-title">Tagesmix</span><span class="cell-sub">${due ? `${due} fällig` : "Noch nichts geübt"}</span></span><span class="tval">0 XP</span></button></div>`;
   paint(`
   <p class="hdate">${new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"})}</p>
   <header class="hhead">
-    <span class="hmark" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="hhi">${greeting().replace(".", "!")}</span>
-    <button class="hic" data-go="trainieren" aria-label="Trainieren">${icon("bolt", 21)}</button>
-    <button class="hic" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
+    <h1 class="hhi">${greeting().replace(".", "!")}</h1>
+    <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 21)}</button>
   </header>
-  <section class="hcard" aria-label="Deine XP">
-    <div class="hc-top">
-      <span class="hc-k">XP</span>
-      <button class="hc-eye" data-act="hide" aria-label="${hideXp ? "Zahlen zeigen" : "Zahlen verbergen"}" aria-pressed="${hideXp}">${hideXp ? EYE : EYE_OFF}</button>
-      <span class="hc-s">${overallProgress()} % gelernt • ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge</span>
-      <b class="hc-n">${hideXp ? "••••" : nf(S.xp)}</b>
-      <span class="hc-d">${hideXp ? "••" : `+${nf(xpToday)}`} heute${due ? ` · ${due} fällig` : ""}</span>
+  <section class="today" aria-label="Dein Ziel für heute">
+    <div class="td-top">
+      <div class="td-txt"><p class="td-k">Dein Ziel für heute</p><p class="td-n"><b>${n}</b> von ${DAY_GOAL} Aufgaben</p></div>
+      ${bigRing(n, DAY_GOAL)}
     </div>
-    <div class="hc-acts">
-      <button data-go="heute"><span class="hc-i">${icon("play", 16)}</span>Lernen</button>
-      <button data-go="trainieren"><span class="hc-i">${icon("trainieren", 17)}</span>Trainieren</button>
-      <button data-go="suche"><span class="hc-i">${icon("suche", 17)}</span>Suchen</button>
-    </div>
+    <button class="td-go" data-go="heute">${icon("play", 18)}<span>${done ? "Weiter üben" : n ? "Weiterlernen" : "Jetzt starten"}</span></button>
+    <p class="td-s">${done ? "Ziel geschafft, stark!" : due ? `${due} zum Wiederholen · ca. 5 Min.` : "Neue Karten aus deinen Themen · ca. 5 Min."}</p>
   </section>
-  <section class="section"><div class="hsec"><h2>Letzte Aktivität</h2><button class="hsee" data-go="trainieren">Alle${icon("right", 14)}</button></div>${activity}</section>
-  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="ltiles">${MODS.map(topicTile).join("")}${CODE.length ? `<button class="mod-tile ltile dark" data-go="code">${icon("plus", 22)}<b>Programmieren</b></button>` : ""}</div></section>
-  ${chartHTML()}`);
-  wireChart();
+  <section class="stats" aria-label="Dein Stand">
+    <div class="st"><span class="st-i" style="--c:#ff9500">${icon("flame", 18)}</span><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} in Folge</small></div>
+    <div class="st"><span class="st-i" style="--c:#34c759">${icon("check", 18)}</span><b>${total} %</b><small>vom Stoff gelernt</small></div>
+    <div class="st"><span class="st-i" style="--c:#007aff">${icon("spark", 18)}</span><b>${nf(S.xp)}</b><small>Punkte gesammelt</small></div>
+  </section>
+  ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
+    <h2>So funktioniert's</h2>
+    <ol>
+      <li><span class="hw-n">1</span><span><b>Thema wählen und lesen</b><small>Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache.</small></span></li>
+      <li><span class="hw-n">2</span><span><b>Üben</b><small>Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran.</small></span></li>
+      <li><span class="hw-n">3</span><span><b>Prüfen</b><small>Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist.</small></span></li>
+    </ol>
+    <button class="btn btn-gray hw-ok" data-act="howto">Verstanden</button>
+  </section>`}
+  ${weekHTML()}
+  <section class="section"><div class="hsec"><h2>Deine Themen</h2><button class="hsee" data-go="themen">Alle${icon("right", 14)}</button></div><div class="mod-list">${MODS.map(modCard).join("")}${CODE.length ? `<button class="mod-card" data-go="code" style="${onColor(APPLE.graphit)}"><span class="si" style="${onColor(APPLE.graphit)}">${icon("code", 22)}</span><span><b>Programmieren</b><small>Python, Java, HTML und CSS, JavaScript, SQL</small><span class="mc-bar" aria-hidden="true"><i style="width:${codeAll()}%"></i></span></span><span class="mc-v">${codeAll()} %</span></button>` : ""}</div></section>`);
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
