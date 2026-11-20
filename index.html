@@ -1930,6 +1930,72 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 /* Ohne Glas-Effekt (Einstellung): ruhige, deckende Flächen */
 :root[data-noglass] :is(.dy,.nb-round,.gpill2,.howto,.group,.hub,.card,.tile,.mode,.mod-tile,.seg,.search-box,.chip,.easy-sw,.face,.tabbar,.gc-v,.gc-ring,.wc-o em){background:var(--surface);box-shadow:none}
 :root[data-noglass] .gc-v,:root[data-noglass] .gc-ring,:root[data-noglass] .wc-o em{background:rgba(0,0,0,.18)}
+
+/* ===== Ruhiger, wie Apple es baut: deckende Karten wie in Health und Fitness, Farbe nur für Daten,
+   Glas nur für schwebende Bedienelemente (Tab-Leiste, Kopfzeile, runde Knöpfe) ===== */
+:root{--yl:#ffcc00;--yl-ink:#1a1400;--surface:#fff;--face:#fff;--solid:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--yl:#ffd60a;--accent:#ffd60a;--tint:#ffd60a;--accent-tint:rgba(255,214,10,.16);--on-accent:#1a1400;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e}}
+:root[data-theme="dark"]{--yl:#ffd60a;--accent:#ffd60a;--tint:#ffd60a;--accent-tint:rgba(255,214,10,.16);--on-accent:#1a1400;--surface:#1c1c1e;--face:#1c1c1e;--solid:#1c1c1e}
+#aurora,:root:not([data-theme="dark"]) #aurora{background:var(--bg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #aurora{background:var(--bg)}}
+/* Inhalt: deckend, ohne Glanz */
+:is(.howto,.group,.hub,.hub.solid,.card,.tile,.mode,.mod-tile,.search-box,.chip,.easy-sw,.face){background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.group:has(> .cell):not(:has(> :not(.cell))){background:var(--surface)}
+.face{box-shadow:0 20px 40px -24px rgba(0,0,0,.5)}
+.dy{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--sep);box-shadow:none}
+.dy[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);box-shadow:none}
+.dy:disabled{background:transparent;opacity:.28}
+/* Bedienelemente bleiben Glas, aber fein */
+:is(.nb-round,.gpill2,.seg,.back){background:var(--gl-bg);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);box-shadow:inset 0 .5px 0 var(--gl-rim),inset 0 0 0 .5px var(--gl-edge)}
+.gpill2{background:var(--fill)}
+.tabbar{box-shadow:inset 0 .5px 0 var(--gl-rim),inset 0 0 0 .5px var(--gl-edge),0 12px 32px -14px rgba(0,0,0,.6)}
+.tabbar .tab-ind{box-shadow:none}
+.ypill{background:var(--yl);color:var(--yl-ink);box-shadow:none}
+.ypill span{background:rgba(0,0,0,.85);color:var(--yl)}
+.dw-cur{stroke:var(--yl)}
+.dw-tri{fill:var(--yl)!important}
+:root:not([data-theme="dark"]) .dw-cur{stroke:#e0a800}
+:root:not([data-theme="dark"]) .dw-tri{fill:#e0a800!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dw-cur{stroke:var(--yl)}:root:not([data-theme="light"]) .dw-tri{fill:var(--yl)!important}}
+/* Datenkarten wie in Health: graue Fläche, farbiger Titel mit Symbol, große Zahl, Grafik in der Kartenfarbe */
+.gc{background:var(--surface)!important;color:var(--label);box-shadow:none;min-height:120px;padding:14px 16px 14px;border-radius:22px;justify-content:flex-start;gap:0}
+.gc::before,.gc::after{display:none}
+.gc.lern{--k:#0a84ff}.gc.serie{--k:#ff9f0a}.gc.faellig{--k:#bf5af2}.gc.xp{--k:#ffd60a}.gc.fehler{--k:#ff453a}.gc.ap1{--k:#ff9f0a}.gc.ap2{--k:#ff375f}
+:root:not([data-theme="dark"]) .gc.xp{--k:#d4a300}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gc.xp{--k:#ffd60a}}
+.gc-l{display:flex;align-items:center;gap:5px;font:600 14px var(--f-ui);color:var(--k);opacity:1}
+.gc-l .ic{flex:none}
+.gc-v{margin:auto 0 0;padding:0;background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border-radius:0;align-self:auto}
+.gc-v b{font:600 30px/1 var(--f-round);letter-spacing:-.01em;color:var(--label)}
+.gc-v small{font:500 14px var(--f-ui);color:var(--label-2);opacity:1}
+.gc-note{margin-top:6px;font-size:13px;color:var(--label-2)}
+/* Lernstand: schlichter Ring */
+.gc.lern{min-height:112px}
+.gc-ring{width:78px;height:78px;right:18px;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.gc-ring > svg:first-child circle{stroke:var(--fill-3);stroke-width:7}
+.gc-ring .arc{stroke:var(--k)!important;stroke-width:7!important}
+.gc-ring .dotn{height:18px;color:var(--label);opacity:.9}
+/* Serie: Spur mit Füllung bis zur Tageszahl */
+.gc-slide{height:6px;margin:16px 0 14px;border-radius:3px;background:linear-gradient(90deg,var(--k) 0 var(--p,0%),var(--fill) var(--p,0%))}
+.gc-slide i{display:none}
+/* Fällig: Punkte */
+.gc-dots{margin:18px 0 14px;padding:0;gap:4px}
+.gc-dots i{width:9px;height:9px;background:var(--fill-3)}
+.gc-dots i.on{width:9px;height:9px;background:var(--k)}
+/* Punkte: Skala bis zur nächsten Stufe */
+.gc-ticks{height:16px;margin:14px 0 12px}
+.gc-ticks i{width:2px;border-radius:1px;background:var(--fill-3)}
+.gc-ticks i.on{background:var(--k)}
+.gc-ticks b{display:none}
+.gcs.two .gc{min-height:96px}
+/* Themen-Stapel: satte, aber gedämpfte Töne ohne Körnung */
+.wc{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 70%,#1c1c1e) 0%,color-mix(in srgb,var(--c) 52%,#0b0b0c) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.22),0 -10px 24px -10px rgba(0,0,0,.6)}
+.wc::before,.wc::after{display:none}
+.wc-h b{font:600 19px/1.2 var(--f-display);letter-spacing:-.01em;text-shadow:none}
+.wc-h small{font:500 14px var(--f-ui);opacity:.75}
+.wc-o small{letter-spacing:.04em;opacity:.7;font-weight:500}
+.wc-o em{background:rgba(0,0,0,.28);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;font-weight:500}
+.dotn.big{opacity:1}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3562,12 +3628,12 @@ function vStart() {
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
   <div class="gcs">
-    <button class="gc lern" data-go="themen"><span class="gc-l">Lernstand</span><span class="gc-v"><b>${total}</b><small>% gelernt</small></span>
+    <button class="gc lern" data-go="themen"><span class="gc-l">${icon("book", 14)}Lernstand</span><span class="gc-v"><b>${total}</b><small>% gelernt</small></span>
       <span class="gc-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37"/>${total > 0 ? `<circle class="arc" cx="40" cy="40" r="37" stroke-dasharray="${(232.5 * total / 100).toFixed(1)} 232.5"/>` : ""}</svg>${dotNum(total)}</span></button>
-    <button class="gc serie" data-go="heute"><span class="gc-l">Serie</span><span class="gc-slide"><i style="left:${Math.min(100, streak / 7 * 100).toFixed(1)}%"></i></span><span class="gc-v"><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} am Stück</small></span></button>
-    <button class="gc faellig" data-go="heute"><span class="gc-l">Fällig</span><span class="gc-dots">${Array.from({length:9}, (_, i) => `<i${i < Math.min(9, due) ? ' class="on"' : ""}></i>`).join("")}</span><span class="gc-v"><b>${due}</b><small>${due === 1 ? "Karte" : "Karten"}</small></span></button>
-    <button class="gc xp" data-go="trainieren"><span class="gc-l">Punkte · Stufe ${lvl}</span><span class="gc-ticks">${Array.from({length:22}, () => "<i></i>").join("")}<b style="left:${lvlP.toFixed(1)}%"></b></span><span class="gc-v"><b>${nf(S.xp)}</b><small>XP</small></span></button>
-    <button class="gc fehler" data-go="trainieren"><span class="gc-l">Fehler</span><span class="gc-v"><b>${wrongN}</b><small>${wrongN === 1 ? "Frage" : "Fragen"} offen</small></span></button>
+    <button class="gc serie" data-go="heute"><span class="gc-l">${icon("flame", 14)}Serie</span><span class="gc-slide" style="--p:${Math.min(100, streak / 7 * 100).toFixed(1)}%"><i style="left:${Math.min(100, streak / 7 * 100).toFixed(1)}%"></i></span><span class="gc-v"><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} am Stück</small></span></button>
+    <button class="gc faellig" data-go="heute"><span class="gc-l">${icon("karten", 14)}Fällig</span><span class="gc-dots">${Array.from({length:9}, (_, i) => `<i${i < Math.min(9, due) ? ' class="on"' : ""}></i>`).join("")}</span><span class="gc-v"><b>${due}</b><small>${due === 1 ? "Karte" : "Karten"}</small></span></button>
+    <button class="gc xp" data-go="trainieren"><span class="gc-l">${icon("bolt", 14)}Punkte · Stufe ${lvl}</span><span class="gc-ticks">${Array.from({length:22}, (_, i) => i < Math.round(lvlP / 100 * 22) ? '<i class="on"></i>' : "<i></i>").join("")}<b style="left:${lvlP.toFixed(1)}%"></b></span><span class="gc-v"><b>${nf(S.xp)}</b><small>XP</small></span></button>
+    <button class="gc fehler" data-go="trainieren"><span class="gc-l">${icon("reset", 14)}Fehler</span><span class="gc-note">${wrongN ? "Tippen zum Wiederholen" : "Gerade alles richtig"}</span><span class="gc-v"><b>${wrongN}</b><small>${wrongN === 1 ? "Frage" : "Fragen"} offen</small></span></button>
   </div>
   <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
     <div class="wstack">${cardsTop.map((m, i) => { const last = i === cardsTop.length - 1, [x, y] = unitsOf(m), p = modProgress(m.id);
@@ -3576,8 +3642,8 @@ function vStart() {
   </section>
   <section class="section"><div class="hsec"><h2>Prüfen</h2></div>
     <div class="gcs two">
-      <button class="gc ap1" data-go="pruefung-ap1"><span class="gc-l">Probeprüfung</span><span class="gc-v"><b>AP1</b><small>mit Zeit</small></span></button>
-      <button class="gc ap2" data-go="pruefung-ap2"><span class="gc-l">Probeprüfung</span><span class="gc-v"><b>AP2</b><small>mit Zeit</small></span></button>
+      <button class="gc ap1" data-go="pruefung-ap1"><span class="gc-l">${icon("timer", 14)}Probeprüfung</span><span class="gc-v"><b>AP1</b><small>mit Zeit</small></span></button>
+      <button class="gc ap2" data-go="pruefung-ap2"><span class="gc-l">${icon("timer", 14)}Probeprüfung</span><span class="gc-v"><b>AP2</b><small>mit Zeit</small></span></button>
     </div>
   </section>
   ${CODE.length ? `<div class="group"><button class="cell" data-go="code"><span class="cell-ic" style="--c:#8e8e93">${icon("code", 18)}</span><span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML, JavaScript, SQL</span></span><span class="cell-detail">${codeAll()} %</span>${icon("right", 16, "chev")}</button></div>` : ""}`);
