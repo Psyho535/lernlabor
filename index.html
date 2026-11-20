@@ -2078,6 +2078,68 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
   .gpill2{padding:0 13px;font-size:15px}
   .gpill2 .ic{display:none}
 }
+
+/* ===== Feinschliff: echte Punktanzeige, Tagesziel als Segmente, Säulen je Thema ===== */
+:root{--dot-off:rgba(0,0,0,.07);--seg-off:rgba(0,0,0,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--dot-off:rgba(255,255,255,.075);--seg-off:rgba(255,255,255,.1)}}
+:root[data-theme="dark"]{--dot-off:rgba(255,255,255,.075);--seg-off:rgba(255,255,255,.1)}
+/* Anzeige mit allen 35 Punkten je Ziffer, die leuchtenden heben sich ab */
+.dbig{gap:0;margin-top:18px}
+.db-l{margin-bottom:14px;font:600 15px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--label-2)}
+.dotn circle.off{fill:var(--dot-off)}
+.dotn.big{height:92px;opacity:1;overflow:visible}
+.dotn.big circle.on{fill:var(--label)}
+.dbig:has(.db-seg.done) .dotn.big circle.on{fill:var(--task)}
+:root[data-theme="dark"] .dotn.big circle.on{filter:drop-shadow(0 0 .35px rgba(255,255,255,.7))}
+:root[data-theme="dark"] .dbig:has(.db-seg.done) .dotn.big circle.on{filter:drop-shadow(0 0 .45px var(--task))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dotn.big circle.on{filter:drop-shadow(0 0 .35px rgba(255,255,255,.7))}:root:not([data-theme="light"]) .dbig:has(.db-seg.done) .dotn.big circle.on{filter:drop-shadow(0 0 .45px var(--task))}}
+/* Tagesziel: 20 Segmente */
+.db-seg{display:flex;gap:3px;width:min(260px,76%);margin:22px 0 10px}
+.db-seg i{flex:1;height:8px;border-radius:2px;background:var(--seg-off)}
+.db-seg i:first-child{border-radius:4px 2px 2px 4px}
+.db-seg i:last-child{border-radius:2px 4px 4px 2px}
+.db-seg i.on{background:var(--task);animation:segIn .35s var(--ease-ios) both;animation-delay:calc(var(--i) * 22ms + 250ms)}
+.db-seg.done i.on{box-shadow:0 0 8px -1px color-mix(in srgb,var(--task) 70%,transparent)}
+@keyframes segIn{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}
+:root[data-calm] .db-seg i.on{animation:none}
+@media (prefers-reduced-motion:reduce){.db-seg i.on{animation:none}}
+.db-u{font-size:14px;color:var(--label-2)}
+.db-u b{font-weight:600;color:var(--label);font-variant-numeric:tabular-nums}
+.db-back{margin-top:12px}
+/* Welle: Fläche, Stiel und Punkt */
+.dwave{height:72px;margin-top:10px}
+.dw-area{stroke:none!important}
+.dw-f0{stop-color:var(--task);stop-opacity:.28}
+.dw-f1{stop-color:var(--task);stop-opacity:0}
+.dw-stem{stroke:var(--task);stroke-width:1;stroke-dasharray:2 3;opacity:.7}
+.dw-rest{opacity:.6}
+/* Lernstand: Säulen je Thema */
+.gc.lern{min-height:128px}
+.gc.lern .gc-note{margin-top:4px}
+.gc-cols{position:absolute;right:20px;top:18px;bottom:18px;display:flex;align-items:flex-end;gap:7px}
+.gc-cols i{position:relative;width:11px;height:100%;border-radius:6px;background:var(--fill-3);overflow:hidden}
+.gc-cols i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--p);border-radius:6px;background:var(--c);animation:colIn .7s var(--ease-ios) both}
+@keyframes colIn{from{transform:scaleY(0);transform-origin:bottom}to{transform:none;transform-origin:bottom}}
+:root[data-calm] .gc-cols i::after{animation:none}
+@media (prefers-reduced-motion:reduce){.gc-cols i::after{animation:none}}
+/* Offene Themenkarte */
+.wc.open{height:248px}
+.wc-o{left:20px;right:20px;bottom:18px;align-items:stretch;gap:14px}
+.wc-n{display:flex;align-items:flex-end;gap:12px}
+.wc-n .dotn{height:54px;width:auto}
+.wc-n .dotn circle.on{fill:#fff}
+.wc-n .dotn circle.off{fill:rgba(255,255,255,.16)}
+.wc-o .wc-n small{font:500 13px/1.25 var(--f-ui);letter-spacing:0;text-transform:none;opacity:.8;padding-bottom:1px}
+.wc-seg{display:flex;gap:3px}
+.wc-seg i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.22)}
+.wc-seg i.on{background:#fff}
+.wc-go{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 9px 9px 16px;border-radius:16px;background:rgba(0,0,0,.24)}
+.wc-go > span{display:flex;flex-direction:column;min-width:0;font:600 15px var(--f-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wc-go > span small{font:500 12px var(--f-ui);letter-spacing:0;text-transform:none;opacity:.7}
+.wc-go .ic{flex:none;box-sizing:content-box;padding:9px;border-radius:50%;background:#fff;color:var(--c)}
+.wc-o em{display:none}
+/* Zubehörleiste: dichteres Material, damit sie über bunten Karten ruhig bleibt */
+.acc{background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3641,11 +3703,12 @@ function topicRows() {
     + (CODE.length ? `<button class="cell srow" data-go="code">${blob(APPLE.graphit)}<span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML und CSS, JavaScript, SQL</span></span><span class="sv"><b>${codeAll()} %</b><small>gelernt</small></span></button>` : "");
 }
 /* Ziffern aus Leuchtpunkten (5 × 7), wie auf einer Punktmatrix-Anzeige. */
-const DOTS = {"0":"01110100011001110101110011000101110","1":"00100011000010000100001000010001110","2":"01110100010000100010001000100011111","3":"11111000100010000010000011000101110","4":"00010001100101010010111110001000010","5":"11111100001111000001000011000101110","6":"00110010001000011110100011000101110","7":"11111000010001000100010000100001000","8":"01110100011000101110100011000101110","9":"01110100011000101111000010001001100","-":"00000000000000011111000000000000000"};
+const DOTS = {"0":"01110100011001110101110011000101110","1":"00100011000010000100001000010001110","2":"01110100010000100010001000100011111","3":"11111000100010000010000011000101110","4":"00010001100101010010111110001000010","5":"11111100001111000001000011000101110","6":"00110010001000011110100011000101110","7":"11111000010001000100010000100001000","8":"01110100011000101110100011000101110","9":"01110100011000101111000010001001100","-":"00000000000000011111000000000000000"," ":"00000000000000000000000000000000000"};
 function dotNum(str, cls = "") {
   const ch = String(str).split("").filter(c => DOTS[c]), w = ch.length * 6 - 1;
   let dots = "";
-  ch.forEach((c, k) => { for (let i = 0; i < 35; i++) if (DOTS[c][i] === "1") dots += `<circle cx="${k * 6 + i % 5 + .5}" cy="${Math.floor(i / 5) + .5}" r=".34"${cls === "big" ? ` style="--d:${k * 4 + Math.floor(i / 5) + (i % 5)}"` : ""}/>`; });
+  const full = /\b(big|full)\b/.test(cls);
+  ch.forEach((c, k) => { for (let i = 0; i < 35; i++) { const on = DOTS[c][i] === "1"; if (on || full) dots += `<circle${full ? ` class="${on ? "on" : "off"}"` : ""} cx="${k * 6 + i % 5 + .5}" cy="${Math.floor(i / 5) + .5}" r=".36"${on && cls.includes("big") ? ` style="--d:${k * 4 + Math.floor(i / 5) + (i % 5)}"` : ""}/>`; } });
   return `<svg class="dotn ${cls}" viewBox="0 0 ${w} 7" style="aspect-ratio:${w}/7" aria-hidden="true">${dots}</svg>`;
 }
 const openCurve = pts => {
@@ -3676,6 +3739,7 @@ function vStart() {
   const cur = openCurve([[0, Y(vals[0])], ...vals.map((v, i) => [X(i), Y(v)]), [W, Y(vals[6])]]);
   const old = openCurve([[0, Y(prev[0])], ...prev.map((v, i) => [X(i), Y(v)]), [W, Y(prev[6])]]);
   const cardsTop = [...MODS.filter(m => m !== st.m), st.m];
+  const uSum = MODS.map(unitsOf), uRead = uSum.reduce((a, u) => a + u[0], 0), uAll = uSum.reduce((a, u) => a + u[1], 0);
   actHandler = (act, el) => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
     if (act === "day") { const v = +el.dataset.v; if (v !== homeSel) { homeSel = v; haptic("select"); vStart(); } }
@@ -3689,15 +3753,19 @@ function vStart() {
   <div class="days" role="group" aria-label="Tag wählen">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => `<button class="dy${i === ti ? " today" : ""}" data-act="day" data-v="${i}" aria-pressed="${i === sel}" aria-label="${DAY_LONG[i]}, ${vals[i]} Aufgaben"${i > ti ? " disabled" : ""}>${dayRing(vals[i])}<span>${n}</span></button>`).join("")}</div>
   <section class="dbig" aria-label="${dayName}: ${selV} Aufgaben gelöst">
     <p class="db-l">${dayName}</p>
-    ${dotNum(selV, "big")}
-    <p class="db-u">Aufgaben gelöst · ${goalTxt}</p>
+    ${dotNum(String(Math.min(selV, 999)).padStart(2, " "), "big")}
+    <span class="db-seg${selV >= DAY_GOAL ? " done" : ""}" aria-hidden="true">${Array.from({length:DAY_GOAL}, (_, i) => `<i${i < selV ? ' class="on"' : ""} style="--i:${i}"></i>`).join("")}</span>
+    <p class="db-u"><b>${selV >= DAY_GOAL ? selV : `${selV} von ${DAY_GOAL}`}</b> Aufgaben · ${goalTxt}</p>
     ${sel !== ti ? `<button class="db-back" data-act="today">${icon("left", 14)}Zurück zu heute</button>` : ""}
   </section>
   <svg class="dwave" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
-    <defs><clipPath id="dwClip"><rect x="0" y="0" width="${X(sel).toFixed(1)}" height="${H}"/></clipPath></defs>
+    <defs><clipPath id="dwClip"><rect x="0" y="0" width="${X(sel).toFixed(1)}" height="${H}"/></clipPath>
+      <linearGradient id="dwFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="dw-f0"/><stop offset="1" class="dw-f1"/></linearGradient></defs>
+    <path d="${cur} L${W},${H} L0,${H} Z" class="dw-area" clip-path="url(#dwClip)"/>
     <path d="${old}" class="dw-old"/>
     <path d="${cur}" class="dw-rest"/>
     <path d="${cur}" class="dw-cur" clip-path="url(#dwClip)"/>
+    <line x1="${X(sel).toFixed(1)}" x2="${X(sel).toFixed(1)}" y1="${(Y(selV) + 6).toFixed(1)}" y2="${H}" class="dw-stem"/>
     <path d="M${(X(sel) - 6).toFixed(1)},${(Y(selV) - 13).toFixed(1)} h12 l-6,9 z" class="dw-tri"/>
   </svg>
   <div class="dact">
@@ -3715,8 +3783,8 @@ function vStart() {
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
   <div class="gcs">
-    <button class="gc lern" data-go="themen"><span class="gc-l">${icon("book", 14)}Lernstand</span><span class="gc-v"><b>${total}</b><small>% gelernt</small></span>
-      <span class="gc-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37"/>${total > 0 ? `<circle class="arc" cx="40" cy="40" r="37" stroke-dasharray="${(232.5 * total / 100).toFixed(1)} 232.5"/>` : ""}</svg>${dotNum(total)}</span></button>
+    <button class="gc lern" data-go="themen"><span class="gc-l">${icon("book", 14)}Lernstand</span><span class="gc-note">${uRead} von ${uAll} Lernseiten gelesen</span><span class="gc-v"><b>${total}</b><small>% gelernt</small></span>
+      <span class="gc-cols" aria-hidden="true">${MODS.map(m => `<i style="--c:${m.color};--p:${Math.max(4, modProgress(m.id))}%" title="${m.title}"></i>`).join("")}</span></button>
     <button class="gc serie" data-go="heute"><span class="gc-l">${icon("flame", 14)}Serie</span><span class="gc-slide" style="--p:${Math.min(100, streak / 7 * 100).toFixed(1)}%"><i style="left:${Math.min(100, streak / 7 * 100).toFixed(1)}%"></i></span><span class="gc-v"><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} am Stück</small></span></button>
     <button class="gc faellig" data-go="heute"><span class="gc-l">${icon("karten", 14)}Fällig</span><span class="gc-dots">${Array.from({length:9}, (_, i) => `<i${i < Math.min(9, due) ? ' class="on"' : ""}></i>`).join("")}</span><span class="gc-v"><b>${due}</b><small>${due === 1 ? "Karte" : "Karten"}</small></span></button>
     <button class="gc xp" data-go="trainieren"><span class="gc-l">${icon("bolt", 14)}Punkte · Stufe ${lvl}</span><span class="gc-ticks">${Array.from({length:22}, (_, i) => i < Math.round(lvlP / 100 * 22) ? '<i class="on"></i>' : "<i></i>").join("")}<b style="left:${lvlP.toFixed(1)}%"></b></span><span class="gc-v"><b>${nf(S.xp)}</b><small>XP</small></span></button>
@@ -3724,7 +3792,7 @@ function vStart() {
   </div>
   <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
     <div class="wstack">${cardsTop.map((m, i) => { const last = i === cardsTop.length - 1, [x, y] = unitsOf(m), p = modProgress(m.id);
-      return `<button class="wc${last ? " open" : ""}" data-go="modul-${m.id}" style="--c:${m.color};z-index:${i + 1}"><span class="wc-h"><b>${m.title}</b><small>${p} %</small></span>${last ? `<span class="wc-o"><small>Lernseiten</small>${dotNum(`${x}-${y}`)}<em>${st.unit}</em></span>` : ""}</button>`; }).join("")}
+      return `<button class="wc${last ? " open" : ""}" data-go="modul-${m.id}" style="--c:${m.color};z-index:${i + 1}"><span class="wc-h"><b>${m.title}</b><small>${p} %</small></span>${last ? `<span class="wc-o"><span class="wc-n">${dotNum(x, "full")}<small>von ${y}<br>Lernseiten</small></span><span class="wc-seg">${Array.from({length:y}, (_, j) => `<i${j < x ? ' class="on"' : ""}></i>`).join("")}</span><span class="wc-go"><span><small>Weiter mit</small>${st.unit}</span>${icon("play", 14)}</span></span>` : ""}</button>`; }).join("")}
     </div>
   </section>
   <section class="section"><div class="hsec"><h2>Prüfen</h2></div>
