@@ -1862,6 +1862,74 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .tabbar .tab-ind{background:var(--ink)}
 .tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--on-ink)}
 .first-open .dh ~ :is(.days,.dbig,.dwave,.dact,.inext,.howto,.gcs,.section,.group):not(.pre,.rev){animation:riseIn .8s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
+
+/* ===== Glas wie bei Apple: mattes, durchscheinendes Glas mit Lichtkante über weichen Farbschimmern ===== */
+:root{
+  --gl-bg:rgba(255,255,255,.55);--gl-bg-2:rgba(255,255,255,.38);
+  --gl-rim:rgba(255,255,255,.9);--gl-rim-2:rgba(255,255,255,.35);--gl-edge:rgba(0,0,0,.06);
+  --gl-shadow:0 10px 30px -14px rgba(20,20,40,.35);
+  --gl-blur:blur(26px) saturate(190%);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --gl-bg:rgba(255,255,255,.075);--gl-bg-2:rgba(255,255,255,.05);
+  --gl-rim:rgba(255,255,255,.32);--gl-rim-2:rgba(255,255,255,.08);--gl-edge:rgba(255,255,255,.07);
+  --gl-shadow:0 14px 34px -14px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --gl-bg:rgba(255,255,255,.075);--gl-bg-2:rgba(255,255,255,.05);
+  --gl-rim:rgba(255,255,255,.32);--gl-rim-2:rgba(255,255,255,.08);--gl-edge:rgba(255,255,255,.07);
+  --gl-shadow:0 14px 34px -14px rgba(0,0,0,.8);
+}
+/* Farbschimmer hinter dem Glas, damit es etwas zum Brechen hat */
+#aurora{background:
+  radial-gradient(42% 30% at 8% 6%,rgba(120,90,255,.30),transparent 70%),
+  radial-gradient(36% 26% at 96% 28%,rgba(228,241,58,.14),transparent 70%),
+  radial-gradient(46% 34% at 82% 78%,rgba(255,60,150,.22),transparent 70%),
+  radial-gradient(40% 30% at 6% 62%,rgba(0,150,255,.22),transparent 70%),
+  var(--bg)}
+:root:not([data-theme="dark"]) #aurora{background:
+  radial-gradient(42% 30% at 8% 6%,rgba(150,120,255,.35),transparent 70%),
+  radial-gradient(36% 26% at 96% 28%,rgba(210,230,40,.28),transparent 70%),
+  radial-gradient(46% 34% at 82% 78%,rgba(255,90,170,.25),transparent 70%),
+  radial-gradient(40% 30% at 6% 62%,rgba(0,160,255,.25),transparent 70%),
+  var(--bg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #aurora{background:
+  radial-gradient(42% 30% at 8% 6%,rgba(120,90,255,.30),transparent 70%),
+  radial-gradient(36% 26% at 96% 28%,rgba(228,241,58,.14),transparent 70%),
+  radial-gradient(46% 34% at 82% 78%,rgba(255,60,150,.22),transparent 70%),
+  radial-gradient(40% 30% at 6% 62%,rgba(0,150,255,.22),transparent 70%),
+  var(--bg)}}
+/* Glasflächen: Tage, Knöpfe, Karten, Listen, Suche, Umschalter */
+:is(.dy,.nb-round,.gpill2,.howto,.group,.hub,.hub.solid,.card,.tile,.mode,.mod-tile,.seg,.search-box,.chip,.easy-sw,.face,.back){
+  background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+  box-shadow:inset 0 1px 0 var(--gl-rim),inset 0 -1px 0 var(--gl-rim-2),inset 0 0 0 .5px var(--gl-edge),var(--gl-shadow)}
+.group:has(> .cell):not(:has(> :not(.cell))){background:var(--gl-bg)}
+.dy{border-color:transparent;box-shadow:inset 0 1px 0 var(--gl-rim),inset 0 0 0 .5px var(--gl-edge)}
+.dy[aria-pressed="true"]{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 18px -6px rgba(255,255,255,.35)}
+.dy:disabled{background:var(--gl-bg-2)}
+.back{background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.face{box-shadow:inset 0 1px 0 var(--gl-rim),inset 0 0 0 .5px var(--gl-edge),0 24px 50px -20px rgba(0,0,0,.6)}
+.seg-thumb{background:rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 3px 10px rgba(0,0,0,.2)}
+:root:not([data-theme="dark"]) .seg-thumb{background:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg-thumb{background:rgba(255,255,255,.18)}}
+/* Leuchtkarten bekommen eine Glaskante und einen Glanz oben */
+.gc,.wc{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.18),0 16px 34px -18px rgba(0,0,0,.7)}
+.wc{box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 0 0 .5px rgba(255,255,255,.2),0 -12px 26px -10px rgba(0,0,0,.55)}
+.gc::before,.wc::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 38%);pointer-events:none}
+/* Glasblase im Lernstand und Glaschip auf der offenen Themenkarte */
+.gc-ring{border-radius:50%;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.12),0 8px 20px -10px rgba(0,0,0,.4)}
+.wc-o em{background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 0 0 .5px rgba(255,255,255,.2)}
+.gc-v{align-self:flex-start;margin:-4px -8px -6px;padding:4px 10px 6px;border-radius:14px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(12px) saturate(170%);backdrop-filter:blur(12px) saturate(170%);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+/* Gelbe Pille mit Lichtkante */
+.ypill{box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 -2px 4px rgba(120,130,0,.25),0 10px 30px -12px rgba(228,241,58,.6)}
+.gpill2{color:var(--label)}
+/* Tab-Leiste und Kopfzeile: flüssiges Glas */
+.tabbar{background:var(--gl-bg);-webkit-backdrop-filter:blur(30px) saturate(200%);backdrop-filter:blur(30px) saturate(200%);border:0;box-shadow:inset 0 1px 0 var(--gl-rim),inset 0 -1px 0 var(--gl-rim-2),inset 0 0 0 .5px var(--gl-edge),0 18px 40px -16px rgba(0,0,0,.7)}
+.tabbar .tab-ind{box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 16px -6px rgba(255,255,255,.3)}
+.navbar.scrolled{background:color-mix(in srgb,var(--bg) 55%,transparent);-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);border-bottom:.5px solid var(--gl-edge)}
+/* Ohne Glas-Effekt (Einstellung): ruhige, deckende Flächen */
+:root[data-noglass] :is(.dy,.nb-round,.gpill2,.howto,.group,.hub,.card,.tile,.mode,.mod-tile,.seg,.search-box,.chip,.easy-sw,.face,.tabbar,.gc-v,.gc-ring,.wc-o em){background:var(--surface);box-shadow:none}
+:root[data-noglass] .gc-v,:root[data-noglass] .gc-ring,:root[data-noglass] .wc-o em{background:rgba(0,0,0,.18)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3498,7 +3566,7 @@ function vStart() {
       <span class="gc-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37"/>${total > 0 ? `<circle class="arc" cx="40" cy="40" r="37" stroke-dasharray="${(232.5 * total / 100).toFixed(1)} 232.5"/>` : ""}</svg>${dotNum(total)}</span></button>
     <button class="gc serie" data-go="heute"><span class="gc-l">Serie</span><span class="gc-slide"><i style="left:${Math.min(100, streak / 7 * 100).toFixed(1)}%"></i></span><span class="gc-v"><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"} am Stück</small></span></button>
     <button class="gc faellig" data-go="heute"><span class="gc-l">Fällig</span><span class="gc-dots">${Array.from({length:9}, (_, i) => `<i${i < Math.min(9, due) ? ' class="on"' : ""}></i>`).join("")}</span><span class="gc-v"><b>${due}</b><small>${due === 1 ? "Karte" : "Karten"}</small></span></button>
-    <button class="gc xp" data-go="trainieren"><span class="gc-l">Punkte</span><span class="gc-ticks">${Array.from({length:22}, () => "<i></i>").join("")}<b style="left:${lvlP.toFixed(1)}%"></b></span><span class="gc-v"><b>${nf(S.xp)}</b><small>XP</small><em>Stufe ${lvl}</em></span></button>
+    <button class="gc xp" data-go="trainieren"><span class="gc-l">Punkte · Stufe ${lvl}</span><span class="gc-ticks">${Array.from({length:22}, () => "<i></i>").join("")}<b style="left:${lvlP.toFixed(1)}%"></b></span><span class="gc-v"><b>${nf(S.xp)}</b><small>XP</small></span></button>
     <button class="gc fehler" data-go="trainieren"><span class="gc-l">Fehler</span><span class="gc-v"><b>${wrongN}</b><small>${wrongN === 1 ? "Frage" : "Fragen"} offen</small></span></button>
   </div>
   <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
