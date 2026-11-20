@@ -1996,6 +1996,74 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .wc-o small{letter-spacing:.04em;opacity:.7;font-weight:500}
 .wc-o em{background:rgba(0,0,0,.28);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;font-weight:500}
 .dotn.big{opacity:1}
+
+/* ===== iOS-System: Systemfarben, Systemblau für Aktionen, Grün für Aufgaben, Liquid Glass für alles Bedienbare ===== */
+:root{--accent:#007aff;--tint:#007aff;--accent-tint:rgba(0,122,255,.12);--on-accent:#fff;--task:#34c759;--task-2:rgba(52,199,89,.2);
+  --glass-c:rgba(255,255,255,.62);--glass-c2:rgba(255,255,255,.4);--glass-hi:rgba(255,255,255,.95);--glass-lo:rgba(255,255,255,.4);--glass-ln:rgba(0,0,0,.07);--glass-sel:rgba(0,0,0,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#0a84ff;--tint:#0a84ff;--accent-tint:rgba(10,132,255,.2);--on-accent:#fff;--task:#30d158;--task-2:rgba(48,209,88,.22);
+  --glass-c:rgba(40,40,44,.55);--glass-c2:rgba(255,255,255,.07);--glass-hi:rgba(255,255,255,.28);--glass-lo:rgba(255,255,255,.06);--glass-ln:rgba(255,255,255,.08);--glass-sel:rgba(255,255,255,.14)}}
+:root[data-theme="dark"]{--accent:#0a84ff;--tint:#0a84ff;--accent-tint:rgba(10,132,255,.2);--on-accent:#fff;--task:#30d158;--task-2:rgba(48,209,88,.22);
+  --glass-c:rgba(40,40,44,.55);--glass-c2:rgba(255,255,255,.07);--glass-hi:rgba(255,255,255,.28);--glass-lo:rgba(255,255,255,.06);--glass-ln:rgba(255,255,255,.08);--glass-sel:rgba(255,255,255,.14)}
+/* Liquid Glass: ein Material für alle Bedienelemente */
+:is(.nb-round,.gpill2,.seg,.back,.days,.db-back,.tabbar,.acc,.ypill){-webkit-backdrop-filter:blur(22px) saturate(190%);backdrop-filter:blur(22px) saturate(190%);box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 -1px 0 var(--glass-lo),inset 0 0 0 .5px var(--glass-ln),0 8px 24px -14px rgba(0,0,0,.45)}
+:is(.nb-round,.gpill2,.seg,.back,.days,.db-back){background:var(--glass-c2)}
+.nb-round,.back{color:var(--accent)}
+.back{padding:0 14px 0 8px}
+/* Datum über dem Titel */
+.dh{align-items:flex-end}
+.dh-d{display:block;margin-bottom:2px;font:600 13px var(--f-ui);color:var(--label-2);text-transform:uppercase;letter-spacing:.02em}
+/* Wochenleiste als Glaskapsel, jeder Tag mit Ring wie in Fitness */
+.days{gap:2px;padding:5px;border-radius:999px;margin-top:2px}
+.dy{position:relative;display:grid;place-items:center;max-width:44px;border:0;background:transparent;box-shadow:none;font:600 12.5px var(--f-ui)}
+.dy span{position:relative;z-index:1}
+.dy-r{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.dy-r circle{fill:none;stroke:var(--task-2);stroke-width:4}
+.dy-r circle.on{stroke:var(--task);stroke-linecap:round}
+.dy[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border:0;box-shadow:0 4px 12px -4px rgba(0,0,0,.4)}
+.dy[aria-pressed="true"] .dy-r circle{stroke:transparent}
+.dy[aria-pressed="true"] .dy-r circle.on{stroke:var(--task)}
+.dy.today:not([aria-pressed="true"]) span{color:var(--accent)}
+.dy:disabled{opacity:.35;background:transparent}
+.dy:disabled .dy-r{display:none}
+/* Große Zahl: Punkte erscheinen nacheinander */
+.dotn.big circle{animation:dotIn .5s var(--ease-ios) both;animation-delay:calc(var(--d,0) * 14ms)}
+@keyframes dotIn{from{opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center}to{opacity:1;transform:none;transform-box:fill-box;transform-origin:center}}
+:root[data-calm] .dotn.big circle{animation:none}
+@media (prefers-reduced-motion:reduce){.dotn.big circle{animation:none}}
+.db-back{display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 14px 0 10px;border:0;border-radius:999px;color:var(--accent);font:600 14px var(--f-ui);cursor:pointer}
+/* Welle in Aufgaben-Grün */
+.dw-cur,:root:not([data-theme="dark"]) .dw-cur{stroke:var(--task)}
+.dw-tri,:root:not([data-theme="dark"]) .dw-tri{fill:var(--task)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dw-cur{stroke:var(--task)}:root:not([data-theme="light"]) .dw-tri{fill:var(--task)!important}}
+/* Hauptknopf: getöntes Glas in Systemblau */
+.ypill{background:color-mix(in srgb,var(--accent) 88%,transparent);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,0,0,.12),0 10px 26px -12px color-mix(in srgb,var(--accent) 80%,transparent)}
+.ypill span{background:rgba(255,255,255,.22);color:#fff}
+.gpill2{display:inline-flex;align-items:center;gap:7px;color:var(--label)}
+.gpill2 .ic{color:var(--accent)}
+.btn-fill,.hw-ok{background:var(--accent)!important;color:var(--on-accent)!important}
+.hsee{color:var(--accent)}
+/* Tab-Leiste wie iOS 26: Glaskapsel, gewählter Tab als hellere Glaslinse, Symbol in Blau */
+.tabbar{background:var(--glass-c)}
+.tabbar .tab-ind{background:var(--glass-sel);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.tab{color:var(--label)}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--accent)}
+/* Leiste „Als Nächstes“ über der Tab-Leiste */
+.acc{position:sticky;z-index:20;bottom:calc(88px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;width:min(100%,440px);margin:6px auto 0;padding:7px 8px 7px 8px;border:0;border-radius:999px;background:color-mix(in srgb,var(--bg) 70%,transparent);color:var(--label);text-align:left;cursor:pointer;opacity:0;transform:translateY(14px) scale(.96);pointer-events:none;transition:opacity .35s var(--ease-ios),transform .45s var(--ease-spring)}
+.acc.on{opacity:1;transform:none;pointer-events:auto}
+.acc:active{transform:scale(.97)}
+.acc-ic{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--c);color:#fff}
+.acc-t{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.2}
+.acc-t small{font-size:12px;color:var(--label-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc-t b{font:600 15px var(--f-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc-go{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff}
+@media (min-width:900px){.acc{bottom:24px}}
+/* Kleine Feinheiten */
+.gc,.wc{transition:transform .45s var(--ease-spring)}
+.gc:active{transform:scale(.97)}
+.gc{box-shadow:inset 0 0 0 .5px var(--glass-ln)}
+.gc-v b{font-variant-numeric:tabular-nums}
+.wc-o em{background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+:root[data-noglass] :is(.nb-round,.gpill2,.seg,.back,.days,.db-back,.acc,.tabbar){-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--surface)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3563,7 +3631,7 @@ const DOTS = {"0":"01110100011001110101110011000101110","1":"0010001100001000010
 function dotNum(str, cls = "") {
   const ch = String(str).split("").filter(c => DOTS[c]), w = ch.length * 6 - 1;
   let dots = "";
-  ch.forEach((c, k) => { for (let i = 0; i < 35; i++) if (DOTS[c][i] === "1") dots += `<circle cx="${k * 6 + i % 5 + .5}" cy="${Math.floor(i / 5) + .5}" r=".34"/>`; });
+  ch.forEach((c, k) => { for (let i = 0; i < 35; i++) if (DOTS[c][i] === "1") dots += `<circle cx="${k * 6 + i % 5 + .5}" cy="${Math.floor(i / 5) + .5}" r=".34"${cls === "big" ? ` style="--d:${k * 4 + Math.floor(i / 5) + (i % 5)}"` : ""}/>`; });
   return `<svg class="dotn ${cls}" viewBox="0 0 ${w} 7" style="aspect-ratio:${w}/7" aria-hidden="true">${dots}</svg>`;
 }
 const openCurve = pts => {
@@ -3574,7 +3642,7 @@ const openCurve = pts => {
   }
   return d;
 };
-let homeSel = null;
+let homeSel = null, accObs = null;
 const DAY_LONG = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 function vStart() {
   setNav({});
@@ -3586,6 +3654,9 @@ function vStart() {
   const total = overallProgress(), st = nextStep(), due = dueCount(), streak = streakNow();
   const wrongN = (S.wrong || []).filter(id => Q_BY_ID[id]).length, lvl = Math.floor(S.xp / 1000) + 1, lvlP = (S.xp % 1000) / 10;
   const dayName = selD === t ? "Heute" : selD === t - 1 ? "Gestern" : DAY_LONG[sel];
+  const goalTxt = selD === t ? (selV >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - selV} bis zum Tagesziel`) : (selV >= DAY_GOAL ? "Tagesziel geschafft" : `Tagesziel ${DAY_GOAL}`);
+  const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
+  const dayRing = v => { const C = 2 * Math.PI * 21, p = Math.min(1, v / DAY_GOAL); return `<svg class="dy-r" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/>${p > 0 ? `<circle class="on" cx="24" cy="24" r="21" stroke-dasharray="${(C * p).toFixed(1)} ${C.toFixed(1)}"/>` : ""}</svg>`; };
   // Welle: diese Woche gelb bis zum gewählten Tag, Vorwoche als feine Linie
   const W = 350, H = 64, max = Math.max(DAY_GOAL, ...vals, ...prev), X = i => (i + .5) / 7 * W, Y = v => H - 8 - v / max * (H - 20);
   const cur = openCurve([[0, Y(vals[0])], ...vals.map((v, i) => [X(i), Y(v)]), [W, Y(vals[6])]]);
@@ -3594,17 +3665,19 @@ function vStart() {
   actHandler = (act, el) => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
     if (act === "day") { const v = +el.dataset.v; if (v !== homeSel) { homeSel = v; haptic("select"); vStart(); } }
+    if (act === "today") { homeSel = ti; haptic("select"); vStart(); }
   };
   paint(`
   <header class="dh">
-    <h1 class="large">Übersicht</h1>
+    <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
   </header>
-  <div class="days" role="group" aria-label="Tag wählen">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => `<button class="dy" data-act="day" data-v="${i}" aria-pressed="${i === sel}"${i > ti ? " disabled" : ""}>${n}</button>`).join("")}</div>
+  <div class="days" role="group" aria-label="Tag wählen">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => `<button class="dy${i === ti ? " today" : ""}" data-act="day" data-v="${i}" aria-pressed="${i === sel}" aria-label="${DAY_LONG[i]}, ${vals[i]} Aufgaben"${i > ti ? " disabled" : ""}>${dayRing(vals[i])}<span>${n}</span></button>`).join("")}</div>
   <section class="dbig" aria-label="${dayName}: ${selV} Aufgaben gelöst">
     <p class="db-l">${dayName}</p>
     ${dotNum(selV, "big")}
-    <p class="db-u">Aufgaben gelöst · Ziel ${DAY_GOAL}</p>
+    <p class="db-u">Aufgaben gelöst · ${goalTxt}</p>
+    ${sel !== ti ? `<button class="db-back" data-act="today">${icon("left", 14)}Zurück zu heute</button>` : ""}
   </section>
   <svg class="dwave" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
     <defs><clipPath id="dwClip"><rect x="0" y="0" width="${X(sel).toFixed(1)}" height="${H}"/></clipPath></defs>
@@ -3615,7 +3688,7 @@ function vStart() {
   </svg>
   <div class="dact">
     <button class="ypill" data-go="${st.go}">${st.started ? "Weiterlernen" : "Jetzt starten"}<span>${icon("right", 16)}</span></button>
-    <button class="gpill2" data-go="heute">Tagesmix</button>
+    <button class="gpill2" data-go="heute">${icon("mix", 17)}Tagesmix</button>
   </div>
   <p class="inext">Als Nächstes: ${st.m.title}, ${st.unit}</p>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
@@ -3646,7 +3719,18 @@ function vStart() {
       <button class="gc ap2" data-go="pruefung-ap2"><span class="gc-l">${icon("timer", 14)}Probeprüfung</span><span class="gc-v"><b>AP2</b><small>mit Zeit</small></span></button>
     </div>
   </section>
-  ${CODE.length ? `<div class="group"><button class="cell" data-go="code"><span class="cell-ic" style="--c:#8e8e93">${icon("code", 18)}</span><span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML, JavaScript, SQL</span></span><span class="cell-detail">${codeAll()} %</span>${icon("right", 16, "chev")}</button></div>` : ""}`);
+  ${CODE.length ? `<div class="group"><button class="cell" data-go="code"><span class="cell-ic" style="--c:#8e8e93">${icon("code", 18)}</span><span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML, JavaScript, SQL</span></span><span class="cell-detail">${codeAll()} %</span>${icon("right", 16, "chev")}</button></div>` : ""}
+  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
+  const dact = view.querySelector(".dact"), acc = view.querySelector(".acc");
+  if (accObs) { accObs.disconnect(); accObs = null; }
+  if (dact && acc && "IntersectionObserver" in window) {
+    accObs = new IntersectionObserver(([e]) => {
+      if (!acc.isConnected) { accObs && accObs.disconnect(); return; }
+      const on = !e.isIntersecting && e.boundingClientRect.top < 0;
+      acc.classList.toggle("on", on); acc.tabIndex = on ? 0 : -1; acc.setAttribute("aria-hidden", String(!on));
+    });
+    accObs.observe(dact);
+  }
 }
 /* Einmal beim Öffnen: Die sieben Schichten stapeln sich, dann fliegt man durch den Stapel in die App. */
 function endFirstOpen() {
