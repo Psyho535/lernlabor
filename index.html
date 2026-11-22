@@ -2400,6 +2400,27 @@ button.prow:active{background:var(--fill);transition:none}
 .st-p b{background:var(--sc)}
 .st-go{background:var(--sd);color:#fff;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 .first-open .st-body>*{animation-delay:calc(var(--intro,0s) + .25s)}
+/* ===== Startseite wie SwiftUI: List im Stil .insetGrouped, großer Titel, wenige klar sortierte Zeilen ===== */
+.dh .large{margin:0}
+.ig-sec{display:block;margin:0 0 6px}
+.ig-h{margin:0 0 7px;padding:0 16px;font:400 13px/1.3 var(--f-ui);text-transform:uppercase;letter-spacing:.02em;color:var(--label-2)}
+.ig{display:flex;flex-direction:column;border-radius:22px;background:var(--surface);overflow:hidden}
+.ig .prow{min-height:52px;padding:10px 16px;gap:14px}
+.ig .prow+.prow::before{left:60px}
+.ig .pr-ic{width:30px;height:30px;border-radius:8px}
+.ig .pr-ic .ic{width:17px;height:17px}
+.ig .pr-r{background:none}
+.ig .pr-ring{width:30px;height:30px}
+.ig .pr-ring circle{stroke-width:3.5}
+.ig-weiter{min-height:76px!important}
+.ig-weiter .pr-ic{width:46px;height:46px;border-radius:12px}
+.ig-weiter .pr-ic .ic{width:24px;height:24px}
+.ig-bar{display:block;height:4px;margin-top:7px;border-radius:2px;background:var(--fill);overflow:hidden}
+.ig-bar i{display:block;height:100%;border-radius:inherit;background:var(--c)}
+.ig-fl{display:inline-flex;align-items:center;gap:4px}
+.ig-fl .ic{width:15px;height:15px;color:var(--p-orange)}
+.first-open .ig-sec,.first-open .dh~.howto{animation:riseIn .7s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .15s)}
+.first-open .ig-sec:nth-of-type(n+3){animation-delay:calc(var(--intro,0s) + .25s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -4200,33 +4221,21 @@ function vStart() {
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
   const q = Math.min(1, heute / DAY_GOAL);
-  // Bühne wie in Apple TV und Musik: das Thema, mit dem es weitergeht, groß auf seiner Farbe; darunter schlichte Listen
-  const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m), RC = 2 * Math.PI * 14;
-  const row = (go, c, ic, t, sub, val, rund) => `<button class="prow" data-go="${go}"><span class="pr-ic${rund ? " rund" : ""}" style="--c:${tief(c, 3.2)}">${icon(ic, 18)}</span><span class="pr-t"><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}</span>${val ? `<span class="pr-v">${val}</span>` : ""}<span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span></button>`;
+  // Wie eine SwiftUI-App: List(.insetGrouped) mit wenigen, klar sortierten Zeilen
+  const pr = modProgress(st.m.id), RC = 2 * Math.PI * 12;
+  const chev = `<span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span>`;
+  const row = (go, c, ic, t, sub, val) => `<button class="prow" data-go="${go}"><span class="pr-ic" style="--c:${tief(c, 3.2)}">${icon(ic, 17)}</span><span class="pr-t"><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}</span>${val ? `<span class="pr-v">${val}</span>` : ""}${chev}</button>`;
+  const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
   paint(`
-  <section class="stage" style="--sc:${tief(st.m.color, 3.2)};--sd:${tief(st.m.color)}">
-    <header class="dh">
-      <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
-      <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
-    </header>
-    <div class="st-body">
-      <span class="st-ic" aria-hidden="true">${icon(st.m.icon, 26)}</span>
-      <small class="st-eye">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
-      <h2 class="st-t">${st.m.title}</h2>
-      <p class="st-s">${st.unit}</p>
-      <div class="st-p"><i aria-hidden="true"><b style="width:${pr}%"></b></i><span>${ux} von ${uy} Lernseiten · ${pr} %</span></div>
-      <button class="st-go" data-go="${st.go}">${icon("play", 16)}${st.started ? "Weiterlernen" : "Loslegen"}</button>
-    </div>
-  </section>
-  <section class="section pl-sec" aria-label="Heute"><div class="hsec"><h2>Heute</h2></div>
-    <div class="plist">
-      <button class="prow" data-go="heute"><span class="pr-ic pr-r"><svg class="pr-ring" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14"/>${q > 0 ? `<circle class="on" cx="17" cy="17" r="14" stroke-dasharray="${(RC * q).toFixed(1)} ${RC.toFixed(1)}"/>` : ""}</svg></span><span class="pr-t"><b>${heute} von ${DAY_GOAL} Aufgaben</b><small>${goalTxt}</small></span><span class="pr-v">Tagesmix</span><span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span></button>
-      <div class="prow"><span class="pr-ic rund" style="--c:${tief(APPLE.orange, 3.2)}">${icon("flame", 17)}</span><span class="pr-t"><b>${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</b><small>${nf(S.xp)} XP · Stufe ${lvl}</small></span></div>
-    </div>
-  </section>
+  <header class="dh">
+    <h1 class="large">Übersicht</h1>
+    <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
+  </header>
+  ${sec(st.started ? "Weiterlernen" : "Als Nächstes", `<button class="prow ig-weiter" data-go="${st.go}"><span class="pr-ic" style="--c:${tief(st.m.color, 3.2)}">${icon(st.m.icon, 22)}</span><span class="pr-t"><b>${st.m.title}</b><small>${st.unit}</small><span class="ig-bar" aria-hidden="true"><i style="width:${pr}%;--c:${tief(st.m.color, 3.2)}"></i></span></span><span class="pr-v">${pr} %</span>${chev}</button>`)}
+  ${sec("Heute", `<div class="prow"><span class="pr-ic pr-r"><svg class="pr-ring" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12"/>${q > 0 ? `<circle class="on" cx="15" cy="15" r="12" stroke-dasharray="${(RC * q).toFixed(1)} ${RC.toFixed(1)}"/>` : ""}</svg></span><span class="pr-t"><b>${heute} von ${DAY_GOAL} Aufgaben</b><small>${goalTxt}</small></span><span class="pr-v ig-fl">${icon("flame", 15)}${streak}</span></div>${row("heute", APPLE.blau, "mix", "Tagesmix starten", "")}`)}
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
     <ol>
@@ -4236,22 +4245,15 @@ function vStart() {
     </ol>
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  <section class="section pl-sec"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
-    <div class="plist">${MODS.map(m => { const [x, y] = unitsOf(m); return row(`modul-${m.id}`, m.color, m.icon, m.title, `${x} von ${y} Lernseiten`, `${modProgress(m.id)} %`, true); }).join("")}</div>
-  </section>
-  <section class="section pl-sec"><div class="hsec"><h2>Üben und Prüfen</h2></div>
-    <div class="plist">
-      ${row("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig")}
-      ${row("trainieren", APPLE.rot, "reset", "Fehler wiederholen", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig")}
-      ${row("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit")}
-      ${row("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit")}
-      ${CODE.length ? row("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`) : ""}
-      ${row("trainieren", APPLE.blau, "trainieren", "Trainieren", "Alle Übungen")}
-    </div>
-  </section>
+  ${sec("Lernen", row("themen", APPLE.blau, "themen", "Alle Themen", `${MODS.length} Themen`, ""))}
+  ${sec("Üben", row("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig", "")
+    + row("trainieren", APPLE.rot, "reset", "Fehler wiederholen", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig", "")
+    + (CODE.length ? row("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`, "") : "")
+    + row("trainieren", APPLE.indigo, "trainieren", "Alle Übungen", "", ""))}
+  ${sec("Prüfen", row("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit", "") + row("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit", ""))}
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
-  // Der Miniplayer erscheint, sobald der Knopf der Bühne aus dem Bild gescrollt ist
-  const dact = view.querySelector(".st-go"), acc = view.querySelector(".acc");
+  // Der Miniplayer erscheint, sobald die Zeile „Weiterlernen“ aus dem Bild gescrollt ist
+  const dact = view.querySelector(".ig-weiter"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
   if (dact && acc && "IntersectionObserver" in window) {
     accObs = new IntersectionObserver(([e]) => {
