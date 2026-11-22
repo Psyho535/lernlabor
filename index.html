@@ -2539,6 +2539,45 @@ button.ios-card:active{transform:scale(.97)}
 .zfx > .col,.zf-innen{position:absolute;will-change:transform}
 .zf-dim{position:fixed;inset:0;z-index:27;display:block;background:#000;opacity:0;pointer-events:none}
 .zf-solo{position:fixed!important;z-index:29!important;margin:0!important;transform:none!important;animation:none!important;transition:none!important;background:transparent!important;box-shadow:none!important;pointer-events:none;grid-column:auto!important;grid-row:auto!important}
+/* ===== Startseite wie der Tab „Heute“ im App Store: große Karten ===== */
+.dh.hk{align-items:flex-end!important;padding-top:2px}
+.dh.hk .dh-d{display:block;margin-bottom:2px;font:600 13px/16px var(--f-ui);letter-spacing:.02em;text-transform:uppercase;color:var(--label-2)}
+.dh.hk .large{font:700 34px/41px var(--f-display)!important;letter-spacing:.004em!important;color:var(--label)!important}
+#view > .dh.hk:first-child{margin-top:calc(-1 * var(--nbh,52px) + 6px)!important}
+.karten{display:flex;flex-direction:column;gap:20px;margin-top:4px}
+.karten-reihe{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.karte{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:14px;width:100%;min-width:0;min-height:208px;padding:20px;border:0;border-radius:26px;background:var(--cb);color:var(--on);text-align:left;overflow:hidden;isolation:isolate;cursor:pointer;box-shadow:0 18px 40px -24px rgba(0,0,0,.65);-webkit-tap-highlight-color:transparent;transition:transform .5s cubic-bezier(.3,1.3,.5,1);will-change:transform}
+.karte::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(70% 55% at 100% 100%,color-mix(in srgb,var(--on) 8%,transparent),transparent 70%)}
+.karte:active{transform:scale(.965);transition-duration:.2s;transition-timing-function:cubic-bezier(.25,.8,.25,1)}
+.karte.gross{min-height:min(370px,50vh)}
+.karte.gross.mittel{min-height:300px}
+.k-kopf{display:block;min-width:0;max-width:100%}
+.k-eye{display:block;font:700 13px/16px var(--f-ui);letter-spacing:.07em;text-transform:uppercase}
+.k-titel{display:block;margin-top:6px;font:800 32px/1.06 var(--f-display);letter-spacing:-.032em;overflow-wrap:break-word;hyphens:auto}
+.k-sub{display:block;max-width:68%;margin-top:8px;font:500 16px/1.35 var(--f-ui)}
+.k-art{position:absolute;z-index:-1;right:20px;bottom:74px;display:grid;place-items:center;width:136px;height:136px;border-radius:36px;background:color-mix(in srgb,var(--on) 12%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--on) 28%,transparent),0 24px 44px -24px rgba(0,0,0,.5);transform:rotate(-6deg)}
+.k-art .ic{width:72px;height:72px}
+.k-fuss{display:flex;align-items:center;gap:12px;min-width:0;font:600 14px/18px var(--f-ui)}
+.k-bar{flex:1;height:5px;border-radius:3px;background:color-mix(in srgb,var(--on) 26%,transparent);overflow:hidden}
+.k-bar i{display:block;height:100%;border-radius:inherit;background:var(--on)}
+.k-wert{display:inline-flex;align-items:center;gap:5px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.k-wert .ic{width:15px;height:15px}
+.karte.gross .k-wert{flex:none}
+.karte.gross .k-bar + .k-wert{flex:none}
+.karte.gross .k-fuss .k-wert:first-child{flex:1}
+.k-pill{flex:none;margin-left:auto;padding:9px 20px;border-radius:999px;background:var(--on);color:var(--cb);font:700 15px/18px var(--f-ui)}
+.karte.halb{min-height:196px;padding:18px}
+.karte.halb .k-titel{font-size:30px}
+.karte.halb .k-art{right:14px;bottom:14px;width:62px;height:62px;border-radius:18px}
+.karte.halb .k-art .ic{width:30px;height:30px}
+.karte.halb .k-fuss{max-width:calc(100% - 78px)}
+.karte.gross.mittel .k-art{bottom:68px;width:120px;height:120px;border-radius:30px}
+.karte.gross.mittel .k-art .ic{width:56px;height:56px}
+.first-open .karten > *{animation:riseIn .75s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
+.first-open .karten > :nth-child(2){animation-delay:calc(var(--intro,0s) + .18s)}
+.first-open .karten > :nth-child(n+3){animation-delay:calc(var(--intro,0s) + .26s)}
+:root[data-mono] .karte{--cb:#48484a!important;--on:#fff!important}
+@media (max-width:350px){.k-titel{font-size:27px}.karte.halb .k-titel{font-size:25px}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3375,7 +3414,7 @@ let io = null;
 function observeTitle() {
   const nb = $("#navbar");
   if (io) { io.disconnect(); io = null; }
-  const t = view.querySelector(".bh-num, .large, .hhead, .shead");
+  const t = view.querySelector(".karten, .bh-num, .large, .hhead, .shead");
   if (!t || !("IntersectionObserver" in window)) { nb.classList.add("scrolled"); return; }
   nb.classList.remove("scrolled");
   io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
@@ -3711,7 +3750,7 @@ function zoomIn(z) {
 // Zurück: Die alte Seite (liegt schon als eigene Ebene vorn) schrumpft als Fenster in ihre Kachel, nur per transform
 function zoomOut(z) {
   if (z.y) window.scrollTo(0, z.y);
-  const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
+  const g = ghostEl, t = view.querySelector(`[data-zoom][data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
   if (!g || !t || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
   const farbe = getComputedStyle(t).backgroundColor, bahn = zoomBahn(zoomGanz(), e, 0, ZOOM_R, ZOOM_D), innen = g.firstElementChild, r0 = innen.getBoundingClientRect();
   const dim = document.createElement("i"), f = zoomFarbschichten(t, farbe, e);
@@ -3733,7 +3772,7 @@ function zoomOut(z) {
   flug.onfinish = fertig;
 }
 function zoomSchrumpf(z) {
-  const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
+  const g = ghostEl, t = view.querySelector(`[data-zoom][data-go="${z.go}"]`);
   if (!g) return;
   const e = t && t.getBoundingClientRect(), W = innerWidth, H = innerHeight;
   if (!t || e.bottom < 0 || e.top > H) { g.animate([{opacity:1}, {opacity:0}], {duration:200, fill:"forwards"}).onfinish = () => { g.remove(); if (ghostEl === g) ghostEl = null; }; return; }
@@ -4194,7 +4233,7 @@ function edgeStart(st) {
   }
   if (st.preview && lastZoom && saved.route.key === lastZoom.go && r && r.view === "start") {
     window.scrollTo(0, lastZoom.y || 0);
-    const t = view.querySelector(`.bt[data-go="${lastZoom.go}"]`), e = t && t.getBoundingClientRect();
+    const t = view.querySelector(`[data-zoom][data-go="${lastZoom.go}"]`), e = t && t.getBoundingClientRect();
     if (e && e.top >= 0 && e.bottom <= innerHeight) {
       const f = zoomFarbschichten(t, getComputedStyle(t).backgroundColor, e), innen = g.firstElementChild, r0 = innen.getBoundingClientRect();
       zoomBox(g);
@@ -4273,7 +4312,7 @@ function edgeZoomEnd(st, p, commit) {
   if (commit) {
     const back = $("#navbar .nb-left .back"), before = location.hash;
     silentNav = true;
-    edgeAfterRender = () => { window.scrollTo(0, z.y); const t2 = view.querySelector(`.bt[data-go="${z.tile.dataset.go}"]`); if (t2) { t2.style.visibility = "hidden"; z.t2 = t2; } };
+    edgeAfterRender = () => { window.scrollTo(0, z.y); const t2 = view.querySelector(`[data-zoom][data-go="${z.tile.dataset.go}"]`); if (t2) { t2.style.visibility = "hidden"; z.t2 = t2; } };
     if (back) back.click();
     if (location.hash === before) { silentNav = false; edgeAfterRender = null; }
   }
@@ -4313,7 +4352,7 @@ document.addEventListener("click", e => {
   const ez = e.target.closest("[data-easy-set]");
   if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
-  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches(".bt") ? g : null;
+  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches("[data-zoom]") ? g : null;
     if (zoomSrc && !reduced()) { if (zoomVorab) return; zoomStart(zoomSrc); const ziel = g.dataset.go; requestAnimationFrame(() => requestAnimationFrame(() => go(ziel))); return; }
     go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
@@ -4573,52 +4612,37 @@ function vStart() {
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
   const q = Math.min(1, heute / DAY_GOAL);
-  // Kachel-Stil: große Zahl oben, darunter ein Raster aus farbigen Kacheln unterschiedlicher Größe
-  const pr = modProgress(st.m.id), total = overallProgress();
-  // Die große Kachel trägt die Farbe der Seite, die sie öffnet (bei den OSI-Schichten die Farbe der Schicht)
+  // Wie der Tab „Heute“ im App Store: große Karten, jede öffnet sich als Fenster zur ganzen Seite
+  const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m);
   const zielFarbe = /^schicht[1-7]$/.test(st.go) ? HUE[+st.go.slice(7)] : st.m.color;
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
-  // Kachel: Hintergrund und Schriftfarbe so gewählt, dass die Schrift mindestens 4,5:1 erreicht
-  const kachel = (cls, go, c, ic, label, val, sub) => `<button class="bt ${cls}" data-go="${go}" style="${onColor(c)}"><span class="bt-ic" aria-hidden="true">${icon(ic, 19)}</span><span class="bt-l">${label}</span><b class="bt-v">${val}</b>${sub ? `<small class="bt-s">${sub}</small>` : ""}</button>`;
+  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
+  const pill = t => `<span class="k-pill">${t}</span>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
   paint(`
-  <header class="dh">
-    <h1 class="large">Übersicht</h1>
+  <header class="dh hk">
+    <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
   </header>
-  <section class="bh-num" aria-label="Lernstand">
-    <small>Lernstand gesamt</small>
-    <b>${total}<span> %</span></b>
-    <p><span class="bh-fl">${icon("flame", 14)}${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</span><span>${nf(S.xp)} XP · Stufe ${lvl}</span></p>
-  </section>
-  <section class="ig-sec" aria-label="Lernen und Üben"><h2 class="ig-h">Lernen und Üben</h2>
-    <div class="bento">
-      <button class="bt bt-big" data-go="${st.go}" style="${onColor(zielFarbe)}">
-        <span class="bt-ic" aria-hidden="true">${icon(st.m.icon, 24)}</span>
-        <small class="bt-e">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
-        <span class="bt-l">${st.m.title}</span>
-        <b class="bt-v">${pr}<span> %</span></b>
-        <small class="bt-s">${st.unit}</small>
-      </button>
-      ${kachel("", "heute", KACHEL.heute, "karten", "Lernkarten", due, due === 1 ? "Karte fällig" : "Karten fällig")}
-      ${kachel("", "heute", KACHEL.heute, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
-      ${kachel("", "themen", KACHEL.themen, "themen", "Themen", MODS.length, "Alle ansehen")}
-      ${CODE.length ? kachel("", "code", KACHEL.code, "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", KACHEL.code, "trainieren", "Üben", "", "Alle Übungen")}
-      ${kachel("", "trainieren", KACHEL.trainieren, "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
+  <div class="karten">
+    ${karte("gross", st.go, zielFarbe, st.m.icon, st.started ? "Weiterlernen" : "Als Nächstes", st.m.title, st.unit, `<span class="k-bar" aria-hidden="true"><i style="width:${pr}%"></i></span><span class="k-wert">${ux} von ${uy}</span>${pill(st.started ? "Weiter" : "Start")}`)}
+    ${karte("gross", "heute", KACHEL.heute, "mix", "Tagesmix", "Lernkarten und Fragen", due ? `${due} ${due === 1 ? "Karte" : "Karten"} fällig` : "Was du noch nicht sicher kannst, kommt öfter dran.", `<span class="k-wert">${icon("flame", 15)}${streak} ${streak === 1 ? "Tag" : "Tage"} · ${heute}/${DAY_GOAL} heute</span>${pill("Los")}`)}
+    <div class="karten-reihe">
+      ${karte("halb", "pruefung-ap1", APPLE.orange, "timer", "Prüfung", "AP1", "", `<span class="k-wert">${PZ_COUNT} Fragen</span>`)}
+      ${karte("halb", "pruefung-ap2", APPLE.pink, "timer", "Prüfung", "AP2", "", `<span class="k-wert">${PZ_COUNT} Fragen</span>`)}
     </div>
-  </section>
-  <section class="ig-sec" aria-label="Prüfen"><h2 class="ig-h">Prüfen</h2>
-    <div class="bento">
-      ${kachel("bt-wide", "pruefung-ap1", APPLE.orange, "timer", "Probeprüfung", "AP1", "Teil 1, mit Zeit")}
-      ${kachel("", "pruefung-ap2", APPLE.pink, "timer", "Probeprüfung", "AP2", "Teil 2")}
+    ${CODE.length ? karte("gross mittel", "code", KACHEL.code, "code", "Programmieren", "Code lernen", CODE.map(l => l.title).join(", "), `<span class="k-wert">${codeAll()} % gelernt</span>${pill("Öffnen")}`) : ""}
+    <div class="karten-reihe">
+      ${karte("halb", "themen", KACHEL.themen, "themen", "Lernen", "Themen", "", `<span class="k-wert">${MODS.length} Themen</span>`)}
+      ${karte("halb", "trainieren", KACHEL.trainieren, "reset", "Üben", "Fehler", "", `<span class="k-wert">${wrongN} offen</span>`)}
     </div>
-  </section>
+  </div>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${zielFarbe}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
-  // Der Miniplayer erscheint, sobald die große Kachel aus dem Bild gescrollt ist
-  const dact = view.querySelector(".bt-big"), acc = view.querySelector(".acc");
+  // Der Miniplayer erscheint, sobald die erste Karte aus dem Bild gescrollt ist
+  const dact = view.querySelector(".karte"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
   if (dact && acc && "IntersectionObserver" in window) {
     accObs = new IntersectionObserver(([e]) => {
