@@ -2525,7 +2525,7 @@ button.ios-card:active{transform:scale(.97)}
 /* Übersicht: Titel in der Zeile der Leiste, kein Leerraum darüber */
 #view > .dh:first-child{margin-top:calc(-1 * var(--nbh,52px) + 4px)!important;min-height:calc(var(--nbh,52px) - 4px)}
 /* fliegende Kachel beim Zoom */
-.zoomkarte{position:fixed!important;z-index:28;margin:0!important;pointer-events:none;transform:none!important;animation:none!important;transition:none!important;grid-column:auto!important;grid-row:auto!important}
+.zoomkarte{position:fixed!important;z-index:28;margin:0!important;pointer-events:none;animation:none;transition:none!important;grid-column:auto!important;grid-row:auto!important;will-change:transform;contain:layout paint}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3095,7 +3095,7 @@ function progress() {
 }
 
 /* ---------------- Wiederholung in wachsenden Abständen ---------------- */
-const HUE = {1:APPLE.graphit, 2:APPLE.blau, 3:APPLE.lila, 4:APPLE.rot, 5:APPLE.orange, 6:APPLE.gelb, 7:APPLE.gruen};
+const HUE = {1:APPLE.teal, 2:APPLE.blau, 3:APPLE.indigo, 4:APPLE.rot, 5:APPLE.orange, 6:APPLE.gelb, 7:APPLE.gruen};
 const LAYER_IC = {1:"wave", 2:"net", 3:"globe", 4:"swap", 5:"link", 6:"lock", 7:"app"};
 const layerIc = n => `<span class="si ly" style="${onColor(HUE[n])}">${icon(LAYER_IC[n], 19)}</span>`;
 const SRS_DAYS = [0, 1, 3, 7, 16, 35];
@@ -3610,74 +3610,97 @@ function zoomPlan(r, from, dir) {
 }
 // Lochrahmen zwischen ganzem Bildschirm (k = 0) und Kachel (k = 1) für den Rückweg
 const zoomRahmen = (e, k) => { const W = innerWidth, H = innerHeight; return `inset(${(e.top * k).toFixed(1)}px ${((W - e.right) * k).toFixed(1)}px ${((H - e.bottom) * k).toFixed(1)}px ${(e.left * k).toFixed(1)}px round ${(ZOOM_R * k).toFixed(1)}px)`; };
-// abgerundetes Rechteck als Pfad (für das Loch in der alten Seite)
-const rrPfad = (x, y, w, h, r) => `M${x + r} ${y}H${x + w - r}A${r} ${r} 0 0 1 ${x + w} ${y + r}V${y + h - r}A${r} ${r} 0 0 1 ${x + w - r} ${y + h}H${x + r}A${r} ${r} 0 0 1 ${x} ${y + h - r}V${y + r}A${r} ${r} 0 0 1 ${x + r} ${y}Z`;
-// Kopfkarte der Seite: farbige Kopfkarte (.page-hero) oder Titel-Farbkarte, jeweils ganz oben
-const zoomKopf = root => root.querySelector(":scope > .page-hero:first-child, :scope > .read-bar:first-child + .page-hero, :scope > .title-block.farbkopf:first-child");
+// Kopfkarte der Seite: farbige Kopfkarte (.page-hero) oder Titel-Farbkarte
+const zoomKopf = root => root.querySelector(":scope > .page-hero:first-child, :scope > .read-bar:first-child + .page-hero, :scope > .title-block.farbkopf:first-child, #layerBody > .page-hero:first-child");
 const zoomFlaeche = kopf => kopf.matches(".page-hero") ? kopf.querySelector(".ph-bg") : kopf;
-const zoomKarte = (el, r, radius) => { const k = el.cloneNode(true); k.removeAttribute("data-go"); k.classList.add("zoomkarte"); k.setAttribute("aria-hidden", "true"); k.style.left = r.left + "px"; k.style.top = r.top + "px"; k.style.width = r.width + "px"; k.style.height = r.height + "px"; k.style.borderRadius = radius; document.body.append(k); return k; };
-const zoomRahmenAus = r => ({left:r.left + "px", top:r.top + "px", width:r.width + "px", height:r.height + "px"});
+const zoomRadien = el => { const cs = getComputedStyle(el); return [parseFloat(cs.borderTopLeftRadius) || 0, parseFloat(cs.borderBottomLeftRadius) || 0]; };
+const zoomGanz = () => ({left:0, top:0, width:innerWidth, height:innerHeight});
+// Feder ohne Nachschwingen (wie SwiftUI .smooth), auf 0 bis 1 normiert
+const zoomFeder = (t, dauer) => { const w = 12, f = x => 1 - (1 + w * x) * Math.exp(-w * x); return f(t * dauer / 1000) / f(dauer / 1000); };
+// Lässt ein Element nur per transform (läuft auf der Grafikkarte) von Rahmen a nach b fliegen.
+// Das Element steht am Ziel, die Bilder dazwischen sind Verschiebung und Skalierung; die Ecken werden gegen die Skalierung ausgeglichen.
+function zoomFlug(el, a, b, ra, rb, dauer, s = 0) {
+  Object.assign(el.style, {left:b.left + "px", top:b.top + "px", width:b.width + "px", height:b.height + "px", transformOrigin:"0 0"});
+  // s: Anteil der Federkurve, der schon gelaufen ist (beim Nachführen im Flug), damit die Bewegung ohne Ruck weitergeht
+  const F = t => zoomFeder(t, dauer), F0 = F(s), N = 18, bew = [], ecken = [];
+  for (let i = 0; i <= N; i++) {
+    const t = s + (1 - s) * i / N, k = (F(t) - F0) / (1 - F0 || 1);
+    const x = a.left + (b.left - a.left) * k, y = a.top + (b.top - a.top) * k, w = a.width + (b.width - a.width) * k, h = a.height + (b.height - a.height) * k;
+    const sx = w / b.width, sy = h / b.height, ro = ra[0] + (rb[0] - ra[0]) * k, ru = ra[1] + (rb[1] - ra[1]) * k;
+    const rx = v => (v / sx).toFixed(2) + "px", ry = v => (v / sy).toFixed(2) + "px";
+    bew.push({offset:i / N, transform:`translate3d(${(x - b.left).toFixed(2)}px,${(y - b.top).toFixed(2)}px,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`});
+    ecken.push({offset:i / N, borderRadius:`${rx(ro)} ${rx(ro)} ${rx(ru)} ${rx(ru)} / ${ry(ro)} ${ry(ro)} ${ry(ru)} ${ry(ru)}`});
+  }
+  const o = {duration:Math.max(1, dauer * (1 - s)), easing:"linear", fill:"forwards"};
+  const flug = el.animate(bew, o);
+  flug.ecken = el.animate(ecken, o);
+  return flug;
+}
+// Start sofort beim Tippen: Die Kachel fliegt schon los, bevor die neue Seite gebaut ist
+let zoomVorab = null;
+const ZOOM_D = 560;
+function zoomStart(tile) {
+  const a = tile.getBoundingClientRect(), karte = zoomKarte(tile);
+  tile.style.visibility = "hidden";
+  const ziel = {left:0, top:0, width:innerWidth, height:Math.min(innerHeight, 250)}, rz = [0, 32];
+  const flug = zoomFlug(karte, a, ziel, [26, 26], rz, ZOOM_D);
+  [...karte.children].forEach(el => el.animate([{opacity:1}, {opacity:0}], {duration:170, easing:"ease-out", fill:"forwards"}));
+  zoomVorab = {karte, flug, t0:performance.now(), rz};
+}
+// Übernimmt eine schon fliegende Karte und führt sie weich zum echten Ziel
+function zoomNachfuehren(b, rb) {
+  const v = zoomVorab; zoomVorab = null;
+  if (!v || !v.karte.isConnected) return null;
+  const s = Math.min(.9, (performance.now() - v.t0) / ZOOM_D), cur = v.karte.getBoundingClientRect(), k = zoomFeder(s, ZOOM_D);
+  const rc = [26 + (v.rz[0] - 26) * k, 26 + (v.rz[1] - 26) * k];
+  v.flug.cancel(); v.flug.ecken.cancel();
+  return {karte:v.karte, flug:zoomFlug(v.karte, cur, b, rc, rb, ZOOM_D, s)};
+}
+const zoomKarte = el => { const k = el.cloneNode(true); k.removeAttribute("data-go"); k.classList.add("zoomkarte"); k.setAttribute("aria-hidden", "true"); document.body.append(k); return k; };
+// Öffnen: Die Kachel fliegt hoch und wird zur Kopfkarte (ohne Kopfkarte: zum ganzen Bildschirm), der Rest steigt darunter ein
 function zoomIn(z) {
-  const kopf = zoomKopf(view), g = ghostEl;
-  if (!kopf || !g || !z.el) return zoomFenster(z);
-  const a = z.rect, b = zoomFlaeche(kopf).getBoundingClientRect(), D = 540, rund = getComputedStyle(zoomFlaeche(kopf)).borderRadius;
-  // Die Kachel selbst fliegt nach oben und wächst zur Kopfkarte; ihr Inhalt blendet dabei weich aus
-  const karte = zoomKarte(z.el, a, "26px");
-  kopf.style.visibility = "hidden";
-  karte.animate([Object.assign(zoomRahmenAus(a), {borderRadius:"26px"}), Object.assign(zoomRahmenAus(b), {borderRadius:rund})], {duration:D, easing:ZOOM_EASE, fill:"forwards"});
-  [...karte.children].forEach(el => el.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"scale(.9)"}], {duration:220, easing:"ease-out", fill:"forwards"}));
-  // Die Übersicht tritt zurück und blendet aus
-  g.animate([{opacity:1, transform:"none", filter:"brightness(1)"}, {opacity:0, transform:"scale(.94)", filter:"brightness(.7)"}], {duration:440, easing:ZOOM_EASE, fill:"forwards"});
-  // Der Rest des Abschnitts steigt unter der Karte ein
-  [...view.children].filter(el => el !== kopf && !el.matches(".read-bar")).forEach((el, i) => el.animate([{opacity:0, transform:"translateY(34px)"}, {opacity:1, transform:"none"}], {duration:520, delay:170 + Math.min(i, 6) * 45, easing:EASE_SOFT, fill:"backwards"}));
-  setTimeout(() => {
-    kopf.style.visibility = "";
-    const innen = kopf.matches(".page-hero") ? kopf.querySelector(".ph-c") : kopf;
-    [...innen.children].forEach((el, i) => el.animate([{opacity:0, transform:"translateY(10px)"}, {opacity:1, transform:"none"}], {duration:300, delay:i * 30, easing:EASE_SOFT, fill:"backwards"}));
-    karte.remove();
+  const g = ghostEl;
+  if (!g || !z.el) return;
+  const kopf = zoomKopf(view), flaeche = kopf && zoomFlaeche(kopf), D = 560;
+  const b = flaeche ? flaeche.getBoundingClientRect() : zoomGanz(), rb = flaeche ? zoomRadien(flaeche) : [0, 0];
+  if (kopf) kopf.style.visibility = "hidden";
+  let karte, flug;
+  const nach = zoomNachfuehren(b, rb);
+  if (nach) ({karte, flug} = nach);
+  else {
+    karte = zoomKarte(z.el);
+    flug = zoomFlug(karte, z.rect, b, [26, 26], rb, D);
+    [...karte.children].forEach(el => el.animate([{opacity:1}, {opacity:0}], {duration:170, easing:"ease-out", fill:"forwards"}));
+  }
+  g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"scale(.94)"}], {duration:420, easing:ZOOM_EASE, fill:"forwards"});
+  [...view.children].filter(el => el !== kopf && !el.matches(".read-bar")).forEach((el, i) => el.animate([{opacity:0, transform:"translate3d(0,34px,0)"}, {opacity:1, transform:"none"}], {duration:520, delay:(kopf ? 170 : 300) + Math.min(i, 6) * 40, easing:EASE_SOFT, fill:"backwards"}));
+  flug.onfinish = () => {
+    if (kopf) {
+      kopf.style.visibility = "";
+      const innen = kopf.matches(".page-hero") ? kopf.querySelector(".ph-c") : kopf;
+      [...innen.children].forEach((el, i) => el.animate([{opacity:0, transform:"translate3d(0,10px,0)"}, {opacity:1, transform:"none"}], {duration:280, delay:i * 25, easing:EASE_SOFT, fill:"backwards"}));
+      karte.remove();
+    } else karte.animate([{opacity:1}, {opacity:0}], {duration:260, easing:"ease-out", fill:"forwards"}).onfinish = () => karte.remove();
     if (g.isConnected) g.remove();
     if (ghostEl === g) ghostEl = null;
-  }, D - 20);
-}
-function zoomFenster(z) {
-  const g = ghostEl, a = z.rect, W = innerWidth, H = innerHeight;
-  if (!g) return;
-  const farbe = document.createElement("div"), dim = document.createElement("i");
-  farbe.className = "zoomfx"; farbe.setAttribute("aria-hidden", "true"); farbe.style.background = z.bg;
-  dim.className = "zoomfx-dim";
-  g.append(dim);
-  g.style.background = "var(--bg)";
-  document.body.append(farbe);
-  view.animate([{transform:"scale(.965)"}, {transform:"none"}], {duration:560, easing:ZOOM_EASE});
-  // Feder ohne Nachschwingen (wie SwiftUI .smooth): k(t) = 1 - (1 + w·t)·e^(-w·t)
-  const t0 = performance.now(), w = 13;
-  const bild = now => {
-    const t = (now - t0) / 1000, k = Math.min(1, 1 - (1 + w * t) * Math.exp(-w * t));
-    const x = a.left * (1 - k), y = a.top * (1 - k), bw = a.width + (W - a.width) * k, bh = a.height + (H - a.height) * k, r = 26 * (1 - k);
-    g.style.clipPath = `path(evenodd, "M0 0H${W}V${H}H0Z ${rrPfad(x, y, bw, bh, r)}")`;
-    farbe.style.clipPath = `inset(${y}px ${W - x - bw}px ${H - y - bh}px ${x}px round ${r}px)`;
-    farbe.style.opacity = Math.max(0, 1 - k * 1.12).toFixed(3);
-    dim.style.opacity = (k * .5).toFixed(3);
-    if (k < .995 && g.isConnected) requestAnimationFrame(bild);
-    else { farbe.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; }
   };
-  bild(t0);
-  requestAnimationFrame(bild);
 }
+// Zurück: Die Kopfkarte (ohne Kopfkarte: die ganze Seite) fliegt in ihre Kachel, die Übersicht kommt nach vorn
 function zoomOut(z) {
   if (z.y) window.scrollTo(0, z.y);
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
-  const kopf = g && zoomKopf(g.firstElementChild);
-  if (!g || !t || !kopf || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
-  const flaeche = zoomFlaeche(kopf), b = flaeche.getBoundingClientRect(), D = 500, rund = getComputedStyle(flaeche).borderRadius;
-  const karte = zoomKarte(t, b, rund);
-  kopf.style.visibility = "hidden";
+  if (!g || !t || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
+  const kopf = zoomKopf(g.firstElementChild), flaeche = kopf && zoomFlaeche(kopf), D = 520;
+  const b = flaeche ? flaeche.getBoundingClientRect() : zoomGanz();
+  const karte = zoomKarte(t);
+  if (kopf) kopf.style.visibility = "hidden";
   t.style.visibility = "hidden";
-  karte.animate([Object.assign(zoomRahmenAus(b), {borderRadius:rund}), Object.assign(zoomRahmenAus(e), {borderRadius:"26px"})], {duration:D, easing:ZOOM_EASE, fill:"forwards"});
-  [...karte.children].forEach(el => el.animate([{opacity:0, transform:"scale(.9)"}, {opacity:0, transform:"scale(.9)", offset:.45}, {opacity:1, transform:"none"}], {duration:D, easing:"ease-out", fill:"forwards"}));
-  g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"translateY(24px)"}], {duration:280, easing:"ease-out", fill:"forwards"});
-  view.animate([{opacity:.35, transform:"scale(.95)", filter:"brightness(.7)"}, {opacity:1, transform:"none", filter:"brightness(1)"}], {duration:D, easing:ZOOM_EASE});
-  setTimeout(() => { t.style.visibility = ""; karte.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; }, D);
+  const flug = zoomFlug(karte, b, e, flaeche ? zoomRadien(flaeche) : [0, 0], [26, 26], D);
+  [...karte.children].forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.5}, {opacity:1}], {duration:D, easing:"ease-out", fill:"forwards"}));
+  if (!kopf) karte.animate([{opacity:0}, {opacity:1, offset:.3}, {opacity:1}], {duration:D, fill:"forwards"});
+  g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"translate3d(0,24px,0)"}], {duration:260, easing:"ease-out", fill:"forwards"});
+  view.animate([{opacity:.4, transform:"scale(.95)"}, {opacity:1, transform:"none"}], {duration:D, easing:ZOOM_EASE});
+  flug.onfinish = () => { t.style.visibility = ""; karte.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
 }
 function zoomSchrumpf(z) {
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
@@ -3886,6 +3909,9 @@ function render() {
     animateBars();
     if (morph) (morph.dir === "in" ? morphIn : morphOut)(morph);
     if (zoom) (zoom.dir === "in" ? zoomIn : zoomOut)(zoom);
+  }
+  if (zoomVorab) { zoomVorab.karte.remove(); zoomVorab = null; document.querySelectorAll(".bt").forEach(b => { b.style.visibility = ""; }); }
+  {
   }
   if (slideNow) iosSlide(dir);
   if (r.view === "start") lastZoom = null;
@@ -4248,7 +4274,9 @@ document.addEventListener("click", e => {
   const ez = e.target.closest("[data-easy-set]");
   if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
-  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches(".bt") ? g : null; go(g.dataset.go); return; }
+  if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches(".bt") ? g : null;
+    if (zoomSrc && !reduced()) { if (zoomVorab) return; zoomStart(zoomSrc); const ziel = g.dataset.go; requestAnimationFrame(() => requestAnimationFrame(() => go(ziel))); return; }
+    go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
   if (a && actHandler && !a.disabled) actHandler(a.dataset.act, a, e);
 });
@@ -4508,6 +4536,8 @@ function vStart() {
   const q = Math.min(1, heute / DAY_GOAL);
   // Kachel-Stil: große Zahl oben, darunter ein Raster aus farbigen Kacheln unterschiedlicher Größe
   const pr = modProgress(st.m.id), total = overallProgress();
+  // Die große Kachel trägt die Farbe der Seite, die sie öffnet (bei den OSI-Schichten die Farbe der Schicht)
+  const zielFarbe = /^schicht[1-7]$/.test(st.go) ? HUE[+st.go.slice(7)] : st.m.color;
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
   // Kachel: Hintergrund und Schriftfarbe so gewählt, dass die Schrift mindestens 4,5:1 erreicht
   const kachel = (cls, go, c, ic, label, val, sub) => `<button class="bt ${cls}" data-go="${go}" style="${onColor(c)}"><span class="bt-ic" aria-hidden="true">${icon(ic, 19)}</span><span class="bt-l">${label}</span><b class="bt-v">${val}</b>${sub ? `<small class="bt-s">${sub}</small>` : ""}</button>`;
@@ -4526,7 +4556,7 @@ function vStart() {
   </section>
   <section class="ig-sec" aria-label="Lernen und Üben"><h2 class="ig-h">Lernen und Üben</h2>
     <div class="bento">
-      <button class="bt bt-big" data-go="${st.go}" style="${onColor(st.m.color)}">
+      <button class="bt bt-big" data-go="${st.go}" style="${onColor(zielFarbe)}">
         <span class="bt-ic" aria-hidden="true">${icon(st.m.icon, 24)}</span>
         <small class="bt-e">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
         <span class="bt-l">${st.m.title}</span>
@@ -4547,7 +4577,7 @@ function vStart() {
     </div>
   </section>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
-  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
+  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${zielFarbe}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
   // Der Miniplayer erscheint, sobald die große Kachel aus dem Bild gescrollt ist
   const dact = view.querySelector(".bt-big"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
