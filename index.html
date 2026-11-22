@@ -2655,6 +2655,97 @@ html[data-vt="zu"]::view-transition-new(root){animation-name:vtRootZurueck}
 .title-block.farbkopf,.page-hero .ph-bg{box-shadow:var(--kante)!important}
 .k-art,.karte.halb .k-art,.karte.gross.mittel .k-art{background:color-mix(in srgb,var(--c) 20%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 18%,transparent)}
 .k-pill{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 16px -10px var(--cb)}
+/* ===== Inseln wie die Dynamic Island: schwarz, stark gerundet, Farbe nur an kleinen Elementen ===== */
+:root{--w-bg:#000;--w-rand:rgba(255,255,255,.04);--w-schatten:0 22px 40px -26px rgba(0,0,0,.55);--w-2:rgba(235,235,245,.62)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--w-bg:#141416;--w-rand:rgba(255,255,255,.07);--w-schatten:none}}
+:root[data-theme="dark"]{--w-bg:#141416;--w-rand:rgba(255,255,255,.07);--w-schatten:none}
+.inseln{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.w{--hell:color-mix(in srgb,var(--c) 82%,#fff);position:relative;display:flex;flex-direction:column;gap:14px;width:100%;min-width:0;padding:18px 20px;border:0;border-radius:38px;background:var(--w-bg);color:#fff;text-align:left;box-shadow:inset 0 0 0 .5px var(--w-rand),var(--w-schatten);font:inherit;-webkit-tap-highlight-color:transparent;transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+button.w{cursor:pointer}
+button.w:active{transform:scale(.97);transition-duration:.18s;transition-timing-function:cubic-bezier(.25,.8,.25,1)}
+.w small{color:var(--w-2)}
+.w-reihe{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.w-kopfzeile{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.w-kopfzeile b{font:600 17px/22px var(--f-ui);letter-spacing:-.02em}
+.w-kopfzeile > span{font:500 14px/18px var(--f-ui);color:var(--w-2);font-variant-numeric:tabular-nums}
+.w-kopfzeile .w-ak{color:var(--hell)}
+/* Weiterlernen: wie die Musik-Insel */
+.w-zeile{display:flex;align-items:center;gap:14px;min-width:0}
+.w-cover{flex:none;display:grid;place-items:center;width:58px;height:58px;border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 88%,#fff),color-mix(in srgb,var(--c) 72%,#000));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.w-cover .ic{width:28px;height:28px}
+.w-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.w-text .w-eye{font:600 12px/15px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--hell)}
+.w-text b{font:600 19px/24px var(--f-display);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-text > span{font:400 14px/18px var(--f-ui);color:var(--w-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-play{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--cb);color:var(--on)}
+.w-play .ic{width:18px;height:18px;margin-left:2px}
+.w-fort{display:flex;align-items:center;gap:10px;font:500 13px/16px var(--f-ui);color:var(--w-2);font-variant-numeric:tabular-nums}
+.w-fort i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
+.w-fort i b{display:block;height:100%;border-radius:inherit;background:#fff}
+/* Heute: wie die Ringe-Insel */
+.w-ringe{align-items:stretch}
+.w .w-kopf{display:flex;align-items:center;justify-content:center;gap:5px;font:700 12px/15px var(--f-ui);letter-spacing:.07em;text-transform:uppercase;color:var(--p-orange)}
+.w-kopf .ic{width:13px;height:13px}
+.w-ringreihe{display:flex;justify-content:space-around;gap:6px}
+.w-ring{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.w-ring svg{width:66px;height:66px;transform:rotate(-90deg)}
+.w-ring circle{fill:none;stroke-width:7}
+.w-ring .bg{stroke:color-mix(in srgb,var(--rc) 22%,transparent)}
+.w-ring .on{stroke:var(--rc);stroke-linecap:round}
+.w-rz{position:absolute;top:0;left:0;right:0;height:66px;display:grid;place-items:center;font:700 17px/1 var(--f-display);letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
+.w-ri .ic{width:20px;height:20px}
+.w-ring small{font:600 11px/14px var(--f-ui);letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+.w-unten{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 15px/20px var(--f-ui)}
+.w-btn{flex:none;padding:8px 20px;border-radius:999px;background:var(--cb);color:var(--on);font:700 14px/18px var(--f-ui)}
+/* Diese Woche: wie die Balken-Insel */
+.w-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;height:118px}
+.w-bar{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;height:100%}
+.w-saeule{flex:1;display:flex;align-items:flex-end;width:100%;max-width:26px;border-radius:9px;background:rgba(255,255,255,.07);overflow:hidden}
+.w-saeule i{display:block;width:100%;border-radius:9px;background:rgba(255,255,255,.28)}
+.w-bar.voll i{background:var(--p-gruen)}
+.w-bar.teil i{background:color-mix(in srgb,var(--p-gruen) 60%,#000)}
+.w-bar.jetzt i{background:var(--p-blau)}
+.w-bar small{font:600 11px/13px var(--f-ui)}
+.w-bar.jetzt small{color:#fff}
+/* Prüfungen: wie die Timer-Insel */
+.w-pruef{align-items:flex-start;gap:4px;padding:16px 18px 18px;border-radius:34px}
+.w-pi{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--c) 24%,transparent);color:var(--hell)}
+.w-pi .ic{width:20px;height:20px}
+.w-pruef b{margin-top:10px;font:700 34px/1 var(--f-display);letter-spacing:-.02em;color:var(--hell);font-variant-numeric:tabular-nums}
+.w-pruef small{font:500 13px/17px var(--f-ui)}
+/* Programmieren: Sprach-Chips */
+.w-chips{display:flex;flex-wrap:wrap;gap:8px}
+.w-chip{display:grid;place-items:center;min-width:46px;height:40px;padding:0 10px;border-radius:12px;background:var(--cb);color:var(--on);font:700 14px/1 var(--f-mono)}
+/* Themen: wie die Listen-Insel */
+.w-liste{gap:10px}
+.w-zeile2{display:flex;align-items:center;gap:12px;min-width:0;font:500 15px/20px var(--f-ui)}
+.w-zeile2 > span:nth-child(2){flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-mi{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--mc);color:#fff}
+.w-mi .ic{width:15px;height:15px}
+.w-pz{flex:none;color:var(--w-2);font-variant-numeric:tabular-nums}
+/* Fehler: schmale Pille */
+.w-pille{flex-direction:row;align-items:center;gap:12px;padding:10px 20px 10px 10px;border-radius:999px}
+.w-pille > span:nth-child(2){flex:1;font:600 16px/20px var(--f-ui)}
+.w-pille b{font:700 18px/1 var(--f-display);color:var(--hell);font-variant-numeric:tabular-nums}
+.first-open .inseln > *{animation:riseIn .7s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .1s)}
+.first-open .inseln > :nth-child(n+3){animation-delay:calc(var(--intro,0s) + .2s)}
+/* Seitenköpfe wie die Inseln: schwarz, weiße Schrift, Farbe nur als Akzent */
+.title-block.farbkopf,.page-hero{--hell:color-mix(in srgb,var(--c) 82%,#fff)}
+.title-block.farbkopf{background:var(--w-bg)!important;color:#fff!important;box-shadow:inset 0 0 0 .5px var(--w-rand)!important}
+.title-block.farbkopf .kicker{color:var(--hell)!important}
+.title-block.farbkopf .large{color:#fff!important}
+.title-block.farbkopf .lede{color:var(--w-2)!important}
+.ph-bg{background:var(--w-bg)!important;box-shadow:inset 0 0 0 .5px var(--w-rand)!important}
+.page-hero,.page-hero .large,.page-hero .ph-en{color:#fff!important}
+.page-hero .ph-k,.page-hero .ph-ic{color:var(--hell)!important}
+.page-hero .ph-l,.page-hero .exam-note{color:var(--w-2)!important}
+.page-hero .ph-bar .track{background:rgba(255,255,255,.16)!important}
+.page-hero .ph-bar i{background:var(--hell)!important}
+.page-hero .btn-tint,.page-hero .btn.done{box-shadow:inset 0 0 0 1.5px var(--hell)!important;color:var(--hell)!important}
+.page-hero .lang-hero{background:var(--cb)!important;color:var(--on)!important}
+::view-transition-image-pair(zoomkarte){border-radius:38px}
+@keyframes vtEcken{from{border-radius:38px}to{border-radius:0 0 32px 32px}}
+@keyframes vtEckenZu{from{border-radius:0 0 32px 32px}to{border-radius:38px}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3059,8 +3150,8 @@ const Q_BY_ID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
 CARDS.forEach(c => { c.m = "osi"; });
 QUESTIONS.forEach(q => { q.m = "osi"; });
 /* iOS-Systemfarben: eine Tabelle für die ganze App. Themen, Sprachen, Schichten und Symbole holen ihre Farbe von hier. */
-// Edle Varianten der iOS-Farben: Jade, Gold, Kupfer, Granat, Rosé, Amethyst, Saphir, Indigo, Aqua, Graphit
-const APPLE = {gruen:"#3fae7d", gelb:"#e0b84f", orange:"#e08a4a", rot:"#d9544f", pink:"#d8668a", lila:"#a07ad8", blau:"#4f86e8", indigo:"#6a6fd6", teal:"#3fa9b8", graphit:"#8e8e93"};
+// iOS-Systemfarben (Dunkel-Varianten), wie in der Dynamic Island als Akzente auf Schwarz
+const APPLE = {gruen:"#30d158", gelb:"#ffd60a", orange:"#ff9f0a", rot:"#ff453a", pink:"#ff375f", lila:"#bf5af2", blau:"#0a84ff", indigo:"#5e5ce6", teal:"#40c8e0", graphit:"#8e8e93"};
 // Die Inhalte nennen auch die hellen iOS-Varianten; jede wird auf denselben Farbton abgebildet
 const AP = {"#30d158":"gruen", "#34c759":"gruen", "#ffd60a":"gelb", "#ffcc00":"gelb", "#ff9f0a":"orange", "#ff9500":"orange", "#ff453a":"rot", "#ff3b30":"rot", "#ff375f":"pink", "#ff2d55":"pink", "#bf5af2":"lila", "#af52de":"lila", "#0a84ff":"blau", "#007aff":"blau", "#5e5ce6":"indigo", "#5856d6":"indigo", "#40c8e0":"teal", "#5ac8fa":"teal", "#30b0c7":"teal", "#8e8e93":"graphit"};
 const ap = c => { const k = AP[String(c).toLowerCase()]; return k ? APPLE[k] : c; };
@@ -3492,7 +3583,7 @@ let io = null;
 function observeTitle() {
   const nb = $("#navbar");
   if (io) { io.disconnect(); io = null; }
-  const t = view.querySelector(".karten, .bh-num, .large, .hhead, .shead");
+  const t = view.querySelector(".inseln, .karten, .bh-num, .large, .hhead, .shead");
   if (!t || !("IntersectionObserver" in window)) { nb.classList.add("scrolled"); return; }
   nb.classList.remove("scrolled");
   io = new IntersectionObserver(([e]) => nb.classList.toggle("scrolled", !e.isIntersecting), {rootMargin:"-56px 0px 0px 0px", threshold:0});
@@ -4734,12 +4825,16 @@ function vStart() {
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
   const q = Math.min(1, heute / DAY_GOAL);
-  // Wie der Tab „Heute“ im App Store: große Karten, jede öffnet sich als Fenster zur ganzen Seite
-  const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m);
+  // Inseln wie die Dynamic Island: schwarz, stark gerundet, Farbe nur an kleinen Elementen, echte Daten
+  const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m), total = overallProgress();
   const zielFarbe = /^schicht[1-7]$/.test(st.go) ? HUE[+st.go.slice(7)] : st.m.color;
+  const aktiv = vals.filter(v => v > 0).length, summe = vals.reduce((a, b) => a + b, 0), maxV = Math.max(DAY_GOAL, ...vals);
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
-  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)};--akt:${tief(farbe, 6.2)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
-  const pill = t => `<span class="k-pill">${t}</span>`;
+  const ring = (wert, max, farbe, ic, unter) => { const r = 27, C = 2 * Math.PI * r, q = max ? Math.min(1, wert / max) : 0;
+    return `<span class="w-ring" style="--rc:${farbe}"><svg viewBox="0 0 66 66" aria-hidden="true"><circle class="bg" cx="33" cy="33" r="${r}"/>${q > 0 ? `<circle class="on" cx="33" cy="33" r="${r}" stroke-dasharray="${(C * q).toFixed(1)} ${C.toFixed(1)}"/>` : ""}</svg><b class="w-rz">${ic}</b><small>${unter}</small></span>`; };
+  const tage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  const balken = tage.map((n, i) => { const v = vals[i], k = i > ti ? "zukunft" : v >= DAY_GOAL ? "voll" : i === ti ? "jetzt" : v > 0 ? "teil" : "leer";
+    return `<span class="w-bar ${k}" aria-label="${DAY_LONG[i]}: ${i > ti ? "noch offen" : `${v} Aufgaben`}"><span class="w-saeule"><i style="height:${i > ti ? 0 : Math.max(v ? 8 : 0, Math.round(v / maxV * 100))}%"></i></span><small>${n}</small></span>`; }).join("");
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
@@ -4748,23 +4843,36 @@ function vStart() {
     <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
   </header>
-  <div class="karten">
-    ${karte("gross", st.go, zielFarbe, st.m.icon, st.started ? "Weiterlernen" : "Als Nächstes", st.m.title, st.unit, `<span class="k-bar" aria-hidden="true"><i style="width:${pr}%"></i></span><span class="k-wert">${ux} von ${uy}</span>${pill(st.started ? "Weiter" : "Start")}`)}
-    ${karte("gross", "heute", KACHEL.heute, "mix", "Tagesmix", "Lernkarten und Fragen", due ? `${due} ${due === 1 ? "Karte" : "Karten"} fällig` : "Was du noch nicht sicher kannst, kommt öfter dran.", `<span class="k-wert">${icon("flame", 15)}${streak} ${streak === 1 ? "Tag" : "Tage"} · ${heute}/${DAY_GOAL} heute</span>${pill("Los")}`)}
-    <div class="karten-reihe">
-      ${karte("halb", "pruefung-ap1", APPLE.orange, "timer", "Prüfung", "AP1", "", `<span class="k-wert">${PZ_COUNT} Fragen</span>`)}
-      ${karte("halb", "pruefung-ap2", APPLE.pink, "timer", "Prüfung", "AP2", "", `<span class="k-wert">${PZ_COUNT} Fragen</span>`)}
+  <div class="inseln">
+    <button class="w w-weiter" data-go="${st.go}" data-zoom style="${onColor(zielFarbe)}">
+      <span class="w-zeile">
+        <span class="w-cover" aria-hidden="true">${icon(st.m.icon, 26)}</span>
+        <span class="w-text"><small class="w-eye">${st.started ? "Weiterlernen" : "Als Nächstes"}</small><b>${st.m.title}</b><span>${st.unit}</span></span>
+        <span class="w-play" aria-hidden="true">${icon("play", 18)}</span>
+      </span>
+      <span class="w-fort"><span>${ux} von ${uy}</span><i aria-hidden="true"><b style="width:${pr}%"></b></i><span>${pr} %</span></span>
+    </button>
+    <button class="w w-ringe" data-go="heute" data-zoom style="${onColor(APPLE.gruen)}">
+      <small class="w-kopf">${icon("flame", 13)}${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</small>
+      <span class="w-ringreihe">${ring(heute, DAY_GOAL, APPLE.gruen, heute, `von ${DAY_GOAL} heute`)}${ring(aktiv, 7, APPLE.blau, aktiv, "von 7 Tagen")}${ring(total, 100, APPLE.orange, `${total}%`, "gelernt")}</span>
+      <span class="w-unten"><span>Tagesmix${due ? ` · ${due} fällig` : ""}</span><span class="w-btn">Los</span></span>
+    </button>
+    <section class="w w-woche" aria-label="Diese Woche">
+      <span class="w-kopfzeile"><b>Diese Woche</b><span>${summe} ${summe === 1 ? "Aufgabe" : "Aufgaben"}</span></span>
+      <span class="w-bars">${balken}</span>
+    </section>
+    <div class="w-reihe">
+      <button class="w w-pruef" data-go="pruefung-ap1" data-zoom style="${onColor(APPLE.orange)}"><span class="w-pi" aria-hidden="true">${icon("timer", 20)}</span><b>AP1</b><small>${PZ_COUNT} Fragen · ${PZ_MINUTES} Min</small></button>
+      <button class="w w-pruef" data-go="pruefung-ap2" data-zoom style="${onColor(APPLE.pink)}"><span class="w-pi" aria-hidden="true">${icon("timer", 20)}</span><b>AP2</b><small>${PZ_COUNT} Fragen · ${PZ_MINUTES} Min</small></button>
     </div>
-    ${CODE.length ? karte("gross mittel", "code", KACHEL.code, "code", "Programmieren", "Code lernen", CODE.map(l => l.title).join(", "), `<span class="k-wert">${codeAll()} % gelernt</span>${pill("Öffnen")}`) : ""}
-    <div class="karten-reihe">
-      ${karte("halb", "themen", KACHEL.themen, "themen", "Lernen", "Themen", "", `<span class="k-wert">${MODS.length} Themen</span>`)}
-      ${karte("halb", "trainieren", KACHEL.trainieren, "reset", "Üben", "Fehler", "", `<span class="k-wert">${wrongN} offen</span>`)}
-    </div>
+    ${CODE.length ? `<button class="w w-code" data-go="code" data-zoom style="${onColor(KACHEL.code)}"><span class="w-kopfzeile"><b>Programmieren</b><span class="w-ak">${codeAll()} % gelernt</span></span><span class="w-chips">${CODE.map(l => `<span class="w-chip" style="${onColor(l.color)}">${l.badge}</span>`).join("")}</span></button>` : ""}
+    <button class="w w-liste" data-go="themen" data-zoom style="${onColor(KACHEL.themen)}"><span class="w-kopfzeile"><b>Themen</b><span class="w-ak">Alle ${MODS.length}</span></span>${MODS.slice(0, 4).map(m => `<span class="w-zeile2"><span class="w-mi" style="--mc:${m.color}" aria-hidden="true">${icon(m.icon, 15)}</span><span>${m.title}</span><span class="w-pz">${modProgress(m.id)} %</span></span>`).join("")}</button>
+    <button class="w w-pille" data-go="trainieren" data-zoom style="${onColor(KACHEL.trainieren)}"><span class="w-pi" aria-hidden="true">${icon("reset", 16)}</span><span>Fehler wiederholen</span><b>${wrongN}</b></button>
   </div>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${zielFarbe}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
-  // Der Miniplayer erscheint, sobald die erste Karte aus dem Bild gescrollt ist
-  const dact = view.querySelector(".karte"), acc = view.querySelector(".acc");
+  // Der Miniplayer erscheint, sobald die erste Insel aus dem Bild gescrollt ist
+  const dact = view.querySelector(".w"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
   if (dact && acc && "IntersectionObserver" in window) {
     accObs = new IntersectionObserver(([e]) => {
