@@ -2497,6 +2497,16 @@ button.ios-card:active{transform:scale(.97)}
 .zoomfx-dim{z-index:6;background:#000;opacity:0}
 .zoomfx-c{z-index:5}
 .ghost{transform-origin:50% 40%}
+/* Farbschleier der Kachel oben auf der Zielseite */
+#view.getoent{isolation:isolate}
+#view.getoent::after{content:"";position:absolute;z-index:-1;left:-16px;right:-16px;top:-160px;height:640px;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 15%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 6%,var(--bg)) 55%,var(--bg) 100%)}
+/* Helles Design: Zweitschrift kräftiger, damit sie überall mindestens 4,5:1 erreicht (vorher etwa 3,3:1) */
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--label-2:rgba(60,60,67,.78)}}
+:root[data-theme="light"]{--label-2:rgba(60,60,67,.78)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #view.getoent::after{background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 34%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 16%,var(--bg)) 55%,var(--bg) 100%)}}
+:root[data-theme="dark"] #view.getoent::after{background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 34%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 16%,var(--bg)) 55%,var(--bg) 100%)}
+#view.getoent{position:relative}
+@media (min-width:900px){#view.getoent::after{left:-40px;right:-40px}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3502,7 +3512,7 @@ function parseHash(tok) {
 }
 function setNav(o = {}) {
   const r = curRoute, nb = $("#navbar");
-  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${r.depth > 2 ? "Zurück" : TITLE[r.parent]}</span></button>` : "");
+  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : lastZoom && lastZoom.go === r.key ? `<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>` : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${r.depth > 2 ? "Zurück" : TITLE[r.parent]}</span></button>` : "");
   nb.querySelector(".nav-title").textContent = o.title || r.title;
   nb.querySelector(".nb-right").innerHTML = o.right || "";
 }
@@ -3565,16 +3575,22 @@ function morphOut(m) {
 /* Zoom wie in SwiftUI: Die Kachel öffnet sich von ihren Rändern bis zum ganzen Bildschirm. Die alte Seite bleibt
    dahinter stehen und tritt leicht zurück, die Kachelfarbe geht in die Farbe der neuen Seite über, dann blendet sie weich auf. */
 const ZOOM_EASE = "cubic-bezier(.32,.72,0,1)";
+// Kachelfarben der Übersicht; dieselbe Farbe liegt als Schleier oben auf der Zielseite
+const KACHEL = {themen:tief(APPLE.blau), code:"#ffd84a", trainieren:"#efe5cf", heute:"#4fc979"};
+const ZOOM_R = 26;
 function zoomPlan(r, from, dir) {
   if (zoomSrc && zoomSrc.isConnected && zoomSrc.dataset.go === r.key) {
     const cs = getComputedStyle(zoomSrc), z = {dir:"in", rect:zoomSrc.getBoundingClientRect(), bg:cs.backgroundImage !== "none" ? cs.backgroundImage : cs.backgroundColor};
-    lastZoom = {go:r.key, bg:z.bg};
+    lastZoom = {go:r.key, bg:z.bg, y:scrollY};
     return z;
   }
-  if (lastZoom && from && dir === "pop" && r.view === "start" && from.key === lastZoom.go) { const z = {dir:"out", go:lastZoom.go, bg:lastZoom.bg}; lastZoom = null; return z; }
-  if (dir !== "pop") lastZoom = null;
+  if (lastZoom && from && r.view === "start" && from.key === lastZoom.go) return {dir:"out", go:lastZoom.go, bg:lastZoom.bg, y:lastZoom.y};
+  // Wechsel über die Tab-Leiste zu einer anderen Seite: kein Rückweg per Zoom mehr
+  if (lastZoom && dir === "fade" && r.key !== lastZoom.go) lastZoom = null;
   return null;
 }
+// Lochrahmen zwischen ganzem Bildschirm (k = 0) und Kachel (k = 1) für den Rückweg
+const zoomRahmen = (e, k) => { const W = innerWidth, H = innerHeight; return `inset(${(e.top * k).toFixed(1)}px ${((W - e.right) * k).toFixed(1)}px ${((H - e.bottom) * k).toFixed(1)}px ${(e.left * k).toFixed(1)}px round ${(ZOOM_R * k).toFixed(1)}px)`; };
 // abgerundetes Rechteck als Pfad (für das Loch in der alten Seite)
 const rrPfad = (x, y, w, h, r) => `M${x + r} ${y}H${x + w - r}A${r} ${r} 0 0 1 ${x + w} ${y + r}V${y + h - r}A${r} ${r} 0 0 1 ${x + w - r} ${y + h}H${x + r}A${r} ${r} 0 0 1 ${x} ${y + h - r}V${y + r}A${r} ${r} 0 0 1 ${x + r} ${y}Z`;
 function zoomIn(z) {
@@ -3594,7 +3610,7 @@ function zoomIn(z) {
     const x = a.left * (1 - k), y = a.top * (1 - k), bw = a.width + (W - a.width) * k, bh = a.height + (H - a.height) * k, r = 26 * (1 - k);
     g.style.clipPath = `path(evenodd, "M0 0H${W}V${H}H0Z ${rrPfad(x, y, bw, bh, r)}")`;
     farbe.style.clipPath = `inset(${y}px ${W - x - bw}px ${H - y - bh}px ${x}px round ${r}px)`;
-    farbe.style.opacity = Math.max(0, 1 - k * 1.5).toFixed(3);
+    farbe.style.opacity = Math.max(0, 1 - k * 1.12).toFixed(3);
     dim.style.opacity = (k * .5).toFixed(3);
     if (k < .995 && g.isConnected) requestAnimationFrame(bild);
     else { farbe.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; }
@@ -3603,6 +3619,7 @@ function zoomIn(z) {
   requestAnimationFrame(bild);
 }
 function zoomOut(z) {
+  if (z.y) window.scrollTo(0, z.y);
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
   if (!g) return;
   const e = t && t.getBoundingClientRect(), W = innerWidth, H = innerHeight;
@@ -3798,6 +3815,10 @@ function render() {
   }
   (needsPro(r) ? () => vPro(r.key) : PRO_PAGES[r.view] || ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view])();
   window.scrollTo(0, 0);
+  // Farbschleier der Kachel oben auf der Zielseite (nicht, wo die Seite schon eine farbige Kopfkarte hat)
+  const schleier = !view.querySelector(":scope > .page-hero") && KACHEL[r.view];
+  view.classList.toggle("getoent", !!schleier);
+  if (schleier) view.style.setProperty("--tint-c", schleier); else view.style.removeProperty("--tint-c");
   if (moving && !reduced() && !silentNav) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
     if (oldShelf) oldShelf.scrollLeft = shelfX;
@@ -3806,6 +3827,7 @@ function render() {
     if (zoom) (zoom.dir === "in" ? zoomIn : zoomOut)(zoom);
   }
   if (slideNow) iosSlide(dir);
+  if (r.view === "start") lastZoom = null;
   if (silentNav) { silentNav = false; const f = edgeAfterRender; edgeAfterRender = null; if (f) f(); }
   updateChrome();
 }
@@ -4050,10 +4072,32 @@ function edgeStart(st) {
     nb.innerHTML = saved.nav; nb.className = saved.cls;
     curRoute = saved.route; curMod = saved.mod; actHandler = saved.act; keyHandler = saved.key; xb = saved.xb;
   }
+  if (st.preview && lastZoom && saved.route.key === lastZoom.go && r && r.view === "start") {
+    window.scrollTo(0, lastZoom.y || 0);
+    const t = view.querySelector(`.bt[data-go="${lastZoom.go}"]`), e = t && t.getBoundingClientRect();
+    if (e && e.top >= 0 && e.bottom <= innerHeight) {
+      const c = document.createElement("i");
+      c.className = "zoomfx-c"; c.style.background = lastZoom.bg; c.style.opacity = "0";
+      g.append(c);
+      t.style.visibility = "hidden";
+      view.classList.remove("ios-low");
+      st.zoom = {rect:e, tile:t, color:c, y:lastZoom.y || 0};
+    }
+  }
   edgePaint(st, 0);
 }
 function edgePaint(st, p) {
   const W = innerWidth;
+  if (st.zoom) {
+    // Die Seite schrumpft dem Finger folgend Richtung Kachel; ganz zur Kachel geht es erst beim Loslassen
+    const k = Math.min(1, p * 1.15);
+    st.ghost.style.transform = "";
+    st.ghost.style.clipPath = zoomRahmen(st.zoom.rect, k * .55);
+    st.zoom.color.style.opacity = (k * .35).toFixed(3);
+    view.style.transform = "";
+    st.dim.style.opacity = .12 * (1 - k);
+    return;
+  }
   st.ghost.style.transform = `translateX(${p * W}px)`;
   view.style.transform = `translateX(${-.3 * W * (1 - p)}px)`;
   st.dim.style.opacity = .1 * (1 - p);
@@ -4069,6 +4113,7 @@ function edgeEnd(e) {
   const commit = e.type === "pointerup" && (v > .4 || (p > .5 && v > -.2));
   const to = commit ? 1 : 0;
   const dur = reduced() ? 0 : Math.round(Math.max(170, Math.min(420, Math.abs(to - p) * W / Math.max(.9, Math.abs(v)))));
+  if (st.zoom) { edgeZoomEnd(st, p, commit); return; }
   const o = {duration:dur, easing:"cubic-bezier(.2,.9,.3,1)", fill:"forwards"};
   const a = st.ghost.animate([{transform:`translateX(${p * W}px)`}, {transform:`translateX(${to * W}px)`}], o);
   view.animate([{transform:`translateX(${-.3 * W * (1 - p)}px)`}, {transform:`translateX(${-.3 * W * (1 - to)}px)`}], o);
@@ -4094,6 +4139,47 @@ function edgeEnd(e) {
     watchIdle();
     if (st.preview) revealBelow(view);
   };
+}
+// Rand-Wischen auf einer per Kachel geöffneten Seite: weich in die Kachel (oder zurück auf die Seite)
+function edgeZoomEnd(st, p, commit) {
+  const z = st.zoom, g = st.ghost, k0 = Math.min(1, p * 1.15) * .55, t0 = performance.now(), w = 14;
+  if (commit) {
+    const back = $("#navbar .nb-left .back"), before = location.hash;
+    silentNav = true;
+    edgeAfterRender = () => window.scrollTo(0, z.y);
+    if (back) back.click();
+    if (location.hash === before) { silentNav = false; edgeAfterRender = null; }
+  }
+  const ziel = commit ? 1 : 0;
+  const bild = now => {
+    const t = (now - t0) / 1000, q = reduced() ? 1 : Math.min(1, 1 - (1 + w * t) * Math.exp(-w * t)), k = k0 + (ziel - k0) * q;
+    g.style.clipPath = zoomRahmen(z.rect, k);
+    z.color.style.opacity = (commit ? Math.min(1, k * 1.25) : k * .6).toFixed(3);
+    st.dim.style.opacity = .12 * (1 - k);
+    if (q < .995) { requestAnimationFrame(bild); return; }
+    st.dim.remove();
+    view.style.transform = "";
+    view.classList.remove("ios-slide", "ios-low");
+    if (commit) {
+      g.remove();
+      const t2 = view.querySelector(`.bt[data-go="${z.tile.dataset.go}"]`);
+      if (t2) t2.style.visibility = "";
+      z.tile.style.visibility = "";
+      lastZoom = null;
+      return;
+    }
+    z.tile.style.visibility = "";
+    view.innerHTML = "";
+    z.color.remove();
+    g.style.clipPath = "";
+    view.append(...g.firstElementChild.childNodes);
+    g.remove();
+    window.scrollTo(0, st.y);
+    observeTitle();
+    watchIdle();
+    if (st.preview) revealBelow(view);
+  };
+  requestAnimationFrame(bild);
 }
 document.addEventListener("click", e => {
   const s = e.target.closest("[data-sheet]");
@@ -4380,7 +4466,7 @@ function vStart() {
   </section>
   <section class="ig-sec" aria-label="Lernen und Üben"><h2 class="ig-h">Lernen und Üben</h2>
     <div class="bento">
-      <button class="bt bt-big" data-go="${st.go}" style="--tb:linear-gradient(165deg,${tief(st.m.color, 6)},${tief(st.m.color, 11)});--tf:#fff">
+      <button class="bt bt-big" data-go="${st.go}" style="--tb:linear-gradient(165deg,#4d392b 0%,#2c2018 100%);--tf:#fff">
         <span class="bt-ic" aria-hidden="true">${icon(st.m.icon, 24)}</span>
         <small class="bt-e">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
         <span class="bt-l">${st.m.title}</span>
@@ -4388,10 +4474,10 @@ function vStart() {
         <small class="bt-s">${st.unit}</small>
       </button>
       ${kachel("", "heute", "#8fe08a", HELL, "karten", "Lernkarten", due, due === 1 ? "Karte fällig" : "Karten fällig")}
-      ${kachel("", "heute", "#4fc979", HELL, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
-      ${kachel("", "themen", tief(APPLE.blau), "#fff", "themen", "Themen", MODS.length, "Alle ansehen")}
-      ${CODE.length ? kachel("", "code", "#ffd84a", "#231c00", "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", "#ffd84a", "#231c00", "trainieren", "Üben", "", "Alle Übungen")}
-      ${kachel("", "trainieren", "#efe5cf", "#2e261a", "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
+      ${kachel("", "heute", KACHEL.heute, HELL, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
+      ${kachel("", "themen", KACHEL.themen, "#fff", "themen", "Themen", MODS.length, "Alle ansehen")}
+      ${CODE.length ? kachel("", "code", KACHEL.code, "#231c00", "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", "#ffd84a", "#231c00", "trainieren", "Üben", "", "Alle Übungen")}
+      ${kachel("", "trainieren", KACHEL.trainieren, "#2e261a", "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
     </div>
   </section>
   <section class="ig-sec" aria-label="Prüfen"><h2 class="ig-h">Prüfen</h2>
@@ -4401,7 +4487,7 @@ function vStart() {
     </div>
   </section>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
-  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
+  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:#5a4232">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
   // Der Miniplayer erscheint, sobald die große Kachel aus dem Bild gescrollt ist
   const dact = view.querySelector(".bt-big"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
