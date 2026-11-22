@@ -2514,11 +2514,11 @@ button.ios-card:active{transform:scale(.97)}
 .title-block.farbkopf .kicker,.title-block.farbkopf .large,.title-block.farbkopf .lede{color:var(--on)!important}
 :root[data-mono] .page-hero,:root[data-mono] .farbkopf,:root[data-mono] .bt{--cb:#48484a!important;--on:#fff!important;--hb:#fff!important;--hbt:#000!important}
 /* Kopfkarten randlos bis zum oberen Bildschirmrand: kein leerer Abstand über der Farbe */
-#view > .page-hero:first-child,#view > .read-bar:first-child + .page-hero,#view > .title-block.farbkopf:first-child{margin-top:calc(-1 * var(--nbh,52px) - 4px)!important;margin-left:-16px!important;margin-right:-16px!important;border-radius:0 0 32px 32px!important}
-#view > .page-hero:first-child .ph-bg,#view > .read-bar:first-child + .page-hero .ph-bg{border-radius:0 0 32px 32px!important}
-#view > .page-hero:first-child .ph-c,#view > .read-bar:first-child + .page-hero .ph-c{padding:calc(var(--nbh,52px) + 8px) 22px 24px}
-#view > .title-block.farbkopf:first-child{padding:calc(var(--nbh,52px) + 8px) 20px 24px!important}
-@media (min-width:900px){#view > .page-hero:first-child,#view > .read-bar:first-child + .page-hero,#view > .title-block.farbkopf:first-child{margin-left:-40px!important;margin-right:-40px!important}}
+.col > .page-hero:first-child,.col > .read-bar:first-child + .page-hero,.col > .title-block.farbkopf:first-child{margin-top:calc(-1 * var(--nbh,52px) - 4px)!important;margin-left:-16px!important;margin-right:-16px!important;border-radius:0 0 32px 32px!important}
+.col > .page-hero:first-child .ph-bg,.col > .read-bar:first-child + .page-hero .ph-bg{border-radius:0 0 32px 32px!important}
+.col > .page-hero:first-child .ph-c,.col > .read-bar:first-child + .page-hero .ph-c{padding:calc(var(--nbh,52px) + 8px) 22px 24px}
+.col > .title-block.farbkopf:first-child{padding:calc(var(--nbh,52px) + 8px) 20px 24px!important}
+@media (min-width:900px){.col > .page-hero:first-child,.col > .read-bar:first-child + .page-hero,.col > .title-block.farbkopf:first-child{margin-left:-40px!important;margin-right:-40px!important}}
 /* Die obere Leiste fängt nur noch Tipps auf ihren Knöpfen ab */
 .navbar{pointer-events:none}
 .navbar button,.navbar a,.navbar [role="button"]{pointer-events:auto}
@@ -2526,6 +2526,11 @@ button.ios-card:active{transform:scale(.97)}
 #view > .dh:first-child{margin-top:calc(-1 * var(--nbh,52px) + 4px)!important;min-height:calc(var(--nbh,52px) - 4px)}
 /* fliegende Kachel beim Zoom */
 .zoomkarte{position:fixed!important;z-index:28;margin:0!important;pointer-events:none;animation:none;transition:none!important;grid-column:auto!important;grid-row:auto!important;will-change:transform;contain:layout paint}
+/* Fenster-Übergang aus der Kachel */
+.zf{position:fixed;z-index:28;overflow:hidden;background:var(--bg);pointer-events:none;contain:layout paint;isolation:isolate}
+.ghost.zf{z-index:2;right:auto;bottom:auto}
+.zf > .col{position:absolute;will-change:transform}
+.zf-kachel{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;z-index:5;animation:none!important;transition:none!important;transform:none!important;pointer-events:none;grid-column:auto!important;grid-row:auto!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3610,97 +3615,65 @@ function zoomPlan(r, from, dir) {
 }
 // Lochrahmen zwischen ganzem Bildschirm (k = 0) und Kachel (k = 1) für den Rückweg
 const zoomRahmen = (e, k) => { const W = innerWidth, H = innerHeight; return `inset(${(e.top * k).toFixed(1)}px ${((W - e.right) * k).toFixed(1)}px ${((H - e.bottom) * k).toFixed(1)}px ${(e.left * k).toFixed(1)}px round ${(ZOOM_R * k).toFixed(1)}px)`; };
-// Kopfkarte der Seite: farbige Kopfkarte (.page-hero) oder Titel-Farbkarte
-const zoomKopf = root => root.querySelector(":scope > .page-hero:first-child, :scope > .read-bar:first-child + .page-hero, :scope > .title-block.farbkopf:first-child, #layerBody > .page-hero:first-child");
-const zoomFlaeche = kopf => kopf.matches(".page-hero") ? kopf.querySelector(".ph-bg") : kopf;
-const zoomRadien = el => { const cs = getComputedStyle(el); return [parseFloat(cs.borderTopLeftRadius) || 0, parseFloat(cs.borderBottomLeftRadius) || 0]; };
-const zoomGanz = () => ({left:0, top:0, width:innerWidth, height:innerHeight});
 // Feder ohne Nachschwingen (wie SwiftUI .smooth), auf 0 bis 1 normiert
 const zoomFeder = (t, dauer) => { const w = 10.5, f = x => 1 - (1 + w * x) * Math.exp(-w * x); return f(t * dauer / 1000) / f(dauer / 1000); };
-// Lässt ein Element nur per transform (läuft auf der Grafikkarte) von Rahmen a nach b fliegen.
-// Das Element steht am Ziel, die Bilder dazwischen sind Verschiebung und Skalierung; die Ecken werden gegen die Skalierung ausgeglichen.
-function zoomFlug(el, a, b, ra, rb, dauer, s = 0) {
-  Object.assign(el.style, {left:b.left + "px", top:b.top + "px", width:b.width + "px", height:b.height + "px", transformOrigin:"0 0"});
-  // s: Anteil der Federkurve, der schon gelaufen ist (beim Nachführen im Flug), damit die Bewegung ohne Ruck weitergeht
-  const F = t => zoomFeder(t, dauer), F0 = F(s), N = 18, bew = [], ecken = [];
+const zoomGanz = () => ({left:0, top:0, width:innerWidth, height:innerHeight});
+let zoomVorab = null;
+const ZOOM_D = 560, ZOOM_ENDE_R = 0;
+// Animiert ein Fenster (fester Kasten mit runden Ecken) von Rahmen a nach b; der Inhalt darin wird gleichmäßig
+// mit der Fensterbreite skaliert und oben angelegt, damit nichts gestaucht wird.
+function zoomFensterFlug(box, inhalt, a, b, ra, rb, dauer) {
+  const W = innerWidth, N = 20, aussen = [], innen = [];
   for (let i = 0; i <= N; i++) {
-    const t = s + (1 - s) * i / N, k = (F(t) - F0) / (1 - F0 || 1);
+    const t = i / N, k = zoomFeder(t, dauer);
     const x = a.left + (b.left - a.left) * k, y = a.top + (b.top - a.top) * k, w = a.width + (b.width - a.width) * k, h = a.height + (b.height - a.height) * k;
-    const sx = w / b.width, sy = h / b.height, ro = ra[0] + (rb[0] - ra[0]) * k, ru = ra[1] + (rb[1] - ra[1]) * k;
-    const rx = v => (v / sx).toFixed(2) + "px", ry = v => (v / sy).toFixed(2) + "px";
-    // Verschiebung, Größe und Rundung im selben Bild, damit die Ecken nie eckig oder verzerrt wirken
-    bew.push({offset:i / N, transform:`translate3d(${(x - b.left).toFixed(2)}px,${(y - b.top).toFixed(2)}px,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`, borderRadius:`${rx(ro)} ${rx(ro)} ${rx(ru)} ${rx(ru)} / ${ry(ro)} ${ry(ro)} ${ry(ru)} ${ry(ru)}`});
+    aussen.push({offset:t, left:x.toFixed(2) + "px", top:y.toFixed(2) + "px", width:w.toFixed(2) + "px", height:h.toFixed(2) + "px", borderRadius:(ra + (rb - ra) * k).toFixed(2) + "px"});
+    innen.push({offset:t, transform:`scale(${(w / W).toFixed(5)})`});
   }
-  const flug = el.animate(bew, {duration:Math.max(1, dauer * (1 - s)), easing:"linear", fill:"forwards"});
-  flug.ecken = {cancel() {}};
+  const o = {duration:dauer, easing:"linear", fill:"forwards"};
+  const flug = box.animate(aussen, o);
+  inhalt.animate(innen, o);
   return flug;
 }
-// Start sofort beim Tippen: Die Kachel fliegt schon los, bevor die neue Seite gebaut ist
-let zoomVorab = null;
-const ZOOM_D = 600;
-function zoomStart(tile) {
-  const a = tile.getBoundingClientRect(), karte = zoomKarte(tile);
-  tile.style.visibility = "hidden";
-  const ziel = {left:0, top:0, width:innerWidth, height:Math.min(innerHeight, 250)}, rz = [0, 32];
-  const flug = zoomFlug(karte, a, ziel, [26, 26], rz, ZOOM_D);
-  [...karte.children].forEach(el => el.animate([{opacity:1}, {opacity:0}], {duration:170, easing:"ease-out", fill:"forwards"}));
-  zoomVorab = {karte, flug, t0:performance.now(), rz};
-}
-// Übernimmt eine schon fliegende Karte und führt sie weich zum echten Ziel
-function zoomNachfuehren(b, rb) {
-  const v = zoomVorab; zoomVorab = null;
-  if (!v || !v.karte.isConnected) return null;
-  const s = Math.min(.9, (performance.now() - v.t0) / ZOOM_D), cur = v.karte.getBoundingClientRect(), k = zoomFeder(s, ZOOM_D);
-  const rc = [26 + (v.rz[0] - 26) * k, 26 + (v.rz[1] - 26) * k];
-  v.flug.cancel(); v.flug.ecken.cancel();
-  return {karte:v.karte, flug:zoomFlug(v.karte, cur, b, rc, rb, ZOOM_D, s)};
-}
-const zoomKarte = el => { const k = el.cloneNode(true); k.removeAttribute("data-go"); k.classList.add("zoomkarte"); k.setAttribute("aria-hidden", "true"); document.body.append(k); return k; };
-// Öffnen: Die Kachel fliegt hoch und wird zur Kopfkarte (ohne Kopfkarte: zum ganzen Bildschirm), der Rest steigt darunter ein
+// Kachel als Deckel im Fenster: am Anfang sichtbar, damit das Fenster wie die Kachel selbst aussieht
+const zoomDeckel = el => { const k = el.cloneNode(true); k.removeAttribute("data-go"); k.removeAttribute("id"); k.className = el.className + " zf-kachel"; k.setAttribute("aria-hidden", "true"); return k; };
+// Öffnen: Die neue Seite wandert für die Dauer des Übergangs in ein Fenster, das aus der Kachel wächst
 function zoomIn(z) {
   const g = ghostEl;
   if (!g || !z.el) return;
-  const kopf = zoomKopf(view), flaeche = kopf && zoomFlaeche(kopf), D = ZOOM_D;
-  const b = flaeche ? flaeche.getBoundingClientRect() : zoomGanz(), rb = flaeche ? zoomRadien(flaeche) : [0, 0];
-  if (kopf) kopf.style.visibility = "hidden";
-  let karte, flug;
-  const nach = zoomNachfuehren(b, rb);
-  if (nach) ({karte, flug} = nach);
-  else {
-    karte = zoomKarte(z.el);
-    flug = zoomFlug(karte, z.rect, b, [26, 26], rb, D);
-    [...karte.children].forEach(el => el.animate([{opacity:1}, {opacity:0}], {duration:170, easing:"ease-out", fill:"forwards"}));
-  }
-  g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"scale(.94)"}], {duration:420, easing:ZOOM_EASE, fill:"forwards"});
-  [...view.children].filter(el => el !== kopf && !el.matches(".read-bar")).forEach((el, i) => el.animate([{opacity:0, transform:"translate3d(0,34px,0)"}, {opacity:1, transform:"none"}], {duration:520, delay:(kopf ? 170 : 300) + Math.min(i, 6) * 40, easing:EASE_SOFT, fill:"backwards"}));
+  const vb = view.getBoundingClientRect(), box = document.createElement("div"), innen = document.createElement("div"), deckel = zoomDeckel(z.el);
+  box.className = "zf"; box.setAttribute("aria-hidden", "true");
+  innen.className = "col";
+  innen.style.cssText = `left:${vb.left}px;top:${vb.top}px;width:${vb.width}px;transform-origin:${-vb.left}px ${-vb.top}px`;
+  innen.append(...view.childNodes);
+  box.append(innen, deckel);
+  document.body.append(box);
+  const nb = [...document.querySelectorAll("#navbar .nb-left, #navbar .nb-right")];
+  nb.forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.55}, {opacity:1}], {duration:ZOOM_D + 120, easing:"ease-out"}));
+  const flug = zoomFensterFlug(box, innen, z.rect, zoomGanz(), ZOOM_R, ZOOM_ENDE_R, ZOOM_D);
+  deckel.animate([{opacity:1}, {opacity:0}], {duration:220, easing:"ease-out", fill:"forwards"});
+  g.animate([{opacity:1, transform:"none"}, {opacity:.25, transform:"scale(.94)"}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
   flug.onfinish = () => {
-    if (kopf) {
-      kopf.style.visibility = "";
-      const innen = kopf.matches(".page-hero") ? kopf.querySelector(".ph-c") : kopf;
-      [...innen.children].forEach((el, i) => el.animate([{opacity:0, transform:"translate3d(0,10px,0)"}, {opacity:1, transform:"none"}], {duration:280, delay:i * 25, easing:EASE_SOFT, fill:"backwards"}));
-      karte.remove();
-    } else karte.animate([{opacity:1}, {opacity:0}], {duration:260, easing:"ease-out", fill:"forwards"}).onfinish = () => karte.remove();
+    view.append(...innen.childNodes);
+    box.remove();
     if (g.isConnected) g.remove();
     if (ghostEl === g) ghostEl = null;
   };
 }
-// Zurück: Die Kopfkarte (ohne Kopfkarte: die ganze Seite) fliegt in ihre Kachel, die Übersicht kommt nach vorn
+// Zurück: Die alte Seite (sie liegt schon als eigene Ebene vorn) schrumpft als Fenster in ihre Kachel
 function zoomOut(z) {
   if (z.y) window.scrollTo(0, z.y);
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
   if (!g || !t || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
-  const kopf = zoomKopf(g.firstElementChild), flaeche = kopf && zoomFlaeche(kopf), D = 560;
-  const b = flaeche ? flaeche.getBoundingClientRect() : zoomGanz();
-  const rStart = (r => [Math.max(r[0], 32), Math.max(r[1], 32)])(flaeche ? zoomRadien(flaeche) : [0, 0]);
-  const karte = zoomKarte(t);
-  if (kopf) kopf.style.visibility = "hidden";
+  const innen = g.firstElementChild, deckel = zoomDeckel(t), r0 = innen.getBoundingClientRect();
+  g.classList.add("zf");
+  innen.style.transformOrigin = `${-r0.left}px ${-r0.top}px`;
+  g.append(deckel);
   t.style.visibility = "hidden";
-  const flug = zoomFlug(karte, b, e, rStart, [26, 26], D);
-  [...karte.children].forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.45}, {opacity:1}], {duration:D, easing:"ease-out", fill:"forwards"}));
-  if (!kopf) karte.animate([{opacity:0}, {opacity:1, offset:.3}, {opacity:1}], {duration:D, fill:"forwards"});
-  g.animate([{opacity:1, transform:"none"}, {opacity:0, transform:"translate3d(0,18px,0) scale(.98)"}], {duration:320, easing:"cubic-bezier(.25,.8,.25,1)", fill:"forwards"});
-  view.animate([{opacity:.5, transform:"scale(.955)"}, {opacity:1, transform:"none"}], {duration:D, easing:ZOOM_EASE});
-  flug.onfinish = () => { t.style.visibility = ""; karte.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
+  const flug = zoomFensterFlug(g, innen, zoomGanz(), e, ZOOM_ENDE_R, ZOOM_R, ZOOM_D);
+  deckel.animate([{opacity:0}, {opacity:0, offset:.45}, {opacity:1}], {duration:ZOOM_D, easing:"ease-in", fill:"forwards"});
+  view.animate([{opacity:.25, transform:"scale(.94)"}, {opacity:1, transform:"none"}], {duration:ZOOM_D, easing:ZOOM_EASE});
+  flug.onfinish = () => { t.style.visibility = ""; if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
 }
 function zoomSchrumpf(z) {
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
@@ -4275,7 +4248,6 @@ document.addEventListener("click", e => {
   if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
   if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches(".bt") ? g : null;
-    if (zoomSrc && !reduced()) { if (zoomVorab) return; zoomStart(zoomSrc); const ziel = g.dataset.go; setTimeout(() => go(ziel), Math.round(ZOOM_D * .38)); return; }
     go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
   if (a && actHandler && !a.disabled) actHandler(a.dataset.act, a, e);
