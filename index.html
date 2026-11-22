@@ -2185,6 +2185,8 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--bg)!important}
 .tabbar.dragging .tab[aria-current="page"]:not(.hov){color:var(--label-2)!important}
 :root[data-noglass] .back{background:var(--surface)!important}
+/* Leuchtkarten: Farbe aus der gewählten Palette */
+.gc.lern{--k:var(--p-blau)!important}.gc.serie{--k:var(--p-orange)!important}.gc.faellig{--k:var(--p-lila)!important}.gc.xp{--k:var(--p-gelb)!important}.gc.fehler{--k:var(--p-rot)!important}.gc.ap1{--k:var(--p-orange)!important}.gc.ap2{--k:var(--p-pink)!important}
 /* Leuchtkarten: dunkle Karte mit weichem Farbschimmer in der Ecke */
 .gc::after{display:block!important;content:"";position:absolute;z-index:-1;inset:auto -26% -46% auto;width:82%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--k) 78%,transparent),color-mix(in srgb,var(--k) 22%,transparent) 58%,transparent);filter:blur(6px);opacity:.7;pointer-events:none}
 .gc.lern::after{width:46%;right:-8%;bottom:-70%}
@@ -2600,10 +2602,12 @@ const Q_BY_ID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
 /* ---------------- Register (Themenmodule) ---------------- */
 CARDS.forEach(c => { c.m = "osi"; });
 QUESTIONS.forEach(q => { q.m = "osi"; });
-/* Apples Farben: die sechs Streifen des klassischen Apple-Logos und Graphit. Alle bisherigen Kennfarben werden hierauf abgebildet. */
-const APPLE = {gruen:"#61bb46", gelb:"#fdb827", orange:"#f5821f", rot:"#e03a3e", lila:"#963d97", blau:"#009ddc", graphit:"#636366"};
-const AP = {"#30d158":APPLE.gruen, "#34c759":APPLE.gruen, "#ff9f0a":APPLE.orange, "#ff9500":APPLE.orange, "#ff375f":APPLE.rot, "#ff3b30":APPLE.rot, "#bf5af2":APPLE.lila, "#0a84ff":APPLE.blau, "#40c8e0":APPLE.blau, "#5e5ce6":APPLE.gelb, "#5856d6":APPLE.gelb};
-const ap = c => c; // schlichtes iOS: Systemfarben bleiben
+/* iOS-Systemfarben: eine Tabelle für die ganze App. Themen, Sprachen, Schichten und Symbole holen ihre Farbe von hier. */
+const APPLE = {gruen:"#30d158", gelb:"#ffd60a", orange:"#ff9f0a", rot:"#ff453a", pink:"#ff375f", lila:"#bf5af2", blau:"#0a84ff", indigo:"#5e5ce6", teal:"#40c8e0", graphit:"#8e8e93"};
+// Die Inhalte nennen auch die hellen iOS-Varianten; jede wird auf denselben Farbton abgebildet
+const AP = {"#30d158":"gruen", "#34c759":"gruen", "#ffd60a":"gelb", "#ffcc00":"gelb", "#ff9f0a":"orange", "#ff9500":"orange", "#ff453a":"rot", "#ff3b30":"rot", "#ff375f":"pink", "#ff2d55":"pink", "#bf5af2":"lila", "#af52de":"lila", "#0a84ff":"blau", "#007aff":"blau", "#5e5ce6":"indigo", "#5856d6":"indigo", "#40c8e0":"teal", "#5ac8fa":"teal", "#30b0c7":"teal", "#8e8e93":"graphit"};
+const ap = c => { const k = AP[String(c).toLowerCase()]; return k ? APPLE[k] : c; };
+Object.entries(APPLE).forEach(([k, v]) => document.documentElement.style.setProperty("--p-" + k, v));
 const MODS = [
   {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#bf5af2", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
   ...(window.LERN_MODULES || [])
