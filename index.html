@@ -2313,8 +2313,8 @@ button.ios-card:active{transform:scale(.97)}
 @keyframes lxAway{to{opacity:0;transform:scale(1.07)}}
 @keyframes lxOut{to{opacity:0;visibility:hidden}}
 /* ===== Liquid Glass wie in der App Store-Leiste von iOS 26: eine Kapsel mit fünf Tabs, eine klare Linse beim Berühren ===== */
-.tabbar{grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;transition:scale .5s cubic-bezier(.25,.8,.25,1)}
-.tabbar.lz-an{scale:1.015}
+.tabbar{grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;transition:scale .45s cubic-bezier(.3,1.25,.5,1)}
+.tabbar.lz-an{scale:1.02}
 .tabbar::before{right:0!important}
 .tab[data-nav="suche"]{position:relative!important;top:auto;right:auto;width:auto!important;height:50px!important;border-radius:999px!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
 .tab[data-nav="suche"] span{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
@@ -2458,6 +2458,39 @@ button.ios-card:active{transform:scale(.97)}
 .ig-link{min-height:50px!important}
 .ig-link .pr-t b{color:var(--ig-link);font-weight:400}
 .ig .prow.ig-link::before{left:16px!important}
+/* ===== Startseite im Kachel-Stil: große Zahl, Raster aus farbigen Kacheln unterschiedlicher Größe ===== */
+.dh .large{font:600 17px/22px var(--f-ui)!important;letter-spacing:-.02em!important;color:var(--label-2)}
+.dh{align-items:center!important}
+.bh-num{display:block;margin:-6px 2px 6px}
+.bh-num small{display:block;font:500 13px/18px var(--f-ui);color:var(--label-2)}
+.bh-num b{display:block;margin-top:2px;font:700 60px/1 var(--f-display);letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--label)}
+.bh-num b span{font-size:.5em;letter-spacing:-.02em;margin-left:2px;color:var(--label-2)}
+.bh-num p{display:flex;flex-wrap:wrap;gap:4px 14px;margin:10px 0 0;font:500 14px/18px var(--f-ui);color:var(--label-2)}
+.bh-fl{display:inline-flex;align-items:center;gap:4px}
+.bh-fl .ic{width:14px;height:14px;color:var(--p-orange)}
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(118px,auto);gap:10px}
+.bt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:0;padding:14px 8px;border:0;border-radius:26px;background:var(--tb);color:var(--tf);text-align:center;cursor:pointer;overflow:hidden;isolation:isolate;box-shadow:inset 0 1px 0 rgba(255,255,255,.22);-webkit-tap-highlight-color:transparent;transition:transform .5s cubic-bezier(.25,.9,.3,1.15)}
+.bt:active{transform:scale(.95);transition:transform .18s cubic-bezier(.25,.8,.25,1)}
+.bt-ic{display:grid;place-items:center;width:34px;height:34px;margin-bottom:6px;border-radius:50%;background:color-mix(in srgb,var(--tf) 13%,transparent)}
+.bt-ic .ic{width:19px;height:19px}
+.bt-l{max-width:100%;font:600 13px/17px var(--f-ui);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-v{font:700 25px/1.15 var(--f-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.bt-v:empty{display:none}
+.bt-s{max-width:100%;font:500 12px/15px var(--f-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-big{grid-column:span 2;grid-row:span 2;padding:20px 16px;gap:2px}
+.bt-big .bt-ic{width:52px;height:52px;margin-bottom:10px;background:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.bt-big .bt-ic .ic{width:26px;height:26px}
+.bt-e{font:600 12px/16px var(--f-ui);text-transform:uppercase;letter-spacing:.06em}
+.bt-big .bt-l{font:600 19px/24px var(--f-display);letter-spacing:-.02em;white-space:normal}
+.bt-big .bt-v{margin-top:4px;font-size:44px;line-height:1}
+.bt-big .bt-v span,.bt-v span{font-size:.55em;margin-left:1px}
+.bt-big .bt-s{margin-top:6px;font-size:13px;line-height:17px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.bt-wide{grid-column:span 2}
+.bento+.bento{margin-top:10px}
+.first-open .bh-num,.first-open .bento .bt{animation:riseIn .7s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .12s)}
+.first-open .bento .bt:nth-child(n+2){animation-delay:calc(var(--intro,0s) + .2s)}
+.first-open .bento .bt:nth-child(n+4){animation-delay:calc(var(--intro,0s) + .28s)}
+@media (max-width:350px){.bt-l{font-size:12px}.bt-v{font-size:22px}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3736,43 +3769,46 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
 (() => {
   const bar = $("#tabbar"), ind = bar.querySelector(".tab-ind"), tabs = [...bar.querySelectorAll(".tab")], N = tabs.length, PAD = 4;
   ind.innerHTML = '<i class="lz-rand"></i>';
-  const S = {x:0, vx:0, tx:0, l:0, vl:0, tl:0, sel:0, raf:0, t:0, ready:false};
+  // Position in Tab-Einheiten (0 = erster Tab): bleibt mittig, egal wie breit die Leiste gerade ist
+  const S = {p:0, v:0, tp:0, l:0, vl:0, sel:0, raf:0, t:0, ready:false};
   let d = null, mute = false;
+  // Federn wie in SwiftUI: response in Sekunden, dampingFraction (1 = ohne Nachschwingen)
+  const feder = (r, z) => ({k:(2 * Math.PI / r) ** 2, c:4 * Math.PI * z / r});
+  const AM_FINGER = feder(.16, 1), GLEITEN = feder(.42, .82), HEBEN = feder(.24, .86), SENKEN = feder(.36, 1);
   const cell = () => (bar.offsetWidth - 2 * PAD) / N;
-  // Fingerposition in der Leiste, unabhängig davon, wie weit die Leiste gerade gewachsen ist
-  const fingerX = e => { const r = bar.getBoundingClientRect(), w = bar.offsetWidth; return (e.clientX - (r.left + r.width / 2)) / (r.width / w || 1) + w / 2 - PAD; };
+  const fingerP = e => { const r = bar.getBoundingClientRect(), w = bar.offsetWidth; return ((e.clientX - (r.left + r.width / 2)) / (r.width / w || 1) + w / 2 - PAD) / cell() - .5; };
   const paint = () => {
-    const c = cell(), l = S.l, lc = Math.max(0, Math.min(1, l)), st = Math.min(.05, Math.abs(S.vx) / 12000);
-    const sx = (1 + .16 * l) * (1 + st), sy = (1 + .3 * l) / (1 + st * .5);
-    ind.style.transform = `translate3d(${S.x.toFixed(2)}px,0,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
+    if (!bar.offsetWidth) return;
+    const lc = Math.max(0, Math.min(1, S.l)), st = Math.min(.08, Math.abs(S.v) / 60);
+    const sx = (1 + .16 * S.l) * (1 + st), sy = (1 + .3 * S.l) / (1 + st * .6);
+    ind.style.transform = `translate3d(${(S.p * cell()).toFixed(2)}px,0,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
     ind.style.setProperty("--lift", lc.toFixed(3));
-    const mitte = S.x + c / 2;
-    tabs.forEach((t, i) => t.style.setProperty("--m", (Math.max(0, 1 - Math.abs((i + .5) * c - mitte) / (c * .85)) * lc).toFixed(3)));
+    tabs.forEach((t, i) => t.style.setProperty("--m", (Math.max(0, 1 - Math.abs(i - S.p) / .85) * lc).toFixed(3)));
   };
-  // Federn: am Finger straff, beim Loslassen weich mit leichtem Nachschwingen; die Linse hebt sich mit kleinem Überschwingen
   const step = dt => {
-    const k = d ? 620 : 260, c = 2 * Math.sqrt(k);
-    S.vx += (k * (S.tx - S.x) - c * S.vx) * dt; S.x += S.vx * dt;
-    const kl = S.tl ? 380 : 240, cl = 2 * Math.sqrt(kl);
-    S.vl += (kl * (S.tl - S.l) - cl * S.vl) * dt; S.l += S.vl * dt;
+    const f = d && d.on ? AM_FINGER : GLEITEN;
+    S.v += (f.k * (S.tp - S.p) - f.c * S.v) * dt; S.p += S.v * dt;
+    // Unterwegs bleibt die Linse leicht angehoben und setzt sich erst kurz vor dem Ziel ab
+    const ziel = d ? 1 : Math.abs(S.tp - S.p) > .16 ? .5 : 0, g = ziel > S.l ? HEBEN : SENKEN;
+    S.vl += (g.k * (ziel - S.l) - g.c * S.vl) * dt; S.l += S.vl * dt;
   };
   const loop = now => {
     const dt = S.t ? Math.min(.034, (now - S.t) / 1000) : 1 / 60;
     S.t = now;
     for (let i = 0; i < 4; i++) step(dt / 4);
-    if (!d && Math.abs(S.x - S.tx) < .3 && Math.abs(S.vx) < 6 && Math.abs(S.l - S.tl) < .003 && Math.abs(S.vl) < .02) {
-      S.x = S.tx; S.l = S.tl; S.vx = S.vl = 0; S.raf = 0; S.t = 0; paint(); return;
+    if (!d && Math.abs(S.tp - S.p) < .004 && Math.abs(S.v) < .03 && Math.abs(S.l) < .003 && Math.abs(S.vl) < .02) {
+      S.p = S.tp; S.l = 0; S.v = S.vl = 0; S.raf = 0; S.t = 0; paint(); return;
     }
     paint();
     S.raf = requestAnimationFrame(loop);
   };
   const kick = () => {
-    if (reduced()) { if (S.raf) cancelAnimationFrame(S.raf); S.raf = 0; S.x = S.tx; S.l = 0; S.vx = S.vl = 0; paint(); return; }
+    if (reduced()) { if (S.raf) cancelAnimationFrame(S.raf); S.raf = 0; S.p = S.tp; S.l = 0; S.v = S.vl = 0; paint(); return; }
     if (!S.raf) { S.t = 0; S.raf = requestAnimationFrame(loop); }
   };
   const follow = e => {
-    const c = cell(), fx = fingerX(e), i = Math.max(0, Math.min(N - 1, Math.floor(fx / c)));
-    S.tx = Math.max(0, Math.min((N - 1) * c, fx - c / 2));
+    const fp = Math.max(0, Math.min(N - 1, fingerP(e))), i = Math.round(fp);
+    S.tp = d.on ? fp : i;
     if (i === d.i) return;
     if (d.i >= 0) haptic("select");
     d.i = i;
@@ -3781,9 +3817,9 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
   lensApi = {set(i) {
     S.sel = i;
     ind.style.opacity = i < 0 ? 0 : 1;
-    if (i < 0 || d || !bar.offsetWidth) return;
-    S.tx = i * cell();
-    if (!S.ready) { S.ready = true; S.x = S.tx; paint(); return; }
+    if (i < 0 || d) return;
+    S.tp = i;
+    if (!S.ready || !bar.offsetWidth) { S.ready = !!bar.offsetWidth; S.p = i; paint(); return; }
     kick();
   }};
   bar.addEventListener("pointerdown", e => {
@@ -3791,7 +3827,6 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
     d = {id:e.pointerId, x0:e.clientX, on:false, i:-1};
     bar.classList.add("dragging", "lz-an");
     ind.style.opacity = 1;
-    S.tl = 1;
     follow(e);
     haptic("light");
     kick();
@@ -3812,9 +3847,8 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
     d = null;
     bar.classList.remove("dragging", "lz-an");
     tabs.forEach(t => t.classList.remove("hov"));
-    S.tl = 0;
     const drin = e.type === "pointerup" && st.i >= 0 && (st.on || bar.contains(document.elementFromPoint(e.clientX, e.clientY)));
-    S.tx = (drin ? st.i : Math.max(0, S.sel)) * cell();
+    S.tp = drin ? st.i : Math.max(0, S.sel);
     if (!drin && S.sel < 0) ind.style.opacity = 0;
     kick();
     if (!st.on) return;
@@ -3827,7 +3861,9 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
   bar.addEventListener("pointercancel", end);
   // Nach dem Ziehen kein zusätzlicher Klick auf den Tab, auf dem die Bewegung begann
   bar.addEventListener("click", e => { if (mute) { e.stopPropagation(); e.preventDefault(); } }, true);
-  addEventListener("resize", () => { if (!bar.offsetWidth) return; S.x = S.tx = Math.max(0, S.sel) * cell(); S.ready = true; paint(); });
+  // Ändert sich die Breite der Leiste (Drehen, Scrollleiste, Textgröße), bleibt die Linse am selben Tab
+  const neu = () => { if (!bar.offsetWidth) return; if (!S.ready) { S.ready = true; S.p = S.tp = Math.max(0, S.sel); } paint(); };
+  if ("ResizeObserver" in window) new ResizeObserver(neu).observe(bar); else addEventListener("resize", neu);
   if (lensPending !== null) lensApi.set(lensPending);
 })();
 /* Runde Glasknöpfe wie in iOS 26: Beim Drücken wächst das Glas federnd und leuchtet dort auf, wo der Finger liegt. */
@@ -4258,11 +4294,12 @@ function vStart() {
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
   const q = Math.min(1, heute / DAY_GOAL);
-  // Wie eine SwiftUI-App: List(.insetGrouped) mit wenigen, klar sortierten Zeilen
-  const pr = modProgress(st.m.id), RC = 2 * Math.PI * 12;
-  const chev = `<span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span>`;
-  const row = (go, c, ic, t, sub, val) => `<button class="prow" data-go="${go}"><span class="pr-ic" style="--c:${tief(c, 3.2)}">${icon(ic, 17)}</span><span class="pr-t"><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}</span>${val ? `<span class="pr-v">${val}</span>` : ""}${chev}</button>`;
+  // Kachel-Stil: große Zahl oben, darunter ein Raster aus farbigen Kacheln unterschiedlicher Größe
+  const pr = modProgress(st.m.id), total = overallProgress();
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
+  // Kachel: Hintergrund und Schriftfarbe so gewählt, dass die Schrift mindestens 4,5:1 erreicht
+  const kachel = (cls, go, tb, tf, ic, label, val, sub) => `<button class="bt ${cls}" data-go="${go}" style="--tb:${tb};--tf:${tf}"><span class="bt-ic" aria-hidden="true">${icon(ic, 19)}</span><span class="bt-l">${label}</span><b class="bt-v">${val}</b>${sub ? `<small class="bt-s">${sub}</small>` : ""}</button>`;
+  const HELL = "#10140f";
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
@@ -4271,18 +4308,37 @@ function vStart() {
     <h1 class="large">Übersicht</h1>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
   </header>
-  ${sec(st.started ? "Weiterlernen" : "Als Nächstes", `<button class="prow ig-weiter" data-go="${st.go}"><span class="pr-ic" style="--c:${tief(st.m.color, 3.2)}">${icon(st.m.icon, 22)}</span><span class="pr-t"><b>${st.m.title}</b><small>${st.unit}</small><span class="ig-pl"><span class="ig-bar" aria-hidden="true"><i style="width:${pr}%;--c:${tief(st.m.color, 3.2)}"></i></span><small>${pr} %</small></span></span><span class="ig-play" style="--c:${tief(st.m.color, 3.2)}" aria-hidden="true">${icon("play", 14)}</span></button>`)}
-  ${sec("Heute", `<div class="prow"><span class="pr-ic pr-r"><svg class="pr-ring" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12"/>${q > 0 ? `<circle class="on" cx="15" cy="15" r="12" stroke-dasharray="${(RC * q).toFixed(1)} ${RC.toFixed(1)}"/>` : ""}</svg></span><span class="pr-t"><b>${heute} von ${DAY_GOAL} Aufgaben</b><small>${goalTxt}</small></span><span class="pr-v ig-fl">${icon("flame", 15)}${streak}</span></div>${row("heute", APPLE.blau, "mix", "Tagesmix starten", "")}`)}
+  <section class="bh-num" aria-label="Lernstand">
+    <small>Lernstand gesamt</small>
+    <b>${total}<span> %</span></b>
+    <p><span class="bh-fl">${icon("flame", 14)}${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</span><span>${nf(S.xp)} XP · Stufe ${lvl}</span></p>
+  </section>
+  <section class="ig-sec" aria-label="Lernen und Üben"><h2 class="ig-h">Lernen und Üben</h2>
+    <div class="bento">
+      <button class="bt bt-big" data-go="${st.go}" style="--tb:linear-gradient(165deg,${tief(st.m.color, 6)},${tief(st.m.color, 11)});--tf:#fff">
+        <span class="bt-ic" aria-hidden="true">${icon(st.m.icon, 24)}</span>
+        <small class="bt-e">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
+        <span class="bt-l">${st.m.title}</span>
+        <b class="bt-v">${pr}<span> %</span></b>
+        <small class="bt-s">${st.unit}</small>
+      </button>
+      ${kachel("", "heute", "#8fe08a", HELL, "karten", "Lernkarten", due, due === 1 ? "Karte fällig" : "Karten fällig")}
+      ${kachel("", "heute", "#4fc979", HELL, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
+      ${kachel("", "themen", tief(APPLE.blau), "#fff", "themen", "Themen", MODS.length, "Alle ansehen")}
+      ${CODE.length ? kachel("", "code", "#ffd84a", "#231c00", "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", "#ffd84a", "#231c00", "trainieren", "Üben", "", "Alle Übungen")}
+      ${kachel("", "trainieren", "#efe5cf", "#2e261a", "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
+    </div>
+  </section>
+  <section class="ig-sec" aria-label="Prüfen"><h2 class="ig-h">Prüfen</h2>
+    <div class="bento">
+      ${kachel("bt-wide", "pruefung-ap1", tief(APPLE.rot), "#fff", "timer", "Probeprüfung", "AP1", "Teil 1, mit Zeit")}
+      ${kachel("", "pruefung-ap2", "#ffad33", "#2a1700", "timer", "Probeprüfung", "AP2", "Teil 2")}
+    </div>
+  </section>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
-  ${sec("Lernen", row("themen", APPLE.blau, "themen", "Alle Themen", `${MODS.length} Themen`, ""))}
-  ${sec("Üben", row("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig", "")
-    + row("trainieren", APPLE.rot, "reset", "Fehler wiederholen", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig", "")
-    + (CODE.length ? row("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`, "") : "")
-    + row("trainieren", APPLE.indigo, "trainieren", "Alle Übungen", "", ""))}
-  ${sec("Prüfen", row("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit", "") + row("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit", ""))}
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
-  // Der Miniplayer erscheint, sobald die Zeile „Weiterlernen“ aus dem Bild gescrollt ist
-  const dact = view.querySelector(".ig-weiter"), acc = view.querySelector(".acc");
+  // Der Miniplayer erscheint, sobald die große Kachel aus dem Bild gescrollt ist
+  const dact = view.querySelector(".bt-big"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
   if (dact && acc && "IntersectionObserver" in window) {
     accObs = new IntersectionObserver(([e]) => {
