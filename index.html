@@ -2534,6 +2534,11 @@ button.ios-card:active{transform:scale(.97)}
 /* Farbschichten im Kachel-Fenster */
 .zf-farbe{position:absolute;inset:0;z-index:4;display:block;pointer-events:none}
 .zf-kachel{background:transparent!important;box-shadow:none!important}
+/* Fenster nur per transform */
+.zfx{position:fixed!important;z-index:28!important;overflow:hidden;transform-origin:0 0;background:var(--bg);pointer-events:none;will-change:transform;contain:paint}
+.zfx > .col,.zf-innen{position:absolute;will-change:transform}
+.zf-dim{position:fixed;inset:0;z-index:27;display:block;background:#000;opacity:0;pointer-events:none}
+.zf-solo{position:fixed!important;z-index:29!important;margin:0!important;transform:none!important;animation:none!important;transition:none!important;background:transparent!important;box-shadow:none!important;pointer-events:none;grid-column:auto!important;grid-row:auto!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3622,75 +3627,96 @@ const zoomRahmen = (e, k) => { const W = innerWidth, H = innerHeight; return `in
 const zoomFeder = (t, dauer) => { const w = 10.5, f = x => 1 - (1 + w * x) * Math.exp(-w * x); return f(t * dauer / 1000) / f(dauer / 1000); };
 const zoomGanz = () => ({left:0, top:0, width:innerWidth, height:innerHeight});
 let zoomVorab = null;
-const ZOOM_D = 560, ZOOM_ENDE_R = 0;
-// Animiert ein Fenster (fester Kasten mit runden Ecken) von Rahmen a nach b; der Inhalt darin wird gleichmäßig
-// mit der Fensterbreite skaliert und oben angelegt, damit nichts gestaucht wird.
-function zoomFensterFlug(box, inhalt, a, b, ra, rb, dauer) {
-  const W = innerWidth, N = 20, aussen = [], innen = [];
+const ZOOM_D = 560;
+// Bahn des Fensters von Rahmen a nach b: Das Fenster ist intern bildschirmgroß und wird nur verschoben und skaliert.
+// Die Seite darin wird senkrecht gegengleich skaliert, damit sie gleichmäßig (mit der Fensterbreite) wächst.
+// Die Ecken werden gegen die ungleiche Skalierung ausgeglichen, damit sie rund bleiben.
+function zoomBahn(a, b, ra, rb, dauer) {
+  const W = innerWidth, H = innerHeight, N = 24, box = [], innen = [], ecken = [];
   for (let i = 0; i <= N; i++) {
     const t = i / N, k = zoomFeder(t, dauer);
     const x = a.left + (b.left - a.left) * k, y = a.top + (b.top - a.top) * k, w = a.width + (b.width - a.width) * k, h = a.height + (b.height - a.height) * k;
-    aussen.push({offset:t, left:x.toFixed(2) + "px", top:y.toFixed(2) + "px", width:w.toFixed(2) + "px", height:h.toFixed(2) + "px", borderRadius:(ra + (rb - ra) * k).toFixed(2) + "px"});
-    innen.push({offset:t, transform:`scale(${(w / W).toFixed(5)})`});
+    const sx = w / W, sy = h / H, r = ra + (rb - ra) * k;
+    box.push({offset:t, transform:`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) scale(${sx.toFixed(5)},${sy.toFixed(5)})`});
+    innen.push({offset:t, transform:`scale(1,${(sx / sy).toFixed(5)})`});
+    ecken.push({offset:t, borderRadius:`${(r / sx).toFixed(2)}px / ${(r / sy).toFixed(2)}px`});
   }
-  const o = {duration:dauer, easing:"linear", fill:"forwards"};
-  const flug = box.animate(aussen, o);
-  inhalt.animate(innen, o);
-  return flug;
+  return {box, innen, ecken};
 }
-// Farbschichten im Fenster: Verlauf (oben Kachelfarbe, unten durchsichtig), volle Kachelfarbe, Inhalt der Kachel
-function zoomFarbschichten(el, farbe) {
-  const verlauf = document.createElement("i"), voll = document.createElement("i"), inhalt = el.cloneNode(true);
+const zoomO = {duration:ZOOM_D, easing:"linear", fill:"forwards"};
+const zoomBlende = (el, kf) => el.animate(kf, zoomO);
+// Farbschichten: Verlauf (oben Kachelfarbe, unten durchsichtig) und volle Kachelfarbe im Fenster, dazu die Schrift der Kachel
+function zoomFarbschichten(tile, farbe, rahmen) {
+  const verlauf = document.createElement("i"), voll = document.createElement("i"), inhalt = tile.cloneNode(true);
   verlauf.className = voll.className = "zf-farbe";
   verlauf.style.background = `linear-gradient(180deg,${farbe} 0%,${farbe} 30%,color-mix(in srgb,${farbe} 55%,transparent) 55%,transparent 88%)`;
   voll.style.background = farbe;
-  inhalt.removeAttribute("data-go"); inhalt.removeAttribute("id");
-  inhalt.className = el.className + " zf-kachel"; inhalt.setAttribute("aria-hidden", "true");
-  return {verlauf, voll, inhalt, alle:[verlauf, voll, inhalt]};
+  inhalt.removeAttribute("data-go"); inhalt.removeAttribute("id"); inhalt.setAttribute("aria-hidden", "true");
+  inhalt.className = tile.className + " zf-solo";
+  Object.assign(inhalt.style, {left:rahmen.left + "px", top:rahmen.top + "px", width:rahmen.width + "px", height:rahmen.height + "px", visibility:"visible"});
+  return {verlauf, voll, inhalt};
 }
-const zoomBlende = (el, kf, dauer) => el.animate(kf, {duration:dauer, easing:"linear", fill:"forwards"});
-// Öffnen: Die neue Seite wandert für die Dauer des Übergangs in ein Fenster, das aus der Kachel wächst
+const zoomBox = el => { el.classList.add("zfx"); Object.assign(el.style, {inset:"auto", left:"0px", top:"0px", right:"auto", bottom:"auto", width:innerWidth + "px", height:innerHeight + "px"}); return el; };
+// Öffnen, Teil 1 (im selben Bild wie das Tippen): Fenster in Kachelfarbe wächst sofort los
+function zoomStart(tile) {
+  const a = tile.getBoundingClientRect(), farbe = getComputedStyle(tile).backgroundColor, bahn = zoomBahn(a, zoomGanz(), ZOOM_R, 0, ZOOM_D);
+  const box = zoomBox(document.createElement("div")), dim = document.createElement("i"), f = zoomFarbschichten(tile, farbe, a);
+  box.setAttribute("aria-hidden", "true");
+  dim.className = "zf-dim";
+  box.append(f.verlauf, f.voll);
+  document.body.append(dim, box, f.inhalt);
+  tile.style.visibility = "hidden";
+  const flug = box.animate(bahn.box, zoomO);
+  box.animate(bahn.ecken, zoomO);
+  zoomBlende(f.inhalt, [{opacity:1}, {opacity:0, offset:.22}, {opacity:0}]);
+  zoomBlende(f.voll, [{opacity:1}, {opacity:1, offset:.1}, {opacity:0, offset:.5, easing:"ease-in-out"}, {opacity:0}]);
+  zoomBlende(f.verlauf, [{opacity:1}, {opacity:1, offset:.3}, {opacity:0, offset:.88, easing:"ease-in-out"}, {opacity:0}]);
+  dim.animate([{opacity:0}, {opacity:.55}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
+  zoomVorab = {box, flug, bahn, dim, inhalt:f.inhalt, tile, weg() { box.remove(); dim.remove(); f.inhalt.remove(); tile.style.visibility = ""; }};
+}
+// Öffnen, Teil 2 (nach dem Aufbau der Seite): Seite in das schon wachsende Fenster setzen, auf derselben Zeitachse
 function zoomIn(z) {
-  const g = ghostEl;
-  if (!g || !z.el) return;
-  const vb = view.getBoundingClientRect(), box = document.createElement("div"), innen = document.createElement("div"), f = zoomFarbschichten(z.el, z.bg);
-  box.className = "zf"; box.setAttribute("aria-hidden", "true");
-  innen.className = "col";
+  const v = zoomVorab; zoomVorab = null;
+  if (!v) return;
+  const g = ghostEl, vb = view.getBoundingClientRect(), innen = document.createElement("div");
+  innen.className = "col zf-innen";
   innen.style.cssText = `left:${vb.left}px;top:${vb.top}px;width:${vb.width}px;transform-origin:${-vb.left}px ${-vb.top}px`;
   innen.append(...view.childNodes);
-  box.append(innen, ...f.alle);
-  document.body.append(box);
-  const nb = [...document.querySelectorAll("#navbar .nb-left, #navbar .nb-right")];
-  nb.forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.55}, {opacity:1}], {duration:ZOOM_D + 120, easing:"ease-out"}));
-  const flug = zoomFensterFlug(box, innen, z.rect, zoomGanz(), ZOOM_R, ZOOM_ENDE_R, ZOOM_D);
-  // Schrift der Kachel geht zuerst, dann die volle Farbe, zuletzt der Verlauf oben in die Kopfkarte
-  zoomBlende(f.inhalt, [{opacity:1}, {opacity:0, offset:.28}, {opacity:0}], ZOOM_D);
-  zoomBlende(f.voll, [{opacity:1}, {opacity:1, offset:.08}, {opacity:0, offset:.5, easing:"ease-in-out"}, {opacity:0}], ZOOM_D);
-  zoomBlende(f.verlauf, [{opacity:1}, {opacity:1, offset:.3}, {opacity:0, offset:.88, easing:"ease-in-out"}, {opacity:0}], ZOOM_D);
-  g.animate([{opacity:1, transform:"none"}, {opacity:.3, transform:"scale(.94)"}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
-  flug.onfinish = () => {
+  v.box.prepend(innen);
+  const ia = innen.animate(v.bahn.innen, zoomO);
+  ia.currentTime = v.flug.currentTime || 0;
+  document.querySelectorAll("#navbar .nb-left, #navbar .nb-right, #navbar .nav-title").forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.5}, {opacity:1}], {duration:ZOOM_D, easing:"ease-out"}));
+  let fertig = false;
+  const ende = () => {
+    if (fertig) return; fertig = true;
     view.append(...innen.childNodes);
-    box.remove();
-    if (g.isConnected) g.remove();
+    v.box.remove(); v.dim.remove(); v.inhalt.remove();
+    if (g && g.isConnected) g.remove();
     if (ghostEl === g) ghostEl = null;
   };
+  if (v.flug.playState === "finished") ende(); else v.flug.onfinish = ende;
 }
-// Zurück: Die alte Seite schrumpft als Fenster in ihre Kachel; die Farbe fließt von oben nach unten zurück
+// Zurück: Die alte Seite (liegt schon als eigene Ebene vorn) schrumpft als Fenster in ihre Kachel, nur per transform
 function zoomOut(z) {
   if (z.y) window.scrollTo(0, z.y);
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
   if (!g || !t || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
-  const innen = g.firstElementChild, f = zoomFarbschichten(t, getComputedStyle(t).backgroundColor), r0 = innen.getBoundingClientRect();
-  g.classList.add("zf");
+  const farbe = getComputedStyle(t).backgroundColor, bahn = zoomBahn(zoomGanz(), e, 0, ZOOM_R, ZOOM_D), innen = g.firstElementChild, r0 = innen.getBoundingClientRect();
+  const dim = document.createElement("i"), f = zoomFarbschichten(t, farbe, e);
+  zoomBox(g);
   innen.style.transformOrigin = `${-r0.left}px ${-r0.top}px`;
-  g.append(...f.alle);
+  dim.className = "zf-dim";
+  g.append(f.verlauf, f.voll);
+  document.body.append(dim, f.inhalt);
   t.style.visibility = "hidden";
-  const flug = zoomFensterFlug(g, innen, zoomGanz(), e, ZOOM_ENDE_R, ZOOM_R, ZOOM_D);
-  zoomBlende(f.verlauf, [{opacity:0}, {opacity:0, offset:.12}, {opacity:1, offset:.62, easing:"ease-in-out"}, {opacity:1}], ZOOM_D);
-  zoomBlende(f.voll, [{opacity:0}, {opacity:0, offset:.42}, {opacity:1, offset:.86, easing:"ease-in-out"}, {opacity:1}], ZOOM_D);
-  zoomBlende(f.inhalt, [{opacity:0}, {opacity:0, offset:.68}, {opacity:1}], ZOOM_D);
-  view.animate([{opacity:.3, transform:"scale(.94)"}, {opacity:1, transform:"none"}], {duration:ZOOM_D, easing:ZOOM_EASE});
-  flug.onfinish = () => { t.style.visibility = ""; if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
+  const flug = g.animate(bahn.box, zoomO);
+  g.animate(bahn.ecken, zoomO);
+  innen.animate(bahn.innen, zoomO);
+  zoomBlende(f.verlauf, [{opacity:0}, {opacity:0, offset:.12}, {opacity:1, offset:.62, easing:"ease-in-out"}, {opacity:1}]);
+  zoomBlende(f.voll, [{opacity:0}, {opacity:0, offset:.42}, {opacity:1, offset:.86, easing:"ease-in-out"}, {opacity:1}]);
+  zoomBlende(f.inhalt, [{opacity:0}, {opacity:0, offset:.7}, {opacity:1}]);
+  dim.animate([{opacity:.55}, {opacity:0}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
+  flug.onfinish = () => { t.style.visibility = ""; f.inhalt.remove(); dim.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
 }
 function zoomSchrumpf(z) {
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
@@ -3900,7 +3926,7 @@ function render() {
     if (morph) (morph.dir === "in" ? morphIn : morphOut)(morph);
     if (zoom) (zoom.dir === "in" ? zoomIn : zoomOut)(zoom);
   }
-  if (zoomVorab) { zoomVorab.karte.remove(); zoomVorab = null; document.querySelectorAll(".bt").forEach(b => { b.style.visibility = ""; }); }
+  if (zoomVorab) { zoomVorab.weg(); zoomVorab = null; }
   {
   }
   if (slideNow) iosSlide(dir);
@@ -4265,6 +4291,7 @@ document.addEventListener("click", e => {
   if (ez) { e.preventDefault(); setEasy(ez.dataset.easySet === "easy"); return; }
   const g = e.target.closest("[data-go]");
   if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches(".bt") ? g : null;
+    if (zoomSrc && !reduced()) { if (zoomVorab) return; zoomStart(zoomSrc); const ziel = g.dataset.go; requestAnimationFrame(() => requestAnimationFrame(() => go(ziel))); return; }
     go(g.dataset.go); return; }
   const a = e.target.closest("[data-act]");
   if (a && actHandler && !a.disabled) actHandler(a.dataset.act, a, e);
