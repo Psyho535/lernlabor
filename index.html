@@ -2578,6 +2578,46 @@ button.ios-card:active{transform:scale(.97)}
 .first-open .karten > :nth-child(n+3){animation-delay:calc(var(--intro,0s) + .26s)}
 :root[data-mono] .karte{--cb:#48484a!important;--on:#fff!important}
 @media (max-width:350px){.k-titel{font-size:27px}.karte.halb .k-titel{font-size:25px}}
+/* ===== Ruhigere Farben: getönte Flächen, Farbe nur als Akzent ===== */
+.karte,.title-block.farbkopf,.page-hero{--ton:color-mix(in srgb,var(--c) 9%,#fff);--akz:var(--akt,var(--c));--rand:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.karte,.title-block.farbkopf,.page-hero){--ton:color-mix(in srgb,var(--c) 15%,#1c1c1e);--akz:color-mix(in srgb,var(--c) 70%,#fff);--rand:rgba(255,255,255,.06)}}
+:root[data-theme="dark"] :is(.karte,.title-block.farbkopf,.page-hero){--ton:color-mix(in srgb,var(--c) 15%,#1c1c1e);--akz:color-mix(in srgb,var(--c) 70%,#fff);--rand:rgba(255,255,255,.06)}
+/* Karten */
+.karte{background:var(--ton)!important;color:var(--label)!important;box-shadow:inset 0 0 0 .5px var(--rand),0 14px 32px -26px rgba(0,0,0,.55)}
+.karte::before{display:none}
+.karte.gross{min-height:232px}
+.karte.gross.mittel{min-height:216px}
+.karte.halb{min-height:156px}
+.k-kopf{padding-right:58px}
+.k-eye{color:var(--akz)}
+.k-titel{color:var(--label);font-size:30px}
+.karte.halb .k-titel{font-size:28px;margin-top:26px;overflow-wrap:normal;hyphens:manual}
+.karte.halb .k-kopf{padding-right:0}
+.karte.halb .k-art{top:14px;right:14px;width:38px;height:38px;border-radius:11px}
+.karte.halb .k-art .ic{width:21px;height:21px}
+.k-sub{max-width:none;color:var(--label-2)}
+.k-art,.karte.halb .k-art,.karte.gross.mittel .k-art{top:18px;right:18px;bottom:auto;z-index:0;width:44px;height:44px;border-radius:13px;transform:none;background:color-mix(in srgb,var(--c) 18%,transparent);box-shadow:none;color:var(--akz)}
+.k-art .ic,.karte.halb .k-art .ic,.karte.gross.mittel .k-art .ic{width:24px;height:24px}
+.karte.halb .k-fuss{max-width:none}
+.k-wert{color:var(--label-2)}
+.k-wert .ic{color:var(--akz)}
+.k-bar{background:color-mix(in srgb,var(--label) 12%,transparent)}
+.k-bar i{background:var(--akz)}
+.k-pill{background:var(--cb);color:var(--on)}
+/* Titel-Farbkarten (Themen, Code, Trainieren) und Kopfkarten der Seiten im selben Ton */
+.title-block.farbkopf{background:var(--ton)!important;color:var(--label)!important}
+.title-block.farbkopf .kicker{color:var(--akz)!important}
+.title-block.farbkopf .large{color:var(--label)!important}
+.title-block.farbkopf .lede{color:var(--label-2)!important}
+.ph-bg{background:var(--ton)!important}
+.page-hero,.page-hero .large,.page-hero .ph-en{color:var(--label)!important}
+.page-hero .ph-k,.page-hero .ph-ic{color:var(--akz)!important}
+.page-hero .ph-l,.page-hero .exam-note{color:var(--label-2)!important}
+.page-hero .ph-bar .track{background:color-mix(in srgb,var(--label) 12%,transparent)!important}
+.page-hero .ph-bar i{background:var(--akz)!important}
+.page-hero .btn-fill{background:var(--cb)!important;color:var(--on)!important}
+.page-hero .btn-tint,.page-hero .btn.done{box-shadow:inset 0 0 0 1.5px var(--akz)!important;color:var(--akz)!important}
+.page-hero .lang-hero{color:var(--akz)!important;background:color-mix(in srgb,var(--c) 18%,transparent)!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3436,7 +3476,7 @@ function paint(html, {anim = true} = {}) {
   if (anim) { animateRings(); revealBelow(); }
   observeTitle();
 }
-const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
+const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)};--akt:${tief(c, 5)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
 const heroBar = v => `<div class="ph-bar"><span class="track"><i style="width:${v}%"></i></span><span data-count="${v}" data-suffix=" %">${v} %</span></div>`;
 const EASE_SOFT = "cubic-bezier(.16,1,.3,1)";
 const EINFACH = window.LERN_EINFACH || {units:{}, layers:{}, pages:{}, intro:{}};
@@ -3973,7 +4013,7 @@ function render() {
   // Farbschleier der Kachel oben auf der Zielseite (nicht, wo die Seite schon eine farbige Kopfkarte hat)
   document.documentElement.style.setProperty("--nbh", $("#navbar").offsetHeight + "px");
   const kopf = KACHEL[r.view] && view.querySelector(":scope > .title-block");
-  if (kopf) { kopf.classList.add("farbkopf"); kopf.setAttribute("style", onColor(KACHEL[r.view])); }
+  if (kopf) { kopf.classList.add("farbkopf"); kopf.setAttribute("style", onColor(KACHEL[r.view]) + ";--akt:" + tief(KACHEL[r.view], 5)); }
   view.classList.remove("getoent");
   if (moving && !reduced() && !silentNav) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
@@ -4616,7 +4656,7 @@ function vStart() {
   const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m);
   const zielFarbe = /^schicht[1-7]$/.test(st.go) ? HUE[+st.go.slice(7)] : st.m.color;
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
-  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
+  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)};--akt:${tief(farbe, 5)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
   const pill = t => `<span class="k-pill">${t}</span>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
