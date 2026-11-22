@@ -2140,6 +2140,32 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .wc-o em{display:none}
 /* Zubehörleiste: dichteres Material, damit sie über bunten Karten ruhig bleibt */
 .acc{background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%)}
+/* ===== Pro-Abo und Rechtliches ===== */
+.pro-head{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.pro-badge{display:inline-grid;place-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--label);color:var(--bg);font:800 13px/1 var(--f-display);letter-spacing:.08em}
+.pro-plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pro-plan{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:118px;padding:16px;border-radius:22px;border:2px solid var(--sep);background:var(--surface);color:var(--label);text-align:left;cursor:pointer;min-width:0;transition:border-color .2s,transform .3s var(--ease-spring)}
+.pro-plan[aria-checked="true"]{border-color:var(--label)}
+.pro-plan:active{transform:scale(.97)}
+.pp-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.pp-top b{font-size:16px}
+.pp-tag{font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--fill);color:var(--label)}
+.pp-price{font:700 22px/1.15 var(--f-display);letter-spacing:-.02em}
+.pp-price small{font-size:14px;font-weight:500;color:var(--label-2)}
+.pp-note{font-size:13px;color:var(--label-2)}
+.pro-cta{margin-top:4px}
+.pro-fine{font-size:12.5px;line-height:1.5;color:var(--label-2);padding:0 4px}
+.pro-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 8px}
+.pro-links .btn{min-height:44px;font-size:14px;font-weight:500}
+.pro-demo{font-size:13px;line-height:1.45;color:var(--label);background:var(--fill);border-radius:14px;padding:12px 14px}
+.legal-draft{font-size:14px;line-height:1.45;color:var(--label);background:var(--fill);border-radius:14px;padding:12px 14px}
+.lb.legal p + p{margin-top:8px}
+.src-link-inline{display:inline-flex;align-items:center;min-height:44px;color:var(--label);font-weight:600;text-decoration:underline}
+/* App-Store-Mindestmaße: Tippflächen ab 44 Punkten, Hauptknopf mit mindestens 4,5:1 Kontrast */
+.back{height:44px}
+.nb-round{width:44px;height:44px}
+.hsee{min-height:44px;min-width:44px;justify-content:center}
+.btn-fill,.hw-ok{background:color-mix(in srgb,var(--accent) 76%,#000)!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3096,7 +3122,8 @@ TITLE.schichten = "Schichten";
 MODS.forEach(m => { TITLE["modul-" + m.id] = m.title; });
 const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"},
   schichten:{parent:"modul-osi", title:"Schichten", depth:3}, kapselung:{parent:"modul-osi", title:"Kapselung", depth:3}, fakten:{parent:"modul-osi", title:"Fakten", depth:3}, quiz:{parent:"modul-osi", title:"Quiz", depth:3}, karten:{parent:"modul-osi", title:"Lernkarten", depth:3}, ueben:{parent:"modul-osi", title:"Übungen", depth:3},
-  "pruefung-ap1":{parent:"trainieren", title:"Probeprüfung AP1"}, "pruefung-ap2":{parent:"trainieren", title:"Probeprüfung AP2"}};
+  "pruefung-ap1":{parent:"trainieren", title:"Probeprüfung AP1"}, "pruefung-ap2":{parent:"trainieren", title:"Probeprüfung AP2"},
+  pro:{parent:"einstellungen", title:"Pro", depth:3}, datenschutz:{parent:"einstellungen", title:"Datenschutz", depth:3}, nutzungsbedingungen:{parent:"einstellungen", title:"Nutzungsbedingungen", depth:3}, impressum:{parent:"einstellungen", title:"Impressum", depth:3}};
 $("#sideNav").innerHTML = TABS.map(([k, label]) => `<button class="side-item" data-go="${k}" data-nav="${k}">${icon(k)}<span>${label}</span></button>`).join("") + `<button class="side-item" data-go="einstellungen" data-nav="einstellungen">${icon("gear")}<span>Einstellungen</span></button>`;
 $("#tabbar").insertAdjacentHTML("beforeend", TABS.map(([k, , short]) => `<button class="tab" data-go="${k}" data-nav="${k}">${icon(k, 23)}<span>${short}</span></button>`).join(""));
 
@@ -3196,6 +3223,124 @@ function morphOut(m) {
 function animateBars() {
   view.querySelectorAll(".ph-bar i, .mbar-line .track i, .mini .bar i").forEach((el, i) => el.animate([{transform:"scaleX(0)"}, {transform:"none"}], {duration:950, delay:180 + Math.min(i, 8) * 34, easing:EASE_SOFT, fill:"backwards"}));
 }
+/* ---------------- Pro-Abo und Rechtliches ----------------
+   Web (GitHub Pages): alles frei, kein Abo.
+   iPhone-App: Üben ist Pro. Gekauft wird ausschließlich über Apples In-App-Kauf. Die native Hülle stellt dafür
+   window.LernStore bereit: products() -> [{id, price, period, trialDays, value}], buy(id) -> true/false,
+   restore() -> true/false, isPro() -> true/false. Ohne diese Schnittstelle gibt es keinen Kauf.
+   Vorschau im Browser: ?shop=vorschau (aus mit ?shop=aus). Dort sind die Preise Beispiele und Kaufen ist gesperrt. */
+const PRO_VIEWS = new Set(["quiz", "karten", "rechnen", "ueben", "heute", "pruefung-ap1", "pruefung-ap2", "cterm", "ctasks", "ctask"]);
+const PRO_PLANS = [
+  {id:"pro_jahr", name:"Jährlich", price:"29,99 €", value:29.99, per:"pro Jahr", months:12, trialDays:7},
+  {id:"pro_monat", name:"Monatlich", price:"4,99 €", value:4.99, per:"pro Monat", months:1, trialDays:7}
+];
+const STORE = (() => {
+  let preview = false;
+  try {
+    const q = new URLSearchParams(location.search).get("shop");
+    if (q === "vorschau") localStorage.setItem("itlernlabor.shop", "vorschau");
+    if (q === "aus") localStorage.removeItem("itlernlabor.shop");
+    preview = localStorage.getItem("itlernlabor.shop") === "vorschau";
+  } catch (e) {}
+  const nat = window.LernStore && typeof window.LernStore.buy === "function" ? window.LernStore : null;
+  return {mode:nat ? "app" : preview ? "vorschau" : "web", nat};
+})();
+let proActive = false, proPlan = "pro_jahr", proPlans = STORE.mode === "app" ? null : PRO_PLANS;
+try { proActive = STORE.mode === "app" && localStorage.getItem("itlernlabor.pro") === "1"; } catch (e) {}
+function setPro(v) { proActive = !!v; try { localStorage.setItem("itlernlabor.pro", proActive ? "1" : "0"); } catch (e) {} }
+const isPro = () => STORE.mode === "web" || proActive;
+const needsPro = r => !isPro() && PRO_VIEWS.has(r.view);
+if (STORE.nat) {
+  // Abo-Stand und Preise kommen von Apple; der gespeicherte Stand gilt nur, bis Apple geantwortet hat
+  Promise.resolve().then(() => STORE.nat.isPro && STORE.nat.isPro()).then(v => { if (typeof v === "boolean" && v !== proActive) { setPro(v); render(); } }).catch(() => {});
+  Promise.resolve().then(() => STORE.nat.products && STORE.nat.products()).then(list => {
+    if (!Array.isArray(list) || !list.length) return;
+    proPlans = PRO_PLANS.map(pl => { const x = list.find(y => y.id === pl.id); return x ? {...pl, price:x.price, value:x.value, trialDays:x.trialDays || 0} : null; }).filter(Boolean);
+    if (curRoute && (curRoute.view === "pro" || needsPro(curRoute))) render();
+  }).catch(() => {});
+}
+const PRO_PERKS = [
+  ["quiz", "Quiz und Lernkarten", "Zu allen Themen, mit Erklärung nach jeder Antwort"],
+  ["timer", "Probeprüfungen AP1 und AP2", "Echte Prüfungsbedingungen mit Zeitlimit"],
+  ["mix", "Tagesmix", "Übt genau das, was du noch nicht sicher kannst"],
+  ["terminal", "Programmieren mit Terminal", "Code ausführen und Aufgaben mit automatischer Prüfung"],
+  ["calc", "Rechentraining", "Subnetting und mehr mit immer neuen Aufgaben"]
+];
+function vPro(target) {
+  const plans = proPlans, demo = STORE.mode === "vorschau", web = STORE.mode === "web";
+  if (target) setNav({title:"Pro"});
+  actHandler = async (act, el) => {
+    if (act === "plan") { proPlan = el.dataset.id; haptic("select"); vPro(target); return; }
+    if (act === "buy" || act === "restore") {
+      if (STORE.mode !== "app") { island(act === "buy" ? "Kaufen geht nur in der iPhone-App" : "Wiederherstellen geht nur in der iPhone-App"); return; }
+      el.disabled = true;
+      try {
+        const ok = act === "buy" ? await STORE.nat.buy(proPlan) : await STORE.nat.restore();
+        if (ok) { setPro(true); haptic("success"); island(act === "buy" ? "Pro ist freigeschaltet" : "Pro wiederhergestellt"); render(); return; }
+        if (act === "restore") island("Kein aktives Abo gefunden");
+      } catch (e) { island(act === "buy" ? "Kauf nicht abgeschlossen" : "Wiederherstellen fehlgeschlagen"); }
+      el.disabled = false;
+    }
+  };
+  const sel = plans && (plans.find(pl => pl.id === proPlan) || plans[0]);
+  const monat = plans && plans.find(pl => pl.months === 1), jahr = plans && plans.find(pl => pl.months === 12);
+  const spar = monat && jahr && monat.value && jahr.value ? Math.round((1 - jahr.value / (monat.value * 12)) * 100) : 0;
+  const planBtn = pl => `<button class="pro-plan" role="radio" aria-checked="${pl === sel}" data-act="plan" data-id="${pl.id}">
+      <span class="pp-top"><b>${pl.name}</b>${pl.months === 12 && spar >= 5 ? `<span class="pp-tag">${spar} % günstiger</span>` : ""}</span>
+      <span class="pp-price">${pl.price}<small> ${pl.per}</small></span>
+      ${pl.months === 12 && pl.value ? `<span class="pp-note">entspricht ${(pl.value / 12).toFixed(2).replace(".", ",")} € im Monat</span>` : ""}
+    </button>`;
+  const trial = sel && sel.trialDays ? sel.trialDays : 0;
+  paint(`
+  <header class="pro-head">
+    <span class="pro-badge">PRO</span>
+    <h1 class="large">IT-Lernlabor Pro</h1>
+    <p class="lede">${target ? "Diese Übung gehört zu Pro. " : ""}Lernseiten bleiben kostenlos. Mit Pro übst du alles bis zur Prüfung.</p>
+  </header>
+  <div class="group">${PRO_PERKS.map(([ic, t, d]) => `<div class="cell static">${si(ic, "#0a84ff")}<span class="cell-main"><span class="cell-title">${t}</span><span class="cell-sub">${d}</span></span></div>`).join("")}</div>
+  ${web ? `<p class="group-f">In der Web-Version ist alles kostenlos. Das Abo gibt es nur in der iPhone-App.</p>` : plans ? `
+  <div class="pro-plans" role="radiogroup" aria-label="Abo wählen">${plans.map(planBtn).join("")}</div>
+  <button class="btn btn-fill btn-lg pro-cta" data-act="buy">${trial ? `${trial} Tage gratis testen` : "Abonnieren"}</button>
+  <p class="pro-fine">${trial ? `Die ersten ${trial} Tage sind kostenlos. Danach ` : ""}${sel.price} ${sel.per}, abgerechnet über deine Apple-ID. Das Abo verlängert sich automatisch, wenn du es nicht mindestens 24 Stunden vor Ende des laufenden Zeitraums kündigst. Kündigen und verwalten kannst du es jederzeit in den Einstellungen deiner Apple-ID.</p>` : `<p class="group-f">Preise werden vom App Store geladen …</p>`}
+  <div class="pro-links">
+    <button class="btn btn-plain" data-act="restore">Käufe wiederherstellen</button>
+    <button class="btn btn-plain" data-go="nutzungsbedingungen">Nutzungsbedingungen</button>
+    <button class="btn btn-plain" data-go="datenschutz">Datenschutz</button>
+  </div>
+  ${demo ? `<p class="pro-demo">Vorschau: Die Preise sind Beispiele. Kaufen geht erst in der iPhone-App.</p>` : ""}`);
+}
+/* Rechtstexte: Entwürfe mit Platzhaltern. Vor der Veröffentlichung ausfüllen und rechtlich prüfen lassen. */
+const LEGAL_DRAFT = `<p class="legal-draft">Entwurf: Die Angaben in eckigen Klammern fehlen noch. Vor der Veröffentlichung ausfüllen und rechtlich prüfen lassen.</p>`;
+const legalPage = (title, blocks) => { paint(`${titleBlock("Rechtliches", title, "")}${LEGAL_DRAFT}${blocks.map(([h, html]) => `<section class="lb legal"><h2>${h}</h2>${html}</section>`).join("")}`); };
+function vDatenschutz() {
+  legalPage("Datenschutz", [
+    ["Verantwortlich", "<p>[Vor- und Nachname]<br>[Straße und Hausnummer]<br>[PLZ und Ort]<br>E-Mail: [E-Mail-Adresse]</p>"],
+    ["Kurz gesagt", "<p>Die App braucht kein Konto, zeigt keine Werbung und nutzt keine Analyse- oder Tracking-Werkzeuge. Dein Lernstand und deine Einstellungen werden nur auf deinem Gerät gespeichert.</p>"],
+    ["Daten auf deinem Gerät", "<p>Lernfortschritt, Einstellungen und der Pro-Status liegen im lokalen Speicher der App auf deinem Gerät. Sie werden nicht an uns übertragen. Mit „Fortschritt exportieren“ erzeugst du eine Datei, die du selbst speicherst. Löschst du die App oder setzt du den Fortschritt zurück, sind die Daten weg.</p>"],
+    ["Verbindungen zu anderen Diensten", "<p>Für einige Funktionen lädt die App Dateien von fremden Servern. Dabei wird technisch bedingt deine IP-Adresse an den jeweiligen Anbieter übertragen:</p><ul class=\"llist\"><li>Schriftarten von Google Fonts (Google Ireland Limited) beim Start der App</li><li>Python-Umgebung Pyodide von jsDelivr (cdn.jsdelivr.net), wenn du das Python-Terminal zum ersten Mal startest</li><li>SQL-Umgebung sql.js von cdnjs (Cloudflare), wenn du SQL zum ersten Mal startest</li><li>Die Web-Version liegt bei GitHub Pages (GitHub, Inc.), das beim Aufruf Server-Protokolle führt</li></ul><p>Quellenlinks in den Lernseiten öffnen fremde Websites. Für diese gelten deren Datenschutzerklärungen.</p>"],
+    ["Käufe in der iPhone-App", "<p>Das Pro-Abo kaufst und verwaltest du über deine Apple-ID. Die Zahlung wickelt Apple ab. Wir erhalten dabei keine Zahlungsdaten, sondern nur die Information, ob ein Abo aktiv ist.</p>"],
+    ["Deine Rechte", "<p>Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung sowie auf Widerspruch und Datenübertragbarkeit. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren.</p>"],
+    ["Stand", "<p>[Monat Jahr]</p>"]
+  ]);
+}
+function vNutzung() {
+  legalPage("Nutzungsbedingungen", [
+    ["Anbieter", "<p>[Vor- und Nachname], [Anschrift], E-Mail: [E-Mail-Adresse]</p>"],
+    ["Inhalte", "<p>Die App hilft beim Lernen für die Ausbildung Fachinformatik Systemintegration. Die Inhalte sind sorgfältig erstellt und mit Quellen belegt. Eine Garantie für Vollständigkeit, Richtigkeit oder das Bestehen einer Prüfung gibt es nicht.</p>"],
+    ["Pro-Abo", "<p>Pro schaltet die Übungsfunktionen frei. Das Abo läuft monatlich oder jährlich und verlängert sich automatisch, wenn es nicht mindestens 24 Stunden vor Ende des laufenden Zeitraums gekündigt wird. Abrechnung und Kündigung laufen über deine Apple-ID. Eine kostenlose Testphase endet mit dem Start des bezahlten Zeitraums.</p>"],
+    ["Lizenzvertrag von Apple", "<p>Für Apps aus dem App Store gilt zusätzlich der Standard-Lizenzvertrag von Apple (Licensed Application End User License Agreement).</p><p><a class=\"src-link-inline\" href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\" target=\"_blank\" rel=\"noopener noreferrer\">Apples Standard-Lizenzvertrag öffnen</a></p>"],
+    ["Urheberrecht", "<p>Texte, Aufgaben, Code und Design der App sind urheberrechtlich geschützt. Kopieren und Weitergeben ist ohne Erlaubnis nicht gestattet.</p>"],
+    ["Stand", "<p>[Monat Jahr]</p>"]
+  ]);
+}
+function vImpressum() {
+  legalPage("Impressum", [
+    ["Angaben nach § 5 Digitale-Dienste-Gesetz", "<p>[Vor- und Nachname]<br>[Straße und Hausnummer]<br>[PLZ und Ort]</p>"],
+    ["Kontakt", "<p>E-Mail: [E-Mail-Adresse]<br>Telefon: [Telefonnummer]</p>"],
+    ["Umsatzsteuer", "<p>[Umsatzsteuer-Identifikationsnummer, falls vorhanden]</p>"]
+  ]);
+}
+const PRO_PAGES = {pro:() => vPro(null), datenschutz:vDatenschutz, nutzungsbedingungen:vNutzung, impressum:vImpressum};
 function render() {
   stopTimers();
   destroyIdes();
@@ -3252,7 +3397,7 @@ function render() {
       enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
     }
   }
-  ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view]();
+  (needsPro(r) ? () => vPro(r.key) : PRO_PAGES[r.view] || ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view])();
   window.scrollTo(0, 0);
   if (moving && !reduced() && !silentNav) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
@@ -3265,7 +3410,7 @@ function render() {
   updateChrome();
 }
 /* Seiten, die sich jederzeit ohne Nebenwirkung neu zeichnen lassen */
-const passiveFn = r => ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), ctasks:() => vCodeTasks(r.lang), modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view];
+const passiveFn = r => needsPro(r) ? () => vPro(r.key) : ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), ctasks:() => vCodeTasks(r.lang), modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), schichten:vSchichten, schicht:() => vSchicht(r.n), trainieren:vTrainieren, fakten:vFakten})[r.view];
 function refreshPassive() {
   const r = parseHash();
   if (["start", "themen", "modul", "schichten", "schicht", "trainieren", "fakten", "code", "clang", "ctasks"].includes(r.view)) {
@@ -4499,6 +4644,11 @@ function vSettings() {
     `<button class="cell sc" data-act="export">${si("upload", "#34c759")}<span class="cell-main"><span class="cell-title">Fortschritt exportieren</span></span></button>` +
     `<button class="cell sc" data-act="import">${si("download", "#ff9500")}<span class="cell-main"><span class="cell-title">Fortschritt importieren</span></span></button>`,
     "Die Einstellungen gelten nur auf diesem Gerät. Mit dem Export nimmst du deinen Lernstand auf ein anderes Gerät mit.")}
+  ${STORE.mode !== "web" ? setSec("IT-Lernlabor Pro", `<button class="cell sc" data-go="pro">${si("spark", "#ff9500")}<span class="cell-main"><span class="cell-title">Pro</span></span><span class="sv">${isPro() ? "Aktiv" : "Nicht aktiv"}</span>${icon("right", 16, "chev")}</button>`, "Lernseiten sind kostenlos. Pro schaltet Quiz, Lernkarten, Probeprüfungen, Tagesmix, Rechentraining und Programmieren frei.") : ""}
+  ${STORE.mode === "web" ? "" : setSec("Rechtliches",
+    `<button class="cell sc" data-go="datenschutz">${si("lock", "#34c759")}<span class="cell-main"><span class="cell-title">Datenschutz</span></span>${icon("right", 16, "chev")}</button>` +
+    `<button class="cell sc" data-go="nutzungsbedingungen">${si("book", "#0a84ff")}<span class="cell-main"><span class="cell-title">Nutzungsbedingungen</span></span>${icon("right", 16, "chev")}</button>` +
+    `<button class="cell sc" data-go="impressum">${si("id", "#8e8e93")}<span class="cell-main"><span class="cell-title">Impressum</span></span>${icon("right", 16, "chev")}</button>`)}
   ${setSec("Über diese App",
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Themen</span></span><span class="sv">${MODS.length}</span></div>` +
     `<div class="cell static sc plain"><span class="cell-main"><span class="cell-title">Lernkarten</span></span><span class="sv">${ITEMS.filter(it => it.k === "card").length}</span></div>` +
