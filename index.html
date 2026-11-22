@@ -3624,10 +3624,20 @@ function zoomPlan(r, from, dir) {
 // Lochrahmen zwischen ganzem Bildschirm (k = 0) und Kachel (k = 1) für den Rückweg
 const zoomRahmen = (e, k) => { const W = innerWidth, H = innerHeight; return `inset(${(e.top * k).toFixed(1)}px ${((W - e.right) * k).toFixed(1)}px ${((H - e.bottom) * k).toFixed(1)}px ${(e.left * k).toFixed(1)}px round ${(ZOOM_R * k).toFixed(1)}px)`; };
 // Feder ohne Nachschwingen (wie SwiftUI .smooth), auf 0 bis 1 normiert
-const zoomFeder = (t, dauer) => { const w = 10.5, f = x => 1 - (1 + w * x) * Math.exp(-w * x); return f(t * dauer / 1000) / f(dauer / 1000); };
+// Feder wie SwiftUI .spring(duration:bounce:): Steifigkeit (2π/d)², Dämpfung 4π(1−bounce)/d, Masse 1, Start ohne Schwung
+function swiftFeder(d, bounce) {
+  const w0 = 2 * Math.PI / d, z = 1 - bounce;
+  if (z >= 1) return t => 1 - (1 + w0 * t) * Math.exp(-w0 * t);
+  const wd = w0 * Math.sqrt(1 - z * z);
+  return t => 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + z * w0 / wd * Math.sin(wd * t));
+}
+// Zoom wie .navigationTransition(.zoom): .spring(duration: 0.5, bounce: 0.12); die Kurve ist nach 0,62 s zur Ruhe gekommen
+const ZOOM_FEDER = swiftFeder(.5, .12);
+const zoomFeder = (t, dauer) => t >= 1 ? 1 : ZOOM_FEDER(t * dauer / 1000);
+let zoomLaeuft = null;
 const zoomGanz = () => ({left:0, top:0, width:innerWidth, height:innerHeight});
 let zoomVorab = null;
-const ZOOM_D = 560;
+const ZOOM_D = 620;
 // Bahn des Fensters von Rahmen a nach b: Das Fenster ist intern bildschirmgroß und wird nur verschoben und skaliert.
 // Die Seite darin wird senkrecht gegengleich skaliert, damit sie gleichmäßig (mit der Fensterbreite) wächst.
 // Die Ecken werden gegen die ungleiche Skalierung ausgeglichen, damit sie rund bleiben.
@@ -3689,11 +3699,13 @@ function zoomIn(z) {
   let fertig = false;
   const ende = () => {
     if (fertig) return; fertig = true;
+    if (zoomLaeuft === ende) zoomLaeuft = null;
     view.append(...innen.childNodes);
     v.box.remove(); v.dim.remove(); v.inhalt.remove();
     if (g && g.isConnected) g.remove();
     if (ghostEl === g) ghostEl = null;
   };
+  zoomLaeuft = ende;
   if (v.flug.playState === "finished") ende(); else v.flug.onfinish = ende;
 }
 // Zurück: Die alte Seite (liegt schon als eigene Ebene vorn) schrumpft als Fenster in ihre Kachel, nur per transform
@@ -3716,7 +3728,9 @@ function zoomOut(z) {
   zoomBlende(f.voll, [{opacity:0}, {opacity:0, offset:.42}, {opacity:1, offset:.86, easing:"ease-in-out"}, {opacity:1}]);
   zoomBlende(f.inhalt, [{opacity:0}, {opacity:0, offset:.7}, {opacity:1}]);
   dim.animate([{opacity:.55}, {opacity:0}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
-  flug.onfinish = () => { t.style.visibility = ""; f.inhalt.remove(); dim.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
+  const fertig = () => { if (zoomLaeuft === fertig) zoomLaeuft = null; flug.onfinish = null; t.style.visibility = ""; f.inhalt.remove(); dim.remove(); if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
+  zoomLaeuft = fertig;
+  flug.onfinish = fertig;
 }
 function zoomSchrumpf(z) {
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`);
@@ -3874,6 +3888,7 @@ function render() {
   prevShown = true;
   let morph = null, slideNow = false, zoom = null;
   if (moving) {
+    if (zoomLaeuft) zoomLaeuft();
     const shelf = view.querySelector(".shelf");
     if (shelf) shelfX = shelf.scrollLeft;
     if (!reduced() && !silentNav) {
@@ -3888,7 +3903,9 @@ function render() {
         if (bg && bg.getBoundingClientRect().bottom > 0) { morph = {dir:"out", rect:bg.getBoundingClientRect(), color:getComputedStyle(bg).backgroundColor, go:from.key}; bg.style.visibility = "hidden"; }
       }
       slideNow = !morph && !zoom && (dir === "push" || dir === "pop") && matchMedia("(max-width:899px)").matches;
-      leavePage(dir, slideNow || !!zoom);
+      // Tab-Wechsel (gleiche Ebene) wie in iOS sofort, ohne Ausblenden der alten Seite
+      if (dir === "fade" && !zoom && !morph) { if (ghostEl) { ghostEl.remove(); ghostEl = null; } }
+      else leavePage(dir, slideNow || !!zoom);
     }
   }
   if (r.mod) curMod = MOD[r.mod];
@@ -3906,7 +3923,7 @@ function render() {
   if (moving) {
     scrollToTop = true;
     view.classList.remove("entering", "enter-fade", "enter-push", "enter-pop");
-    if (!slideNow && !silentNav && !zoom) {
+    if (!slideNow && !silentNav && !zoom && dir !== "fade") {
       view.classList.add("entering", "enter-" + dir);
       clearTimeout(enterT);
       enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
@@ -4179,12 +4196,15 @@ function edgeStart(st) {
     window.scrollTo(0, lastZoom.y || 0);
     const t = view.querySelector(`.bt[data-go="${lastZoom.go}"]`), e = t && t.getBoundingClientRect();
     if (e && e.top >= 0 && e.bottom <= innerHeight) {
-      const c = document.createElement("i");
-      c.className = "zoomfx-c"; c.style.background = lastZoom.bg; c.style.opacity = "0";
-      g.append(c);
+      const f = zoomFarbschichten(t, getComputedStyle(t).backgroundColor, e), innen = g.firstElementChild, r0 = innen.getBoundingClientRect();
+      zoomBox(g);
+      innen.style.transformOrigin = `${-r0.left}px ${-r0.top}px`;
+      f.verlauf.style.opacity = f.voll.style.opacity = f.inhalt.style.opacity = "0";
+      g.append(f.verlauf, f.voll);
+      document.body.append(f.inhalt);
       t.style.visibility = "hidden";
       view.classList.remove("ios-low");
-      st.zoom = {rect:e, tile:t, color:c, y:lastZoom.y || 0};
+      st.zoom = {rect:e, tile:t, f, innen, y:lastZoom.y || 0, cur:null};
     }
   }
   edgePaint(st, 0);
@@ -4192,13 +4212,15 @@ function edgeStart(st) {
 function edgePaint(st, p) {
   const W = innerWidth;
   if (st.zoom) {
-    // Die Seite schrumpft dem Finger folgend Richtung Kachel; ganz zur Kachel geht es erst beim Loslassen
-    const k = Math.min(1, p * 1.15);
-    st.ghost.style.transform = "";
-    st.ghost.style.clipPath = zoomRahmen(st.zoom.rect, k * .55);
-    st.zoom.color.style.opacity = (k * .35).toFixed(3);
+    // Wie der Zoom-Rückweg in iOS 18: Die Seite wird dem Finger folgend kleiner, rundet ihre Ecken und wandert mit
+    const H = innerHeight, q = Math.max(0, Math.min(1, p)), sc = 1 - .26 * q, w = W * sc, h = H * sc, r = 44 * Math.min(1, q * 2.5);
+    const left = (W - w) / 2 + W * .16 * q, top = (H - h) / 2;
+    st.ghost.style.transform = `translate3d(${left.toFixed(2)}px,${top.toFixed(2)}px,0) scale(${sc.toFixed(4)})`;
+    st.ghost.style.borderRadius = (r / sc).toFixed(2) + "px";
+    st.zoom.cur = {left, top, width:w, height:h, r};
+    st.zoom.f.verlauf.style.opacity = (q * .3).toFixed(3);
     view.style.transform = "";
-    st.dim.style.opacity = .12 * (1 - k);
+    st.dim.style.opacity = .12 * (1 - q);
     return;
   }
   st.ghost.style.transform = `translateX(${p * W}px)`;
@@ -4243,46 +4265,47 @@ function edgeEnd(e) {
     if (st.preview) revealBelow(view);
   };
 }
-// Rand-Wischen auf einer per Kachel geöffneten Seite: weich in die Kachel (oder zurück auf die Seite)
+// Rand-Wischen auf einer per Kachel geöffneten Seite: Beim Loslassen fliegt die Seite von der Fingerposition in ihre
+// Kachel (oder federt zurück auf den ganzen Bildschirm), auf derselben Federkurve wie der Zoom.
 function edgeZoomEnd(st, p, commit) {
-  const z = st.zoom, g = st.ghost, k0 = Math.min(1, p * 1.15) * .55, t0 = performance.now(), w = 14;
+  const z = st.zoom, g = st.ghost, cur = z.cur || zoomGanz(), rCur = z.cur ? z.cur.r : 0, o = {duration:ZOOM_D, easing:"linear", fill:"forwards"};
+  g.style.transform = ""; g.style.borderRadius = "";
   if (commit) {
     const back = $("#navbar .nb-left .back"), before = location.hash;
     silentNav = true;
-    edgeAfterRender = () => window.scrollTo(0, z.y);
+    edgeAfterRender = () => { window.scrollTo(0, z.y); const t2 = view.querySelector(`.bt[data-go="${z.tile.dataset.go}"]`); if (t2) { t2.style.visibility = "hidden"; z.t2 = t2; } };
     if (back) back.click();
     if (location.hash === before) { silentNav = false; edgeAfterRender = null; }
   }
-  const ziel = commit ? 1 : 0;
-  const bild = now => {
-    const t = (now - t0) / 1000, q = reduced() ? 1 : Math.min(1, 1 - (1 + w * t) * Math.exp(-w * t)), k = k0 + (ziel - k0) * q;
-    g.style.clipPath = zoomRahmen(z.rect, k);
-    z.color.style.opacity = (commit ? Math.min(1, k * 1.25) : k * .6).toFixed(3);
-    st.dim.style.opacity = .12 * (1 - k);
-    if (q < .995) { requestAnimationFrame(bild); return; }
+  const bahn = zoomBahn(cur, commit ? z.rect : zoomGanz(), rCur, commit ? ZOOM_R : 0, ZOOM_D);
+  const flug = g.animate(bahn.box, o);
+  g.animate(bahn.ecken, o);
+  z.innen.animate(bahn.innen, o);
+  const v0 = +z.f.verlauf.style.opacity || 0;
+  if (commit) {
+    z.f.verlauf.animate([{opacity:v0}, {opacity:1, offset:.55, easing:"ease-in-out"}, {opacity:1}], o);
+    z.f.voll.animate([{opacity:0}, {opacity:0, offset:.3}, {opacity:1, offset:.8, easing:"ease-in-out"}, {opacity:1}], o);
+    z.f.inhalt.animate([{opacity:0}, {opacity:0, offset:.62}, {opacity:1}], o);
+  } else z.f.verlauf.animate([{opacity:v0}, {opacity:0}], {duration:ZOOM_D * .5, fill:"forwards"});
+  st.dim.animate([{opacity:+st.dim.style.opacity || 0}, {opacity:commit ? 0 : .12}], o);
+  flug.onfinish = () => {
     st.dim.remove();
     view.style.transform = "";
     view.classList.remove("ios-slide", "ios-low");
-    if (commit) {
-      g.remove();
-      const t2 = view.querySelector(`.bt[data-go="${z.tile.dataset.go}"]`);
-      if (t2) t2.style.visibility = "";
-      z.tile.style.visibility = "";
-      lastZoom = null;
-      return;
-    }
+    z.f.inhalt.remove();
     z.tile.style.visibility = "";
+    if (commit) { g.remove(); if (z.t2) z.t2.style.visibility = ""; lastZoom = null; return; }
+    // Abgebrochen: Die Seite kehrt unverändert zurück, mit Inhalt, Stand und Bildlaufposition
+    g.getAnimations().forEach(a => a.cancel()); z.innen.getAnimations().forEach(a => a.cancel());
+    z.innen.style.transformOrigin = "";
     view.innerHTML = "";
-    z.color.remove();
-    g.style.clipPath = "";
-    view.append(...g.firstElementChild.childNodes);
+    view.append(...z.innen.childNodes);
     g.remove();
     window.scrollTo(0, st.y);
     observeTitle();
     watchIdle();
     if (st.preview) revealBelow(view);
   };
-  requestAnimationFrame(bild);
 }
 document.addEventListener("click", e => {
   const s = e.target.closest("[data-sheet]");
