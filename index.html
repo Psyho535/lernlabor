@@ -2312,6 +2312,30 @@ button.ios-card:active{transform:scale(.97)}
 @keyframes lxName{to{opacity:1;transform:none}}
 @keyframes lxAway{to{opacity:0;transform:scale(1.07)}}
 @keyframes lxOut{to{opacity:0;visibility:hidden}}
+/* ===== Liquid Glass wie in der App Store-Leiste von iOS 26: eine Kapsel mit fünf Tabs, eine klare Linse beim Berühren ===== */
+.tabbar{grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;transition:scale .55s cubic-bezier(.3,1.45,.5,1)}
+.tabbar.lz-an{scale:1.035}
+.tabbar::before{right:0!important}
+.tab[data-nav="suche"]{position:relative!important;top:auto;right:auto;width:auto!important;height:50px!important;border-radius:999px!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
+.tab[data-nav="suche"] span{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
+.tab[data-nav="suche"] .ic{width:22px;height:22px}
+.tab[data-nav="suche"][aria-current="page"] .ic{color:var(--accent)}
+.tab > *{scale:calc(1 + .2 * var(--m,0));transition:none}
+.tabbar .tab-ind{width:calc((100% - 8px) / 5)!important;background:none!important;box-shadow:none!important;scale:none!important;transition:opacity .2s!important;will-change:transform;pointer-events:none}
+.tabbar .tab-ind::before,.tabbar .tab-ind::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+/* Ruhezustand: dezente Markierung unter dem gewählten Tab */
+.tabbar .tab-ind::before{background:var(--lg-sel);box-shadow:inset 0 1px 0 rgba(255,255,255,.22);opacity:calc(1 - var(--lift,0))}
+/* Angehoben: klares Glas mit Lichtkante oben, hellem Saum unten und weichem Schatten, darunter wird kaum etwas verdeckt */
+.tabbar .tab-ind::after{display:block!important;padding:0!important;-webkit-mask:none!important;mask:none!important;opacity:var(--lift,0);background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.2),rgba(255,255,255,.04) 55%,rgba(255,255,255,.1) 100%);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.85),inset 0 -1.5px 1.5px rgba(255,255,255,.45),inset 0 0 0 .6px rgba(255,255,255,.55),inset 0 7px 9px -7px rgba(255,255,255,.5),inset 0 -8px 10px -8px rgba(0,0,0,.28),0 10px 24px -10px rgba(0,0,0,.55);-webkit-backdrop-filter:blur(.6px) saturate(185%) brightness(1.06);backdrop-filter:blur(.6px) saturate(185%) brightness(1.06)}
+/* Regenbogensaum am Rand der Linse, wie das Licht im echten Glas bricht */
+.lz-rand{position:absolute;inset:0;border-radius:inherit;padding:1.6px;background:conic-gradient(from 200deg,rgba(255,80,120,.9),rgba(255,200,60,.9),rgba(80,230,140,.9),rgba(60,170,255,.95),rgba(170,110,255,.9),rgba(255,80,120,.9));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);filter:blur(.5px);opacity:calc(var(--lift,0) * .55);pointer-events:none}
+.tab.hov .ic,.tab.hov span{color:var(--accent)}
+:root[data-noglass] .tabbar .tab-ind::after{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--lg-sel)}
+:root[data-mono] .lz-rand{display:none}
+/* Runde Glasknöpfe: wachsen beim Drücken und leuchten unter dem Finger auf (statt grau zu werden) */
+.back:active{opacity:1!important}
+.acc:active{transform:none}
+.nb-round.lg-on,.back.lg-on,.acc.lg-on{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.34),rgba(255,255,255,0) 70%),var(--lg-bg)!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3536,8 +3560,7 @@ function render() {
   const tabKey = r.tab ? r.tab : r.view === "einstellungen" || r.parent === "einstellungen" ? "einstellungen" : r.mod ? "themen" : r.parent || r.view;
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   const tabI = TABS.findIndex(t => t[0] === tabKey);
-  $(".tab-ind").style.setProperty("--i", Math.max(0, tabI));
-  $(".tab-ind").style.opacity = tabI < 0 || TABS[tabI][0] === "suche" ? 0 : 1;
+  lensSet(tabI);
   setNav();
   if (moving && !reduced()) document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
   const aurora = $("#aurora");
@@ -3583,52 +3606,131 @@ function updateChrome() {
   $("#spBar").style.width = total + "%";
 }
 window.addEventListener("hashchange", render);
-/* Tab-Leiste wie bei iOS 26: Die Glaslinse lässt sich mit Finger oder Maus über die Leiste ziehen.
-   Sie folgt der Bewegung, der Tab darunter hebt sich hervor, beim Loslassen wird er geöffnet. Tippen geht weiterhin. */
+/* Tab-Leiste wie in iOS 26 (App Store): Beim Berühren hebt sich eine klare Glaslinse aus der Leiste. Sie ist größer als die Leiste,
+   vergrößert das Symbol darunter, folgt dem Finger mit Federung, dehnt sich bei schneller Bewegung und sinkt beim Loslassen
+   federnd als ruhige Markierung auf den gewählten Tab zurück. Die ganze Leiste wächst dabei leicht. Tippen geht wie immer. */
+var lensApi = null, lensPending = null;
+function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
 (() => {
-  const bar = $("#tabbar"), ind = bar.querySelector(".tab-ind");
+  const bar = $("#tabbar"), ind = bar.querySelector(".tab-ind"), tabs = [...bar.querySelectorAll(".tab")], N = tabs.length, PAD = 4;
+  ind.innerHTML = '<i class="lz-rand"></i>';
+  const S = {x:0, vx:0, tx:0, l:0, vl:0, tl:0, sel:0, raf:0, t:0, ready:false};
   let d = null, mute = false;
-  // Die Linse gleitet über die vier Tabs der Glaskapsel; die Suche ist ein eigener Glaskreis rechts daneben (68 px samt Abstand)
-  const N = 4, PAD = 4, SUCHE = 68;
-  const geo = () => { const r = bar.getBoundingClientRect(), cell = (r.width - 2 * PAD - SUCHE) / N; return {left:r.left + PAD, cell}; };
-  const move = x => {
-    const g = geo(), i = Math.max(0, Math.min(N - 1, Math.floor((x - g.left) / g.cell)));
-    ind.style.setProperty("--x", Math.max(0, Math.min((N - 1) * g.cell, x - g.left - g.cell / 2)) + "px");
-    if (i === d.i) return;
-    d.i = i;
-    haptic("select");
-    bar.querySelectorAll(".tab").forEach((t, k) => t.classList.toggle("hov", k === i));
+  const cell = () => (bar.offsetWidth - 2 * PAD) / N;
+  // Fingerposition in der Leiste, unabhängig davon, wie weit die Leiste gerade gewachsen ist
+  const fingerX = e => { const r = bar.getBoundingClientRect(), w = bar.offsetWidth; return (e.clientX - (r.left + r.width / 2)) / (r.width / w || 1) + w / 2 - PAD; };
+  const paint = () => {
+    const c = cell(), l = S.l, lc = Math.max(0, Math.min(1, l)), st = Math.min(.24, Math.abs(S.vx) / 3600);
+    const sx = (1 + .3 * l) * (1 + st), sy = (1 + .44 * l) / (1 + st * .8);
+    ind.style.transform = `translate3d(${S.x.toFixed(2)}px,0,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
+    ind.style.setProperty("--lift", lc.toFixed(3));
+    const mitte = S.x + c / 2;
+    tabs.forEach((t, i) => t.style.setProperty("--m", (Math.max(0, 1 - Math.abs((i + .5) * c - mitte) / (c * .85)) * lc).toFixed(3)));
   };
-  bar.addEventListener("pointerdown", e => { if (e.button || (e.target.closest && e.target.closest('[data-nav="suche"]'))) return; d = {id:e.pointerId, x0:e.clientX, on:false, i:-1}; });
+  // Federn: am Finger straff, beim Loslassen weich mit leichtem Nachschwingen; die Linse hebt sich mit kleinem Überschwingen
+  const step = dt => {
+    const k = d ? 900 : 380, c = d ? 54 : 29;
+    S.vx += (k * (S.tx - S.x) - c * S.vx) * dt; S.x += S.vx * dt;
+    const kl = S.tl ? 560 : 300, cl = S.tl ? 30 : 21;
+    S.vl += (kl * (S.tl - S.l) - cl * S.vl) * dt; S.l += S.vl * dt;
+  };
+  const loop = now => {
+    const dt = S.t ? Math.min(.034, (now - S.t) / 1000) : 1 / 60;
+    S.t = now;
+    for (let i = 0; i < 4; i++) step(dt / 4);
+    if (!d && Math.abs(S.x - S.tx) < .3 && Math.abs(S.vx) < 6 && Math.abs(S.l - S.tl) < .003 && Math.abs(S.vl) < .02) {
+      S.x = S.tx; S.l = S.tl; S.vx = S.vl = 0; S.raf = 0; S.t = 0; paint(); return;
+    }
+    paint();
+    S.raf = requestAnimationFrame(loop);
+  };
+  const kick = () => {
+    if (reduced()) { if (S.raf) cancelAnimationFrame(S.raf); S.raf = 0; S.x = S.tx; S.l = 0; S.vx = S.vl = 0; paint(); return; }
+    if (!S.raf) { S.t = 0; S.raf = requestAnimationFrame(loop); }
+  };
+  const follow = e => {
+    const c = cell(), fx = fingerX(e), i = Math.max(0, Math.min(N - 1, Math.floor(fx / c)));
+    S.tx = Math.max(0, Math.min((N - 1) * c, fx - c / 2));
+    if (i === d.i) return;
+    if (d.i >= 0) haptic("select");
+    d.i = i;
+    tabs.forEach((t, k) => t.classList.toggle("hov", k === i));
+  };
+  lensApi = {set(i) {
+    S.sel = i;
+    ind.style.opacity = i < 0 ? 0 : 1;
+    if (i < 0 || d || !bar.offsetWidth) return;
+    S.tx = i * cell();
+    if (!S.ready) { S.ready = true; S.x = S.tx; paint(); return; }
+    kick();
+  }};
+  bar.addEventListener("pointerdown", e => {
+    if (e.button || !bar.offsetWidth) return;
+    d = {id:e.pointerId, x0:e.clientX, on:false, i:-1};
+    bar.classList.add("dragging", "lz-an");
+    ind.style.opacity = 1;
+    S.tl = 1;
+    follow(e);
+    haptic("light");
+    kick();
+  });
   bar.addEventListener("pointermove", e => {
     if (!d || e.pointerId !== d.id) return;
     if (!d.on) {
       if (Math.abs(e.clientX - d.x0) < 6) return;
       d.on = true;
-      bar.classList.add("dragging");
-      ind.style.opacity = 1;
       try { bar.setPointerCapture(e.pointerId); } catch (err) {}
     }
-    move(e.clientX);
+    follow(e);
+    kick();
   });
   const end = e => {
     const st = d;
     if (!st || e.pointerId !== st.id) return;
     d = null;
+    bar.classList.remove("dragging", "lz-an");
+    tabs.forEach(t => t.classList.remove("hov"));
+    S.tl = 0;
+    const drin = e.type === "pointerup" && st.i >= 0 && (st.on || bar.contains(document.elementFromPoint(e.clientX, e.clientY)));
+    S.tx = (drin ? st.i : Math.max(0, S.sel)) * cell();
+    if (!drin && S.sel < 0) ind.style.opacity = 0;
+    kick();
     if (!st.on) return;
-    bar.classList.remove("dragging");
-    bar.querySelectorAll(".tab.hov").forEach(t => t.classList.remove("hov"));
-    if (e.type === "pointerup" && st.i >= 0) ind.style.setProperty("--i", st.i);
-    ind.style.removeProperty("--x");
     mute = true;
     setTimeout(() => { mute = false; }, 80);
-    if (e.type === "pointerup" && st.i >= 0) { morphSrc = null; go(TABS[st.i][0]); }
+    if (drin) { morphSrc = null; go(TABS[st.i][0]); }
     else render();
   };
   bar.addEventListener("pointerup", end);
   bar.addEventListener("pointercancel", end);
   // Nach dem Ziehen kein zusätzlicher Klick auf den Tab, auf dem die Bewegung begann
   bar.addEventListener("click", e => { if (mute) { e.stopPropagation(); e.preventDefault(); } }, true);
+  addEventListener("resize", () => { if (!bar.offsetWidth) return; S.x = S.tx = Math.max(0, S.sel) * cell(); S.ready = true; paint(); });
+  if (lensPending !== null) lensApi.set(lensPending);
+})();
+/* Runde Glasknöpfe wie in iOS 26: Beim Drücken wächst das Glas federnd und leuchtet dort auf, wo der Finger liegt. */
+(() => {
+  const SEL = ".nb-round, .back, .acc";
+  let an = null;
+  const los = () => {
+    if (!an) return;
+    const el = an; an = null;
+    el.classList.remove("lg-on");
+    if (!reduced()) el.animate([{scale:el.dataset.lgS || "1.12"}, {scale:"1"}], {duration:520, easing:"cubic-bezier(.3,1.45,.5,1)"});
+  };
+  document.addEventListener("pointerdown", e => {
+    const el = e.button ? null : e.target.closest && e.target.closest(SEL);
+    if (!el) return;
+    los();
+    an = el;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--gx", (e.clientX - r.left) + "px");
+    el.style.setProperty("--gy", (e.clientY - r.top) + "px");
+    el.classList.add("lg-on");
+    el.dataset.lgS = el.matches(".acc") ? "1.035" : "1.14";
+    if (!reduced()) el.animate([{scale:"1"}, {scale:el.dataset.lgS}], {duration:420, easing:"cubic-bezier(.3,1.6,.5,1)", fill:"forwards"});
+  }, {passive:true});
+  ["pointerup", "pointercancel"].forEach(t => document.addEventListener(t, () => { if (an) { an.getAnimations().forEach(x => x.cancel()); los(); } }, {passive:true}));
 })();
 /* ---------------- iOS-Gefühl ---------------- */
 /* Seitenwechsel wie der Navigationsstapel auf dem iPhone: Die neue Seite schiebt sich von rechts über die alte,
