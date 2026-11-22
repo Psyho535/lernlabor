@@ -2385,6 +2385,21 @@ button.prow:active{background:var(--fill);transition:none}
 .first-open .st-body>:nth-child(n+5){animation-delay:calc(var(--intro,0s) + .6s)}
 .first-open .stage~.section{animation:riseIn .85s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .7s)}
 @media (prefers-reduced-motion:reduce){.st-glow{animation:none}}
+/* Startseite cleaner: ruhiger Grund wie überall, Farbe nur als Akzent (Symbol, Balken, Knopf) */
+.stage{color:var(--label);padding-bottom:26px}
+.stage .dh .dh-d{color:var(--label-2)}
+.stage .dh .large{color:var(--label)}
+.st-body{padding-top:30px;gap:5px}
+.st-ic{display:grid;place-items:center;width:52px;height:52px;margin-bottom:12px;border-radius:14px;background:var(--sc);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.st-ic .ic{width:26px;height:26px}
+.st-eye{color:var(--label-2)}
+.st-t{color:var(--label);font-size:36px}
+.st-s{color:var(--label-2)}
+.st-p{color:var(--label-2)}
+.st-p i{background:var(--fill)}
+.st-p b{background:var(--sc)}
+.st-go{background:var(--sd);color:#fff;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.first-open .st-body>*{animation-delay:calc(var(--intro,0s) + .25s)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -4192,13 +4207,13 @@ function vStart() {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
   paint(`
-  <section class="stage" style="--sc:${tief(st.m.color, 3.2)};--sd:${tief(st.m.color, 7.5)}">
-    <div class="st-bg" aria-hidden="true"><i class="st-glow"></i><span class="st-art">${icon(st.m.icon, 220)}</span></div>
+  <section class="stage" style="--sc:${tief(st.m.color, 3.2)};--sd:${tief(st.m.color)}">
     <header class="dh">
       <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
       <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
     </header>
     <div class="st-body">
+      <span class="st-ic" aria-hidden="true">${icon(st.m.icon, 26)}</span>
       <small class="st-eye">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
       <h2 class="st-t">${st.m.title}</h2>
       <p class="st-s">${st.unit}</p>
