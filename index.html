@@ -2313,14 +2313,14 @@ button.ios-card:active{transform:scale(.97)}
 @keyframes lxAway{to{opacity:0;transform:scale(1.07)}}
 @keyframes lxOut{to{opacity:0;visibility:hidden}}
 /* ===== Liquid Glass wie in der App Store-Leiste von iOS 26: eine Kapsel mit fünf Tabs, eine klare Linse beim Berühren ===== */
-.tabbar{grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;transition:scale .55s cubic-bezier(.3,1.45,.5,1)}
-.tabbar.lz-an{scale:1.035}
+.tabbar{grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;transition:scale .5s cubic-bezier(.25,.8,.25,1)}
+.tabbar.lz-an{scale:1.015}
 .tabbar::before{right:0!important}
 .tab[data-nav="suche"]{position:relative!important;top:auto;right:auto;width:auto!important;height:50px!important;border-radius:999px!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
 .tab[data-nav="suche"] span{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
 .tab[data-nav="suche"] .ic{width:22px;height:22px}
 .tab[data-nav="suche"][aria-current="page"] .ic{color:var(--accent)}
-.tab > *{scale:calc(1 + .2 * var(--m,0));transition:none}
+.tab > *{scale:calc(1 + .1 * var(--m,0));transition:none}
 .tabbar .tab-ind{width:calc((100% - 8px) / 5)!important;background:none!important;box-shadow:none!important;scale:none!important;transition:opacity .2s!important;will-change:transform;pointer-events:none}
 .tabbar .tab-ind::before,.tabbar .tab-ind::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
 /* Ruhezustand: dezente Markierung unter dem gewählten Tab */
@@ -2328,7 +2328,7 @@ button.ios-card:active{transform:scale(.97)}
 /* Angehoben: klares Glas mit Lichtkante oben, hellem Saum unten und weichem Schatten, darunter wird kaum etwas verdeckt */
 .tabbar .tab-ind::after{display:block!important;padding:0!important;-webkit-mask:none!important;mask:none!important;opacity:var(--lift,0);background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.2),rgba(255,255,255,.04) 55%,rgba(255,255,255,.1) 100%);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.85),inset 0 -1.5px 1.5px rgba(255,255,255,.45),inset 0 0 0 .6px rgba(255,255,255,.55),inset 0 7px 9px -7px rgba(255,255,255,.5),inset 0 -8px 10px -8px rgba(0,0,0,.28),0 10px 24px -10px rgba(0,0,0,.55);-webkit-backdrop-filter:blur(.6px) saturate(185%) brightness(1.06);backdrop-filter:blur(.6px) saturate(185%) brightness(1.06)}
 /* Regenbogensaum am Rand der Linse, wie das Licht im echten Glas bricht */
-.lz-rand{position:absolute;inset:0;border-radius:inherit;padding:1.6px;background:conic-gradient(from 200deg,rgba(255,80,120,.9),rgba(255,200,60,.9),rgba(80,230,140,.9),rgba(60,170,255,.95),rgba(170,110,255,.9),rgba(255,80,120,.9));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);filter:blur(.5px);opacity:calc(var(--lift,0) * .55);pointer-events:none}
+.lz-rand{position:absolute;inset:0;border-radius:inherit;padding:1.6px;background:conic-gradient(from 200deg,rgba(255,80,120,.9),rgba(255,200,60,.9),rgba(80,230,140,.9),rgba(60,170,255,.95),rgba(170,110,255,.9),rgba(255,80,120,.9));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);filter:blur(.6px);opacity:calc(var(--lift,0) * .28);pointer-events:none}
 .tab.hov .ic,.tab.hov span{color:var(--accent)}
 :root[data-noglass] .tabbar .tab-ind::after{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--lg-sel)}
 :root[data-mono] .lz-rand{display:none}
@@ -2336,6 +2336,55 @@ button.ios-card:active{transform:scale(.97)}
 .back:active{opacity:1!important}
 .acc:active{transform:none}
 .nb-round.lg-on,.back.lg-on,.acc.lg-on{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.34),rgba(255,255,255,0) 70%),var(--lg-bg)!important}
+/* ===== Übersicht als Bühne mit Listen (wie Apple TV und Musik): Farbe des Themas oben randlos, darunter Listen ohne Kästen ===== */
+.stage{position:relative;isolation:isolate;display:block!important;align-self:stretch;width:auto;margin-top:-4px;padding:0 0 34px;color:#fff}
+.stage .dh{width:100%}
+.stage~.howto{background:none!important;box-shadow:none!important;border:0!important;padding:4px 2px 0!important}
+.st-bg{position:absolute;z-index:-1;left:-16px;right:-16px;top:-260px;bottom:-90px;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,var(--sd) 0%,var(--sd) calc(100% - 150px),color-mix(in srgb,var(--sd) 50%,var(--bg)) calc(100% - 80px),var(--bg) 100%)}
+@media (min-width:900px){.st-bg{left:-40px;right:-40px}}
+.st-glow{position:absolute;right:-38%;top:150px;width:95%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--sc),transparent);opacity:.75;animation:stGlow 18s ease-in-out infinite alternate}
+@keyframes stGlow{to{transform:translate(-14%,12%) scale(1.15)}}
+.st-art{position:absolute;right:-40px;top:230px;color:#fff;opacity:.1;transform:rotate(-10deg)}
+.st-art .ic{width:220px;height:220px}
+.stage .dh .dh-d,.stage .dh .large{color:#fff}
+.st-body{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:44px 2px 0}
+.st-eye{font:600 13px/1.2 var(--f-ui);text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.86)}
+.st-t{margin:0;font:800 40px/1.04 var(--f-display);letter-spacing:-.035em;color:#fff;overflow-wrap:break-word;hyphens:auto;max-width:100%}
+.st-s{margin:0;font:500 17px/1.3 var(--f-ui);color:rgba(255,255,255,.9)}
+.st-p{display:flex;align-items:center;gap:10px;margin-top:12px;font:600 13px/1.2 var(--f-ui);color:rgba(255,255,255,.86);font-variant-numeric:tabular-nums}
+.st-p i{flex:none;width:110px;height:4px;border-radius:2px;background:rgba(255,255,255,.26);overflow:hidden}
+.st-p b{display:block;height:100%;border-radius:inherit;background:#fff}
+.st-go{display:inline-flex;align-items:center;gap:8px;height:50px;margin-top:18px;padding:0 26px 0 22px;border:0;border-radius:999px;background:rgba(255,255,255,.95);color:#000;font:600 17px var(--f-ui);cursor:pointer;box-shadow:inset 0 1px 0 #fff,0 12px 30px -14px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(12px) saturate(180%);backdrop-filter:blur(12px) saturate(180%);-webkit-tap-highlight-color:transparent;transition:transform .45s cubic-bezier(.25,.8,.25,1)}
+.st-go:active{transform:scale(.96)}
+.st-go .ic{width:16px;height:16px}
+/* Listen wie in Apple Musik: Symbol, Text, Wert, Pfeil, feine Trennlinien, keine Kästen */
+.pl-sec .hsec{margin-bottom:0}
+.plist{display:flex;flex-direction:column;margin:0 -16px}
+.prow{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:58px;padding:9px 16px 9px 18px;border:0;border-radius:0;background:none;color:var(--label);font:inherit;text-align:left;-webkit-tap-highlight-color:transparent;transition:background-color .3s}
+button.prow{cursor:pointer}
+.prow+.prow::before{content:"";position:absolute;top:0;left:64px;right:0;height:.5px;background:var(--sep)}
+button.prow:active{background:var(--fill);transition:none}
+.pr-ic{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--c);color:#fff}
+.pr-ic.rund{border-radius:50%}
+.pr-ic .ic{width:18px;height:18px}
+.pr-r{background:none}
+.pr-ring{width:32px;height:32px;transform:rotate(-90deg)}
+.pr-ring circle{fill:none;stroke:var(--fill);stroke-width:4}
+.pr-ring .on{stroke:var(--p-gruen);stroke-linecap:round}
+.prow .pr-t{position:static;flex:1;min-width:0;max-width:none;display:flex;flex-direction:column;align-items:stretch;gap:1px;padding:0}
+.prow .pr-t b{font:500 17px/1.25 var(--f-ui);letter-spacing:-.012em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prow .pr-t small{font:400 13px/1.3 var(--f-ui);color:var(--label-2)}
+.pr-v{flex:none;font:400 15px var(--f-ui);color:var(--label-2);font-variant-numeric:tabular-nums}
+.pr-ch{flex:none;display:grid;color:var(--label-3)}
+.pr-ch .ic{width:13px;height:13px}
+/* Einmal beim Öffnen: Farbe blendet ruhig auf, Inhalte steigen nacheinander herein */
+.first-open .st-bg{animation:stBg 1.3s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--intro,0s) + .15s)}
+@keyframes stBg{from{opacity:0;transform:scale(1.08)}}
+.first-open .st-body>*{animation:riseIn .85s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .4s)}
+.first-open .st-body>:nth-child(n+3){animation-delay:calc(var(--intro,0s) + .5s)}
+.first-open .st-body>:nth-child(n+5){animation-delay:calc(var(--intro,0s) + .6s)}
+.first-open .stage~.section{animation:riseIn .85s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .7s)}
+@media (prefers-reduced-motion:reduce){.st-glow{animation:none}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3620,8 +3669,8 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
   // Fingerposition in der Leiste, unabhängig davon, wie weit die Leiste gerade gewachsen ist
   const fingerX = e => { const r = bar.getBoundingClientRect(), w = bar.offsetWidth; return (e.clientX - (r.left + r.width / 2)) / (r.width / w || 1) + w / 2 - PAD; };
   const paint = () => {
-    const c = cell(), l = S.l, lc = Math.max(0, Math.min(1, l)), st = Math.min(.24, Math.abs(S.vx) / 3600);
-    const sx = (1 + .3 * l) * (1 + st), sy = (1 + .44 * l) / (1 + st * .8);
+    const c = cell(), l = S.l, lc = Math.max(0, Math.min(1, l)), st = Math.min(.05, Math.abs(S.vx) / 12000);
+    const sx = (1 + .16 * l) * (1 + st), sy = (1 + .3 * l) / (1 + st * .5);
     ind.style.transform = `translate3d(${S.x.toFixed(2)}px,0,0) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
     ind.style.setProperty("--lift", lc.toFixed(3));
     const mitte = S.x + c / 2;
@@ -3629,9 +3678,9 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
   };
   // Federn: am Finger straff, beim Loslassen weich mit leichtem Nachschwingen; die Linse hebt sich mit kleinem Überschwingen
   const step = dt => {
-    const k = d ? 900 : 380, c = d ? 54 : 29;
+    const k = d ? 620 : 260, c = 2 * Math.sqrt(k);
     S.vx += (k * (S.tx - S.x) - c * S.vx) * dt; S.x += S.vx * dt;
-    const kl = S.tl ? 560 : 300, cl = S.tl ? 30 : 21;
+    const kl = S.tl ? 380 : 240, cl = 2 * Math.sqrt(kl);
     S.vl += (kl * (S.tl - S.l) - cl * S.vl) * dt; S.l += S.vl * dt;
   };
   const loop = now => {
@@ -3716,7 +3765,7 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
     if (!an) return;
     const el = an; an = null;
     el.classList.remove("lg-on");
-    if (!reduced()) el.animate([{scale:el.dataset.lgS || "1.12"}, {scale:"1"}], {duration:520, easing:"cubic-bezier(.3,1.45,.5,1)"});
+    if (!reduced()) el.animate([{scale:el.dataset.lgS || "1.08"}, {scale:"1"}], {duration:480, easing:"cubic-bezier(.25,.8,.25,1)"});
   };
   document.addEventListener("pointerdown", e => {
     const el = e.button ? null : e.target.closest && e.target.closest(SEL);
@@ -3727,8 +3776,8 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
     el.style.setProperty("--gx", (e.clientX - r.left) + "px");
     el.style.setProperty("--gy", (e.clientY - r.top) + "px");
     el.classList.add("lg-on");
-    el.dataset.lgS = el.matches(".acc") ? "1.035" : "1.14";
-    if (!reduced()) el.animate([{scale:"1"}, {scale:el.dataset.lgS}], {duration:420, easing:"cubic-bezier(.3,1.6,.5,1)", fill:"forwards"});
+    el.dataset.lgS = el.matches(".acc") ? "1.02" : "1.08";
+    if (!reduced()) el.animate([{scale:"1"}, {scale:el.dataset.lgS}], {duration:380, easing:"cubic-bezier(.25,.8,.25,1)", fill:"forwards"});
   }, {passive:true});
   ["pointerup", "pointercancel"].forEach(t => document.addEventListener(t, () => { if (an) { an.getAnimations().forEach(x => x.cancel()); los(); } }, {passive:true}));
 })();
@@ -4135,32 +4184,33 @@ function vStart() {
   const wrongN = (S.wrong || []).filter(id => Q_BY_ID[id]).length, lvl = Math.floor(S.xp / 1000) + 1;
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
   const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
-  const C = 2 * Math.PI * 34, q = Math.min(1, heute / DAY_GOAL);
-  // Wie „Weiterlesen“ in Apple Books: zuerst das Thema, mit dem es weitergeht, dann die übrigen
-  const order = [st.m, ...MODS.filter(m => m !== st.m)];
-  const cover = (m, i) => { const [x, y] = unitsOf(m), pr = modProgress(m.id), first = i === 0;
-    return `<button class="cover" data-go="${first ? st.go : `modul-${m.id}`}" style="--cv:${tief(m.color, 3.2)};--cd:${tief(m.color)};--k:${Math.min(i, 3)}"><span class="cv-in"><span class="cv-art" aria-hidden="true">${icon(m.icon, 170)}</span><span class="cv-eye">${first ? (st.started ? "Weiterlernen" : "Als Nächstes") : `${x} von ${y} Lernseiten`}</span><span class="cv-t">${m.title}</span>${first ? `<span class="cv-s">${st.unit}</span>` : ""}<span class="cv-p"><i><b style="width:${pr}%"></b></i>${pr} %</span></span></button>`; };
-  const tile = (go, col, ic, title, sub) => `<button class="ptile" data-go="${go}" style="--cv:${tief(col, 3.2)};--cd:${tief(col)}"><span class="pt-art" aria-hidden="true">${icon(ic, 96)}</span>${icon(ic, 24)}<span class="pt-t">${title}<small>${sub}</small></span></button>`;
+  const q = Math.min(1, heute / DAY_GOAL);
+  // Bühne wie in Apple TV und Musik: das Thema, mit dem es weitergeht, groß auf seiner Farbe; darunter schlichte Listen
+  const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m), RC = 2 * Math.PI * 14;
+  const row = (go, c, ic, t, sub, val, rund) => `<button class="prow" data-go="${go}"><span class="pr-ic${rund ? " rund" : ""}" style="--c:${tief(c, 3.2)}">${icon(ic, 18)}</span><span class="pr-t"><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}</span>${val ? `<span class="pr-v">${val}</span>` : ""}<span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span></button>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
   paint(`
-  <header class="dh">
-    <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
-    <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
-  </header>
-  <section class="section shelf-sec"><div class="hsec"><h2>Weiterlernen</h2><button class="hsee" data-go="themen">Alle</button></div>
-    <div class="shelf">${order.map(cover).join("")}</div>
-  </section>
-  <section class="ios-card goal" aria-label="Tagesziel">
-    <div class="gl-r">
-      <div class="gl-t"><small>Heute</small><p class="gl-n"><b>${heute}</b>von ${DAY_GOAL} Aufgaben</p><p class="gl-s">${goalTxt}</p></div>
-      <svg class="gl-ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34"/>${q > 0 ? `<circle class="on" cx="40" cy="40" r="34" stroke-dasharray="${(C * q).toFixed(1)} ${C.toFixed(1)}"/>` : ""}</svg>
+  <section class="stage" style="--sc:${tief(st.m.color, 3.2)};--sd:${tief(st.m.color, 7.5)}">
+    <div class="st-bg" aria-hidden="true"><i class="st-glow"></i><span class="st-art">${icon(st.m.icon, 220)}</span></div>
+    <header class="dh">
+      <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
+      <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
+    </header>
+    <div class="st-body">
+      <small class="st-eye">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
+      <h2 class="st-t">${st.m.title}</h2>
+      <p class="st-s">${st.unit}</p>
+      <div class="st-p"><i aria-hidden="true"><b style="width:${pr}%"></b></i><span>${ux} von ${uy} Lernseiten · ${pr} %</span></div>
+      <button class="st-go" data-go="${st.go}">${icon("play", 16)}${st.started ? "Weiterlernen" : "Loslegen"}</button>
     </div>
-    <ol class="gl-w" aria-label="Diese Woche">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => { const v = vals[i], k = i > ti ? "zukunft" : v >= DAY_GOAL ? "voll" : v > 0 ? "teil" : "leer";
-      return `<li class="${k}${i === ti ? " jetzt" : ""}" aria-label="${DAY_LONG[i]}: ${i > ti ? "noch offen" : `${v} Aufgaben`}"><span>${n}</span><i>${k === "voll" ? icon("check", 14) : ""}</i></li>`; }).join("")}</ol>
-    <div class="gl-x"><span class="sx">${icon("flame", 16)}<b>${streak}</b>${streak === 1 ? "Tag" : "Tage"} Serie</span><span class="xp">${icon("bolt", 16)}<b>${nf(S.xp)}</b>XP · Stufe ${lvl}</span></div>
-    <div class="dact"><button class="ios-btn fill" data-go="heute">${icon("mix", 17)}Tagesmix starten</button></div>
+  </section>
+  <section class="section pl-sec" aria-label="Heute"><div class="hsec"><h2>Heute</h2></div>
+    <div class="plist">
+      <button class="prow" data-go="heute"><span class="pr-ic pr-r"><svg class="pr-ring" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14"/>${q > 0 ? `<circle class="on" cx="17" cy="17" r="14" stroke-dasharray="${(RC * q).toFixed(1)} ${RC.toFixed(1)}"/>` : ""}</svg></span><span class="pr-t"><b>${heute} von ${DAY_GOAL} Aufgaben</b><small>${goalTxt}</small></span><span class="pr-v">Tagesmix</span><span class="pr-ch" aria-hidden="true">${icon("right", 14)}</span></button>
+      <div class="prow"><span class="pr-ic rund" style="--c:${tief(APPLE.orange, 3.2)}">${icon("flame", 17)}</span><span class="pr-t"><b>${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</b><small>${nf(S.xp)} XP · Stufe ${lvl}</small></span></div>
+    </div>
   </section>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
@@ -4171,18 +4221,22 @@ function vStart() {
     </ol>
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  <section class="section"><div class="hsec"><h2>Üben und Prüfen</h2></div>
-    <div class="ptiles">
-      ${tile("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig")}
-      ${tile("trainieren", APPLE.rot, "reset", "Fehler", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig")}
-      ${tile("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit")}
-      ${tile("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit")}
-      ${CODE.length ? tile("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`) : ""}
-      ${tile("trainieren", APPLE.blau, "trainieren", "Trainieren", "Alle Übungen")}
+  <section class="section pl-sec"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
+    <div class="plist">${MODS.map(m => { const [x, y] = unitsOf(m); return row(`modul-${m.id}`, m.color, m.icon, m.title, `${x} von ${y} Lernseiten`, `${modProgress(m.id)} %`, true); }).join("")}</div>
+  </section>
+  <section class="section pl-sec"><div class="hsec"><h2>Üben und Prüfen</h2></div>
+    <div class="plist">
+      ${row("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig")}
+      ${row("trainieren", APPLE.rot, "reset", "Fehler wiederholen", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig")}
+      ${row("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit")}
+      ${row("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit")}
+      ${CODE.length ? row("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`) : ""}
+      ${row("trainieren", APPLE.blau, "trainieren", "Trainieren", "Alle Übungen")}
     </div>
   </section>
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
-  const dact = view.querySelector(".dact"), acc = view.querySelector(".acc");
+  // Der Miniplayer erscheint, sobald der Knopf der Bühne aus dem Bild gescrollt ist
+  const dact = view.querySelector(".st-go"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
   if (dact && acc && "IntersectionObserver" in window) {
     accObs = new IntersectionObserver(([e]) => {
@@ -4191,22 +4245,6 @@ function vStart() {
       acc.classList.toggle("on", on); acc.tabIndex = on ? 0 : -1; acc.setAttribute("aria-hidden", String(!on));
     });
     accObs.observe(dact);
-  }
-  // Fokus beim Wischen: je näher ein Cover an der Einrastposition ist, desto größer (bis 5 %); die anderen bleiben gleich
-  const shelf = view.querySelector(".shelf");
-  if (shelf) {
-    const covers = [...shelf.querySelectorAll(".cover")];
-    let raf = 0, vorne = 0;
-    const fokus = tick => {
-      raf = 0;
-      const L = shelf.getBoundingClientRect().left + (parseFloat(getComputedStyle(shelf).scrollPaddingLeft) || 16);
-      let best = 0, bf = -1;
-      covers.forEach((c, i) => { const r = c.getBoundingClientRect(), f = Math.max(0, 1 - Math.abs(r.left - L) / r.width); c.style.setProperty("--f", f.toFixed(3)); if (f > bf) { bf = f; best = i; } });
-      if (tick && best !== vorne) haptic("select");
-      vorne = best;
-    };
-    shelf.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(() => fokus(true)); }, {passive:true});
-    fokus(false);
   }
 }
 /* Einmal beim Öffnen: Das App-Symbol erscheint weich, seine Balken zeichnen sich, der Name blendet ein.
