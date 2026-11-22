@@ -2643,6 +2643,18 @@ html[data-vt="zu"]::view-transition-new(root){animation-name:vtRootZurueck}
 @keyframes vtRootZurueck{from{opacity:0;transform:scale(.94)}}
 ::view-transition-group(tabbar){animation:none}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+/* ===== Hochwertiger: deckenderes Glas ===== */
+:root{--lg-bg:rgba(250,250,252,.9);--lg-fx:blur(28px) saturate(180%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lg-bg:rgba(28,28,30,.9)}}
+:root[data-theme="dark"]{--lg-bg:rgba(28,28,30,.9)}
+/* ===== Karten und Seitenköpfe als Material: feiner Verlauf, Lichtkante, weicher Schatten ===== */
+.karte,.title-block.farbkopf,.page-hero{--ton:linear-gradient(165deg,color-mix(in srgb,var(--c) 15%,#fff) 0%,color-mix(in srgb,var(--c) 6%,#fff) 100%);--kante:inset 0 0 0 .5px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.9)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.karte,.title-block.farbkopf,.page-hero){--ton:linear-gradient(165deg,color-mix(in srgb,var(--c) 21%,#1c1c1e) 0%,color-mix(in srgb,var(--c) 9%,#141416) 100%);--kante:inset 0 0 0 .5px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.09)}}
+:root[data-theme="dark"] :is(.karte,.title-block.farbkopf,.page-hero){--ton:linear-gradient(165deg,color-mix(in srgb,var(--c) 21%,#1c1c1e) 0%,color-mix(in srgb,var(--c) 9%,#141416) 100%);--kante:inset 0 0 0 .5px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.09)}
+.karte{box-shadow:var(--kante),0 18px 40px -26px rgba(0,0,0,.6)!important}
+.title-block.farbkopf,.page-hero .ph-bg{box-shadow:var(--kante)!important}
+.k-art,.karte.halb .k-art,.karte.gross.mittel .k-art{background:color-mix(in srgb,var(--c) 20%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 18%,transparent)}
+.k-pill{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 16px -10px var(--cb)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3047,7 +3059,8 @@ const Q_BY_ID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
 CARDS.forEach(c => { c.m = "osi"; });
 QUESTIONS.forEach(q => { q.m = "osi"; });
 /* iOS-Systemfarben: eine Tabelle für die ganze App. Themen, Sprachen, Schichten und Symbole holen ihre Farbe von hier. */
-const APPLE = {gruen:"#30d158", gelb:"#ffd60a", orange:"#ff9f0a", rot:"#ff453a", pink:"#ff375f", lila:"#bf5af2", blau:"#0a84ff", indigo:"#5e5ce6", teal:"#40c8e0", graphit:"#8e8e93"};
+// Edle Varianten der iOS-Farben: Jade, Gold, Kupfer, Granat, Rosé, Amethyst, Saphir, Indigo, Aqua, Graphit
+const APPLE = {gruen:"#3fae7d", gelb:"#e0b84f", orange:"#e08a4a", rot:"#d9544f", pink:"#d8668a", lila:"#a07ad8", blau:"#4f86e8", indigo:"#6a6fd6", teal:"#3fa9b8", graphit:"#8e8e93"};
 // Die Inhalte nennen auch die hellen iOS-Varianten; jede wird auf denselben Farbton abgebildet
 const AP = {"#30d158":"gruen", "#34c759":"gruen", "#ffd60a":"gelb", "#ffcc00":"gelb", "#ff9f0a":"orange", "#ff9500":"orange", "#ff453a":"rot", "#ff3b30":"rot", "#ff375f":"pink", "#ff2d55":"pink", "#bf5af2":"lila", "#af52de":"lila", "#0a84ff":"blau", "#007aff":"blau", "#5e5ce6":"indigo", "#5856d6":"indigo", "#40c8e0":"teal", "#5ac8fa":"teal", "#30b0c7":"teal", "#8e8e93":"graphit"};
 const ap = c => { const k = AP[String(c).toLowerCase()]; return k ? APPLE[k] : c; };
@@ -3062,7 +3075,7 @@ const tief = (c, min = 4.6) => {
 };
 Object.entries(APPLE).forEach(([k, v]) => document.documentElement.style.setProperty("--t-" + k, tief(v)));
 const MODS = [
-  {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#40c8e0", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
+  {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:APPLE.teal, ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
   ...(window.LERN_MODULES || [])
 ];
 MODS.forEach(m => { m.color = ap(m.color); });
@@ -3501,7 +3514,7 @@ function paint(html, {anim = true} = {}) {
   if (anim) { animateRings(); revealBelow(); }
   observeTitle();
 }
-const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)};--akt:${tief(c, 5)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
+const pageHero = (c, {ic = "", kicker = "", title, en = "", lede = "", extra = ""}) => `<section class="page-hero" style="${onColor(c)};--akt:${tief(c, 6.2)}"><span class="ph-bg"></span><div class="ph-c">${ic ? `<span class="ph-ic">${ic}</span>` : ""}${kicker ? `<div class="ph-k">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${en ? `<div class="ph-en">${en}</div>` : ""}${lede ? `<p class="ph-l">${lede}</p>` : ""}${extra}</div></section>`;
 const heroBar = v => `<div class="ph-bar"><span class="track"><i style="width:${v}%"></i></span><span data-count="${v}" data-suffix=" %">${v} %</span></div>`;
 const EASE_SOFT = "cubic-bezier(.16,1,.3,1)";
 const EINFACH = window.LERN_EINFACH || {units:{}, layers:{}, pages:{}, intro:{}};
@@ -4070,7 +4083,7 @@ function render() {
   // Farbschleier der Kachel oben auf der Zielseite (nicht, wo die Seite schon eine farbige Kopfkarte hat)
   document.documentElement.style.setProperty("--nbh", $("#navbar").offsetHeight + "px");
   const kopf = KACHEL[r.view] && view.querySelector(":scope > .title-block");
-  if (kopf) { kopf.classList.add("farbkopf"); kopf.setAttribute("style", onColor(KACHEL[r.view]) + ";--akt:" + tief(KACHEL[r.view], 5)); }
+  if (kopf) { kopf.classList.add("farbkopf"); kopf.setAttribute("style", onColor(KACHEL[r.view]) + ";--akt:" + tief(KACHEL[r.view], 6.2)); }
   view.classList.remove("getoent");
   if (moving && !reduced() && !silentNav && !vtAktiv) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
@@ -4725,7 +4738,7 @@ function vStart() {
   const pr = modProgress(st.m.id), [ux, uy] = unitsOf(st.m);
   const zielFarbe = /^schicht[1-7]$/.test(st.go) ? HUE[+st.go.slice(7)] : st.m.color;
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
-  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)};--akt:${tief(farbe, 5)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
+  const karte = (cls, go, farbe, ic, eye, titel, sub, fuss) => `<button class="karte ${cls}" data-go="${go}" data-zoom style="${onColor(farbe)};--akt:${tief(farbe, 6.2)}"><span class="k-kopf"><small class="k-eye">${eye}</small><b class="k-titel">${titel}</b>${sub ? `<span class="k-sub">${sub}</span>` : ""}</span><span class="k-art" aria-hidden="true">${icon(ic, 64)}</span><span class="k-fuss">${fuss}</span></button>`;
   const pill = t => `<span class="k-pill">${t}</span>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
