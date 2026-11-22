@@ -2232,78 +2232,84 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .ios-card{position:relative;display:block;width:100%;padding:16px;border:0;border-radius:22px;background:var(--surface);color:var(--label);text-align:left;box-shadow:none}
 button.ios-card{cursor:pointer;transition:transform .45s var(--ease-spring),background-color .2s}
 button.ios-card:active{transform:scale(.97)}
-/* Aktivität: drei Ringe, Werte daneben, Woche darunter */
-.act-h{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:28px;margin-bottom:8px}
-.act-h h2{margin:0;font:700 20px/1.2 var(--f-display);letter-spacing:-.015em}
-.act-h > span{font:500 15px var(--f-ui);color:var(--label-2)}
-.act-today{min-height:44px;margin:-8px -8px -8px 0;padding:0 8px;border:0;background:none;color:var(--accent);font:600 15px var(--f-ui);cursor:pointer}
-.act-b{display:grid;grid-template-columns:136px minmax(0,1fr);align-items:center;gap:20px}
-.rings{width:136px;height:136px;transform:rotate(-90deg);overflow:visible}
-.rings circle{fill:none;stroke-width:12.5;stroke-linecap:round}
-.rg-t.r1{stroke:color-mix(in srgb,var(--r1) 24%,transparent)}.rg-t.r2{stroke:color-mix(in srgb,var(--r2) 24%,transparent)}.rg-t.r3{stroke:color-mix(in srgb,var(--r3) 24%,transparent)}
-.rg-v.r1{stroke:var(--r1)}.rg-v.r2{stroke:var(--r2)}.rg-v.r3{stroke:var(--r3)}
-.rg-v{animation:ringIn 1.3s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--intro,0s) + .15s)}
-@keyframes ringIn{from{stroke-dasharray:0 400}}
-.act-s{display:flex;flex-direction:column;gap:10px;margin:0}
-.act-s dt{font:600 15px/1.2 var(--f-ui);color:var(--label)}
-.act-s dd{margin:0;font:600 17px/1.15 var(--f-ui);font-variant-numeric:tabular-nums}
-.act-s dd b{font:700 26px/1.1 var(--f-ui);letter-spacing:-.01em}
-.act-s .r1 dd{color:var(--r1t)}.act-s .r2 dd{color:var(--r2t)}.act-s .r3 dd{color:var(--r3t)}
-.act-n{margin:12px 0 0;font:400 14px/1.35 var(--f-ui);color:var(--label-2)}
-.akw{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin:12px -8px -6px;padding-top:10px;border-top:.5px solid var(--sep)}
-.akw-d{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:66px;padding:4px 0 6px;border:0;border-radius:14px;background:none;color:var(--label-2);font:600 12px var(--f-ui);cursor:pointer;transition:transform .35s var(--ease-spring)}
-.akw-l{display:grid;place-items:center;min-width:30px;height:22px;padding:0 5px;border-radius:999px;transition:background-color .25s,color .25s}
-.akw-d.ist-heute .akw-l{color:var(--label)}
-.akw-d[aria-pressed="true"] .akw-l{background:var(--label);color:var(--bg)}
-.akw-r{width:30px;height:30px;transform:rotate(-90deg)}
-.akw-r circle{fill:none;stroke:color-mix(in srgb,var(--r1) 24%,transparent);stroke-width:5.5;stroke-linecap:round}
-.akw-r circle.on{stroke:var(--r1)}
-.akw-d:disabled{opacity:.35;cursor:default}
-.akw-d:not(:disabled):active{transform:scale(.9)}
-/* Als Nächstes: Symbol wie ein App-Symbol, zwei Knöpfe wie in iOS */
-.nx-r{display:flex;align-items:center;gap:14px}
-.nx-ic{display:grid;place-items:center;flex:none;width:58px;height:58px;border-radius:14px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 80%,#fff),var(--c));color:#fff;box-shadow:inset 0 .5px 0 rgba(255,255,255,.45)}
-.nx-t{display:flex;flex-direction:column;gap:3px;min-width:0}
-.nx-t small{font:500 13px/1.25 var(--f-ui);color:var(--label-2)}
-.nx-t b{font:600 17px/1.25 var(--f-ui);color:var(--label)}
-.next .dact{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 0;justify-content:stretch}
 .ios-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:50px;padding:0 14px;border:0;border-radius:999px;font:600 17px var(--f-ui);white-space:nowrap;cursor:pointer;transition:transform .4s var(--ease-spring),filter .2s}
 .ios-btn:active{transform:scale(.96);filter:brightness(.92)}
 .ios-btn.fill{background:var(--btn-a);color:#fff}
 .ios-btn.tint{background:var(--fill);color:var(--label)}
 @media (max-width:360px){.ios-btn{gap:5px;padding:0 10px;font-size:15px}}
-/* Werte wie die Karten der Fitness-App: farbiger Titel, große Zahl, kurze Zeile darunter */
-.ios-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.met{display:flex!important;flex-direction:column;gap:4px;min-height:122px;padding:14px 14px 14px 16px}
-.met-h{display:flex;align-items:center;gap:6px;font:600 15px var(--f-ui);color:var(--mt)}
-.met-h .ic{flex:none}
-.met-h .chev{margin-left:auto;color:var(--label-3)}
-.met-v{display:flex;align-items:baseline;gap:5px;margin-top:auto}
-.met-v b{font:700 30px/1.05 var(--f-ui);letter-spacing:-.015em;color:var(--label);font-variant-numeric:tabular-nums}
-.met-v small{font:600 15px var(--f-ui);color:var(--label-2)}
-.met-s{display:flex;align-items:center;gap:8px;font:400 13px/1.3 var(--f-ui);color:var(--label-2)}
-.met-bar{flex:1;height:4px;border-radius:2px;background:var(--fill-3,var(--fill));overflow:hidden}
-.met-bar i{display:block;height:100%;border-radius:inherit;background:var(--mc)}
-.m-due{--mc:var(--p-lila);--mt:var(--t-lila)}.m-streak{--mc:var(--p-orange);--mt:var(--t-orange)}.m-xp{--mc:var(--p-gelb);--mt:var(--t-gelb)}.m-err{--mc:var(--p-rot);--mt:var(--t-rot)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .met{--mt:color-mix(in srgb,var(--mc) 82%,#fff)}}
-:root[data-theme="dark"] .met{--mt:color-mix(in srgb,var(--mc) 82%,#fff)}
-/* Listen wie in den Einstellungen: farbige Symbolquadrate, Prozent rechts */
-.dh ~ .section .group .cell-ic{width:32px;height:32px;border-radius:8px;background:var(--c);color:#fff}
-.dh ~ .section .group .cell-detail{font-variant-numeric:tabular-nums}
-.dh ~ .section .group .chev{color:var(--label-3)}
-/* Aufbau beim Öffnen: Karten gleiten nacheinander herein */
-.first-open .dh{animation:riseIn .7s cubic-bezier(.32,.72,0,1) both;animation-delay:var(--intro,0s)}
-.first-open .dh ~ :is(.act,.next,.howto,.ios-grid,.section):not(.pre,.rev){animation:riseIn .8s cubic-bezier(.32,.72,0,1) both;animation-delay:calc(var(--intro,0s) + var(--st,0s))}
-.dh ~ .act{--st:.05s}.dh ~ .next{--st:.1s}.dh ~ .howto{--st:.14s}.dh ~ .ios-grid{--st:.16s}.dh ~ .section{--st:.22s}
-:root[data-calm] .rg-v{animation:none}
-@media (prefers-reduced-motion:reduce){.rg-v{animation:none}}
-/* Start wie am iPhone: das App-Symbol wächst zum Bildschirm und gibt die App frei */
-#intro.go{animation:lxOut .45s cubic-bezier(.32,.72,0,1) .3s forwards}
-.lx-ic{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:7px;width:92px;height:92px;padding:0 0 0 25px;border-radius:22px;background:linear-gradient(180deg,#2f8fff,#0a6cf0);box-shadow:0 18px 40px -16px rgba(10,108,240,.75);opacity:0;transform:scale(.84)}
-.lx-ic i{display:block;height:7px;border-radius:4px;background:#fff}
-.lx-ic i:nth-child(1){width:42px}.lx-ic i:nth-child(2),.lx-ic i:nth-child(3){width:30px}
-.go .lx-ic{animation:lxIc .85s cubic-bezier(.32,.72,0,1) forwards}
-@keyframes lxIc{0%{opacity:0;transform:scale(.84)}28%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(12);border-radius:40px}}
+/* ===== Übersicht wie Apple Books: Cover zum Durchwischen, Tagesziel wie das Leseziel, bunte Übungskacheln ===== */
+.shelf{display:flex;gap:12px;margin:0 -16px;padding:4px 16px 12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.shelf::-webkit-scrollbar{display:none}
+@media (min-width:900px){.shelf{margin:0 -40px;padding-inline:40px;scroll-padding-inline:40px}}
+.cover{position:relative;flex:none;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:4px;width:min(76%,300px);height:300px;padding:18px 18px 16px;border:0;border-radius:26px;overflow:hidden;isolation:isolate;color:#fff;text-align:left;cursor:pointer;scroll-snap-align:start;background:radial-gradient(110% 70% at 100% 0%,color-mix(in srgb,var(--cv) 78%,#fff) 0%,transparent 62%),linear-gradient(172deg,var(--cv) 0%,var(--cd) 46%,color-mix(in srgb,var(--cd) 72%,#000) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.35),0 18px 34px -22px rgba(0,0,0,.7);transition:transform .5s var(--ease-spring)}
+.cover:active{transform:scale(.97)}
+.cv-art{position:absolute;z-index:-1;top:-20px;right:-28px;color:#fff;opacity:.22;transform:rotate(-10deg)}
+.cv-art .ic{width:170px;height:170px;stroke-width:1.4}
+.cv-eye{font:600 13px/1.2 var(--f-ui);letter-spacing:.02em}
+.cv-t{max-width:100%;font:800 27px/1.08 var(--f-display);letter-spacing:-.02em;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:anywhere}
+.cv-s{max-width:100%;font:500 15px/1.3 var(--f-ui);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cv-p{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;font:600 13px var(--f-ui);font-variant-numeric:tabular-nums}
+.cv-p i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden}
+.cv-p b{display:block;height:100%;border-radius:inherit;background:#fff}
+.goal{padding:18px}
+.gl-r{display:grid;grid-template-columns:minmax(0,1fr) 84px;align-items:center;gap:16px}
+.gl-t small{display:block;font:600 13px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--label-2)}
+.gl-n{margin:6px 0 0;font:600 17px/1.2 var(--f-ui);color:var(--label-2)}
+.gl-n b{margin-right:6px;font:700 40px/1 var(--f-display);letter-spacing:-.02em;color:var(--label);font-variant-numeric:tabular-nums}
+.gl-s{margin:8px 0 0;font:500 15px/1.3 var(--f-ui);color:var(--label-2)}
+.gl-ring{width:84px;height:84px;transform:rotate(-90deg)}
+.gl-ring circle{fill:none;stroke:var(--fill-3,var(--fill));stroke-width:9;stroke-linecap:round}
+.gl-ring circle.on{stroke:var(--accent);animation:glIn 1.3s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--intro,0s) + .3s)}
+@keyframes glIn{from{stroke-dasharray:0 300}}
+.gl-w{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:16px 0 0;padding:14px 0 0;border-top:.5px solid var(--sep);list-style:none}
+.gl-w li{display:flex;flex-direction:column;align-items:center;gap:7px;font:600 12px var(--f-ui);color:var(--label-2)}
+.gl-w li.jetzt span{color:var(--label)}
+.gl-w i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--fill-3,var(--fill))}
+.gl-w li.teil i{box-shadow:inset 0 0 0 2.5px var(--accent)}
+.gl-w li.voll i{background:var(--accent);box-shadow:none;color:#fff}
+.gl-w li.zukunft{opacity:.4}
+.gl-x{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font:500 14px var(--f-ui);color:var(--label-2)}
+.gl-x span{display:inline-flex;align-items:center;gap:6px}
+.gl-x b{font-weight:700;color:var(--label);font-variant-numeric:tabular-nums}
+.gl-x .sx .ic{color:var(--p-orange)}.gl-x .xp .ic{color:var(--p-gelb)}
+.goal .dact{display:block;margin:16px 0 0}
+.goal .ios-btn{width:100%}
+.ptiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ptile{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:112px;padding:14px 14px 13px;border:0;border-radius:22px;overflow:hidden;isolation:isolate;color:#fff;text-align:left;cursor:pointer;background:linear-gradient(180deg,var(--cv) 0%,var(--cd) 40%,color-mix(in srgb,var(--cd) 80%,#000) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.3);transition:transform .45s var(--ease-spring)}
+.ptile:active{transform:scale(.96)}
+.ptile > .ic{flex:none}
+.ptile:last-child:nth-child(odd){grid-column:1/-1}
+.pt-art{position:absolute;z-index:-1;top:-26px;right:-20px;color:#fff;opacity:.16;transform:rotate(-10deg)}
+.pt-art .ic{width:84px;height:84px;stroke-width:1.5}
+.pt-t{display:flex;flex-direction:column;gap:2px;font:700 16px/1.2 var(--f-ui)}
+.pt-t small{font:500 13px/1.25 var(--f-ui)}
+/* Aufbau beim Öffnen: weich von unten, die Cover gleiten nacheinander von rechts herein */
+@keyframes ioIn{from{opacity:0;transform:translateY(26px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes cvIn{from{opacity:0;transform:translateX(48px) scale(.97)}to{opacity:1;transform:none}}
+.first-open .dh{animation:ioIn .9s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--intro,0s)}
+.first-open .dh ~ :is(.section,.goal,.howto):not(.pre,.rev){animation:ioIn 1s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--intro,0s) + var(--st,0s))}
+.dh ~ .shelf-sec{--st:.06s}.dh ~ .goal{--st:.16s}.dh ~ .howto{--st:.22s}.dh ~ .section:not(.shelf-sec){--st:.26s}
+/* Die Reihe gleitet als Ganzes herein; die Cover blenden nur ein, damit das Einrasten nicht springt */
+.first-open .shelf{animation:cvIn 1.05s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--intro,0s) + .06s)}
+.first-open .cover{animation:cvFade .9s ease both;animation-delay:calc(var(--intro,0s) + .08s + var(--k,0) * 90ms)}
+@keyframes cvFade{from{opacity:0}}
+:root[data-calm] :is(.gl-ring circle.on,.cover,.shelf){animation:none}
+@media (prefers-reduced-motion:reduce){.gl-ring circle.on,.cover,.shelf{animation:none}}
+/* Start: App-Symbol erscheint weich mit leichtem Federn, die Balken zeichnen sich, der Name blendet ein; dann löst sich alles auf */
+#intro.go{animation:lxOut .7s cubic-bezier(.4,0,.2,1) 1.4s forwards}
+.lx{display:flex;flex-direction:column;align-items:center;gap:18px;will-change:transform,opacity}
+.lx-ic{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;width:104px;height:104px;padding-left:28px;border-radius:24px;background:linear-gradient(180deg,#3291ff,#0a6cf0);box-shadow:0 24px 50px -18px rgba(10,108,240,.65),inset 0 1px 0 rgba(255,255,255,.35);opacity:0;transform:scale(.72);filter:blur(6px);will-change:transform,opacity,filter}
+.lx-ic i{display:block;height:8px;border-radius:4px;background:#fff;transform-origin:left center}
+.lx-ic i:nth-child(1){width:48px}.lx-ic i:nth-child(2),.lx-ic i:nth-child(3){width:34px}
+.lx-n{font:600 19px var(--f-display);letter-spacing:-.01em;color:var(--label);opacity:0;transform:translateY(10px)}
+.go .lx-ic{animation:lxIc .95s cubic-bezier(.34,1.36,.64,1) .05s forwards}
+.go .lx-ic i{animation:lxBar .75s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(.32s + var(--b) * 110ms)}
+.go .lx-n{animation:lxName .85s cubic-bezier(.22,1,.36,1) .42s forwards}
+.go .lx{animation:lxAway .75s cubic-bezier(.4,0,.2,1) 1.3s forwards}
+@keyframes lxIc{0%{opacity:0;transform:scale(.72);filter:blur(6px)}55%{opacity:1;filter:blur(0)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes lxBar{from{opacity:0;transform:scaleX(.15)}to{opacity:1;transform:none}}
+@keyframes lxName{to{opacity:1;transform:none}}
+@keyframes lxAway{to{opacity:0;transform:scale(1.07)}}
 @keyframes lxOut{to{opacity:0;visibility:hidden}}
 </style>
 
@@ -4021,45 +4027,37 @@ const DAY_LONG = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sa
 function vStart() {
   setNav({});
   const t = today(), start = t - (dayDate(t).getUTCDay() + 6) % 7, ti = t - start;
-  if (homeSel === null || homeSel > ti) homeSel = ti;
   const vals = Array.from({length:7}, (_, i) => start + i > t ? 0 : cntOf(start + i));
-  const sel = homeSel, selV = vals[sel], selD = start + sel;
-  const total = overallProgress(), st = nextStep(), due = dueCount(), streak = streakNow();
-  const wrongN = (S.wrong || []).filter(id => Q_BY_ID[id]).length, lvl = Math.floor(S.xp / 1000) + 1, lvlP = (S.xp % 1000) / 10;
-  const aktiv = vals.filter(v => v > 0).length;
-  const dayName = selD === t ? "Heute" : selD === t - 1 ? "Gestern" : DAY_LONG[sel];
-  const goalTxt = selV >= DAY_GOAL ? "Tagesziel geschafft" : selD === t ? `Noch ${DAY_GOAL - selV} bis zum Tagesziel` : `Tagesziel ${DAY_GOAL} Aufgaben`;
+  const heute = vals[ti], st = nextStep(), due = dueCount(), streak = streakNow();
+  const wrongN = (S.wrong || []).filter(id => Q_BY_ID[id]).length, lvl = Math.floor(S.xp / 1000) + 1;
   const dateTxt = dayDate(t).toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", timeZone:"UTC"});
-  // Ringe wie in Apples Aktivitäts-App: außen die Aufgaben des gewählten Tags, Mitte die aktiven Tage dieser Woche, innen der Lernstand
-  const ring = (r, v, k) => { const C = 2 * Math.PI * r; return `<circle class="rg-t ${k}" cx="60" cy="60" r="${r}"/>${v > 0 ? `<circle class="rg-v ${k}" cx="60" cy="60" r="${r}" stroke-dasharray="${(C * Math.min(1, v)).toFixed(1)} ${C.toFixed(1)}"/>` : ""}`; };
-  const mini = v => { const C = 2 * Math.PI * 16, q = Math.min(1, v / DAY_GOAL); return `<svg class="akw-r" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16"/>${q > 0 ? `<circle class="on" cx="20" cy="20" r="16" stroke-dasharray="${(C * q).toFixed(1)} ${C.toFixed(1)}"/>` : ""}</svg>`; };
-  const chev = icon("right", 15, "chev");
-  actHandler = (act, el) => {
+  const goalTxt = heute >= DAY_GOAL ? "Tagesziel geschafft" : `Noch ${DAY_GOAL - heute} bis zum Tagesziel`;
+  const C = 2 * Math.PI * 34, q = Math.min(1, heute / DAY_GOAL);
+  // Wie „Weiterlesen“ in Apple Books: zuerst das Thema, mit dem es weitergeht, dann die übrigen
+  const order = [st.m, ...MODS.filter(m => m !== st.m)];
+  const cover = (m, i) => { const [x, y] = unitsOf(m), pr = modProgress(m.id), first = i === 0;
+    return `<button class="cover" data-go="${first ? st.go : `modul-${m.id}`}" style="--cv:${tief(m.color, 3.2)};--cd:${tief(m.color)};--k:${Math.min(i, 3)}"><span class="cv-art" aria-hidden="true">${icon(m.icon, 170)}</span><span class="cv-eye">${first ? (st.started ? "Weiterlernen" : "Als Nächstes") : `${x} von ${y} Lernseiten`}</span><span class="cv-t">${m.title}</span>${first ? `<span class="cv-s">${st.unit}</span>` : ""}<span class="cv-p"><i><b style="width:${pr}%"></b></i>${pr} %</span></button>`; };
+  const tile = (go, col, ic, title, sub) => `<button class="ptile" data-go="${go}" style="--cv:${tief(col, 3.2)};--cd:${tief(col)}"><span class="pt-art" aria-hidden="true">${icon(ic, 96)}</span>${icon(ic, 24)}<span class="pt-t">${title}<small>${sub}</small></span></button>`;
+  actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
-    if (act === "day") { const v = +el.dataset.v; if (v !== homeSel) { homeSel = v; haptic("select"); vStart(); } }
-    if (act === "today") { homeSel = ti; haptic("select"); vStart(); }
   };
   paint(`
   <header class="dh">
     <div><small class="dh-d">${dateTxt}</small><h1 class="large">Übersicht</h1></div>
     <button class="nb-round" data-go="einstellungen" aria-label="Einstellungen">${icon("gear", 20)}</button>
   </header>
-  <section class="ios-card act" aria-label="Aktivität: ${dayName}">
-    <div class="act-h"><h2>Aktivität</h2>${sel !== ti ? `<button class="act-today" data-act="today">Zurück zu heute</button>` : `<span>${dayName}</span>`}</div>
-    <div class="act-b">
-      <svg class="rings" viewBox="0 0 120 120" aria-hidden="true">${ring(51, selV / DAY_GOAL, "r1")}${ring(37, aktiv / 7, "r2")}${ring(23, total / 100, "r3")}</svg>
-      <dl class="act-s">
-        <div class="r1"><dt>Aufgaben</dt><dd><b>${selV}</b>/${DAY_GOAL}</dd></div>
-        <div class="r2"><dt>Aktive Tage</dt><dd><b>${aktiv}</b>/7</dd></div>
-        <div class="r3"><dt>Gelernt</dt><dd><b>${total}</b> %</dd></div>
-      </dl>
-    </div>
-    <p class="act-n">${sel !== ti ? `${dayName} · ` : ""}${goalTxt}</p>
-    <div class="akw" role="group" aria-label="Tag wählen">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => `<button class="akw-d${i === ti ? " ist-heute" : ""}" data-act="day" data-v="${i}" aria-pressed="${i === sel}" aria-label="${DAY_LONG[i]}, ${vals[i]} Aufgaben"${i > ti ? " disabled" : ""}><span class="akw-l">${n}</span>${mini(vals[i])}</button>`).join("")}</div>
+  <section class="section shelf-sec"><div class="hsec"><h2>Weiterlernen</h2><button class="hsee" data-go="themen">Alle</button></div>
+    <div class="shelf">${order.map(cover).join("")}</div>
   </section>
-  <section class="ios-card next" aria-label="Als Nächstes">
-    <div class="nx-r"><span class="nx-ic" style="--c:${ap(st.m.color)}">${icon(st.m.icon, 26)}</span><span class="nx-t"><small>${st.started ? "Weiterlernen" : "Als Nächstes"} · ${st.m.title}</small><b>${st.unit}</b></span></div>
-    <div class="dact"><button class="ios-btn fill" data-go="${st.go}">${icon("play", 15)}${st.started ? "Weiterlernen" : "Jetzt starten"}</button><button class="ios-btn tint" data-go="heute">${icon("mix", 17)}Tagesmix</button></div>
+  <section class="ios-card goal" aria-label="Tagesziel">
+    <div class="gl-r">
+      <div class="gl-t"><small>Heute</small><p class="gl-n"><b>${heute}</b>von ${DAY_GOAL} Aufgaben</p><p class="gl-s">${goalTxt}</p></div>
+      <svg class="gl-ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34"/>${q > 0 ? `<circle class="on" cx="40" cy="40" r="34" stroke-dasharray="${(C * q).toFixed(1)} ${C.toFixed(1)}"/>` : ""}</svg>
+    </div>
+    <ol class="gl-w" aria-label="Diese Woche">${["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map((n, i) => { const v = vals[i], k = i > ti ? "zukunft" : v >= DAY_GOAL ? "voll" : v > 0 ? "teil" : "leer";
+      return `<li class="${k}${i === ti ? " jetzt" : ""}" aria-label="${DAY_LONG[i]}: ${i > ti ? "noch offen" : `${v} Aufgaben`}"><span>${n}</span><i>${k === "voll" ? icon("check", 14) : ""}</i></li>`; }).join("")}</ol>
+    <div class="gl-x"><span class="sx">${icon("flame", 16)}<b>${streak}</b>${streak === 1 ? "Tag" : "Tage"} Serie</span><span class="xp">${icon("bolt", 16)}<b>${nf(S.xp)}</b>XP · Stufe ${lvl}</span></div>
+    <div class="dact"><button class="ios-btn fill" data-go="heute">${icon("mix", 17)}Tagesmix starten</button></div>
   </section>
   ${howtoSeen ? "" : `<section class="card howto" aria-label="So funktioniert's">
     <h2>So funktioniert's</h2>
@@ -4070,21 +4068,14 @@ function vStart() {
     </ol>
     <button class="btn btn-fill hw-ok" data-act="howto">Verstanden</button>
   </section>`}
-  <div class="ios-grid">
-    <button class="ios-card met m-due" data-go="heute"><span class="met-h">${icon("karten", 16)}Fällig${chev}</span><span class="met-v"><b>${due}</b><small>${due === 1 ? "Karte" : "Karten"}</small></span><span class="met-s">${due ? "Heute wiederholen" : "Alles erledigt"}</span></button>
-    <button class="ios-card met m-streak" data-go="heute"><span class="met-h">${icon("flame", 16)}Serie${chev}</span><span class="met-v"><b>${streak}</b><small>${streak === 1 ? "Tag" : "Tage"}</small></span><span class="met-s">am Stück gelernt</span></button>
-    <button class="ios-card met m-xp" data-go="trainieren"><span class="met-h">${icon("bolt", 16)}Punkte${chev}</span><span class="met-v"><b>${nf(S.xp)}</b><small>XP</small></span><span class="met-s"><span class="met-bar" aria-hidden="true"><i style="width:${lvlP.toFixed(1)}%"></i></span>Stufe ${lvl}</span></button>
-    <button class="ios-card met m-err" data-go="trainieren"><span class="met-h">${icon("reset", 16)}Fehler${chev}</span><span class="met-v"><b>${wrongN}</b><small>${wrongN === 1 ? "Frage" : "Fragen"}</small></span><span class="met-s">${wrongN ? "Zum Wiederholen" : "Alles richtig"}</span></button>
-  </div>
-  <section class="section"><div class="hsec"><h2>Themen</h2><button class="hsee" data-go="themen">Alle</button></div>
-    <div class="group">${MODS.map(m => { const [x, y] = unitsOf(m);
-      return `<button class="cell" data-go="modul-${m.id}"><span class="cell-ic" style="--c:${ap(m.color)}">${icon(m.icon, 18)}</span><span class="cell-main"><span class="cell-title">${m.title}</span><span class="cell-sub">${x} von ${y} Lernseiten</span></span><span class="cell-detail">${modProgress(m.id)} %</span>${chev}</button>`; }).join("")}</div>
-  </section>
-  <section class="section"><div class="hsec"><h2>Prüfen und Üben</h2></div>
-    <div class="group">
-      <button class="cell" data-go="pruefung-ap1"><span class="cell-ic" style="--c:${APPLE.orange}">${icon("timer", 18)}</span><span class="cell-main"><span class="cell-title">Probeprüfung AP1</span><span class="cell-sub">Abschlussprüfung Teil 1, mit Zeit</span></span>${chev}</button>
-      <button class="cell" data-go="pruefung-ap2"><span class="cell-ic" style="--c:${APPLE.pink}">${icon("timer", 18)}</span><span class="cell-main"><span class="cell-title">Probeprüfung AP2</span><span class="cell-sub">Abschlussprüfung Teil 2, mit Zeit</span></span>${chev}</button>
-      ${CODE.length ? `<button class="cell" data-go="code"><span class="cell-ic" style="--c:${APPLE.graphit}">${icon("code", 18)}</span><span class="cell-main"><span class="cell-title">Programmieren</span><span class="cell-sub">Python, Java, HTML, JavaScript, SQL</span></span><span class="cell-detail">${codeAll()} %</span>${chev}</button>` : ""}
+  <section class="section"><div class="hsec"><h2>Üben und Prüfen</h2></div>
+    <div class="ptiles">
+      ${tile("heute", APPLE.lila, "karten", "Lernkarten", due ? `${due} fällig` : "Nichts fällig")}
+      ${tile("trainieren", APPLE.rot, "reset", "Fehler", wrongN ? `${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} offen` : "Alles richtig")}
+      ${tile("pruefung-ap1", APPLE.orange, "timer", "Probeprüfung AP1", "Teil 1, mit Zeit")}
+      ${tile("pruefung-ap2", APPLE.pink, "timer", "Probeprüfung AP2", "Teil 2, mit Zeit")}
+      ${CODE.length ? tile("code", APPLE.teal, "code", "Programmieren", `${codeAll()} % gelernt`) : ""}
+      ${tile("trainieren", APPLE.blau, "trainieren", "Trainieren", "Alle Übungen")}
     </div>
   </section>
   <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
@@ -4099,7 +4090,8 @@ function vStart() {
     accObs.observe(dact);
   }
 }
-/* Einmal beim Öffnen wie am iPhone: Das App-Symbol wächst zum ganzen Bildschirm, dahinter baut sich die Übersicht auf. */
+/* Einmal beim Öffnen: Das App-Symbol erscheint weich, seine Balken zeichnen sich, der Name blendet ein.
+   Danach löst sich alles sanft auf und die Übersicht gleitet herein. Antippen überspringt. */
 function endFirstOpen() {
   document.documentElement.classList.remove("first-open");
   document.documentElement.style.removeProperty("--intro");
@@ -4109,17 +4101,17 @@ function playIntro() {
   const root = document.documentElement, el = document.createElement("div");
   el.id = "intro";
   el.setAttribute("aria-hidden", "true");
-  el.innerHTML = `<span class="lx-ic"><i></i><i></i><i></i></span>`;
+  el.innerHTML = `<div class="lx"><span class="lx-ic">${[0, 1, 2].map(b => `<i style="--b:${b}"></i>`).join("")}</span><b class="lx-n">IT-Lernlabor</b></div>`;
   document.body.appendChild(el);
-  root.style.setProperty("--intro", ".38s");
+  root.style.setProperty("--intro", "1.45s");
   root.classList.add("first-open");
   const end = () => { el.remove(); removeEventListener("pointerdown", end); };
   addEventListener("pointerdown", end);
   // Erst nach dem ersten Aufbau der Seite starten, sonst bremst das Laden die Animation aus.
   requestAnimationFrame(() => requestAnimationFrame(() => {
     el.classList.add("go");
-    setTimeout(end, 950);
-    setTimeout(endFirstOpen, 2600);
+    setTimeout(end, 2150);
+    setTimeout(endFirstOpen, 4000);
   }));
 }
 function vThemen() {
