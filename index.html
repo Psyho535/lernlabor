@@ -2238,11 +2238,12 @@ button.ios-card:active{transform:scale(.97)}
 .ios-btn.tint{background:var(--fill);color:var(--label)}
 @media (max-width:360px){.ios-btn{gap:5px;padding:0 10px;font-size:15px}}
 /* ===== Übersicht wie Apple Books: Cover zum Durchwischen, Tagesziel wie das Leseziel, bunte Übungskacheln ===== */
-.shelf{display:flex;gap:12px;margin:0 -16px;padding:4px 16px 12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.shelf{display:flex;gap:12px;margin:-8px -16px 0;padding:14px 16px 20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .shelf::-webkit-scrollbar{display:none}
 @media (min-width:900px){.shelf{margin:0 -40px;padding-inline:40px;scroll-padding-inline:40px}}
-.cover{position:relative;flex:none;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:4px;width:min(76%,300px);height:300px;padding:18px 18px 16px;border:0;border-radius:26px;overflow:hidden;isolation:isolate;color:#fff;text-align:left;cursor:pointer;scroll-snap-align:start;background:radial-gradient(110% 70% at 100% 0%,color-mix(in srgb,var(--cv) 78%,#fff) 0%,transparent 62%),linear-gradient(172deg,var(--cv) 0%,var(--cd) 46%,color-mix(in srgb,var(--cd) 72%,#000) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.35),0 18px 34px -22px rgba(0,0,0,.7);transition:transform .5s var(--ease-spring)}
-.cover:active{transform:scale(.97)}
+.cover{position:relative;flex:none;display:block;width:min(76%,300px);height:300px;padding:0;border:0;background:none;color:#fff;text-align:left;cursor:pointer;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
+.cv-in{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:4px;padding:18px 18px 16px;border-radius:26px;overflow:hidden;isolation:isolate;background:radial-gradient(110% 70% at 100% 0%,color-mix(in srgb,var(--cv) 78%,#fff) 0%,transparent 62%),linear-gradient(172deg,var(--cv) 0%,var(--cd) 46%,color-mix(in srgb,var(--cd) 72%,#000) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.35),0 calc(14px + 10px * var(--f,0)) calc(28px + 16px * var(--f,0)) -22px rgba(0,0,0,.75);transform:scale(calc(1 + .05 * var(--f,0)));transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;will-change:transform}
+.cover:active .cv-in{transform:scale(calc((1 + .05 * var(--f,0)) * .97))}
 .cv-art{position:absolute;z-index:-1;top:-20px;right:-28px;color:#fff;opacity:.22;transform:rotate(-10deg)}
 .cv-art .ic{width:170px;height:170px;stroke-width:1.4}
 .cv-eye{font:600 13px/1.2 var(--f-ui);letter-spacing:.02em}
@@ -4036,7 +4037,7 @@ function vStart() {
   // Wie „Weiterlesen“ in Apple Books: zuerst das Thema, mit dem es weitergeht, dann die übrigen
   const order = [st.m, ...MODS.filter(m => m !== st.m)];
   const cover = (m, i) => { const [x, y] = unitsOf(m), pr = modProgress(m.id), first = i === 0;
-    return `<button class="cover" data-go="${first ? st.go : `modul-${m.id}`}" style="--cv:${tief(m.color, 3.2)};--cd:${tief(m.color)};--k:${Math.min(i, 3)}"><span class="cv-art" aria-hidden="true">${icon(m.icon, 170)}</span><span class="cv-eye">${first ? (st.started ? "Weiterlernen" : "Als Nächstes") : `${x} von ${y} Lernseiten`}</span><span class="cv-t">${m.title}</span>${first ? `<span class="cv-s">${st.unit}</span>` : ""}<span class="cv-p"><i><b style="width:${pr}%"></b></i>${pr} %</span></button>`; };
+    return `<button class="cover" data-go="${first ? st.go : `modul-${m.id}`}" style="--cv:${tief(m.color, 3.2)};--cd:${tief(m.color)};--k:${Math.min(i, 3)}"><span class="cv-in"><span class="cv-art" aria-hidden="true">${icon(m.icon, 170)}</span><span class="cv-eye">${first ? (st.started ? "Weiterlernen" : "Als Nächstes") : `${x} von ${y} Lernseiten`}</span><span class="cv-t">${m.title}</span>${first ? `<span class="cv-s">${st.unit}</span>` : ""}<span class="cv-p"><i><b style="width:${pr}%"></b></i>${pr} %</span></span></button>`; };
   const tile = (go, col, ic, title, sub) => `<button class="ptile" data-go="${go}" style="--cv:${tief(col, 3.2)};--cd:${tief(col)}"><span class="pt-art" aria-hidden="true">${icon(ic, 96)}</span>${icon(ic, 24)}<span class="pt-t">${title}<small>${sub}</small></span></button>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
@@ -4088,6 +4089,22 @@ function vStart() {
       acc.classList.toggle("on", on); acc.tabIndex = on ? 0 : -1; acc.setAttribute("aria-hidden", String(!on));
     });
     accObs.observe(dact);
+  }
+  // Fokus beim Wischen: je näher ein Cover an der Einrastposition ist, desto größer (bis 5 %); die anderen bleiben gleich
+  const shelf = view.querySelector(".shelf");
+  if (shelf) {
+    const covers = [...shelf.querySelectorAll(".cover")];
+    let raf = 0, vorne = 0;
+    const fokus = tick => {
+      raf = 0;
+      const L = shelf.getBoundingClientRect().left + (parseFloat(getComputedStyle(shelf).scrollPaddingLeft) || 16);
+      let best = 0, bf = -1;
+      covers.forEach((c, i) => { const r = c.getBoundingClientRect(), f = Math.max(0, 1 - Math.abs(r.left - L) / r.width); c.style.setProperty("--f", f.toFixed(3)); if (f > bf) { bf = f; best = i; } });
+      if (tick && best !== vorne) haptic("select");
+      vorne = best;
+    };
+    shelf.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(() => fokus(true)); }, {passive:true});
+    fokus(false);
   }
 }
 /* Einmal beim Öffnen: Das App-Symbol erscheint weich, seine Balken zeichnen sich, der Name blendet ein.
