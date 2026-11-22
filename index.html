@@ -2531,6 +2531,9 @@ button.ios-card:active{transform:scale(.97)}
 .ghost.zf{z-index:2;right:auto;bottom:auto}
 .zf > .col{position:absolute;will-change:transform}
 .zf-kachel{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;z-index:5;animation:none!important;transition:none!important;transform:none!important;pointer-events:none;grid-column:auto!important;grid-row:auto!important}
+/* Farbschichten im Kachel-Fenster */
+.zf-farbe{position:absolute;inset:0;z-index:4;display:block;pointer-events:none}
+.zf-kachel{background:transparent!important;box-shadow:none!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -3635,24 +3638,36 @@ function zoomFensterFlug(box, inhalt, a, b, ra, rb, dauer) {
   inhalt.animate(innen, o);
   return flug;
 }
-// Kachel als Deckel im Fenster: am Anfang sichtbar, damit das Fenster wie die Kachel selbst aussieht
-const zoomDeckel = el => { const k = el.cloneNode(true); k.removeAttribute("data-go"); k.removeAttribute("id"); k.className = el.className + " zf-kachel"; k.setAttribute("aria-hidden", "true"); return k; };
+// Farbschichten im Fenster: Verlauf (oben Kachelfarbe, unten durchsichtig), volle Kachelfarbe, Inhalt der Kachel
+function zoomFarbschichten(el, farbe) {
+  const verlauf = document.createElement("i"), voll = document.createElement("i"), inhalt = el.cloneNode(true);
+  verlauf.className = voll.className = "zf-farbe";
+  verlauf.style.background = `linear-gradient(180deg,${farbe} 0%,${farbe} 30%,color-mix(in srgb,${farbe} 55%,transparent) 55%,transparent 88%)`;
+  voll.style.background = farbe;
+  inhalt.removeAttribute("data-go"); inhalt.removeAttribute("id");
+  inhalt.className = el.className + " zf-kachel"; inhalt.setAttribute("aria-hidden", "true");
+  return {verlauf, voll, inhalt, alle:[verlauf, voll, inhalt]};
+}
+const zoomBlende = (el, kf, dauer) => el.animate(kf, {duration:dauer, easing:"linear", fill:"forwards"});
 // Öffnen: Die neue Seite wandert für die Dauer des Übergangs in ein Fenster, das aus der Kachel wächst
 function zoomIn(z) {
   const g = ghostEl;
   if (!g || !z.el) return;
-  const vb = view.getBoundingClientRect(), box = document.createElement("div"), innen = document.createElement("div"), deckel = zoomDeckel(z.el);
+  const vb = view.getBoundingClientRect(), box = document.createElement("div"), innen = document.createElement("div"), f = zoomFarbschichten(z.el, z.bg);
   box.className = "zf"; box.setAttribute("aria-hidden", "true");
   innen.className = "col";
   innen.style.cssText = `left:${vb.left}px;top:${vb.top}px;width:${vb.width}px;transform-origin:${-vb.left}px ${-vb.top}px`;
   innen.append(...view.childNodes);
-  box.append(innen, deckel);
+  box.append(innen, ...f.alle);
   document.body.append(box);
   const nb = [...document.querySelectorAll("#navbar .nb-left, #navbar .nb-right")];
   nb.forEach(el => el.animate([{opacity:0}, {opacity:0, offset:.55}, {opacity:1}], {duration:ZOOM_D + 120, easing:"ease-out"}));
   const flug = zoomFensterFlug(box, innen, z.rect, zoomGanz(), ZOOM_R, ZOOM_ENDE_R, ZOOM_D);
-  deckel.animate([{opacity:1}, {opacity:0}], {duration:220, easing:"ease-out", fill:"forwards"});
-  g.animate([{opacity:1, transform:"none"}, {opacity:.25, transform:"scale(.94)"}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
+  // Schrift der Kachel geht zuerst, dann die volle Farbe, zuletzt der Verlauf oben in die Kopfkarte
+  zoomBlende(f.inhalt, [{opacity:1}, {opacity:0, offset:.28}, {opacity:0}], ZOOM_D);
+  zoomBlende(f.voll, [{opacity:1}, {opacity:1, offset:.08}, {opacity:0, offset:.5, easing:"ease-in-out"}, {opacity:0}], ZOOM_D);
+  zoomBlende(f.verlauf, [{opacity:1}, {opacity:1, offset:.3}, {opacity:0, offset:.88, easing:"ease-in-out"}, {opacity:0}], ZOOM_D);
+  g.animate([{opacity:1, transform:"none"}, {opacity:.3, transform:"scale(.94)"}], {duration:ZOOM_D, easing:ZOOM_EASE, fill:"forwards"});
   flug.onfinish = () => {
     view.append(...innen.childNodes);
     box.remove();
@@ -3660,19 +3675,21 @@ function zoomIn(z) {
     if (ghostEl === g) ghostEl = null;
   };
 }
-// Zurück: Die alte Seite (sie liegt schon als eigene Ebene vorn) schrumpft als Fenster in ihre Kachel
+// Zurück: Die alte Seite schrumpft als Fenster in ihre Kachel; die Farbe fließt von oben nach unten zurück
 function zoomOut(z) {
   if (z.y) window.scrollTo(0, z.y);
   const g = ghostEl, t = view.querySelector(`.bt[data-go="${z.go}"]`), e = t && t.getBoundingClientRect();
   if (!g || !t || e.bottom < 0 || e.top > innerHeight) return zoomSchrumpf(z);
-  const innen = g.firstElementChild, deckel = zoomDeckel(t), r0 = innen.getBoundingClientRect();
+  const innen = g.firstElementChild, f = zoomFarbschichten(t, getComputedStyle(t).backgroundColor), r0 = innen.getBoundingClientRect();
   g.classList.add("zf");
   innen.style.transformOrigin = `${-r0.left}px ${-r0.top}px`;
-  g.append(deckel);
+  g.append(...f.alle);
   t.style.visibility = "hidden";
   const flug = zoomFensterFlug(g, innen, zoomGanz(), e, ZOOM_ENDE_R, ZOOM_R, ZOOM_D);
-  deckel.animate([{opacity:0}, {opacity:0, offset:.45}, {opacity:1}], {duration:ZOOM_D, easing:"ease-in", fill:"forwards"});
-  view.animate([{opacity:.25, transform:"scale(.94)"}, {opacity:1, transform:"none"}], {duration:ZOOM_D, easing:ZOOM_EASE});
+  zoomBlende(f.verlauf, [{opacity:0}, {opacity:0, offset:.12}, {opacity:1, offset:.62, easing:"ease-in-out"}, {opacity:1}], ZOOM_D);
+  zoomBlende(f.voll, [{opacity:0}, {opacity:0, offset:.42}, {opacity:1, offset:.86, easing:"ease-in-out"}, {opacity:1}], ZOOM_D);
+  zoomBlende(f.inhalt, [{opacity:0}, {opacity:0, offset:.68}, {opacity:1}], ZOOM_D);
+  view.animate([{opacity:.3, transform:"scale(.94)"}, {opacity:1, transform:"none"}], {duration:ZOOM_D, easing:ZOOM_EASE});
   flug.onfinish = () => { t.style.visibility = ""; if (g.isConnected) g.remove(); if (ghostEl === g) ghostEl = null; };
 }
 function zoomSchrumpf(z) {
