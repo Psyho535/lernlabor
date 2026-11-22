@@ -2169,19 +2169,22 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 /* ===== Vorlagen-Look: Glas wie iOS 26, Leuchtkarten, runde Glasknöpfe ===== */
 /* Zahnrad mittig im Kreis, Tippfläche 44 pt */
 .nb-round,.dh .nb-round{display:inline-grid;place-items:center;width:44px;height:44px;padding:0}
-/* Zurück als runder Glasknopf; der Name bleibt für Bedienhilfen erhalten */
-.back{width:44px;min-width:44px;height:44px;padding:0!important;margin-left:6px;justify-content:center;border-radius:50%!important;color:var(--label)!important;background:var(--glass-c)!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;backdrop-filter:blur(24px) saturate(180%)!important;box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 .5px var(--glass-ln)!important}
+/* Zurück als runder, deckender Knopf wie in der Vorlage; der Name bleibt für Bedienhilfen erhalten */
+.back{width:44px;min-width:44px;height:44px;padding:0!important;margin-left:6px;justify-content:center;border-radius:50%!important;color:var(--label)!important;background:var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border:0!important}
 .back span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .back .ic{width:22px;height:22px}
 .back:active{transform:scale(.9);opacity:1}
-/* Tab-Leiste: Glaskapsel mit vier Tabs, daneben die Suche als eigener Glaskreis */
-.tabbar{grid-template-columns:repeat(4,minmax(0,1fr)) 80px!important;padding:5px!important;background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-.tabbar::before{content:"";position:absolute;top:0;bottom:0;left:0;right:80px;border-radius:999px;background:var(--glass-c);-webkit-backdrop-filter:blur(30px) saturate(200%);backdrop-filter:blur(30px) saturate(200%);box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 .5px var(--glass-ln),0 12px 32px -14px rgba(0,0,0,.6);pointer-events:none}
-.tabbar .tab-ind{left:5px!important;width:calc((100% - 10px - 80px) / 4)!important}
-.tab[data-nav="suche"]{justify-self:end;align-self:center;width:66px!important;height:66px!important;border-radius:50%!important;background:var(--glass-c);-webkit-backdrop-filter:blur(30px) saturate(200%);backdrop-filter:blur(30px) saturate(200%);box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 0 0 .5px var(--glass-ln),0 12px 32px -14px rgba(0,0,0,.6)}
-.tab[data-nav="suche"] span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.tab[data-nav="suche"][aria-current="page"]{background:var(--glass-sel);color:var(--accent)}
-:root[data-noglass] .tabbar::before,:root[data-noglass] .tab[data-nav="suche"],:root[data-noglass] .back{background:var(--material-strong)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Tab-Leiste: schmal und deckend, alle fünf Tabs, der aktive Tab hell hervorgehoben wie der gewählte Tag */
+.tabbar{width:min(calc(100% - 32px),400px)!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:4px!important;gap:0!important;border-radius:999px!important;background:var(--surface)!important;border:.5px solid var(--sep)!important;box-shadow:0 10px 26px -14px rgba(0,0,0,.7)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.tabbar::before{display:none}
+.tab{height:48px!important;gap:2px!important;border-radius:999px!important;color:var(--label-2)}
+.tab .ic{width:21px;height:21px}
+.tab span{font-size:10px!important;font-weight:600}
+.tabbar .tab-ind{top:4px!important;bottom:4px!important;left:4px!important;width:calc((100% - 8px) / 5)!important;border-radius:999px!important;background:var(--label)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.tab-ind::after{display:none}
+.tab[aria-current="page"],.tabbar.dragging .tab.hov{color:var(--bg)!important}
+.tabbar.dragging .tab[aria-current="page"]:not(.hov){color:var(--label-2)!important}
+:root[data-noglass] .back{background:var(--surface)!important}
 /* Leuchtkarten: dunkle Karte mit weichem Farbschimmer in der Ecke */
 .gc::after{display:block!important;content:"";position:absolute;z-index:-1;inset:auto -26% -46% auto;width:82%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--k) 78%,transparent),color-mix(in srgb,var(--k) 22%,transparent) 58%,transparent);filter:blur(6px);opacity:.7;pointer-events:none}
 .gc.lern::after{width:46%;right:-8%;bottom:-70%}
@@ -3408,7 +3411,7 @@ function render() {
   document.querySelectorAll("[data-nav]").forEach(b => { if (b.dataset.nav === tabKey) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   const tabI = TABS.findIndex(t => t[0] === tabKey);
   $(".tab-ind").style.setProperty("--i", Math.max(0, tabI));
-  $(".tab-ind").style.opacity = tabI < 0 || TABS[tabI][0] === "suche" ? 0 : 1;
+  $(".tab-ind").style.opacity = tabI < 0 ? 0 : 1;
   setNav();
   if (moving && !reduced()) document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
   const aurora = $("#aurora");
@@ -3459,9 +3462,8 @@ window.addEventListener("hashchange", render);
 (() => {
   const bar = $("#tabbar"), ind = bar.querySelector(".tab-ind");
   let d = null, mute = false;
-  // Die Linse gleitet nur über die vier Tabs in der Kapsel; die Suche ist ein eigener Knopf daneben
-  const N = 4, SEARCH_COL = 80;
-  const geo = () => { const r = bar.getBoundingClientRect(), cell = (r.width - 10 - SEARCH_COL) / N; return {left:r.left + 5, cell}; };
+  const N = TABS.length, PAD = 4;
+  const geo = () => { const r = bar.getBoundingClientRect(), cell = (r.width - 2 * PAD) / N; return {left:r.left + PAD, cell}; };
   const move = x => {
     const g = geo(), i = Math.max(0, Math.min(N - 1, Math.floor((x - g.left) / g.cell)));
     ind.style.setProperty("--x", Math.max(0, Math.min((N - 1) * g.cell, x - g.left - g.cell / 2)) + "px");
@@ -3470,7 +3472,7 @@ window.addEventListener("hashchange", render);
     haptic("select");
     bar.querySelectorAll(".tab").forEach((t, k) => t.classList.toggle("hov", k === i));
   };
-  bar.addEventListener("pointerdown", e => { if (e.button || (e.target.closest && e.target.closest('[data-nav="suche"]'))) return; d = {id:e.pointerId, x0:e.clientX, on:false, i:-1}; });
+  bar.addEventListener("pointerdown", e => { if (e.button) return; d = {id:e.pointerId, x0:e.clientX, on:false, i:-1}; });
   bar.addEventListener("pointermove", e => {
     if (!d || e.pointerId !== d.id) return;
     if (!d.on) {
