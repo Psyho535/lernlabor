@@ -2337,16 +2337,12 @@ button.ios-card:active{transform:scale(.97)}
 .acc:active{transform:none}
 .nb-round.lg-on,.back.lg-on,.acc.lg-on{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.34),rgba(255,255,255,0) 70%),var(--lg-bg)!important}
 /* ===== Übersicht als Bühne mit Listen (wie Apple TV und Musik): Farbe des Themas oben randlos, darunter Listen ohne Kästen ===== */
-.stage{position:relative;isolation:isolate;display:block!important;align-self:stretch;width:auto;margin-top:-4px;padding:0 0 34px;color:#fff}
-.stage .dh{width:100%}
-.stage~.howto{background:none!important;box-shadow:none!important;border:0!important;padding:4px 2px 0!important}
 .st-bg{position:absolute;z-index:-1;left:-16px;right:-16px;top:-260px;bottom:-90px;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,var(--sd) 0%,var(--sd) calc(100% - 150px),color-mix(in srgb,var(--sd) 50%,var(--bg)) calc(100% - 80px),var(--bg) 100%)}
 @media (min-width:900px){.st-bg{left:-40px;right:-40px}}
 .st-glow{position:absolute;right:-38%;top:150px;width:95%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--sc),transparent);opacity:.75;animation:stGlow 18s ease-in-out infinite alternate}
 @keyframes stGlow{to{transform:translate(-14%,12%) scale(1.15)}}
 .st-art{position:absolute;right:-40px;top:230px;color:#fff;opacity:.1;transform:rotate(-10deg)}
 .st-art .ic{width:220px;height:220px}
-.stage .dh .dh-d,.stage .dh .large{color:#fff}
 .st-body{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:44px 2px 0}
 .st-eye{font:600 13px/1.2 var(--f-ui);text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.86)}
 .st-t{margin:0;font:800 40px/1.04 var(--f-display);letter-spacing:-.035em;color:#fff;overflow-wrap:break-word;hyphens:auto;max-width:100%}
@@ -2383,12 +2379,8 @@ button.ios-card:active{transform:scale(.97)}
 .first-open .st-body>*{animation:riseIn .85s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .4s)}
 .first-open .st-body>:nth-child(n+3){animation-delay:calc(var(--intro,0s) + .5s)}
 .first-open .st-body>:nth-child(n+5){animation-delay:calc(var(--intro,0s) + .6s)}
-.first-open .stage~.section{animation:riseIn .85s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .7s)}
 @media (prefers-reduced-motion:reduce){.st-glow{animation:none}}
 /* Startseite cleaner: ruhiger Grund wie überall, Farbe nur als Akzent (Symbol, Balken, Knopf) */
-.stage{color:var(--label);padding-bottom:26px}
-.stage .dh .dh-d{color:var(--label-2)}
-.stage .dh .large{color:var(--label)}
 .st-body{padding-top:30px;gap:5px}
 .st-ic{display:grid;place-items:center;width:52px;height:52px;margin-bottom:12px;border-radius:14px;background:var(--sc);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
 .st-ic .ic{width:26px;height:26px}
@@ -2507,6 +2499,20 @@ button.ios-card:active{transform:scale(.97)}
 :root[data-theme="dark"] #view.getoent::after{background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 34%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 16%,var(--bg)) 55%,var(--bg) 100%)}
 #view.getoent{position:relative}
 @media (min-width:900px){#view.getoent::after{left:-40px;right:-40px}}
+/* ===== Farbkarten: Kachel, Kopfkarte und Titelbereich teilen dieselbe Farbe (onColor: --cb Hintergrund, --on Schrift) ===== */
+.bt{background:var(--cb)!important;color:var(--on)!important}
+.bt-ic{background:color-mix(in srgb,var(--on) 14%,transparent)!important}
+.bt-big .bt-ic{background:color-mix(in srgb,var(--on) 16%,transparent)!important}
+.ph-bg{background:var(--cb)!important;background-image:none!important;box-shadow:none!important}
+.page-hero,.page-hero .large,.page-hero .ph-k,.page-hero .ph-l,.page-hero .ph-en,.page-hero .exam-note,.page-hero .ph-ic{color:var(--on)!important}
+.page-hero .ph-bar .track{background:color-mix(in srgb,var(--on) 24%,transparent)!important}
+.page-hero .ph-bar i{background:var(--on)!important}
+.page-hero .btn-fill{background:var(--hb)!important;color:var(--hbt)!important}
+.page-hero .btn-tint,.page-hero .btn.done{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--on)!important;color:var(--on)!important}
+.page-hero .lang-hero{color:var(--on)!important;background:color-mix(in srgb,var(--on) 12%,transparent)!important}
+.title-block.farbkopf{margin:0 0 6px;padding:20px 20px 22px;border-radius:30px;background:var(--cb);color:var(--on)}
+.title-block.farbkopf .kicker,.title-block.farbkopf .large,.title-block.farbkopf .lede{color:var(--on)!important}
+:root[data-mono] .page-hero,:root[data-mono] .farbkopf,:root[data-mono] .bt{--cb:#48484a!important;--on:#fff!important;--hb:#fff!important;--hbt:#000!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -2926,7 +2932,7 @@ const tief = (c, min = 4.6) => {
 };
 Object.entries(APPLE).forEach(([k, v]) => document.documentElement.style.setProperty("--t-" + k, tief(v)));
 const MODS = [
-  {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#bf5af2", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
+  {id:"osi", osi:true, title:"OSI-Modell", sub:"7 Schichten, Kapselung, Protokolle", icon:"schichten", color:"#8a6a4f", ap:"AP1 und AP2", exam:"Grundlage für Analyse und Entwicklung von Netzwerken (AP2) und die Netzwerkaufgaben in AP1", units:[], cards:CARDS, questions:QUESTIONS},
   ...(window.LERN_MODULES || [])
 ];
 MODS.forEach(m => { m.color = ap(m.color); });
@@ -3576,7 +3582,7 @@ function morphOut(m) {
    dahinter stehen und tritt leicht zurück, die Kachelfarbe geht in die Farbe der neuen Seite über, dann blendet sie weich auf. */
 const ZOOM_EASE = "cubic-bezier(.32,.72,0,1)";
 // Kachelfarben der Übersicht; dieselbe Farbe liegt als Schleier oben auf der Zielseite
-const KACHEL = {themen:tief(APPLE.blau), code:"#ffd84a", trainieren:"#efe5cf", heute:"#4fc979"};
+const KACHEL = {themen:"#0a84ff", code:"#ffd84a", trainieren:"#efe5cf", heute:"#4fc979"};
 const ZOOM_R = 26;
 function zoomPlan(r, from, dir) {
   if (zoomSrc && zoomSrc.isConnected && zoomSrc.dataset.go === r.key) {
@@ -3816,9 +3822,9 @@ function render() {
   (needsPro(r) ? () => vPro(r.key) : PRO_PAGES[r.view] || ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view])();
   window.scrollTo(0, 0);
   // Farbschleier der Kachel oben auf der Zielseite (nicht, wo die Seite schon eine farbige Kopfkarte hat)
-  const schleier = !view.querySelector(":scope > .page-hero") && KACHEL[r.view];
-  view.classList.toggle("getoent", !!schleier);
-  if (schleier) view.style.setProperty("--tint-c", schleier); else view.style.removeProperty("--tint-c");
+  const kopf = KACHEL[r.view] && view.querySelector(":scope > .title-block");
+  if (kopf) { kopf.classList.add("farbkopf"); kopf.setAttribute("style", onColor(KACHEL[r.view])); }
+  view.classList.remove("getoent");
   if (moving && !reduced() && !silentNav) {
     const oldShelf = ghostEl && ghostEl.querySelector(".shelf");
     if (oldShelf) oldShelf.scrollLeft = shelfX;
@@ -4449,8 +4455,7 @@ function vStart() {
   const pr = modProgress(st.m.id), total = overallProgress();
   const sec = (h, inner) => `<section class="ig-sec">${h ? `<h2 class="ig-h">${h}</h2>` : ""}<div class="ig">${inner}</div></section>`;
   // Kachel: Hintergrund und Schriftfarbe so gewählt, dass die Schrift mindestens 4,5:1 erreicht
-  const kachel = (cls, go, tb, tf, ic, label, val, sub) => `<button class="bt ${cls}" data-go="${go}" style="--tb:${tb};--tf:${tf}"><span class="bt-ic" aria-hidden="true">${icon(ic, 19)}</span><span class="bt-l">${label}</span><b class="bt-v">${val}</b>${sub ? `<small class="bt-s">${sub}</small>` : ""}</button>`;
-  const HELL = "#10140f";
+  const kachel = (cls, go, c, ic, label, val, sub) => `<button class="bt ${cls}" data-go="${go}" style="${onColor(c)}"><span class="bt-ic" aria-hidden="true">${icon(ic, 19)}</span><span class="bt-l">${label}</span><b class="bt-v">${val}</b>${sub ? `<small class="bt-s">${sub}</small>` : ""}</button>`;
   actHandler = act => {
     if (act === "howto") { howtoSeen = true; try { localStorage.setItem("itlernlabor.howto", "1"); } catch (e) {} haptic("light"); vStart(); }
   };
@@ -4466,28 +4471,28 @@ function vStart() {
   </section>
   <section class="ig-sec" aria-label="Lernen und Üben"><h2 class="ig-h">Lernen und Üben</h2>
     <div class="bento">
-      <button class="bt bt-big" data-go="${st.go}" style="--tb:linear-gradient(165deg,#4d392b 0%,#2c2018 100%);--tf:#fff">
+      <button class="bt bt-big" data-go="${st.go}" style="${onColor(st.m.color)}">
         <span class="bt-ic" aria-hidden="true">${icon(st.m.icon, 24)}</span>
         <small class="bt-e">${st.started ? "Weiterlernen" : "Als Nächstes"}</small>
         <span class="bt-l">${st.m.title}</span>
         <b class="bt-v">${pr}<span> %</span></b>
         <small class="bt-s">${st.unit}</small>
       </button>
-      ${kachel("", "heute", "#8fe08a", HELL, "karten", "Lernkarten", due, due === 1 ? "Karte fällig" : "Karten fällig")}
-      ${kachel("", "heute", KACHEL.heute, HELL, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
-      ${kachel("", "themen", KACHEL.themen, "#fff", "themen", "Themen", MODS.length, "Alle ansehen")}
-      ${CODE.length ? kachel("", "code", KACHEL.code, "#231c00", "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", "#ffd84a", "#231c00", "trainieren", "Üben", "", "Alle Übungen")}
-      ${kachel("", "trainieren", KACHEL.trainieren, "#2e261a", "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
+      ${kachel("", "heute", "#8fe08a", "karten", "Lernkarten", due, due === 1 ? "Karte fällig" : "Karten fällig")}
+      ${kachel("", "heute", KACHEL.heute, "mix", "Tagesziel", `${heute}/${DAY_GOAL}`, "Aufgaben heute")}
+      ${kachel("", "themen", KACHEL.themen, "themen", "Themen", MODS.length, "Alle ansehen")}
+      ${CODE.length ? kachel("", "code", KACHEL.code, "code", "Code", `${codeAll()} %`, "gelernt") : kachel("", "trainieren", KACHEL.code, "trainieren", "Üben", "", "Alle Übungen")}
+      ${kachel("", "trainieren", KACHEL.trainieren, "reset", "Fehler", wrongN, wrongN === 1 ? "Frage offen" : "Fragen offen")}
     </div>
   </section>
   <section class="ig-sec" aria-label="Prüfen"><h2 class="ig-h">Prüfen</h2>
     <div class="bento">
-      ${kachel("bt-wide", "pruefung-ap1", "#ffad33", "#2a1700", "timer", "Probeprüfung", "AP1", "Teil 1, mit Zeit")}
-      ${kachel("", "pruefung-ap2", tief(APPLE.pink), "#fff", "timer", "Probeprüfung", "AP2", "Teil 2")}
+      ${kachel("bt-wide", "pruefung-ap1", "#ff9f0a", "timer", "Probeprüfung", "AP1", "Teil 1, mit Zeit")}
+      ${kachel("", "pruefung-ap2", "#ff375f", "timer", "Probeprüfung", "AP2", "Teil 2")}
     </div>
   </section>
   ${howtoSeen ? "" : sec("So funktioniert's", [["Thema wählen und lesen", "Jedes Thema hat kurze Lernseiten, auf Wunsch in einfacher Sprache."], ["Üben", "Lernkarten und Fragen festigen das Wissen. Was du noch nicht kannst, kommt öfter dran."], ["Prüfen", "Die Probeprüfung zeigt dir, ob du für AP1 und AP2 bereit bist."]].map(([t, x], i) => `<div class="prow ig-info"><span class="pr-ic rund ig-num" style="--c:${tief(APPLE.blau)}">${i + 1}</span><span class="pr-t"><b>${t}</b><small>${x}</small></span></div>`).join("") + `<button class="prow ig-link" data-act="howto"><span class="pr-t"><b>Verstanden</b></span></button>`)}
-  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:#5a4232">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
+  <button class="acc" data-go="${st.go}" aria-hidden="true" tabindex="-1"><span class="acc-ic" style="--c:${st.m.color}">${icon(st.m.icon, 17)}</span><span class="acc-t"><small>Als Nächstes · ${st.m.title}</small><b>${st.unit}</b></span><span class="acc-go">${icon("play", 15)}</span></button>`);
   // Der Miniplayer erscheint, sobald die große Kachel aus dem Bild gescrollt ist
   const dact = view.querySelector(".bt-big"), acc = view.querySelector(".acc");
   if (accObs) { accObs.disconnect(); accObs = null; }
@@ -5454,7 +5459,7 @@ function vTrainieren() {
   paint(`
   ${titleBlock("Üben und prüfen", "Trainieren", "Der Tagesmix sucht die richtigen Aufgaben für dich aus. Mit der Probeprüfung testest du dich unter Zeitdruck.")}
   <div class="section">
-    <button class="hub mix solid" data-go="heute" style="${onColor("#5e5ce6")}"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
+    <button class="hub mix solid" data-go="heute" style="${onColor(KACHEL.heute)}"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
     <button class="hub solid" data-go="pruefung-ap1" style="${onColor("#ff9f0a")}"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP1</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
     <button class="hub solid" data-go="pruefung-ap2" style="${onColor("#ff375f")}"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP2</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
   </div>
@@ -5803,7 +5808,7 @@ function drawMixDone() {
   const msg = p === 100 ? "Alles beim ersten Versuch richtig." : p >= 60 ? "Das sitzt. Was offen blieb, kommt bald wieder." : "Das Falsche kommt zuerst wieder, bis es sitzt.";
   setNav({left:`<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>`, title:"Runde geschafft"});
   paint(`
-  ${pageHero("#5e5ce6", {kicker:"Tagesmix", title:"Runde geschafft"})}
+  ${pageHero(KACHEL.heute, {kicker:"Tagesmix", title:"Runde geschafft"})}
   <section class="card">
     <div class="result-head">${ring(p, 116, 12, "richtig")}<div class="prog-info"><div class="prog-label">${mix.firstRight} von ${mix.firsts}</div><p class="muted">${msg}</p></div></div>
     <div class="mix-stats">
