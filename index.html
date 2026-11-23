@@ -2789,6 +2789,40 @@ html[data-vt="tab"]::view-transition-new(root){animation:vtTabRein .42s var(--fe
 #statusSchleier{display:none;position:fixed;left:0;right:0;top:0;height:calc(env(safe-area-inset-top,0px) * 1.4);z-index:40;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.44) 0%,rgba(0,0,0,.22) 55%,rgba(0,0,0,0) 100%)}
 @media (display-mode:standalone) and (prefers-color-scheme:light){:root:not([data-theme="dark"]) #statusSchleier{display:block}}
 @media (display-mode:standalone){:root[data-theme="light"] #statusSchleier{display:block}}
+
+/* ===== Unterseiten wie die Übersicht: Kopf mit Kennzahlen, eine Insel pro Kategorie ===== */
+.title-block .kz{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.kz > span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.kz b{font:700 28px/1 var(--f-rund);letter-spacing:-.01em;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kz > span:first-child b{color:var(--hell)}
+.kz small{font:600 11.5px/14px var(--f-ui);letter-spacing:.03em;text-transform:uppercase;color:var(--w-2)}
+.title-block.farbkopf + .inseln{margin-top:-10px}
+.w-kat{gap:14px}
+.w-proz{flex:none;display:flex;align-items:baseline;gap:1px;font:700 24px/1 var(--f-rund);color:var(--hell);font-variant-numeric:tabular-nums}
+.w-proz small{font:700 14px/1 var(--f-rund);color:var(--hell)}
+.w-kat .w-fort i b,.w-weiter .w-fort i b{background:var(--hell)}
+.w-kat .w-fort > span:last-child{text-align:right}
+.w-kat .w-text b{font-size:18px;line-height:23px}
+.w-badge,.w-kat .w-cover:has(.w-badge-t){background:var(--cb);color:var(--on);box-shadow:none;font:700 19px/1 var(--f-mono)}
+.w-badge-t{font:700 19px/1 var(--f-mono)}
+.w-info{gap:14px}
+.w-schritt{display:flex;align-items:flex-start;gap:12px}
+.w-schritt .w-mi{margin-top:1px}
+.w-schritt > span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.w-schritt b{font:600 15px/20px var(--f-ui)}
+.w-schritt small{font:400 13.5px/18px var(--f-ui)}
+.w-themen{gap:2px}
+.w-themen .w-kopfzeile{margin-bottom:6px}
+.w-tap{width:100%;min-height:50px;padding:6px 0;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:12px;transition:opacity .2s}
+.w-tap:active{opacity:.55}
+.w-tap > span:nth-child(2){display:flex;flex-direction:column;gap:1px}
+.w-tap b{font:600 15px/20px var(--f-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-tap small{font:400 12.5px/16px var(--f-ui)}
+.w-tap + .w-tap{box-shadow:0 -.5px 0 rgba(255,255,255,.12)}
+.w-chev{flex:none;width:14px;height:14px;color:var(--w-2)}
+.kat-f{margin:-8px 4px 0}
+.col.entering .inseln > *{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 40ms + 40ms)}
+.inseln > :nth-child(2){--k:1}.inseln > :nth-child(3){--k:2}.inseln > :nth-child(4){--k:3}.inseln > :nth-child(5){--k:4}.inseln > :nth-child(n+6){--k:5}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -3748,6 +3782,10 @@ document.addEventListener("keydown", e => {
   e.preventDefault(); e.stopPropagation();
   setEasy(map[e.key]);
 }, true);
+/* Seitenkopf mit Kennzahlen (wie die Ziffern einer Live-Aktivität) */
+const kopfZahlen = (kicker, title, zahlen) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1><div class="kz">${zahlen.map(([w, t]) => `<span><b>${w}</b><small>${t}</small></span>`).join("")}</div></header>`;
+/* Eine Insel pro Kategorie: Symbol, Name, Kurzinfo, Prozent und Fortschritt */
+const kategorieInsel = ({go, c, cover, eye = "", title, sub, v, links, rechts}) => `<button class="w w-kat" data-go="${go}" data-zoom style="${onColor(c)}"><span class="w-zeile"><span class="w-cover" aria-hidden="true">${cover}</span><span class="w-text">${eye ? `<small class="w-eye">${eye}</small>` : ""}<b>${title}</b><span>${sub}</span></span><span class="w-proz" aria-label="${v} Prozent">${v}<small>%</small></span></span><span class="w-fort"><span>${links}</span><i aria-hidden="true"><b style="width:${v}%"></b></i><span>${rechts}</span></span></button>`;
 const titleBlock = (kicker, title, lede) => `<header class="title-block">${kicker ? `<div class="kicker">${kicker}</div>` : ""}<h1 class="large">${title}</h1>${lede ? `<p class="lede" style="margin-top:6px">${lede}</p>` : ""}</header>`;
 
 /* ---------------- Navigation ---------------- */
@@ -3796,7 +3834,7 @@ function parseHash(tok) {
 }
 function setNav(o = {}) {
   const r = curRoute, nb = $("#navbar");
-  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : lastZoom && lastZoom.go === r.key ? `<button class="back" data-go="start">${icon("left", 24)}<span>Übersicht</span></button>` : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${r.depth > 2 ? "Zurück" : TITLE[r.parent]}</span></button>` : "");
+  nb.querySelector(".nb-left").innerHTML = o.left != null ? o.left : lastZoom && lastZoom.go === r.key ? `<button class="back" data-go="${lastZoom.von || "start"}">${icon("left", 24)}<span>${TITLE[lastZoom.von || "start"] || "Zurück"}</span></button>` : (r.parent ? `<button class="back" data-go="${r.parent}">${icon("left", 24)}<span>${r.depth > 2 ? "Zurück" : TITLE[r.parent]}</span></button>` : "");
   nb.querySelector(".nav-title").textContent = o.title || r.title;
   nb.querySelector(".nb-right").innerHTML = o.right || "";
 }
@@ -4209,6 +4247,8 @@ function render() {
   const layerSwap = !same && prevRoute && prevRoute.view === "schicht" && r.view === "schicht" && $("#layerBody");
   if (!layerSwap) { clearTimeout(swapT); swapT = null; }
   prevRoute = r; curRoute = r;
+  // Zurück auf der Seite, von der aus eine Insel geöffnet wurde: deren eigener Rückweg gilt wieder
+  if (lastZoom && lastZoom.von && r.key === lastZoom.von && r.key !== lastZoom.go) lastZoom = lastZoom.vorher || null;
   const firstPaint = !prevShown, moving = !same && !layerSwap && !firstPaint;
   prevShown = true;
   let morph = null, slideNow = false, zoom = null;
@@ -4642,15 +4682,15 @@ document.addEventListener("click", e => {
   if (g) { e.preventDefault(); haptic("light"); morphSrc = g.matches(".shelf-card, .mod-card, .hub:not(.mix), .mod-tile, .tile, .cell.with-badge") ? g : null; zoomSrc = g.matches("[data-zoom]") ? g : null;
     if (zoomSrc && !reduced() && vtGeht) {
       const ziel = g.dataset.go, y = scrollY, karte = g;
-      lastZoom = {go:ziel, bg:getComputedStyle(g).backgroundColor, y};
+      lastZoom = {go:ziel, bg:getComputedStyle(g).backgroundColor, y, von:curRoute ? curRoute.key : "start", vorher:lastZoom && curRoute && lastZoom.go === curRoute.key ? lastZoom : null};
       zoomSrc = null;
       vtWechsel(ziel, "auf", () => karte, vtZiel);
       return;
     }
     if (g.matches("#tabbar .tab")) { vtTab(g.dataset.go); return; }
-    if (!silentNav && !reduced() && vtGeht && lastZoom && curRoute && curRoute.key === lastZoom.go && g.matches("#navbar .back") && g.dataset.go === "start") {
+    if (!silentNav && !reduced() && vtGeht && lastZoom && curRoute && curRoute.key === lastZoom.go && g.matches("#navbar .back") && g.dataset.go === (lastZoom.von || "start")) {
       const lz = lastZoom;
-      vtWechsel("start", "zu", vtZiel, () => { window.scrollTo(0, lz.y || 0); return view.querySelector(`[data-zoom][data-go="${lz.go}"]`); });
+      vtWechsel(g.dataset.go, "zu", vtZiel, () => { window.scrollTo(0, lz.y || 0); return view.querySelector(`[data-zoom][data-go="${lz.go}"]`); });
       return;
     }
     if (zoomSrc && !reduced()) { if (zoomVorab) return; zoomStart(zoomSrc); const ziel = g.dataset.go; requestAnimationFrame(() => requestAnimationFrame(() => go(ziel))); return; }
@@ -4995,9 +5035,11 @@ function playIntro() {
   }));
 }
 function vThemen() {
+  const seiten = MODS.reduce((n, m) => n + unitsOf(m)[1], 0);
   paint(`
-  ${titleBlock("Fachrichtung Systemintegration", "Themen", "Jedes Thema hat Lernseiten, Karten und ein Quiz. Der Inhalt orientiert sich an den Prüfungsbereichen der Ausbildungsverordnung.")}
-  <div class="mod-list">${MODS.map(modCard).join("")}</div>`);
+  ${kopfZahlen("Fachrichtung Systemintegration", "Themen", [[`${overallProgress()} %`, "gelernt"], [MODS.length, "Themen"], [seiten, "Lernseiten"]])}
+  <div class="inseln">${MODS.map(m => { const [x, y] = unitsOf(m); return kategorieInsel({go:`modul-${m.id}`, c:m.color, cover:icon(m.icon, 26), eye:m.ap, title:m.title, sub:m.sub, v:modProgress(m.id), links:`${x} von ${y} gelesen`, rechts:`${m.cards.length} Karten`}); }).join("")}</div>
+  <p class="group-f kat-f">Die Inhalte orientieren sich an den Prüfungsbereichen der Ausbildungsverordnung.</p>`);
 }
 function vModul(id) {
   const m = MOD[id];
@@ -5098,19 +5140,21 @@ function nextLesson(l) { return l.lessons.find(x => !S.code.read[lessonKey(l, x)
 function vCode() {
   const last = S.code.last && CL[S.code.last.lang] && CL[S.code.last.lang].lessons.find(x => x.id === S.code.last.lesson);
   const ll = last ? CL[S.code.last.lang] : null;
+  const lek = CODE.reduce((n, l) => n + l.lessons.length, 0), auf = CODE.reduce((n, l) => n + l.tasks.length, 0);
+  const schritt = (c, ic, t, x) => `<span class="w-schritt"><span class="w-mi" style="--mc:${c}" aria-hidden="true">${ic}</span><span><b>${t}</b><small>${x}</small></span></span>`;
   paint(`
-  ${titleBlock("Ohne Vorkenntnisse", "Programmieren", "Lerne die Grundlagen von Python, Java, HTML und CSS, JavaScript und SQL. Jede Sprache hat Lektionen mit Beispielen zum Ausführen, ein Terminal und Aufgaben, die automatisch geprüft werden.")}
-  ${last ? `<div class="group"><button class="cell with-badge" data-go="code-${ll.id}-l-${last.id}">${langBadge(ll)}<span class="cell-main"><span class="cell-sub">Weiterlernen in ${ll.title}</span><span class="cell-title">${last.title}</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
-  <div class="mod-list">${CODE.map(codeCard).join("")}</div>
-  <section class="section">
-    <h2 class="section-t">So lernst du hier</h2>
-    <div class="group">
-      <div class="cell static with-badge"><span class="si" style="${onColor(APPLE.blau)}">${icon("book", 19)}</span><span class="cell-main"><span class="cell-title">Lektion lesen</span><span class="cell-sub">Kurze Erklärungen, jede mit Quelle. Mit dem Schalter „Einfach“ wird es noch leichter.</span></span></div>
-      <div class="cell static with-badge"><span class="si" style="${onColor(APPLE.gruen)}">${icon("play", 17)}</span><span class="cell-main"><span class="cell-title">Beispiele ausführen</span><span class="cell-sub">Jedes Beispiel kannst du ändern und sofort laufen lassen.</span></span></div>
-      <div class="cell static with-badge"><span class="si" style="${onColor(APPLE.orange)}">${icon("tasks", 19)}</span><span class="cell-main"><span class="cell-title">Aufgaben lösen</span><span class="cell-sub">Die App prüft dein Programm mit Tests und zeigt, was noch fehlt.</span></span></div>
-    </div>
-    <p class="group-f">Python, SQL und JavaScript laufen mit den echten Sprachen im Browser. Java prüft und startet die App selbst, mit denselben Meldungen wie javac und java aus JDK 25.</p>
-  </section>`);
+  ${kopfZahlen("Ohne Vorkenntnisse", "Programmieren", [[`${codeAll()} %`, "gelernt"], [lek, "Lektionen"], [auf, "Aufgaben"]])}
+  <div class="inseln">
+    ${last ? `<button class="w w-weiter" data-go="code-${ll.id}-l-${last.id}" style="${onColor(ll.color)}"><span class="w-zeile"><span class="w-cover w-badge" aria-hidden="true">${ll.badge}</span><span class="w-text"><small class="w-eye">Weiterlernen · ${ll.title}</small><b>${last.title}</b><span>Lektion ${ll.lessons.indexOf(last) + 1} von ${ll.lessons.length}</span></span><span class="w-play" aria-hidden="true">${icon("play", 18)}</span></span></button>` : ""}
+    ${CODE.map(l => { const c = codeCounts(l); return kategorieInsel({go:`code-${l.id}`, c:l.color, cover:`<span class="w-badge-t">${l.badge}</span>`, title:l.title, sub:l.sub, v:codeProgress(l), links:`${c.read}/${l.lessons.length} Lektionen`, rechts:`${c.done}/${l.tasks.length} Aufgaben`}); }).join("")}
+    <section class="w w-info" aria-label="So lernst du hier" style="${onColor(KACHEL.code)}">
+      <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("bulb", 14)}</span>So lernst du hier</b></span>
+      ${schritt(APPLE.blau, icon("book", 15), "Lektion lesen", "Kurze Erklärungen, jede mit Quelle. Mit dem Schalter „Einfach“ wird es noch leichter.")}
+      ${schritt(APPLE.gruen, icon("play", 13), "Beispiele ausführen", "Jedes Beispiel kannst du ändern und sofort laufen lassen.")}
+      ${schritt(APPLE.orange, icon("tasks", 15), "Aufgaben lösen", "Die App prüft dein Programm mit Tests und zeigt, was noch fehlt.")}
+    </section>
+  </div>
+  <p class="group-f kat-f">Python, SQL und JavaScript laufen mit den echten Sprachen im Browser. Java prüft und startet die App selbst, mit denselben Meldungen wie javac und java aus JDK 25.</p>`);
 }
 function vCodeLang(id) {
   const l = CL[id], c = codeCounts(l), nx = nextLesson(l);
@@ -5922,17 +5966,19 @@ function vTrainieren() {
     if (act === "wrongmix") { mix.onlyWrong = true; haptic("light"); go("heute"); }
   };
   paint(`
-  ${titleBlock("Üben und prüfen", "Trainieren", "Der Tagesmix sucht die richtigen Aufgaben für dich aus. Mit der Probeprüfung testest du dich unter Zeitdruck.")}
-  <div class="section">
-    <button class="hub mix solid" data-go="heute" style="${onColor(KACHEL.heute)}"><span class="cell-ic">${icon("mix", 24)}</span><span><b>Tagesmix</b><small>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen im Wechsel"}</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub solid" data-go="pruefung-ap1" style="${onColor(APPLE.orange)}"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP1</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
-    <button class="hub solid" data-go="pruefung-ap2" style="${onColor(APPLE.pink)}"><span class="cell-ic">${icon("timer", 24)}</span><span><b>Probeprüfung AP2</b><small>${PZ_COUNT} Fragen in ${PZ_MINUTES} Minuten</small></span>${icon("right", 18, "chev")}</button>
-  </div>
-  ${wrongN ? `<div class="group"><button class="cell" data-act="wrongmix"><span class="cell-ic" style="background:var(--red)">${icon("reset", 18)}</span><span class="cell-main"><span class="cell-title">Fehler wiederholen</span><span class="cell-sub">${wrongN} ${wrongN === 1 ? "Frage" : "Fragen"} aus allen Themen</span></span>${icon("right", 16, "chev")}</button></div>` : ""}
-  <section class="section">
-    <h2 class="section-t">Nach Thema üben</h2>
-    <div class="group">${MODS.map(m => `<button class="cell with-badge" data-go="modul-${m.id}">${modIc(m)}<span class="cell-main"><span class="cell-title">${m.title}</span><span class="cell-sub">${m.cards.length} Karten, ${m.questions.length} Fragen</span></span><span class="cell-detail">${modProgress(m.id)} %</span>${icon("right", 16, "chev")}</button>`).join("")}</div>
-  </section>`);
+  ${kopfZahlen("Üben und prüfen", "Trainieren", [[due, "fällig"], [wrongN, "Fehler"], [ITEMS.length, "Übungen"]])}
+  <div class="inseln">
+    <button class="w w-weiter" data-go="heute" data-zoom style="${onColor(KACHEL.heute)}"><span class="w-zeile"><span class="w-cover" aria-hidden="true">${icon("mix", 26)}</span><span class="w-text"><small class="w-eye">Tagesmix</small><b>${due ? `${due} fällig, dazu Neues` : "Karten und Fragen"}</b><span>Passend für dich ausgewählt</span></span><span class="w-play" aria-hidden="true">${icon("play", 18)}</span></span></button>
+    <div class="w-reihe">
+      <button class="w w-pruef" data-go="pruefung-ap1" data-zoom style="${onColor(APPLE.orange)}"><span class="w-pi" aria-hidden="true">${icon("timer", 20)}</span><b>AP1</b><small>${PZ_COUNT} Fragen · ${PZ_MINUTES} Min</small></button>
+      <button class="w w-pruef" data-go="pruefung-ap2" data-zoom style="${onColor(APPLE.pink)}"><span class="w-pi" aria-hidden="true">${icon("timer", 20)}</span><b>AP2</b><small>${PZ_COUNT} Fragen · ${PZ_MINUTES} Min</small></button>
+    </div>
+    ${wrongN ? `<button class="w w-pille" data-act="wrongmix" style="${onColor(KACHEL.trainieren)}"><span class="w-pi" aria-hidden="true">${icon("reset", 16)}</span><span>Fehler wiederholen</span><b>${wrongN}</b></button>` : ""}
+    <section class="w w-liste w-themen" aria-label="Nach Thema üben" style="${onColor(KACHEL.themen)}">
+      <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("themen", 14)}</span>Nach Thema üben</b><span>${MODS.length} Themen</span></span>
+      ${MODS.map(m => `<button class="w-zeile2 w-tap" data-go="modul-${m.id}"><span class="w-mi" style="--mc:${m.color}" aria-hidden="true">${icon(m.icon, 15)}</span><span><b>${m.title}</b><small>${m.cards.length} Karten, ${m.questions.length} Fragen</small></span><span class="w-pz">${modProgress(m.id)} %</span>${icon("right", 14, "w-chev")}</button>`).join("")}
+    </section>
+  </div>`);
 }
 
 /* ---------------- Quiz ---------------- */
