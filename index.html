@@ -2825,6 +2825,100 @@ html[data-vt="tab"]::view-transition-new(root){animation:vtTabRein .42s var(--fe
 .inseln > :nth-child(2){--k:1}.inseln > :nth-child(3){--k:2}.inseln > :nth-child(4){--k:3}.inseln > :nth-child(5){--k:4}.inseln > :nth-child(n+6){--k:5}
 /* Tab-Leiste ohne transform zentriert: Safari setzte sie beim Tab-Wechsel (View Transition) sonst um die halbe Breite nach links */
 .tabbar{left:0!important;right:0!important;margin-inline:auto!important;transform:none!important}
+/* ===== Lernkurve wie eine Aktienkurve ===== */
+.w-kurve{gap:12px}
+.lk-mini{display:flex;align-items:flex-end;gap:16px;min-width:0}
+.lk-zahl{display:flex;flex-direction:column;gap:3px;flex:none}
+.lk-zahl b{font:700 30px/1 var(--f-rund);letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:#fff}
+.lk-zahl small{font:600 12px/1.3 var(--f-ui);color:var(--w-2)}
+.lk-dz{font:700 13px/1.25 var(--f-rund);color:var(--w-2);font-variant-numeric:tabular-nums}
+.lk-dz.auf{color:#30d158}
+.lk-spark{flex:1;min-width:0;height:58px;overflow:visible}
+.lk-spark .ln,.lk-plot .ln{fill:none;stroke:var(--c);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.lk-basis{stroke:rgba(255,255,255,.3);stroke-width:1.2;stroke-dasharray:2 5}
+.lk-kopf .lk-wert{display:flex;align-items:baseline;gap:8px;font-family:var(--f-rund)!important;font-variant-numeric:tabular-nums}
+.lk-kopf .lk-wert small{font:700 22px/1 var(--f-rund);color:var(--w-2)}
+.lk-kopf .lk-dz{display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:8px;font-size:15px}
+.lk-kopf .lk-zr{color:var(--w-2)}
+.lk-chart{gap:14px}
+.lk-seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:3px;border-radius:999px;background:rgba(255,255,255,.1)}
+.lk-seg button{min-height:36px;border:0;border-radius:999px;background:none;color:var(--w-2);font:700 14px/1 var(--f-rund);cursor:pointer;transition:background .3s cubic-bezier(.3,1.2,.5,1),color .2s}
+.lk-seg button[aria-selected="true"]{background:rgba(255,255,255,.2);color:#fff}
+.lk-plot{position:relative;height:210px;margin:4px 0 0;touch-action:none;-webkit-user-select:none;user-select:none;cursor:crosshair}
+.lk-plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:lkZeichnen .95s cubic-bezier(.65,0,.35,1) both}
+@keyframes lkZeichnen{from{clip-path:inset(-20% 100% -20% 0)}to{clip-path:inset(-20% -3% -20% 0)}}
+.lk-plot .fl{fill:url(#lkVerlauf)}
+.lk-band{fill:rgba(255,255,255,.1);opacity:0;transition:opacity .2s}
+.lk-plot.zwei .lk-band{opacity:1}
+.lk-cur{position:absolute;top:-6px;bottom:0;width:1.5px;margin-left:-.75px;background:rgba(255,255,255,.6);opacity:0;pointer-events:none}
+.lk-dot{position:absolute;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px var(--w-bg),0 0 0 7px color-mix(in srgb,var(--c) 28%,transparent);opacity:0;pointer-events:none}
+.lk-plot.aktiv .lk-cur:not(.b),.lk-plot.aktiv .lk-dot:not(.b),.lk-plot.zwei .lk-cur.b,.lk-plot.zwei .lk-dot.b{opacity:1}
+.lk-plot.aktiv svg .ln{opacity:.9}
+.lk-achse{display:flex;justify-content:space-between;margin-top:-4px;font:600 12px/1 var(--f-rund);color:var(--w-2)}
+.lk-hinweis{margin:0;font:500 13px/1.4 var(--f-ui);color:var(--w-2);text-align:center}
+.lk-werte{gap:6px}
+.lk-reihe{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:46px;border-top:.5px solid rgba(255,255,255,.12)}
+.lk-werte > div > :first-child{border-top:0}
+.lk-reihe span{color:var(--w-2);font-weight:600}
+.lk-reihe b{font:700 17px/1.2 var(--f-rund);font-variant-numeric:tabular-nums;text-align:right}
+.lk-th{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 10px;padding:9px 0}
+.lk-th > span{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lk-th > b{font:700 15px/1.2 var(--f-rund);font-variant-numeric:tabular-nums}
+.lk-th i{grid-column:1/-1;height:6px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+.lk-th i b{display:block;height:100%;border-radius:3px;background:var(--tc)}
+/* ===== Erfolg als HUD ===== */
+.hud{position:fixed;inset:0;z-index:95;display:grid;place-items:center;pointer-events:none}
+.hud-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:164px;height:164px;border-radius:40px;background:rgba(22,22,24,.84);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);color:#fff;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.08),0 24px 60px -24px rgba(0,0,0,.6);animation:hudRein .5s cubic-bezier(.3,1.35,.5,1) both}
+.hud svg{width:86px;height:86px;overflow:visible}
+.hud-scan{transform-origin:50px 50px;animation:hudDreh 1.4s linear infinite}
+.hud-scan circle{fill:#fff;opacity:.2;transform-box:fill-box;transform-origin:center;animation:hudPuls .84s ease-in-out infinite;animation-delay:calc(var(--i) * -30ms)}
+.hud-ring{fill:none;stroke:#30d158;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transform:rotate(-90deg);transform-origin:50px 50px}
+.hud-ok{fill:none;stroke:#30d158;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.hud b{font:600 15px/1.2 var(--f-ui);letter-spacing:-.01em;opacity:0;transform:translateY(4px);transition:opacity .3s .42s,transform .45s cubic-bezier(.3,1.3,.5,1) .42s}
+.hud.ok .hud-scan circle{animation:hudSammeln .34s cubic-bezier(.5,0,.75,0) both;animation-delay:calc(var(--i) * 5ms)}
+.hud.ok .hud-ring{stroke-dashoffset:0;transition:stroke-dashoffset .5s cubic-bezier(.65,0,.35,1) .08s}
+.hud.ok .hud-ok{stroke-dashoffset:0;transition:stroke-dashoffset .36s cubic-bezier(.3,1.1,.5,1) .4s}
+.hud.ok svg{animation:hudPop .55s cubic-bezier(.3,1.6,.5,1) .42s both}
+.hud.ok b{opacity:1;transform:none}
+.hud.weg .hud-box{animation:hudWeg .38s cubic-bezier(.4,0,1,1) forwards}
+.hud.still *{animation:none!important;transition:none!important}
+.hud.still .hud-scan{display:none}
+@keyframes hudRein{from{opacity:0;transform:scale(.84)}}
+@keyframes hudWeg{to{opacity:0;transform:scale(.92)}}
+@keyframes hudDreh{to{transform:rotate(360deg)}}
+@keyframes hudPuls{0%,100%{opacity:.18;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes hudSammeln{to{opacity:0;transform:scale(0)}}
+@keyframes hudPop{40%{transform:scale(1.09)}}
+/* ===== Gefühl beim Benutzen ===== */
+/* Knöpfe geben beim Drücken nach und federn zurück */
+:is(.opt,.btn,.w-btn,.sheet-btn,.chip,.lk-seg button){transition:transform .55s cubic-bezier(.3,1.45,.5,1),background-color .2s,color .2s,box-shadow .2s,opacity .2s}
+:is(.btn,.w-btn,.sheet-btn,.chip,.lk-seg button):not(:disabled):active{transform:scale(.95);transition:transform .1s ease-out,background-color .2s,color .2s}
+.opt:not(:disabled):active{transform:scale(.975);transition:transform .1s ease-out,background-color .2s}
+button.w:active{transform:scale(.965)}
+/* Falsche Antwort: gedämpftes Wackeln wie bei einem falschen Code */
+.opt.no{animation:wackeln .55s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes wackeln{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(3px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+/* Zeitraum-Schalter mit gleitender Auswahl */
+.lk-seg{position:relative}
+.lk-seg button{position:relative;z-index:1}
+.lk-seg button[aria-selected="true"]{background:none}
+.lk-ind{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 5);border-radius:999px;background:rgba(255,255,255,.2);transform:translateX(calc(var(--i,0) * 100%));pointer-events:none}
+/* Ringe, Balken und Kurven zeichnen sich beim Öffnen ein */
+@media (prefers-reduced-motion:no-preference){
+  :root:not([data-calm]) .w-ring .on{animation:ringRein 1.15s cubic-bezier(.3,.9,.3,1) .12s both}
+  :root:not([data-calm]) :is(.w-fort i b,.lk-th i b){transform-origin:left center;animation:balkenRein .9s cubic-bezier(.3,.9,.3,1) .15s both}
+  :root:not([data-calm]) .w-saeule i{transform-origin:center bottom;animation:saeuleRein .75s cubic-bezier(.3,1.3,.5,1) .12s both}
+  :root:not([data-calm]) .w-bar:nth-child(2) .w-saeule i{animation-delay:.16s}
+  :root:not([data-calm]) .w-bar:nth-child(3) .w-saeule i{animation-delay:.2s}
+  :root:not([data-calm]) .w-bar:nth-child(4) .w-saeule i{animation-delay:.24s}
+  :root:not([data-calm]) .w-bar:nth-child(5) .w-saeule i{animation-delay:.28s}
+  :root:not([data-calm]) .w-bar:nth-child(6) .w-saeule i{animation-delay:.32s}
+  :root:not([data-calm]) .w-bar:nth-child(7) .w-saeule i{animation-delay:.36s}
+  :root:not([data-calm]) .lk-spark{animation:lkZeichnen 1s cubic-bezier(.65,0,.35,1) .15s both}
+}
+@keyframes ringRein{from{stroke-dasharray:0 999}}
+@keyframes balkenRein{from{transform:scaleX(0)}}
+@keyframes saeuleRein{from{transform:scaleY(0)}}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -2938,6 +3032,7 @@ const ICONS = {
   mail:'<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
   warn:'<path d="M10.3 4.6 2.9 17.5A2 2 0 0 0 4.6 20.5h14.8a2 2 0 0 0 1.7-3L13.7 4.6a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4"/><path d="M12 17h.01"/>',
   spark:'<path d="M12 3.5l2.1 5.4 5.4 2.1-5.4 2.1L12 18.5l-2.1-5.4L4.5 11l5.4-2.1z"/>',
+  trend:'<path d="M3.5 16.5l5.2-5.2 4 4 7.8-7.8"/><path d="M15 7.5h5.5V13"/>',
   tasks:'<path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="m3.5 6.5 1.2 1.2L7 5.4M3.5 12l1.2 1.2L7 10.9M3.5 17.5l1.2 1.2L7 16.4"/>',
   id:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.8 16c.6-1.4 1.6-2 2.7-2s2.1.6 2.7 2"/><path d="M14 10h4M14 13.5h3"/>',
   plug:'<path d="M9 3.5v4M15 3.5v4"/><path d="M6.5 7.5h11v3a5.5 5.5 0 0 1-11 0z"/><path d="M12 16v4.5"/>',
@@ -3456,12 +3551,21 @@ function buildMix(layer, size = CFG.round, modId = "") {
 /* ---------------- Haptik, Island, Sheet ---------------- */
 const coarse = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches);
 let hapticLabel = null;
+let hapticLetzt = 0;
 function haptic(kind = "light") {
   if (!hapticsOn) return;
-  const pattern = {select:6, light:10, medium:16, heavy:24, success:[12, 60, 18], error:[28, 45, 28, 45, 28]}[kind] || 10;
+  const jetzt = performance.now();
+  if (kind === "select" && jetzt - hapticLetzt < 30) return; // beim Ziehen nicht zu dicht hintereinander
+  hapticLetzt = jetzt;
+  const pattern = {select:10, light:16, medium:26, heavy:40, success:[20, 90, 30], error:[35, 60, 35, 60, 35]}[kind] || 16;
   try { if (typeof navigator.vibrate === "function") { navigator.vibrate(pattern); return; } } catch (e) {}
   // iOS-Safari hat keine Vibration-API, gibt beim Umschalten eines Switch-Elements aber ein kurzes Haptik-Signal.
+  // Ein Signal ist immer gleich stark, darum unterscheiden sich die Arten durch die Zahl der Ticks.
   if (!coarse) return;
+  const ticks = {heavy:[0, 70], success:[0, 120], error:[0, 110, 220]}[kind] || [0];
+  ticks.forEach(t => { if (t) setTimeout(hapticTick, t); else hapticTick(); });
+}
+function hapticTick() {
   try {
     if (!hapticLabel) {
       hapticLabel = document.createElement("label");
@@ -3475,6 +3579,7 @@ function haptic(kind = "light") {
     hapticLabel.click();
   } catch (e) {}
 }
+document.addEventListener("touchstart", () => {}, {passive:true});
 let islandT;
 function island(msg, kind = "") {
   const el = $("#island");
@@ -3796,7 +3901,7 @@ const TITLE = Object.fromEntries(TABS.map(t => [t[0], t[1]]));
 TITLE.einstellungen = "Einstellungen";
 TITLE.schichten = "Schichten";
 MODS.forEach(m => { TITLE["modul-" + m.id] = m.title; });
-const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"},
+const PUSHED = {einstellungen:{parent:"start", title:"Einstellungen"}, "set-size":{parent:"einstellungen", title:"Textgröße", depth:3}, ...Object.fromEntries(Object.entries(SET_PAGES).map(([k, p]) => [k, {parent:"einstellungen", title:p.title, depth:3}])), heute:{parent:"start", title:"Tagesmix"}, statistik:{parent:"start", title:"Lernkurve"},
   schichten:{parent:"modul-osi", title:"Schichten", depth:3}, kapselung:{parent:"modul-osi", title:"Kapselung", depth:3}, fakten:{parent:"modul-osi", title:"Fakten", depth:3}, quiz:{parent:"modul-osi", title:"Quiz", depth:3}, karten:{parent:"modul-osi", title:"Lernkarten", depth:3}, ueben:{parent:"modul-osi", title:"Übungen", depth:3},
   "pruefung-ap1":{parent:"trainieren", title:"Probeprüfung AP1"}, "pruefung-ap2":{parent:"trainieren", title:"Probeprüfung AP2"},
   pro:{parent:"einstellungen", title:"Pro", depth:3}, datenschutz:{parent:"einstellungen", title:"Datenschutz", depth:3}, nutzungsbedingungen:{parent:"einstellungen", title:"Nutzungsbedingungen", depth:3}, impressum:{parent:"einstellungen", title:"Impressum", depth:3}};
@@ -4298,8 +4403,9 @@ function render() {
       enterT = setTimeout(() => view.classList.remove("entering", "enter-" + dir), 980);
     }
   }
-  (needsPro(r) ? () => vPro(r.key) : PRO_PAGES[r.view] || ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view])();
+  (needsPro(r) ? () => vPro(r.key) : PRO_PAGES[r.view] || ({start:vStart, themen:vThemen, code:vCode, clang:() => vCodeLang(r.lang), clesson:() => vCodeLesson(r.lang, r.item), cterm:() => vCodeTerm(r.lang), ctasks:() => vCodeTasks(r.lang), ctask:() => vCodeTask(r.lang, r.item), suche:vSuche, modul:() => r.mod === "osi" ? vOsi() : vModul(r.mod), unit:() => vUnit(r.mod, r.unit), rechnen:vRechnen, "pruefung-ap1":() => vPruefung("AP1"), "pruefung-ap2":() => vPruefung("AP2"), schichten:vSchichten, schicht:() => vSchicht(r.n, layerSwap ? dir : null), kapselung:vKapselung, trainieren:vTrainieren, einstellungen:vSettings, "set-size":vSetSize, ...Object.fromEntries(Object.keys(SET_PAGES).map(k => [k, () => vSetChoice(k)])), heute:vHeute, statistik:vStatistik, quiz:vQuiz, karten:vKarten, ueben:vUeben, fakten:vFakten})[r.view])();
   window.scrollTo(0, 0);
+  if (moving && !silentNav) zaehlHoch(view);
   // Farbschleier der Kachel oben auf der Zielseite (nicht, wo die Seite schon eine farbige Kopfkarte hat)
   document.documentElement.style.setProperty("--nbh", $("#navbar").offsetHeight + "px");
   const kopf = KACHEL[r.view] && view.querySelector(":scope > .title-block");
@@ -4795,6 +4901,160 @@ function wireChart() {
   plot.addEventListener("pointermove", e => { if (e.pointerType === "mouse" || e.buttons) at(e); });
   requestAnimationFrame(() => pick(plot.querySelector(".dc.on") || cols[cols.length - 1]));
 }
+/* ===== Lernkurve wie eine Aktienkurve: Gesamt-XP über die Zeit, echte Daten aus S.act (XP pro Tag) ===== */
+const LK_SPANS = [["1W", 7, "1 Woche"], ["1M", 30, "1 Monat"], ["3M", 91, "3 Monate"], ["6M", 182, "6 Monate"], ["1J", 365, "1 Jahr"]];
+let lkSpan = "1M", lkVon = null;
+const xpTxt = v => hideXp ? "••••" : nf(v);
+// Stand der Gesamt-XP am Ende jedes Tages; der erste Wert ist der Stand vor dem Zeitraum (wie der Vortagesschluss)
+function lkDaten(n) {
+  const t = today(), tage = Array.from({length:n + 1}, (_, i) => t - n + i), werte = new Array(tage.length);
+  let x = S.xp || 0;
+  for (let i = tage.length - 1; i >= 0; i--) { werte[i] = Math.max(0, x); x -= actSum(tage[i]); }
+  return {tage, werte};
+}
+function lkPfad(w) {
+  const n = w.length - 1, lo = Math.min(...w), hi = Math.max(...w), sp = hi - lo;
+  const y = v => sp ? 262 - (v - lo) / sp * 232 : 200;
+  const pts = w.map((v, i) => [n ? i / n * 1000 : 0, y(v)]);
+  const line = "M" + pts.map(q => q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" L");
+  return {line, area:line + " L1000 300 L0 300 Z", y};
+}
+const lkDatum = (d, jahr) => dayDate(d).toLocaleDateString("de-DE", Object.assign({day:"numeric", month:"short", timeZone:"UTC"}, jahr ? {year:"numeric"} : {}));
+function lkInsel() {
+  const {werte:w} = lkDaten(30), dz = w[w.length - 1] - w[0], p = lkPfad(w), farbe = dz > 0 ? APPLE.gruen : APPLE.graphit;
+  return `<button class="w w-kurve" data-go="statistik" data-zoom style="${onColor(farbe)}">
+      <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("trend", 14)}</span>Lernkurve</b><span>30 Tage</span></span>
+      <span class="lk-mini"><span class="lk-zahl"><b>${xpTxt(S.xp || 0)}</b><small>XP gesamt</small><span class="lk-dz${dz > 0 ? " auf" : ""}">${dz > 0 ? "▲ +" + xpTxt(dz) + " XP" : "Noch kein Anstieg"}</span></span><svg class="lk-spark" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><line class="lk-basis" x1="0" x2="1000" y1="${p.y(w[0]).toFixed(1)}" y2="${p.y(w[0]).toFixed(1)}" vector-effect="non-scaling-stroke"/><path class="ln" d="${p.line}" vector-effect="non-scaling-stroke"/></svg></span>
+    </button>`;
+}
+function vStatistik() {
+  setNav({});
+  const [, n, lang] = LK_SPANS.find(x => x[0] === lkSpan), {tage, werte:w} = lkDaten(n), p = lkPfad(w);
+  const start = w[0], ende = w[n], dz = ende - start, farbe = dz > 0 ? APPLE.gruen : APPLE.graphit, jahr = n >= 182;
+  const proz = v => start > 0 && v > 0 ? ` (+${(v / start * 100).toLocaleString("de-DE", {maximumFractionDigits:1})} %)` : "";
+  const imZr = tage.slice(1), aktiv = imZr.filter(d => actSum(d) > 0).length, aufg = imZr.reduce((a, d) => a + cntOf(d), 0);
+  const best = imZr.reduce((b, d) => actSum(d) > actSum(b) ? d : b, imZr[imZr.length - 1]);
+  const proThema = {};
+  imZr.forEach(d => { const a = actOf(d); for (const k in a) proThema[k] = (proThema[k] || 0) + a[k]; });
+  const themen = Object.entries(proThema).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]), tmax = themen.length ? themen[0][1] : 1;
+  const reihe = (t, v) => `<div class="lk-reihe"><span>${t}</span><b>${v}</b></div>`;
+  const dzTxt = v => (v > 0 ? "+" : "±") + xpTxt(v) + " XP";
+  actHandler = act => {
+    if (act.startsWith("span-")) { const k = act.slice(5); if (k !== lkSpan) { lkVon = LK_SPANS.findIndex(x => x[0] === lkSpan); lkSpan = k; haptic("select"); const y = scrollY; vStatistik(); window.scrollTo(0, y); } }
+  };
+  paint(`
+  <header class="title-block farbkopf lk-kopf" style="${onColor(farbe)}">
+    <div class="kicker">Gesamt-XP</div>
+    <h1 class="large lk-wert"><span class="lk-v">${xpTxt(ende)}</span><small>XP</small></h1>
+    <div class="lk-dz${dz > 0 ? " auf" : ""}"><span class="lk-d">${dzTxt(dz)}${proz(dz)}</span><span class="lk-zr">${lang}</span></div>
+  </header>
+  <div class="inseln">
+    <section class="w lk-chart" style="${onColor(farbe)}">
+      <div class="lk-seg" role="tablist" aria-label="Zeitraum"><i class="lk-ind" aria-hidden="true" style="--i:${LK_SPANS.findIndex(x => x[0] === lkSpan)}"></i>${LK_SPANS.map(([k, , l]) => `<button role="tab" aria-selected="${k === lkSpan}" aria-label="${l}" data-act="span-${k}">${k}</button>`).join("")}</div>
+      <div class="lk-plot" role="img" aria-label="Lernkurve, ${lang}: von ${xpTxt(start)} auf ${xpTxt(ende)} XP">
+        <svg viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="lkVerlauf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--c);stop-opacity:.34"/><stop offset="1" style="stop-color:var(--c);stop-opacity:0"/></linearGradient></defs>
+          <rect class="lk-band" x="0" y="0" width="0" height="300"/>
+          <line class="lk-basis" x1="0" x2="1000" y1="${p.y(start).toFixed(1)}" y2="${p.y(start).toFixed(1)}" vector-effect="non-scaling-stroke"/>
+          <path class="fl" d="${p.area}"/><path class="ln" d="${p.line}" vector-effect="non-scaling-stroke"/></svg>
+        <i class="lk-cur"></i><i class="lk-cur b"></i><i class="lk-dot"></i><i class="lk-dot b"></i>
+      </div>
+      <div class="lk-achse"><span>${lkDatum(tage[0], jahr)}</span><span>Heute</span></div>
+      <p class="lk-hinweis">${S.xp ? "Mit einem Finger durch die Tage fahren, mit zwei Fingern einen Zeitraum vergleichen." : "Sobald du lernst und übst, wächst hier deine Kurve. Jede Übung bringt XP."}</p>
+    </section>
+    <section class="w lk-werte" style="${onColor(farbe)}">
+      <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("check", 14)}</span>${lang}</b></span>
+      <div>${reihe("Aufgaben", nf(aufg))}${reihe("Aktive Tage", `${aktiv} von ${n}`)}${reihe("Serie", `${streakNow()} ${streakNow() === 1 ? "Tag" : "Tage"}`)}${reihe("Bester Tag", actSum(best) > 0 ? `${xpTxt(actSum(best))} XP · ${lkDatum(best)}` : "–")}${reihe("Ø pro aktivem Tag", aktiv ? `${xpTxt(Math.round((ende - start) / aktiv))} XP` : "–")}</div>
+    </section>
+    ${themen.length ? `<section class="w lk-werte" style="${onColor(farbe)}">
+      <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("themen", 14)}</span>XP nach Thema</b></span>
+      <div>${themen.map(([k, v]) => { const m = MOD[k]; return `<div class="lk-th" style="--tc:${m ? m.color : APPLE.graphit}"><span>${m ? m.title : "Weitere Übungen"}</span><b>${xpTxt(v)} XP</b><i><b style="width:${Math.max(3, Math.round(v / tmax * 100))}%"></b></i></div>`; }).join("")}</div>
+    </section>` : ""}
+  </div>`, {anim:lkVon == null});
+  if (lkVon != null) {
+    const ind = view.querySelector(".lk-ind"), neu = LK_SPANS.findIndex(x => x[0] === lkSpan);
+    if (ind && !reduced()) ind.animate([{transform:`translateX(${lkVon * 100}%)`}, {transform:`translateX(${neu * 100}%)`}], {duration:520, easing:"cubic-bezier(.3,1.25,.5,1)"});
+    lkVon = null;
+  }
+  // Scrubbing wie in einer Börsen-App: Finger zeigt den Stand an einem Tag, zwei Finger die Veränderung dazwischen
+  const plot = view.querySelector(".lk-plot"), kopf = view.querySelector(".lk-kopf");
+  if (!plot || !kopf) return;
+  const [c1, c2] = plot.querySelectorAll(".lk-cur"), [d1, d2] = plot.querySelectorAll(".lk-dot"), band = plot.querySelector(".lk-band");
+  const vEl = kopf.querySelector(".lk-v"), dEl = kopf.querySelector(".lk-d"), zEl = kopf.querySelector(".lk-zr"), dzEl = kopf.querySelector(".lk-dz");
+  const ruhe = {v:vEl.textContent, d:dEl.textContent, z:zEl.textContent, auf:dz > 0};
+  const ptr = new Map();
+  let letzte = "";
+  const idx = x => { const r = plot.getBoundingClientRect(); return Math.round(Math.min(1, Math.max(0, (x - r.left) / r.width)) * n); };
+  const setze = (c, d, i) => { const l = (i / n * 100) + "%"; c.style.left = l; d.style.left = l; d.style.top = (p.y(w[i]) / 300 * plot.clientHeight) + "px"; };
+  const zeige = () => {
+    const ids = [...ptr.values()].map(idx).sort((a, b) => a - b);
+    if (!ids.length) {
+      plot.classList.remove("aktiv", "zwei"); letzte = "";
+      vEl.textContent = ruhe.v; dEl.textContent = ruhe.d; zEl.textContent = ruhe.z; dzEl.classList.toggle("auf", ruhe.auf);
+      return;
+    }
+    const key = ids.join(",");
+    if (key === letzte) return;
+    letzte = key; haptic("select");
+    plot.classList.add("aktiv");
+    if (ids.length === 1 || ids[0] === ids[ids.length - 1]) {
+      const i = ids[0], tag = actSum(tage[i]);
+      plot.classList.remove("zwei"); setze(c1, d1, i);
+      vEl.textContent = xpTxt(w[i]);
+      dEl.textContent = i === 0 ? "Stand davor" : tag > 0 ? `+${xpTxt(tag)} XP an diesem Tag` : "Kein Lernen an diesem Tag";
+      zEl.textContent = i === n ? "Heute" : lkDatum(tage[i], jahr);
+      dzEl.classList.toggle("auf", i > 0 && tag > 0);
+    } else {
+      const a = ids[0], b = ids[ids.length - 1], diff = w[b] - w[a];
+      plot.classList.add("zwei"); setze(c1, d1, a); setze(c2, d2, b);
+      band.setAttribute("x", (a / n * 1000).toFixed(1)); band.setAttribute("width", ((b - a) / n * 1000).toFixed(1));
+      vEl.textContent = (diff > 0 ? "+" : "±") + xpTxt(diff);
+      dEl.textContent = w[a] > 0 && diff > 0 ? `+${(diff / w[a] * 100).toLocaleString("de-DE", {maximumFractionDigits:1})} %` : "Veränderung";
+      zEl.textContent = `${lkDatum(tage[a], jahr)} – ${b === n ? "Heute" : lkDatum(tage[b], jahr)}`;
+      dzEl.classList.toggle("auf", diff > 0);
+    }
+  };
+  plot.addEventListener("pointerdown", e => { try { plot.setPointerCapture(e.pointerId); } catch (err) {} ptr.set(e.pointerId, e.clientX); zeige(); });
+  plot.addEventListener("pointermove", e => {
+    if (ptr.has(e.pointerId)) { ptr.set(e.pointerId, e.clientX); zeige(); }
+    else if (e.pointerType === "mouse" && !e.buttons) { ptr.set("maus", e.clientX); zeige(); }
+  });
+  const los = e => { ptr.delete(e.pointerId); if (e.type === "pointerleave") ptr.delete("maus"); zeige(); };
+  ["pointerup", "pointercancel", "pointerleave"].forEach(t => plot.addEventListener(t, los));
+}
+function zaehlHoch(root) {
+  if (reduced()) return;
+  root.querySelectorAll(".kz b, .lk-zahl b, .lk-kopf .lk-v, .w-proz, .w-rz").forEach(el => {
+    const node = [...el.childNodes].find(n => n.nodeType === 3 && /\d/.test(n.nodeValue));
+    if (!node) return;
+    const m = node.nodeValue.match(/^(\D*)(\d{1,3}(?:\.\d{3})+|\d+)(.*)$/);
+    if (!m) return;
+    const ziel = +m[2].replace(/\./g, "");
+    if (!ziel || ziel > 1e7) return;
+    const t0 = performance.now(), dauer = Math.min(950, 420 + ziel * 6);
+    node.nodeValue = m[1] + "0" + m[3];
+    const schritt = jetzt => {
+      if (!node.isConnected) return;
+      const q = Math.min(1, (jetzt - t0) / dauer), e = 1 - Math.pow(1 - q, 4);
+      node.nodeValue = m[1] + nf(Math.round(ziel * e)) + m[3];
+      if (q < 1) requestAnimationFrame(schritt);
+    };
+    requestAnimationFrame(schritt);
+  });
+}
+/* Erfolg wie ein System-HUD: ein Punktekreis tastet sich ab und wird zum grünen Haken (eigene Gestaltung) */
+function erfolgHud(titel) {
+  document.querySelectorAll(".hud").forEach(x => x.remove());
+  const el = document.createElement("div"), N = 28;
+  el.className = "hud"; el.setAttribute("role", "status");
+  const punkte = Array.from({length:N}, (_, i) => { const a = i / N * Math.PI * 2 - Math.PI / 2; return `<circle cx="${(50 + 31 * Math.cos(a)).toFixed(2)}" cy="${(50 + 31 * Math.sin(a)).toFixed(2)}" r="2.2" style="--i:${i}"/>`; }).join("");
+  el.innerHTML = `<div class="hud-box"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="hud-scan">${punkte}</g><circle class="hud-ring" cx="50" cy="50" r="31" pathLength="1"/><path class="hud-ok" d="M36.5 51.5l9.2 9.2L64 41.5" pathLength="1"/></svg><b>${titel}</b></div>`;
+  document.body.append(el);
+  const ruhig = reduced();
+  if (ruhig) el.classList.add("still", "ok");
+  else setTimeout(() => el.classList.add("ok"), 640);
+  setTimeout(() => el.classList.add("weg"), ruhig ? 1200 : 1750);
+  setTimeout(() => el.remove(), ruhig ? 1500 : 2200);
+}
 /* Startseite, die man sofort versteht: Tagesziel mit einem großen Knopf, drei klare Zahlen,
    die Woche als Punktsäulen mit Wochentagen und die Themen als Zeilen mit Fortschrittsbalken. */
 const DAY_GOAL = 20;
@@ -4988,6 +5248,7 @@ function vStart() {
       <span class="w-ringreihe">${ring(heute, DAY_GOAL, APPLE.gruen, heute, `von ${DAY_GOAL} heute`)}${ring(aktiv, 7, APPLE.blau, aktiv, "von 7 Tagen")}${ring(total, 100, APPLE.orange, `${total}%`, "gelernt")}</span>
       <span class="w-unten"><span>Tagesmix${due ? ` · ${due} fällig` : ""}</span><span class="w-btn">Los</span></span>
     </button>
+    ${lkInsel()}
     <section class="w w-woche" aria-label="Diese Woche" style="${onColor(APPLE.blau)}">
       <span class="w-kopfzeile"><b><span class="w-ki" aria-hidden="true">${icon("check", 14)}</span>Diese Woche</b><span>${summe} ${summe === 1 ? "Aufgabe" : "Aufgaben"}</span></span>
       <span class="w-bars">${balken}</span>
@@ -6039,7 +6300,7 @@ function finishQuiz() {
   S.wrong = [...wrong];
   save();
   qz.phase = "result"; qz.right = right; qz.pct = p;
-  setTimeout(() => { haptic(p >= 80 ? "success" : "medium"); if (p >= 80) celebrate(); }, 300);
+  setTimeout(() => { haptic(p >= 80 ? "success" : "medium"); if (p >= 80) { erfolgHud("Quiz geschafft"); celebrate(); } }, 300);
 }
 function vQuiz() {
   if (qz.phase !== "q" || qz.mod !== curMod.id) qz = {phase:"intro", mod:curMod.id};
@@ -6256,7 +6517,7 @@ function mixNext() {
   mix.i++; mix.picked = null; mix.flipped = false; mix.busy = false;
   if (mix.i >= mix.list.length) {
     mix.phase = "done";
-    setTimeout(() => { haptic("success"); if (mix.firstRight / Math.max(1, mix.firsts) >= .6) celebrate(); }, 350);
+    setTimeout(() => { haptic("success"); erfolgHud("Runde geschafft"); if (mix.firstRight / Math.max(1, mix.firsts) >= .6) celebrate(); }, 350);
   }
   drawMix();
   window.scrollTo(0, 0);
