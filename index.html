@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<script>/* Statusleiste beim Start in der Farbe des gewählten App-Designs */try{var tS=JSON.parse(localStorage.getItem("itlernlabor.settings")||"{}").theme||"dark";if(tS!=="auto"){var tC=tS==="dark"?"#000000":"#f2f2f7";document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.setAttribute("content",tC)})}}catch(e){}</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Lernlabor">
@@ -2785,7 +2786,7 @@ html[data-vt="tab"]::view-transition-new(root){animation:vtTabRein .42s var(--fe
 ::view-transition-old(tabbar){display:none}
 ::view-transition-new(tabbar){animation:none}
 /* Vollbild: im hellen Design weicher Schleier hinter der weißen Uhr der Statusleiste (nur als Home-Bildschirm-App) */
-#statusSchleier{display:none;position:fixed;left:0;right:0;top:0;height:calc(env(safe-area-inset-top,0px) + 22px);z-index:40;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.44) 0%,rgba(0,0,0,.22) 55%,rgba(0,0,0,0) 100%)}
+#statusSchleier{display:none;position:fixed;left:0;right:0;top:0;height:calc(env(safe-area-inset-top,0px) * 1.4);z-index:40;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.44) 0%,rgba(0,0,0,.22) 55%,rgba(0,0,0,0) 100%)}
 @media (display-mode:standalone) and (prefers-color-scheme:light){:root:not([data-theme="dark"]) #statusSchleier{display:block}}
 @media (display-mode:standalone){:root[data-theme="light"] #statusSchleier{display:block}}
 </style>
@@ -4157,6 +4158,23 @@ function vtWechsel(ziel, richtung, vorher, nachher) {
     document.querySelectorAll(".vt-name").forEach(el => { el.style.viewTransitionName = ""; el.classList.remove("vt-name"); });
   });
 }
+/* Statusleiste in der Farbe dessen, was oben in der App liegt: schwarzer Seitenkopf oder Seitengrund */
+let statusLetzte = "", statusRaf = 0;
+function statusFarbe() {
+  statusRaf = 0;
+  const kopf = view.querySelector(":scope > .page-hero:first-child .ph-bg, :scope > .read-bar:first-child + .page-hero .ph-bg, :scope > .title-block.farbkopf:first-child");
+  const nb = $("#navbar"), grenze = nb ? nb.offsetHeight : 0;
+  let farbe = getComputedStyle(document.body).backgroundColor;
+  if (kopf && kopf.getBoundingClientRect().bottom > grenze) farbe = getComputedStyle(kopf).backgroundColor;
+  const m = (farbe.match(/[0-9.]+/g) || []).map(Number);
+  if (m.length < 3) return;
+  const roh = farbe.startsWith("color(") ? m.slice(0, 3).map(v => v * 255) : m.slice(0, 3);
+  const hex = "#" + roh.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+  if (hex === statusLetzte) return;
+  statusLetzte = hex;
+  document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.setAttribute("content", hex));
+}
+addEventListener("scroll", () => { if (!statusRaf) statusRaf = requestAnimationFrame(statusFarbe); }, {passive:true});
 function render() {
   stopTimers();
   destroyIdes();
@@ -4237,6 +4255,7 @@ function render() {
   }
   if (slideNow) iosSlide(dir);
   if (r.view === "start") lastZoom = null;
+  statusFarbe();
   if (silentNav) { silentNav = false; const f = edgeAfterRender; edgeAfterRender = null; if (f) f(); }
   updateChrome();
 }
