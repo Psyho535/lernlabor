@@ -372,6 +372,25 @@ function createEditor(host, {lang, value = "", onChange, onRun, label}) {
     insert(k === "⇥" ? L.indent : k);
   });
   const showKeys = () => host.classList.toggle("keys-on", coarse() && document.activeElement === ta);
+  // Die Zeile mit dem Cursor bleibt im sichtbaren Teil des Editors (auch wenn die Tastatur offen ist)
+  let chW = 0;
+  function zeigeCursor() {
+    const sc = host.querySelector(".ed-scroll");
+    if (!sc || document.activeElement !== ta) return;
+    const cs = getComputedStyle(ta), lh = parseFloat(cs.lineHeight) || 21, padT = parseFloat(cs.paddingTop) || 12, padL = parseFloat(cs.paddingLeft) || 6;
+    const vor = ta.value.slice(0, ta.selectionEnd), zeile = vor.split("\n").length - 1, y = padT + zeile * lh;
+    if (y < sc.scrollTop + 4) sc.scrollTop = Math.max(0, y - lh);
+    else if (y + lh > sc.scrollTop + sc.clientHeight - 6) sc.scrollTop = y + lh * 2 - sc.clientHeight;
+    if (!chW) { const m = document.createElement("span"); m.textContent = "0000000000"; m.style.cssText = "position:absolute;visibility:hidden;white-space:pre"; code.parentNode.appendChild(m); chW = m.getBoundingClientRect().width / 10 || 8; m.remove(); }
+    const gutW = gut.offsetWidth, x = gutW + padL + (vor.length - vor.lastIndexOf("\n") - 1) * chW;
+    if (x < sc.scrollLeft + gutW + 8) sc.scrollLeft = Math.max(0, x - gutW - 40);
+    else if (x > sc.scrollLeft + sc.clientWidth - 24) sc.scrollLeft = x - sc.clientWidth + 56;
+  }
+  const cursorBald = () => requestAnimationFrame(zeigeCursor);
+  ta.addEventListener("input", cursorBald);
+  ta.addEventListener("keyup", cursorBald);
+  ta.addEventListener("pointerup", () => setTimeout(zeigeCursor, 60));
+  ta.addEventListener("focus", () => setTimeout(zeigeCursor, 350));
   ta.addEventListener("focus", showKeys);
   ta.addEventListener("blur", () => setTimeout(showKeys, 120));
   paint();
@@ -380,6 +399,7 @@ function createEditor(host, {lang, value = "", onChange, onRun, label}) {
     get value() { return ta.value; },
     set value(v) { ta.value = v; errLines = new Set(); paint(); },
     focus() { ta.focus(); },
+    zeigeCursor,
     markErrors(lines) { errLines = new Set(lines.filter(n => n > 0)); paint(); },
     goLine(n) {
       const v = ta.value.split("\n");
@@ -480,8 +500,10 @@ function mount(host, o) {
   const initial = saved !== null ? saved : (o.code || "");
   host.innerHTML = `<div class="ide${o.check ? " has-check" : ""}" style="${o.colorVars || "--c:" + (o.color || "#0a84ff")}">
     <div class="ide-bar"><span class="ide-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ide-file">${esc(o.file || L.file)}</span><span class="ide-sp"></span>
+      <button class="ide-btn ide-fokus-btn" type="button" data-ide="fokus" aria-label="Editor im Vollbild"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15"/></svg></button>
       ${o.reset !== false ? `<button class="ide-btn" type="button" data-ide="reset" aria-label="Code zurücksetzen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5V9h4.5"/></svg></button>` : ""}
       ${o.check ? `<button class="ide-run ide-check" type="button" data-ide="check"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Prüfen</button>` : ""}
+      <button class="ide-fertig" type="button" data-ide="fertig">Fertig</button>
       <button class="ide-run" type="button" data-ide="run" aria-label="Ausführen"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4a1 1 0 0 0 1.5.86l11.3-7.2a1 1 0 0 0 0-1.7L8.5 3.94A1 1 0 0 0 7 4.8z" fill="currentColor"/></svg><span class="ide-lbl">Ausführen</span></button></div>
     <div class="ide-ed"></div>
     <div class="ide-out" hidden></div>
@@ -489,6 +511,41 @@ function mount(host, o) {
   const out = host.querySelector(".ide-out");
   const ed = createEditor(host.querySelector(".ide-ed"), {lang, value:initial, label:o.label, onRun:() => doRun(), onChange:v => { try { if (store) localStorage.setItem(store, v); } catch (e) {} o.onChange && o.onChange(v); }});
   let inputs = [], seed = 1, busy = false, runToken = 0;
+  /* Schreibmodus: Der Editor füllt genau den sichtbaren Bereich über der Tastatur (Visual Viewport).
+     Auf dem Handy startet er beim Tippen in den Code, sonst über den Vollbild-Knopf. „Fertig“ beendet ihn. */
+  const ide = host.querySelector(".ide"), ta = host.querySelector(".ed-ta"), vv = window.visualViewport;
+  const handy = () => coarse() && Math.min(innerWidth, innerHeight) < 600;
+  let fokus = false;
+  function passe() {
+    if (!fokus) return;
+    const h = vv ? vv.height : innerHeight, top = vv ? vv.offsetTop : 0;
+    ide.style.setProperty("--vv-h", h + "px");
+    ide.style.setProperty("--vv-top", top + "px");
+    ide.classList.toggle("tastatur", h < innerHeight - 120);
+    ed.zeigeCursor();
+  }
+  function fokusAn() {
+    if (fokus) return;
+    fokus = true;
+    ide.classList.add("fokus");
+    document.documentElement.classList.add("ide-fokus");
+    passe();
+    if (vv) { vv.addEventListener("resize", passe); vv.addEventListener("scroll", passe); }
+    addEventListener("resize", passe);
+  }
+  function fokusAus() {
+    if (!fokus) return;
+    fokus = false;
+    if (vv) { vv.removeEventListener("resize", passe); vv.removeEventListener("scroll", passe); }
+    removeEventListener("resize", passe);
+    if (document.activeElement && ide.contains(document.activeElement)) document.activeElement.blur();
+    ide.classList.remove("fokus", "tastatur");
+    document.documentElement.classList.remove("ide-fokus");
+    if (ide.isConnected) ide.scrollIntoView({block:"nearest"});
+  }
+  ta.addEventListener("focus", () => { if (handy()) fokusAn(); });
+  ide.addEventListener("keydown", e => { if (e.key === "Escape" && fokus) { e.preventDefault(); fokusAus(); } });
+  host.addEventListener("ide:destroy", fokusAus);
   const pl = L.runner === "python" ? pool("python") : L.runner === "java" ? pool("java") : L.runner === "sql" ? pool("sql") : null;
   if (pl) {
     const off = pl.on(ev => {
@@ -570,12 +627,14 @@ function mount(host, o) {
     ed.markErrors(res.line ? [res.line] : []);
   }
   function keepVisible() {
+    if (fokus) { requestAnimationFrame(() => { out.scrollTop = out.scrollHeight; }); return; }
     const r = out.getBoundingClientRect();
     if (r.bottom > innerHeight - 90) window.scrollBy({top:Math.min(r.bottom - innerHeight + 110, r.top - 70), behavior:"smooth"});
   }
   async function doRun(isReplay = false, eof = false) {
     if (lang === "web") { renderWeb(); return; }
     if (busy && !isReplay) return;
+    if (fokus && coarse() && document.activeElement === ta) ta.blur();
     const tok = ++runToken;
     if (!isReplay) { inputs = []; seed = (Math.random() * 4294967295) >>> 0; }
     busy = true;
@@ -619,6 +678,8 @@ function mount(host, o) {
     if (b) {
       const a = b.dataset.ide;
       if (a === "run") doRun();
+      if (a === "fokus") fokusAn();
+      if (a === "fertig") fokusAus();
       if (a === "eof") doRun(true, true);
       if (a === "check") o.onCheck && o.onCheck();
       if (a === "reset") o.onReset ? o.onReset() : api.reset();

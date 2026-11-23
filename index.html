@@ -14,6 +14,7 @@
 <meta name="copyright" content="© 2026 Alexander S. Alle Rechte vorbehalten.">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
+<script>/* iOS: kein automatisches Hineinzoomen beim Tippen in Eingabefelder (Zoomen mit zwei Fingern bleibt möglich) */if(/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)){var vm=document.querySelector('meta[name="viewport"]');if(vm)vm.setAttribute("content",vm.getAttribute("content")+",maximum-scale=1")}</script>
 <link rel="apple-touch-icon" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
 <title>IT-Lernlabor</title>
@@ -118,7 +119,7 @@ p{margin:0}
 .sidebar{display:none}
 main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom,0px))}
 .col{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:22px;min-width:0;padding-top:4px}
-@media (min-width:900px){
+@media (min-width:900px) and (min-height:560px){
   .sidebar{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:260px;z-index:20;background:var(--side);border-right:.5px solid var(--sep);padding:calc(20px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px));overflow-y:auto}
   main{margin-left:260px;padding-inline:40px;padding-block:0 64px}
   .read-bar{left:calc(260px / var(--zoom,1))}
@@ -145,7 +146,7 @@ main{padding-inline:16px;padding-block:0 calc(112px + env(safe-area-inset-bottom
 
 .navbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:52px;margin-inline:-16px;padding-inline:6px;border-bottom:.5px solid transparent;transition:background-color .3s,border-color .3s}
 .navbar.scrolled{background:var(--material);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom-color:var(--sep)}
-@media (min-width:900px){.navbar{margin-inline:-40px;padding-inline:26px}}
+@media (min-width:900px) and (min-height:560px){.navbar{margin-inline:-40px;padding-inline:26px}}
 .nb-left{justify-self:start;min-width:0;display:flex}
 .nb-right{justify-self:end;min-width:0;display:flex;gap:4px}
 .nav-title{font-weight:620;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(52vw,420px);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .4s var(--ease-ios)}
@@ -512,7 +513,7 @@ table.t.wide{min-width:760px}
 .island.good .idot{background:var(--green)}
 .island.bad .idot{background:var(--red)}
 .island span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media (min-width:900px){.island{left:calc(50% + 130px)}}
+@media (min-width:900px) and (min-height:560px){.island{left:calc(50% + 130px)}}
 .sheet-wrap{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;padding:12px 10px calc(10px + env(safe-area-inset-bottom,0px))}
 .sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.34);animation:fade .3s}
 .sheet{position:relative;width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;animation:sheetUp .5s var(--ease-ios)}
@@ -769,7 +770,7 @@ main{overflow-x:clip}
 .shelf-card small{display:block;margin-top:7px;font-size:14.5px;line-height:1.3}
 .shelf-bar{display:block;height:4px;margin-top:16px;border-radius:4px;background:rgba(255,255,255,.28);overflow:hidden}
 .shelf-bar i{display:block;height:100%;border-radius:inherit;background:currentColor}
-@media (min-width:900px){.shelf-wrap{margin-inline:-40px}.shelf{padding-inline:40px;scroll-padding-inline:40px}}
+@media (min-width:900px) and (min-height:560px){.shelf-wrap{margin-inline:-40px}.shelf{padding-inline:40px;scroll-padding-inline:40px}}
 /* Vorspann */
 #intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);pointer-events:none}
 #intro.go{animation:introOut .55s cubic-bezier(.6,0,.9,.3) 1.3s forwards}
@@ -1310,7 +1311,7 @@ main{zoom:var(--zoom,1)}
 .first-open .hhead{animation:riseIn .8s var(--ease-ios) both;animation-delay:var(--intro,0s)}
 .first-open .hcard{animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .12s)}
 .first-open .hhead ~ :is(.section,.dchart):not(.pre,.rev){animation:riseIn .9s var(--ease-ios) both;animation-delay:calc(var(--intro,0s) + .26s)}
-@media (min-width:900px){.ltiles{margin:0;padding:2px 0 10px;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}}
+@media (min-width:900px) and (min-height:560px){.ltiles{margin:0;padding:2px 0 10px;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}}
 @media (hover:hover) and (pointer:fine){
   .mod-card:hover,.hub:hover,.mod-tile:hover,.tile:hover,.mode:not([disabled]):hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
 }
@@ -2057,7 +2058,7 @@ body{font-family:var(--f-ui);letter-spacing:-.012em}
 .acc-t small{font-size:12px;color:var(--label-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-t b{font:600 15px var(--f-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-go{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff}
-@media (min-width:900px){.acc{bottom:24px}}
+@media (min-width:900px) and (min-height:560px){.acc{bottom:24px}}
 /* Kleine Feinheiten */
 .gc,.wc{transition:transform .45s var(--ease-spring)}
 .gc:active{transform:scale(.97)}
@@ -2241,7 +2242,7 @@ button.ios-card:active{transform:scale(.97)}
 /* ===== Übersicht wie Apple Books: Cover zum Durchwischen, Tagesziel wie das Leseziel, bunte Übungskacheln ===== */
 .shelf{display:flex;gap:12px;margin:-8px -16px 0;padding:14px 16px 20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .shelf::-webkit-scrollbar{display:none}
-@media (min-width:900px){.shelf{margin:0 -40px;padding-inline:40px;scroll-padding-inline:40px}}
+@media (min-width:900px) and (min-height:560px){.shelf{margin:0 -40px;padding-inline:40px;scroll-padding-inline:40px}}
 .cover{position:relative;flex:none;display:block;width:min(76%,300px);height:300px;padding:0;border:0;background:none;color:#fff;text-align:left;cursor:pointer;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
 .cv-in{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:4px;padding:18px 18px 16px;border-radius:26px;overflow:hidden;isolation:isolate;background:radial-gradient(110% 70% at 100% 0%,color-mix(in srgb,var(--cv) 78%,#fff) 0%,transparent 62%),linear-gradient(172deg,var(--cv) 0%,var(--cd) 46%,color-mix(in srgb,var(--cd) 72%,#000) 100%);box-shadow:inset 0 .5px 0 rgba(255,255,255,.35),0 calc(14px + 10px * var(--f,0)) calc(28px + 16px * var(--f,0)) -22px rgba(0,0,0,.75);transform:scale(calc(1 + .05 * var(--f,0)));transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;will-change:transform}
 .cover:active .cv-in{transform:scale(calc((1 + .05 * var(--f,0)) * .97))}
@@ -2339,7 +2340,7 @@ button.ios-card:active{transform:scale(.97)}
 .nb-round.lg-on,.back.lg-on,.acc.lg-on{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.34),rgba(255,255,255,0) 70%),var(--lg-bg)!important}
 /* ===== Übersicht als Bühne mit Listen (wie Apple TV und Musik): Farbe des Themas oben randlos, darunter Listen ohne Kästen ===== */
 .st-bg{position:absolute;z-index:-1;left:-16px;right:-16px;top:-260px;bottom:-90px;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,var(--sd) 0%,var(--sd) calc(100% - 150px),color-mix(in srgb,var(--sd) 50%,var(--bg)) calc(100% - 80px),var(--bg) 100%)}
-@media (min-width:900px){.st-bg{left:-40px;right:-40px}}
+@media (min-width:900px) and (min-height:560px){.st-bg{left:-40px;right:-40px}}
 .st-glow{position:absolute;right:-38%;top:150px;width:95%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--sc),transparent);opacity:.75;animation:stGlow 18s ease-in-out infinite alternate}
 @keyframes stGlow{to{transform:translate(-14%,12%) scale(1.15)}}
 .st-art{position:absolute;right:-40px;top:230px;color:#fff;opacity:.1;transform:rotate(-10deg)}
@@ -2499,7 +2500,7 @@ button.ios-card:active{transform:scale(.97)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #view.getoent::after{background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 34%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 16%,var(--bg)) 55%,var(--bg) 100%)}}
 :root[data-theme="dark"] #view.getoent::after{background:linear-gradient(180deg,color-mix(in srgb,var(--tint-c) 34%,var(--bg)) 0%,color-mix(in srgb,var(--tint-c) 16%,var(--bg)) 55%,var(--bg) 100%)}
 #view.getoent{position:relative}
-@media (min-width:900px){#view.getoent::after{left:-40px;right:-40px}}
+@media (min-width:900px) and (min-height:560px){#view.getoent::after{left:-40px;right:-40px}}
 /* ===== Farbkarten: Kachel, Kopfkarte und Titelbereich teilen dieselbe Farbe (onColor: --cb Hintergrund, --on Schrift) ===== */
 .bt{background:var(--cb)!important;color:var(--on)!important}
 .bt-ic{background:color-mix(in srgb,var(--on) 14%,transparent)!important}
@@ -2519,7 +2520,7 @@ button.ios-card:active{transform:scale(.97)}
 .col > .page-hero:first-child .ph-bg,.col > .read-bar:first-child + .page-hero .ph-bg{border-radius:0 0 32px 32px!important}
 .col > .page-hero:first-child .ph-c,.col > .read-bar:first-child + .page-hero .ph-c{padding:calc(var(--nbh,52px) + 8px) 22px 24px}
 .col > .title-block.farbkopf:first-child{padding:calc(var(--nbh,52px) + 8px) 20px 24px!important}
-@media (min-width:900px){.col > .page-hero:first-child,.col > .read-bar:first-child + .page-hero,.col > .title-block.farbkopf:first-child{margin-left:-40px!important;margin-right:-40px!important}}
+@media (min-width:900px) and (min-height:560px){.col > .page-hero:first-child,.col > .read-bar:first-child + .page-hero,.col > .title-block.farbkopf:first-child{margin-left:-40px!important;margin-right:-40px!important}}
 /* Die obere Leiste fängt nur noch Tipps auf ihren Knöpfen ab */
 .navbar{pointer-events:none}
 .navbar button,.navbar a,.navbar [role="button"]{pointer-events:auto}
@@ -2919,6 +2920,33 @@ button.w:active{transform:scale(.965)}
 @keyframes ringRein{from{stroke-dasharray:0 999}}
 @keyframes balkenRein{from{transform:scaleX(0)}}
 @keyframes saeuleRein{from{transform:scaleY(0)}}
+/* ===== Querformat: Abstand zur Kamera-Aussparung an den Seiten ===== */
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* ===== Code-Editor: Schreibmodus über der Tastatur, Querformat mit Code links und Ausgabe rechts ===== */
+.ide-fertig{display:none;align-items:center;height:36px;padding:0 14px;border:0;border-radius:11px;background:var(--fill);color:var(--label);font:600 14.5px/1 var(--f-ui);cursor:pointer;flex:none}
+.ide.fokus .ide-fertig{display:inline-flex}
+.ide.fokus .ide-fokus-btn{display:none}
+.ide.fokus{background:linear-gradient(var(--ed-bg),var(--ed-bg)),var(--bg,#f2f2f7);position:fixed;z-index:200;left:0;right:0;top:calc(var(--vv-top,0px) / var(--zoom,1));height:calc(var(--vv-h,100dvh) / var(--zoom,1));margin:0;border:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);animation:ideAuf .34s cubic-bezier(.3,1.1,.5,1)}
+.ide.fokus.tastatur{padding-bottom:0}
+.ide.fokus .ide-bar{flex:none}
+.ide.fokus .ide-ed{flex:1;min-height:0;display:flex;flex-direction:column}
+.ide.fokus .ed{flex:1;min-height:0;display:flex;flex-direction:column}
+.ide.fokus .ed-scroll{flex:1;min-height:0;max-height:none}
+.ide.fokus .ed-keys{flex:none}
+.ide.fokus .ide-out:not([hidden]){background:#0d0d10;flex:none;max-height:44%;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.ide.fokus.tastatur:has(.ed-ta:focus) .ide-out{display:none}
+@media (orientation:landscape){
+  .ide.fokus{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,42%);grid-template-rows:auto minmax(0,1fr)}
+  .ide.fokus .ide-bar{grid-column:1/-1}
+  .ide.fokus .ide-ed{grid-column:1;grid-row:2}
+  .ide.fokus .ide-out:not([hidden]){grid-column:2;grid-row:2;max-height:none;border-top:0;border-left:.5px solid var(--sep)}
+  .ide.fokus:has(.ide-out[hidden]) .ide-ed{grid-column:1/-1}
+  .ide.fokus.tastatur:has(.ed-ta:focus) .ide-out:not([hidden]){display:block}
+}
+html.ide-fokus,html.ide-fokus body{overflow:hidden;overscroll-behavior:none}
+html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hidden}
+@keyframes ideAuf{from{opacity:.5;transform:scale(.985)}}
+@media (prefers-reduced-motion:reduce){.ide.fokus{animation:none}}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -4376,7 +4404,7 @@ function render() {
         const bg = view.querySelector(":scope > .page-hero .ph-bg, #layerBody > .page-hero .ph-bg");
         if (bg && bg.getBoundingClientRect().bottom > 0) { morph = {dir:"out", rect:bg.getBoundingClientRect(), color:getComputedStyle(bg).backgroundColor, go:from.key}; bg.style.visibility = "hidden"; }
       }
-      slideNow = !morph && !zoom && (dir === "push" || dir === "pop") && matchMedia("(max-width:899px)").matches;
+      slideNow = !morph && !zoom && (dir === "push" || dir === "pop") && matchMedia("(max-width:899px), (max-height:559px)").matches;
       // Tab-Wechsel (gleiche Ebene) wie in iOS sofort, ohne Ausblenden der alten Seite
       if (dir === "fade" && !zoom && !morph) { if (ghostEl) { ghostEl.remove(); ghostEl = null; } }
       else leavePage(dir, slideNow || !!zoom);
