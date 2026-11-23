@@ -2823,6 +2823,8 @@ html[data-vt="tab"]::view-transition-new(root){animation:vtTabRein .42s var(--fe
 .kat-f{margin:-8px 4px 0}
 .col.entering .inseln > *{animation:cellIn .5s var(--ease-soft) backwards;animation-delay:calc(var(--k,0) * 40ms + 40ms)}
 .inseln > :nth-child(2){--k:1}.inseln > :nth-child(3){--k:2}.inseln > :nth-child(4){--k:3}.inseln > :nth-child(5){--k:4}.inseln > :nth-child(n+6){--k:5}
+/* Tab-Leiste ohne transform zentriert: Safari setzte sie beim Tab-Wechsel (View Transition) sonst um die halbe Breite nach links */
+.tabbar{left:0!important;right:0!important;margin-inline:auto!important;transform:none!important}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
