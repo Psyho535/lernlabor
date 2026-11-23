@@ -4175,6 +4175,24 @@ function statusFarbe() {
   document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.setAttribute("content", hex));
 }
 addEventListener("scroll", () => { if (!statusRaf) statusRaf = requestAnimationFrame(statusFarbe); }, {passive:true});
+/* Läuft die Home-Bildschirm-App noch mit der beim Hinzufügen gespeicherten alten Statusleiste (kein Vollbild),
+   einmal erklären, wie man sie neu hinzufügt. iOS liest diese Einstellung nur beim Hinzufügen. */
+setTimeout(() => {
+  try {
+    const standalone = navigator.standalone === true || matchMedia("(display-mode: standalone)").matches;
+    if (!standalone || localStorage.getItem("itlernlabor.vollbildHinweis")) return;
+    const probe = document.createElement("div");
+    probe.style.cssText = "position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none";
+    document.body.append(probe);
+    const oben = probe.offsetHeight;
+    probe.remove();
+    if (oben > 0) return;
+    localStorage.setItem("itlernlabor.vollbildHinweis", "1");
+    sheet({title:"Vollbild einschalten", msg:"Diese App wurde mit einer älteren Einstellung zum Home-Bildschirm hinzugefügt. iOS merkt sich diese Einstellung, deshalb liegt oben ein Streifen. So geht die App bis zum Rand: App-Symbol gedrückt halten, „App entfernen“, dann in Safari psyho535.github.io/lernlabor öffnen und über Teilen „Zum Home-Bildschirm“ neu hinzufügen. Achtung: Dabei wird der Lernstand in dieser App gelöscht.", action:"Verstanden"});
+    const ok = $("#sheetRoot .sheet-btn.destructive");
+    if (ok) ok.classList.remove("destructive");
+  } catch (e) {}
+}, 1800);
 function render() {
   stopTimers();
   destroyIdes();
