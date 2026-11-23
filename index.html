@@ -4170,11 +4170,12 @@ let vtAktiv = false, vtLauf = null;
   for (let i = 0; i <= N; i++) pkt.push(i === N ? 1 : +f(.62 * i / N).toFixed(4));
   document.documentElement.style.setProperty("--feder", `linear(${pkt.join(",")})`);
 })();
-// Tab-Wechsel mit weicher Animation; ohne View Transitions wie bisher
+// Tab-Wechsel wie in iOS: sofort, ohne Übergang (nur die Glaslinse gleitet zum neuen Tab)
+let tabNav = false;
 function vtTab(key) {
-  if (!vtGeht || reduced() || location.hash === "#" + key) { go(key); return; }
-  if (key !== "start") lastZoom = null;
-  vtWechsel(key, "tab", () => null, () => null);
+  lastZoom = null;
+  tabNav = true;
+  go(key);
 }
 const vtZiel = () => view.querySelector(":scope > .page-hero:first-child, :scope > .read-bar:first-child + .page-hero, :scope > .title-block.farbkopf:first-child, #layerBody > .page-hero:first-child") || view;
 function vtWechsel(ziel, richtung, vorher, nachher) {
@@ -4245,6 +4246,7 @@ function render() {
     else if (r.depth < prevRoute.depth) dir = "pop";
     else if (r.view === "schicht" && prevRoute.view === "schicht") dir = r.n > prevRoute.n ? "push" : "pop";
   }
+  if (tabNav) { dir = "fade"; tabNav = false; }
   const same = prevRoute && prevRoute.key === r.key;
   const layerSwap = !same && prevRoute && prevRoute.view === "schicht" && r.view === "schicht" && $("#layerBody");
   if (!layerSwap) { clearTimeout(swapT); swapT = null; }
@@ -4281,7 +4283,7 @@ function render() {
   const tabI = TABS.findIndex(t => t[0] === tabKey);
   lensSet(tabI);
   setNav();
-  if (moving && !reduced() && !vtAktiv) document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
+  if (moving && !reduced() && !vtAktiv && dir !== "fade") document.querySelectorAll("#navbar .nb-left, #navbar .nb-right").forEach(el => el.animate([{opacity:0, transform:`translateX(${dir === "pop" ? -10 : dir === "push" ? 10 : 0}px)`}, {opacity:1, transform:"none"}], {duration:380, easing:EASE_SOFT}));
   const aurora = $("#aurora");
   aurora.classList.toggle("tinted", r.view === "schicht");
   if (r.view === "schicht") aurora.style.setProperty("--route", HUE[r.n]);
