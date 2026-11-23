@@ -2767,6 +2767,23 @@ button.w:active{transform:scale(.97);transition-duration:.18s;transition-timing-
 .w-text .w-eye,.w .w-kopf{font-weight:700}
 .w-ring small{font-size:11.5px;font-weight:700}
 .w-fort,.w-pruef small,.w-text > span{font-weight:500}
+/* ===== Dunkelmodus ruhiger: keine farbigen Ränder, neutrale Spuren ===== */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--w-bg:#1c1c1e;--w-rand:transparent}}
+:root[data-theme="dark"]{--w-bg:#1c1c1e;--w-rand:transparent}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.w,.title-block.farbkopf,.page-hero .ph-bg){box-shadow:none!important}}
+:root[data-theme="dark"] :is(.w,.title-block.farbkopf,.page-hero .ph-bg){box-shadow:none!important}
+.w-ring .bg{stroke:rgba(255,255,255,.1)}
+.w-pi{background:rgba(255,255,255,.1)}
+.w-saeule{background:rgba(255,255,255,.08)}
+.w-fort i{background:rgba(255,255,255,.14)}
+/* ===== Tab-Wechsel: alte Seite blendet aus, neue gleitet leicht hoch ===== */
+html[data-vt="tab"]::view-transition-old(root){animation:vtTabWeg .16s ease-out both}
+html[data-vt="tab"]::view-transition-new(root){animation:vtTabRein .42s var(--feder,cubic-bezier(.32,.72,0,1)) .04s both}
+@keyframes vtTabWeg{to{opacity:0}}
+@keyframes vtTabRein{from{opacity:0;transform:translateY(14px) scale(.985)}}
+/* Die Tab-Leiste bleibt lebendig sichtbar, damit die Linse während des Wechsels gleitet */
+::view-transition-old(tabbar){display:none}
+::view-transition-new(tabbar){animation:none}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
@@ -4107,6 +4124,12 @@ let vtAktiv = false, vtLauf = null;
   for (let i = 0; i <= N; i++) pkt.push(i === N ? 1 : +f(.62 * i / N).toFixed(4));
   document.documentElement.style.setProperty("--feder", `linear(${pkt.join(",")})`);
 })();
+// Tab-Wechsel mit weicher Animation; ohne View Transitions wie bisher
+function vtTab(key) {
+  if (!vtGeht || reduced() || location.hash === "#" + key) { go(key); return; }
+  if (key !== "start") lastZoom = null;
+  vtWechsel(key, "tab", () => null, () => null);
+}
 const vtZiel = () => view.querySelector(":scope > .page-hero:first-child, :scope > .read-bar:first-child + .page-hero, :scope > .title-block.farbkopf:first-child, #layerBody > .page-hero:first-child") || view;
 function vtWechsel(ziel, richtung, vorher, nachher) {
   if (vtLauf) vtLauf.skipTransition();
@@ -4322,7 +4345,7 @@ function lensSet(i) { if (lensApi) lensApi.set(i); else lensPending = i; }
     if (!st.on) return;
     mute = true;
     setTimeout(() => { mute = false; }, 80);
-    if (drin) { morphSrc = null; go(TABS[st.i][0]); }
+    if (drin) { morphSrc = null; vtTab(TABS[st.i][0]); }
     else render();
   };
   bar.addEventListener("pointerup", end);
@@ -4582,6 +4605,7 @@ document.addEventListener("click", e => {
       vtWechsel(ziel, "auf", () => karte, vtZiel);
       return;
     }
+    if (g.matches("#tabbar .tab")) { vtTab(g.dataset.go); return; }
     if (!silentNav && !reduced() && vtGeht && lastZoom && curRoute && curRoute.key === lastZoom.go && g.matches("#navbar .back") && g.dataset.go === "start") {
       const lz = lastZoom;
       vtWechsel("start", "zu", vtZiel, () => { window.scrollTo(0, lz.y || 0); return view.querySelector(`[data-zoom][data-go="${lz.go}"]`); });
@@ -4871,7 +4895,7 @@ function vStart() {
         <span class="w-text"><small class="w-eye">${st.started ? "Weiterlernen" : "Als Nächstes"}</small><b>${st.m.title}</b><span>${st.unit}</span></span>
         <span class="w-play" aria-hidden="true">${icon("play", 18)}</span>
       </span>
-      <span class="w-fort"><span>${ux} von ${uy}</span><i aria-hidden="true"><b style="width:${pr}%"></b></i><span>${pr} %</span></span>
+      <span class="w-fort"><span>${ux} von ${uy} gelesen</span><i aria-hidden="true"><b style="width:${pr}%"></b></i><span>${pr} %</span></span>
     </button>
     <button class="w w-ringe" data-go="heute" data-zoom style="${onColor(APPLE.gruen)}">
       <small class="w-kopf">${icon("flame", 13)}${streak} ${streak === 1 ? "Tag" : "Tage"} Serie</small>
