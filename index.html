@@ -2947,6 +2947,10 @@ html.ide-fokus,html.ide-fokus body{overflow:hidden;overscroll-behavior:none}
 html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hidden}
 @keyframes ideAuf{from{opacity:.5;transform:scale(.985)}}
 @media (prefers-reduced-motion:reduce){.ide.fokus{animation:none}}
+/* ===== Weicher Rand oben in der Farbe dessen, was darunter liegt (schwarzer Kopf oder Seitengrund) ===== */
+@property --nb-schleier{syntax:"<color>";inherits:true;initial-value:transparent}
+.navbar{transition:--nb-schleier .25s ease}
+.navbar::before{background:linear-gradient(180deg,var(--nb-schleier,var(--bg)) 30%,color-mix(in srgb,var(--nb-schleier,var(--bg)) 72%,transparent) 66%,transparent)}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -4344,6 +4348,7 @@ function statusFarbe() {
   if (m.length < 3) return;
   const roh = farbe.startsWith("color(") ? m.slice(0, 3).map(v => v * 255) : m.slice(0, 3);
   const hex = "#" + roh.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+  if (nb) nb.style.setProperty("--nb-schleier", hex);
   if (hex === statusLetzte) return;
   statusLetzte = hex;
   document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.setAttribute("content", hex));
