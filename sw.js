@@ -1,6 +1,6 @@
 /*! IT-Lernlabor · © 2026 Alexander S. · Alle Rechte vorbehalten. Nutzung nur nach LICENSE. */
 // Offline-Cache. Die Version ändert sich bei jedem Build, damit Handys die neue Fassung holen.
-const CACHE = "lernlabor-20261125-160000";
+const CACHE = "lernlabor-20261125-170000";
 // Python (Pyodide) und SQLite (sql.js) kommen einmalig vom CDN. Sie liegen in einem eigenen Cache,
 // der App-Updates übersteht, weil die Versionsnummer in ihrer Adresse steht.
 const RUNTIME = "lernlabor-laufzeiten-1";
@@ -23,7 +23,8 @@ self.addEventListener("fetch", e => {
   // Die App selbst: erst Netz (für neue Inhalte), ohne Netz aus dem Cache.
   if (req.mode === "navigate") {
     e.respondWith(
-      Promise.race([fetch(req), timeout(4000)])
+      // no-cache: immer beim Server nachfragen, damit eine neue Version sofort ankommt (nicht erst nach 10 Minuten Browser-Cache)
+      Promise.race([fetch(req.url, {cache:"no-cache", credentials:"same-origin"}), timeout(4000)])
         .then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put("./index.html", copy)); return res; })
         .catch(() => caches.match("./index.html").then(r => r || caches.match("./")))
     );

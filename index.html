@@ -2947,10 +2947,8 @@ html.ide-fokus,html.ide-fokus body{overflow:hidden;overscroll-behavior:none}
 html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hidden}
 @keyframes ideAuf{from{opacity:.5;transform:scale(.985)}}
 @media (prefers-reduced-motion:reduce){.ide.fokus{animation:none}}
-/* ===== Weicher Rand oben in der Farbe dessen, was darunter liegt (schwarzer Kopf oder Seitengrund) ===== */
-@property --nb-schleier{syntax:"<color>";inherits:true;initial-value:transparent}
-.navbar{transition:--nb-schleier .25s ease}
-.navbar::before{background:linear-gradient(180deg,var(--nb-schleier,var(--bg)) 30%,color-mix(in srgb,var(--nb-schleier,var(--bg)) 72%,transparent) 66%,transparent)}
+/* ===== Liegt ein Seitenkopf oben, bleibt der helle weiche Rand weg: oben ist dann alles in der Farbe des Kopfs ===== */
+.navbar.ueber-kopf::before{opacity:0!important}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -4343,12 +4341,13 @@ function statusFarbe() {
   const kopf = view.querySelector(":scope > .page-hero:first-child .ph-bg, :scope > .read-bar:first-child + .page-hero .ph-bg, :scope > .title-block.farbkopf:first-child");
   const nb = $("#navbar"), grenze = nb ? nb.offsetHeight : 0;
   let farbe = getComputedStyle(document.body).backgroundColor;
-  if (kopf && kopf.getBoundingClientRect().bottom > grenze) farbe = getComputedStyle(kopf).backgroundColor;
+  const ueberKopf = !!(kopf && kopf.getBoundingClientRect().bottom > grenze);
+  if (nb) nb.classList.toggle("ueber-kopf", ueberKopf);
+  if (ueberKopf) farbe = getComputedStyle(kopf).backgroundColor;
   const m = (farbe.match(/[0-9.]+/g) || []).map(Number);
   if (m.length < 3) return;
   const roh = farbe.startsWith("color(") ? m.slice(0, 3).map(v => v * 255) : m.slice(0, 3);
   const hex = "#" + roh.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
-  if (nb) nb.style.setProperty("--nb-schleier", hex);
   if (hex === statusLetzte) return;
   statusLetzte = hex;
   document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.setAttribute("content", hex));
