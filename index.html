@@ -2949,6 +2949,8 @@ html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hid
 @media (prefers-reduced-motion:reduce){.ide.fokus{animation:none}}
 /* ===== Liegt ein Seitenkopf oben, bleibt der helle weiche Rand weg: oben ist dann alles in der Farbe des Kopfs ===== */
 .navbar.ueber-kopf::before{opacity:0!important}
+/* ===== Wiederholsystem: wann kommt die Aufgabe wieder ===== */
+.explain small.wieder{display:block;margin-top:8px;font-size:13.5px;font-weight:600;color:var(--label-2)}
 </style>
 
 <div id="statusSchleier" aria-hidden="true"></div>
@@ -2978,6 +2980,7 @@ html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hid
 <script src="content/wirtschaft.js"></script>
 <script src="content/ergaenzung.js"></script>
 <script src="content/vertiefung.js"></script>
+<script src="content/pruefung.js"></script>
 <script src="content/einfach.js"></script>
 <script src="content/code-python.js"></script>
 <script src="content/code-java.js"></script>
@@ -3533,6 +3536,12 @@ function grade(id, ok, xp) {
   const b = ok ? Math.min(SRS_DAYS.length - 1, rec.b + 1) : 0;
   S.srs[id] = {b, d:d + SRS_DAYS[b]};
   countDay(xp, (CARD_BY_ID[id] || Q_BY_ID[id] || {}).m);
+}
+/* Text: wann kommt die Aufgabe wieder (nach dem Leitner-Fach in S.srs) */
+function wiederText(id, ok, nochmal) {
+  if (!ok) return nochmal ? "Kommt in dieser Runde gleich noch mal." : "Kommt beim nächsten Üben wieder dran.";
+  const r = S.srs[id], t = r ? r.d - today() : 0;
+  return t <= 0 ? "Kommt bald wieder dran." : t === 1 ? "Sitzt. Kommt morgen wieder." : `Sitzt. Kommt in ${t} Tagen wieder.`;
 }
 /* Zählt die Übung des Tages; S.act merkt sich pro Tag und Thema die XP (für das Punktdiagramm und „Heute / Gestern“). */
 function countDay(xp, m) {
@@ -6289,8 +6298,11 @@ function arrange(o) {
 function startQuiz(mode) {
   let pool;
   const all = curMod.questions;
-  if (mode === "quick") pool = shuffle(all).slice(0, 10);
-  else if (mode === "big") pool = shuffle(all).slice(0, 25);
+  // Zuerst Fälliges (auch falsch Beantwortetes), dann Neues, dann nach Leitner-Fach: Was lange sitzt, kommt zuletzt.
+  const rang = q => { const r = S.srs[q.id]; return !r ? 1 : r.d <= today() ? 0 : 2 + r.b; };
+  const auswahl = n => shuffle(shuffle(all).sort((a, b) => rang(a) - rang(b)).slice(0, n));
+  if (mode === "quick") pool = auswahl(10);
+  else if (mode === "big") pool = auswahl(25);
   else pool = shuffle(all.filter(q => S.wrong.includes(q.id)));
   if (!pool.length) { drawQuiz(); return; }
   haptic("medium");
@@ -6515,8 +6527,9 @@ function scoreItem(it, ok) {
   grade(it.id, ok, xp);
   if (it.k === "card") { if (ok) { if (!S.known.includes(it.id)) S.known.push(it.id); } else S.known = S.known.filter(x => x !== it.id); }
   else { const w = new Set(S.wrong); if (ok) w.delete(it.id); else w.add(it.id); S.wrong = [...w]; }
-  // Falsches kommt in dieser Runde noch einmal, einmalig und ein paar Aufgaben später.
-  if (!ok && !mix.retried[it.id]) { mix.retried[it.id] = true; mix.list.splice(Math.min(mix.list.length, mix.i + 4), 0, {...it, retry:true}); }
+  // Falsches kommt in dieser Runde ein paar Aufgaben später wieder, bis es sitzt (höchstens 3 Wiederholungen).
+  const versuche = mix.retried[it.id] || 0;
+  if (!ok && versuche < 3) { mix.retried[it.id] = versuche + 1; mix.list.splice(Math.min(mix.list.length, mix.i + 3), 0, {...it, retry:true}); }
   save();
   return xp;
 }
@@ -6582,7 +6595,7 @@ function drawMix() {
   const where = it.L ? `Schicht ${it.L}, ${shortName(it.L)}` : src.u ? `${MOD[it.m].title}, ${unitOf(MOD[it.m], src.u).title}` : MOD[it.m].title;
   setNav({left:`<button class="nb-btn" data-go="start">Beenden</button>`, title:`${mix.i + 1} von ${mix.list.length}`});
   const head = `<div class="qprog" aria-hidden="true"><i style="width:${pct(mix.i, mix.list.length)}%"></i></div>
-    <div class="mix-top"><span class="kicker lhk" style="--lh:${lh}">${where}${it.retry ? ", zweiter Versuch" : ""}</span>${mix.combo >= 2 ? `<span class="combo">${icon("flame", 14)} ${mix.combo}er-Serie</span>` : ""}</div>`;
+    <div class="mix-top"><span class="kicker lhk" style="--lh:${lh}">${where}${it.retry ? ", noch ein Versuch" : ""}</span>${mix.combo >= 2 ? `<span class="combo">${icon("flame", 14)} ${mix.combo}er-Serie</span>` : ""}</div>`;
   if (it.k === "card") {
     const c = CARD_BY_ID[it.id];
     paint(`${head}
@@ -6605,7 +6618,7 @@ function drawMix() {
       const mark = answered && o.ok ? icon("check", 20, "mark") : answered && k === mix.picked ? icon("x", 20, "mark") : "<span></span>";
       return `<button class="opt ${cls}" data-act="pick" data-k="${k}" ${answered ? "disabled" : ""}><span class="key">${"ABCD"[k]}</span><span>${o.t}</span>${mark}</button>`;
     }).join("")}</div>
-    ${answered ? `<div class="explain ${ok ? "good" : "bad"}" role="status">${icon(ok ? "check" : "bulb", 20)}<div><b>${ok ? "Richtig" : "Nicht ganz"}</b>${q.e}</div></div>
+    ${answered ? `<div class="explain ${ok ? "good" : "bad"}" role="status">${icon(ok ? "check" : "bulb", 20)}<div><b>${ok ? "Richtig" : "Nicht ganz"}</b>${q.e}<small class="wieder">${wiederText(it.id, ok, !ok && mix.list.slice(mix.i + 1).some(x => x.id === it.id))}</small></div></div>
       <button class="btn btn-fill btn-lg" id="nextMix" data-act="next">${mix.i + 1 < mix.list.length ? "Weiter" : "Runde abschließen"}</button>` : ""}
   </section>`, {anim:false});
 }
