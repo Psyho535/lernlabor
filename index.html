@@ -2981,6 +2981,7 @@ html.ide-fokus :is(.tabbar,#navbar,.acc,.sidebar,#statusSchleier){visibility:hid
 <script src="content/ergaenzung.js"></script>
 <script src="content/vertiefung.js"></script>
 <script src="content/pruefung.js"></script>
+<script src="content/pruefung2.js"></script>
 <script src="content/einfach.js"></script>
 <script src="content/code-python.js"></script>
 <script src="content/code-java.js"></script>
@@ -3464,6 +3465,8 @@ const clone = o => JSON.parse(JSON.stringify(o));
 let S = DEFAULT();
 try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(DEFAULT(), JSON.parse(raw)); } catch (e) {}
 if (!S.code || !S.code.read) S.code = {read:{}, done:{}, last:null};
+// Früher gab es 6 Fächer, jetzt 5: Das alte 6. Fach wird zum 5.
+Object.values(S.srs || {}).forEach(r => { if (r && r.b > 4) r.b = 4; });
 let hapticsOn = true;
 try { hapticsOn = localStorage.getItem("itlernlabor.haptics") !== "0"; } catch (e) {}
 
@@ -3527,7 +3530,8 @@ function progress() {
 const HUE = {1:APPLE.teal, 2:APPLE.blau, 3:APPLE.indigo, 4:APPLE.rot, 5:APPLE.orange, 6:APPLE.gelb, 7:APPLE.gruen};
 const LAYER_IC = {1:"wave", 2:"net", 3:"globe", 4:"swap", 5:"link", 6:"lock", 7:"app"};
 const layerIc = n => `<span class="si ly" style="${onColor(HUE[n])}">${icon(LAYER_IC[n], 19)}</span>`;
-const SRS_DAYS = [0, 1, 3, 7, 16, 35];
+/* Leitner-Karteikasten mit 5 Fächern (b = 0 bis 4 ist Fach 1 bis 5). Richtig: ein Fach weiter. Falsch: zurück in Fach 1. */
+const SRS_DAYS = [0, 1, 3, 7, 30];
 const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 864e5);
 const streakNow = () => S.streak.last >= today() - 1 ? S.streak.n : 0;
 const doneToday = () => S.day.d === today() ? S.day.n : 0;
@@ -3539,9 +3543,10 @@ function grade(id, ok, xp) {
 }
 /* Text: wann kommt die Aufgabe wieder (nach dem Leitner-Fach in S.srs) */
 function wiederText(id, ok, nochmal) {
-  if (!ok) return nochmal ? "Kommt in dieser Runde gleich noch mal." : "Kommt beim nächsten Üben wieder dran.";
-  const r = S.srs[id], t = r ? r.d - today() : 0;
-  return t <= 0 ? "Kommt bald wieder dran." : t === 1 ? "Sitzt. Kommt morgen wieder." : `Sitzt. Kommt in ${t} Tagen wieder.`;
+  if (!ok) return nochmal ? "Zurück in Fach 1 von 5. Kommt in dieser Runde gleich noch mal." : "Zurück in Fach 1 von 5. Kommt beim nächsten Üben wieder dran.";
+  const r = S.srs[id], t = r ? r.d - today() : 0, fach = r ? Math.min(r.b, SRS_DAYS.length - 1) + 1 : 1;
+  const wann = t <= 0 ? "kommt bald wieder" : t === 1 ? "kommt morgen wieder" : t === 7 ? "kommt in einer Woche wieder" : t === 30 ? "kommt in einem Monat wieder" : `kommt in ${t} Tagen wieder`;
+  return `Fach ${fach} von 5, ${wann}.`;
 }
 /* Zählt die Übung des Tages; S.act merkt sich pro Tag und Thema die XP (für das Punktdiagramm und „Heute / Gestern“). */
 function countDay(xp, m) {
@@ -3562,7 +3567,7 @@ const ITEMS = MODS.flatMap(m => [...m.cards.map(c => ({k:"card", id:c.id, L:c.L 
 const allItems = () => ITEMS;
 const isDue = it => S.srs[it.id] && S.srs[it.id].d <= today();
 const dueCount = () => ITEMS.filter(isDue).length;
-const share = items => items.length ? items.reduce((sum, it) => sum + (S.srs[it.id] ? S.srs[it.id].b : 0), 0) / (items.length * (SRS_DAYS.length - 1)) : 0;
+const share = items => items.length ? items.reduce((sum, it) => sum + (S.srs[it.id] ? Math.min(S.srs[it.id].b, SRS_DAYS.length - 1) : 0), 0) / (items.length * (SRS_DAYS.length - 1)) : 0;
 const mastery = n => share(ITEMS.filter(it => it.m === "osi" && it.L === n));
 const modMastery = id => share(ITEMS.filter(it => it.m === id));
 /* Fortschritt eines Registers: 40 % gelesene Lernseiten, 60 % gefestigte Karten und Fragen. */
